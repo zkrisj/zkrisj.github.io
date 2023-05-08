@@ -1,0 +1,324 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>如何使用 meta 标签 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    如何使用 meta 标签
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-08-29 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/10MZNKSN7/" class="post-tags">
+                            # HTML
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p><code>&lt;meta&gt;</code> 元素用来表示不能由其它 <code>HTML</code> 元相关（meta-related）元素（(<code>&lt;base&gt;</code>、<code>&lt;link&gt;</code>、<code>&lt;script&gt;</code>、<code>&lt;style&gt;</code> 或 <code>&lt;title&gt;</code>）之一表示的数据信息，元素标签内不包含任何内容。</p>
+<p>具有不同属性的多个 <code>&lt;meta&gt;</code> 元素可以在同一页面上使用。<code>&lt;meta&gt;</code> 元素内容不会显示在页面上，但是对于机器是可读的，可用于模拟 <code>HTTP</code> 响应头字段的使用，页面描述、关键字用于搜索引擎优化，或其他 <code>web</code> 服务。</p>
+<h2 id="属性">属性</h2>
+<p><code>&lt;meta&gt;</code> 标签的属性定义了与文档相关联的名称/值对，元数据总是以名称/值的形式被成对传递的。</p>
+<p>对于 <strong>HTML 4.01</strong> 和 <strong>XHTML 1.0</strong>，有四个有效的属性：<code>content</code>、<code>http-equiv</code>、<code>name</code> 和 <code>scheme</code>。在 <strong>HTML 5</strong> 下，现在有五个有效的属性，添加了 <code>charset</code>。<code>http-equiv</code> 用于模拟 HTTP 标题，并用 <code>name</code> 来嵌入元数据。无论哪种情况，语句的值都包含在 <code>content</code> 属性中，除非给出 <code>charset</code>，否则这是唯一必需的属性。</p>
+<p><code>&lt;meta&gt;</code> 标签通常位于 <code>&lt;head&gt;</code> 区域内，但在 <strong>HTML5</strong> 中不再需要 <code>&lt;head&gt;</code> 标签。</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>charset</td>
+<td>character_set</td>
+<td>规定 HTML 文档的字符编码。</td>
+</tr>
+<tr>
+<td>content</td>
+<td>text</td>
+<td>定义与 http-equiv 或 name 属性相关的元信息。</td>
+</tr>
+<tr>
+<td>http-equiv</td>
+<td>content-security-policy<br>content-type<br>default-style<br>refresh</td>
+<td>把 content 属性关联到 HTTP 头部。</td>
+</tr>
+<tr>
+<td>name</td>
+<td>application-name<br>author<br>description<br>generator<br>keywords<br>viewport</td>
+<td>把 content 属性关联到一个名称。</td>
+</tr>
+<tr>
+<td>scheme</td>
+<td>format/URI</td>
+<td>定义用于翻译 content 属性值的格式。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="name-属性">name 属性</h3>
+<p><code>name</code> 属性提供了名称/值对中的名称。HTML 和 XHTML 标签都没有指定任何预先定义的 <code>&lt;meta&gt;</code> 名称。通常情况下，您可以自由使用对自己和源文档的读者来说富有意义的名称。</p>
+<p><code>keywords</code> 是一个经常被用到的名称。它为文档定义了一组关键字。某些搜索引擎在遇到这些关键字时，会用这些关键字对文档进行分类。</p>
+<p>类似这样的 <code>meta</code> 标签可能对于进入搜索引擎的索引有帮助：</p>
+<pre><code class="language-html">&lt;meta name=&quot;keywords&quot; content=&quot;HTML,ASP,PHP,SQL&quot;&gt;
+</code></pre>
+<p>如果没有提供 <code>name</code> 属性，那么名称/值对中的名称会采用 <code>http-equiv</code> 属性的值。</p>
+<h3 id="http-equiv-属性">http-equiv 属性</h3>
+<p><code>http-equiv</code> 属性为名称/值对提供了名称。并指示服务器在发送实际的文档之前先在要传送给浏览器的 <code>MIME</code> 文档头部包含名称/值对。</p>
+<p>当服务器向浏览器发送文档时，会先发送许多名称/值对。虽然有些服务器会发送许多这种名称/值对，但是所有服务器都至少要发送一个：<code>content-type:text/html</code>。这将告诉浏览器准备接受一个 <code>HTML</code> 文档。</p>
+<p>使用带有 <code>http-equiv</code> 属性的 <code>&lt;meta&gt;</code> 标签时，服务器将把名称/值对添加到发送给浏览器的内容头部。例如，添加：</p>
+<pre><code class="language-html">&lt;meta http-equiv=&quot;expires&quot; content=&quot;31 Dec 2008&quot;&gt;
+</code></pre>
+<p>这样发送到浏览器的头部就应该包含：</p>
+<pre><code>content-type: text/html
+charset:iso-8859-1
+expires:31 Dec 2008
+</code></pre>
+<p>当然，只有浏览器可以接受这些附加的头部字段，并能以适当的方式使用它们时，这些字段才有意义。</p>
+<h3 id="content-属性">content 属性</h3>
+<p><code>content</code> 属性提供了名称/值对中的值。该值可以是任何有效的字符串。</p>
+<p><code>content</code> 属性始终要和 <code>name</code> 属性或 <code>http-equiv</code> 属性一起使用。</p>
+<h3 id="scheme-属性">scheme 属性</h3>
+<p><code>scheme</code> 属性用于指定要用来翻译属性值的方案。此方案应该在由 <code>&lt;head&gt;</code> 标签的 <code>profile</code> 属性指定的概况文件中进行了定义。</p>
+<h2 id="html-401-与-html5之间的差异">HTML 4.01 与 HTML5之间的差异</h2>
+<p>在 <strong>HTML5</strong> 中，有一个新的 <code>charset</code> 属性，它使字符集的定义更加容易：</p>
+<ul>
+<li>HTML 4.01：<code>&lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;</code></li>
+<li>HTML5：<code>&lt;meta charset=&quot;UTF-8&quot;&gt;</code></li>
+</ul>
+<h2 id="示例">示例</h2>
+<ol>
+<li>定义创作者和修改信息：</li>
+</ol>
+<pre><code class="language-html">&lt;meta name=&quot;author&quot; content=&quot;Chris Mills&quot;&gt;
+
+&lt;meta name=&quot;revised&quot; content=&quot;David Yang,8/1/07&quot;&gt;
+</code></pre>
+<ol start="2">
+<li>定义文档关键词和页面描述，用于搜索引擎：</li>
+</ol>
+<pre><code class="language-html">&lt;meta name=&quot;description&quot; content=&quot;HTML examples&quot;&gt;
+
+&lt;meta name=&quot;keywords&quot; content=&quot;HTML, CSS, XML, XHTML, JavaScript&quot;&gt;
+</code></pre>
+<ol start="3">
+<li>下面示例演示 3 秒后，重定向到另外一个地址，如果 <code>url</code> 为空则会刷新当前网页：</li>
+</ol>
+<pre><code class="language-html">&lt;meta http-equiv=&quot;refresh&quot; content=&quot;3;url=https://www.baidu.com&quot;&gt;
+</code></pre>
+<ol start="4">
+<li>在文档级别上设置浅色模式与深色模式的工作方式与 CSS <code>color-scheme</code> 属性允许单个元素指定其首选和接受的配色方案相同：</li>
+</ol>
+<pre><code class="language-html">&lt;meta name=&quot;color-scheme&quot; content=&quot;dark light&quot;&gt;
+</code></pre>
+<ol start="5">
+<li>为当前页面定义内容策略，例如，已经存在的一个网站，用了太多内联代码修复问题，而且想确保资源（如图片、字体、脚本等）只从 <code>https</code> 加载，并且禁止插件：</li>
+</ol>
+<pre><code class="language-html">&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src https: 'unsafe-eval' 'unsafe-inline'; object-src 'none'&quot;&gt;
+</code></pre>
+<ol start="6">
+<li>微前端需要按功能拆分多个子应用，主应用在加载的过程中经常出现加载失败的问题。因为 <code>https</code> 地址中，如果加载了 <code>http</code> 资源，浏览器将认为这是不安全的资源，将会默认阻止。后来在文档中添加了以下 <code>&lt;meta&gt;</code> 标签完美解决：</li>
+</ol>
+<pre><code class="language-html">&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;upgrade-insecure-requests&quot;&gt;
+</code></pre>
+<ol start="7">
+<li>禁止浏览器从本地机的缓存中调阅页面内容，设定后，一旦离开网页就无法从 Cache 中再调出：</li>
+</ol>
+<pre><code class="language-html">&lt;meta http-equiv=&quot;Pragma&quot; content=&quot;no-cache&quot;&gt;
+</code></pre>
+<ol start="8">
+<li>定义搜索引擎机器人(不包括恶意爬虫)对此页面的处理行为：</li>
+</ol>
+<pre><code class="language-html">&lt;meta name=&quot;robots&quot; content=&quot;index,follow&quot;&gt;
+</code></pre>
+<blockquote>
+<ul>
+<li><code>index</code>：允许机器人索引此页面（默认）。</li>
+<li><code>follow</code>：允许机器人跟随此页面上的链接（默认）。</li>
+<li><code>noindex</code>：要求机器人不索引此页面。</li>
+<li><code>nofollow</code>：要求机器人不跟随此页面上的链接。</li>
+<li><code>all</code>：与 index, follow 相同。</li>
+<li><code>none</code>：与 noindex, nofollow 相同。</li>
+<li><code>noarchive</code>：要求搜索引擎不缓存页面内容。</li>
+<li><code>nocache</code>：noarchive 的替代名称。</li>
+<li><code>nosnippet</code>：防止在搜索引擎结果中显示页面的任何描述。</li>
+<li><code>noimageindex</code>：要求此页面不显示为图片索引的引用页面。</li>
+</ul>
+</blockquote>
+<ol start="9">
+<li>典型的移动优化网站会设置 <code>&lt;meta&gt;</code> 标签视口宽度等于屏幕宽度，这样可以避免当视口宽度大于屏幕宽度时，出现横向滚动条：</li>
+</ol>
+<pre><code class="language-html">&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+</code></pre>
+<blockquote>
+<p><code>&lt;meta&gt;</code> 标签的 <code>viewport</code> 的属性包括：</p>
+<ul>
+<li><code>width</code>：视口的宽度，可以设置为特殊值 <code>device-width</code>，数字（1-10000），或 <code>100vw</code>, <code>100%</code> 这样的有效值。负值：忽略。</li>
+<li><code>height</code>：视口的高度，可以设置为特殊值 <code>device-height</code>，数字（1-10000），或 <code>100vh</code>, <code>100%</code> 这样的有效值。负值：忽略。</li>
+<li><code>initial-scale</code>：控制第一次加载页面时的缩放级别。最小值：0.1。最大值：10。默认值：1。负值：忽略。</li>
+<li><code>minimum-scale</code>：控制页面上允许的缩小程度。最小值：0.1。最大值：10。默认值：0.1。负值：忽略。</li>
+<li><code>maximum-scale</code>：控制页面上允许的放大程度。最小值：0.1。最大值：10。默认值：10。负值：忽略。</li>
+<li><code>user-scalable</code>：控制页面上是否允许放大和缩小操作。有效值：0、1、yes 或 no。默认值：1，与 yes 相同。将该值设置为 0（与否相同），将违反 Web 内容可访问性指南 (WCAG)。</li>
+</ul>
+</blockquote>
+<h2 id="引用资料">引用资料</h2>
+<ol>
+<li><a href="https://juejin.cn/post/6987919006468407309">meta标签到底是做什么的</a></li>
+<li><a href="https://www.w3schools.com/tags/tag_meta.asp">HTML <code>&lt;meta&gt;</code> 标签</a></li>
+</ol>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/shi-yong-grid-qing-song-shi-xian-ge-chong-bu-ju/" class="post-title gt-a-link">
+                    使用 grid 轻松实现各种布局
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,283 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>HTML rel 属性的使用 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    HTML rel 属性的使用
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-09-01 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/10MZNKSN7/" class="post-tags">
+                            # HTML
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p>通过 <code>&lt;a&gt;</code>, <code>&lt;area&gt;</code>、<code>&lt;form&gt;</code> 或 <code>&lt;link&gt;</code> 元素可以使一个页面链接到另一个页面，通过 <code>href</code> 属性（<code>&lt;form&gt;</code> 属性是 <code>action</code>）可以设置外部资源的路径。</p>
+<p><code>rel</code> 属性表示 “关系 (relationship) ”，在 <code>&lt;link&gt;</code>、<code>&lt;a&gt;</code>、<code>&lt;area&gt;</code> 和 <code>&lt;form&gt;</code> 元素上有效，属性值表示 <code>&lt;link&gt;</code> 的链接方式或与包含它的文档之间的关系。</p>
+<h2 id="支持的类型">支持的类型</h2>
+<h3 id="alternate">alternate</h3>
+<p>在 <code>&lt;link&gt;</code>、<code>&lt;a&gt;</code>、<code>&lt;area&gt;</code> 元素上有效。<br>
+如果元素是 <code>&lt;link&gt;</code> 并且 <code>rel</code> 属性也包含 stylesheet 类型，则链接定义替代样式表；在这种情况下，<code>title</code> 属性必须存在。</p>
+<pre><code class="language-html">&lt;link href=&quot;reset.css&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;link href=&quot;default.css&quot; rel=&quot;stylesheet&quot; title=&quot;默认&quot;&gt;
+&lt;link href=&quot;red.css&quot; rel=&quot;alternate stylesheet&quot; title=&quot;红色&quot;&gt;
+&lt;link href=&quot;green.css&quot; rel=&quot;alternate stylesheet&quot; title=&quot;绿色&quot;&gt;
+</code></pre>
+<p>上面4个 <code>&lt;link&gt;</code> 元素，共定义了 3 种不同性质的 CSS 样式文件加载：</p>
+<ul>
+<li>没有 <code>title</code> 属性，<code>rel</code> 属性值仅仅是 <code>stylesheet</code> 的 <code>&lt;link&gt;</code> 无论如何都会加载并渲染，如 reset.css；</li>
+<li>有 <code>title</code> 属性，<code>rel</code> 属性值仅仅是 <code>stylesheet</code> 的 <code>&lt;link&gt;</code> 作为默认样式 CSS 文件加载并渲染，如 default.css；</li>
+<li>有 <code>title</code> 属性，<code>rel</code> 属性值同时包含 <code>alternate</code> 和 <code>stylesheet</code> 的 <code>&lt;link&gt;</code> 作为备选样式 CSS 文件加载，默认不渲染，如 red.css 和 green.css。</li>
+</ul>
+<p>在 IE 和 Firefox 中可以通过菜单切换样式：</p>
+<figure data-type="image" tabindex="1"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cff8a077b1be4348acd74aac7a0e4497~tplv-k3u1fbpfcp-watermark.image?" alt="微信图片编辑_20220901124007.jpg" loading="lazy"></figure>
+<hr>
+<figure data-type="image" tabindex="2"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9665dd8b116a4fb8a24ea704354ef37b~tplv-k3u1fbpfcp-watermark.image?" alt="微信图片编辑_20220901123729.jpg" loading="lazy"></figure>
+<hr>
+<p>而在 Chrome 中则需要手动添加 JS 切换：</p>
+<pre><code class="language-js">// 渲染red.css这个皮肤
+document.querySelector('link[href=&quot;red.css&quot;]').disabled = false;
+</code></pre>
+<h3 id="用来增强链接语义的类型">用来增强链接语义的类型</h3>
+<p>archives、author、glossary、help、first、last、prev、next、index、contents、chapter、section、subsection、appendix、license 在 <code>&lt;link&gt;</code>、<code>&lt;a&gt;</code>、<code>&lt;area&gt;</code> 元素上有效，表明这个链接指向归档、作者信息介绍页面、使用的词汇的术语表页面、与上下文相关的帮助页面或资源、一系列链接中的第一个页面、最后一个页面、上一个页面、下一个页面、根页面、文档的目录、章、节、小节、附录、版权说明页面；bookmark，external、nofollow 在 <code>&lt;a&gt;</code>、<code>&lt;area&gt;</code> 元素上有效，表明这是一个固定链接、外部链接（点击这个链接会离开当前网站）、搜索引擎无需抓取的链接。</p>
+<h3 id="canonical">canonical</h3>
+<p>在 <code>&lt;link&gt;</code> 元素上有效，定义当前文档的首选 URL，这对搜索引擎很有用，可以为类似网页或重复网页指定规范网页。例如 wordpress 文章链接地址有多种 URL 表示，我希望用户通过 <code>https://www.zhangxinxu.com/wordpress/2019/05/html-a-rel/</code>（而非 <code>https://www.zhangxinxu.com/wordpress/?p=8488</code>）访问这篇文章，则可以新增如下代码：</p>
+<pre><code class="language-html">&lt;link rel=&quot;canonical&quot; href=&quot;https://www.zhangxinxu.com/wordpress/2019/05/html-a-rel/&quot;&gt;
+</code></pre>
+<h3 id="dns-prefetchexperimenta">dns-prefetchExperimenta</h3>
+<p>在 <code>&lt;link&gt;</code> 元素上有效，提示浏览器该资源需要在用户点击链接之前进行 DNS 查询和协议握手。例如：</p>
+<pre><code class="language-html">&lt;link rel=&quot;dns-prefetch&quot; href=&quot;http://www.zhangxinxu.com/&quot;&gt;
+</code></pre>
+<p>此时如果页面中有链接地址的域名也是 <code>www.zhangxinxu.com</code>，那么当用户点击这个链接的时候，新打开的页面就少了 DNS 向上查找这一步，因为之前浏览器已经 DNS 预读取了，页面呈现速度就会快一些。</p>
+<h3 id="icon">icon</h3>
+<p>同义词 shortcut，在 <code>&lt;link&gt;</code> 元素上有效，指定网站标题栏小图标。例如：</p>
+<pre><code class="language-html">&lt;link rel=&quot;icon&quot; href=&quot;favicon.ico&quot;&gt;
+</code></pre>
+<h3 id="manifest">manifest</h3>
+<p>在 <code>&lt;link&gt;</code> 元素上有效，表示链接到的文件是 Web App Manifest，一个 JSON 文本文件，在其中提供有关 PWA 应用程序的信息（如名称，作者，图标和描述）。</p>
+<h3 id="modulepreload">modulepreload</h3>
+<p>预加载原生模块脚本。浏览器已经原生支持 JavaScript 模块，包括静态和动态导入支持。这意味着现在可以编写在浏览器中本地运行的基于模块的 JavaScript，而无需转译器或捆绑器。但是，模块依赖引入了一个加载问题，因为浏览器需要等待一个模块加载，然后才能发现它的依赖是什么。解决此问题的一种方法是预加载依赖项，以便浏览器提前了解所有依赖文件。<code>modulepreload</code> 即是 <code>preload</code> 的 JavaScript 模块版本，它解决了后者的许多问题。</p>
+<pre><code class="language-html">&lt;link rel=&quot;modulepreload&quot; href=&quot;./1.mjs&quot;&gt;
+&lt;script src=&quot;./1.mjs&quot; type=&quot;module&quot;&gt;&lt;/script&gt;
+</code></pre>
+<p>Chrome 现在知道您要预加载的是一个模块，因此它可以很智能，并在完成获取后立即解析和编译模块，而不是等到它尝试运行。</p>
+<h4 id="模块的依赖关系呢">模块的依赖关系呢？</h4>
+<p>以递归方式预加载依赖项，但需要浏览器需要具有强大的模块重复数据删除功能。通常最佳实践是声明模块及其依赖项的扁平列表。</p>
+<pre><code class="language-html">&lt;!-- dog.js 依赖 dog-head.js, dog-head.js 依赖 dog-head-mouth.js, dog-head-mouth.js 依赖 dog-head-mouth-tongue.js. --&gt;
+&lt;link rel=&quot;modulepreload&quot; href=&quot;dog-head-mouth-tongue.mjs&quot;&gt;
+&lt;link rel=&quot;modulepreload&quot; href=&quot;dog-head-mouth.mjs&quot;&gt;
+&lt;link rel=&quot;modulepreload&quot; href=&quot;dog-head.mjs&quot;&gt;
+&lt;link rel=&quot;modulepreload&quot; href=&quot;dog.mjs&quot;&gt;
+</code></pre>
+<h4 id="预加载模块是否有助于提高性能">预加载模块是否有助于提高性能？</h4>
+<p>预加载可以帮助最大化带宽使用，通过告诉浏览器它需要获取什么，这样它就不会在那些漫长的往返过程中无事可做。如果您正在尝试使用模块并由于深度依赖树而遇到性能问题，那么创建一个扁平的预加载列表肯定会有所帮助。</p>
+<h3 id="noopener">noopener</h3>
+<p>在 <code>&lt;a&gt;</code>、<code>&lt;area&gt;</code>、<code>&lt;form&gt;</code> 元素上有效，在打开不受信任的链接时确保它们不能通过 <code>window.opener</code> 属性篡改原始文档。目前除了 IE 都已默认。与 <code>window.open(url, 'OpenNewWindow', 'noopener')</code> 功能相同。</p>
+<h3 id="opener">opener</h3>
+<p>在 <code>&lt;a&gt;</code>、<code>&lt;area&gt;</code>、<code>&lt;form&gt;</code> 元素上有效，在打开链接时恢复对 <code>window.opener</code> 属性的引用。</p>
+<h3 id="noreferrer">noreferrer</h3>
+<p>在 <code>&lt;a&gt;</code>、<code>&lt;area&gt;</code>、<code>&lt;form&gt;</code> 元素上有效，阻止浏览器导航到另一个页面时，通过 <code>Referer：HTTP header</code> 请求头将该页面地址或任何其他值作为 <code>Referrer</code> 发送。与 <code>window.open(url, 'OpenNewWindow', 'noreferrer')</code> 功能相同。</p>
+<h3 id="preconnect">preconnect</h3>
+<p>在 <code>&lt;link&gt;</code> 元素上有效，表示预连接，作用是告知浏览器提前连接链接地址对应站点，不过只是连接，并不会公开任何私人信息或者下载任何内容。好处是打开链接内容的时候可以更快的获取（节约了 DNS 查询、重定向以及指向处理用户请求的最终服务器的若干往返）。</p>
+<h3 id="prefetch">prefetch</h3>
+<p>在 <code>&lt;link&gt;</code> 元素上有效，表示预获取将在下一次导航/页面加载中使用的资源，例如搜索结果列表中首个产品的详情页面或搜索分页内容的下一页，<code>prefetch</code> 获取页面并不会加载页面中的 css 和 js 资源，而是加载页面本身。<code>prefetch</code> 比 <code>preload</code> 的优先级低——因为当前页面比下一个页面更重要。</p>
+<h3 id="preload">preload</h3>
+<p>在 <code>&lt;link&gt;</code> 元素上有效，表示预加载，通常是一些静态资源（字体、图片、样式或脚本），因为这些资源通常隐藏在 CSS 文件中，有时甚至有好几级。在这种情况下，浏览器必须等待多次往返才能发现它需要获取一个大字体文件，而它本可以利用这段时间开始下载并利用完整的连接带宽。</p>
+<p><code>preload</code> 及其等效的 HTTP 标头提供了一种简单的声明性方式，在浏览器需要资源之前提前声明式请求资源。当浏览器遇到 <code>preload</code> 时，它就会开始为资源进行高优先级下载，因此在实际需要它时它已经被获取或部分存在。</p>
+<p>需要同时设置 <code>as</code> 属性中的资源类型（这是内容安全策略和设置正确的 <code>Accept</code> 请求标头所必需的）来指定要预加载的内容类型，这样可以使浏览器：</p>
+<ul>
+<li>更准确地优先加载资源。</li>
+<li>存储在缓存中以供将来的请求使用，并在适当的情况下重用资源。</li>
+<li>将正确的内容安全策略应用于资源。</li>
+<li>为其设置正确的 <code>Accept</code> 请求标头。</li>
+</ul>
+<pre><code class="language-html">&lt;link rel=&quot;preload&quot; href=&quot;style.css&quot; as=&quot;style&quot;&gt;
+&lt;link rel=&quot;preload&quot; href=&quot;main.js&quot; as=&quot;script&quot;&gt;
+</code></pre>
+<p>可以预加载许多不同的内容类型，可能的 <code>as</code> 属性值是：</p>
+<ul>
+<li>audio：音频文件，通常用于 <code>&lt;audio&gt;</code>。</li>
+<li>document: 由 <code>&lt;frame&gt;</code> 或 <code>&lt;iframe&gt;</code> 嵌入的 HTML 文档。</li>
+<li>embed：要嵌入到 <code>&lt;embed&gt;</code> 元素中的资源。</li>
+<li>fetch：要通过 fetch 或 XHR 请求访问的资源，例如 ArrayBuffer 或 JSON 文件。</li>
+<li>font: CSS @font-face 字体文件。</li>
+<li>image： 图像文件。</li>
+<li>object：要嵌入到 <code>&lt;object&gt;</code> 元素中的资源。</li>
+<li>script: JavaScript 文件。</li>
+<li>style: CSS 样式表。</li>
+<li>track: WebVTT 文件。</li>
+<li>worker：一个 web worker 或 shared worker。</li>
+<li>video：视频文件，通常用于 <code>&lt;video&gt;</code>。</li>
+</ul>
+<p>还可以同时指定一个 <code>type</code> 属性，该属性包含元素指向的资源的 MIME 类型。这在预加载资源时特别有用——浏览器将使用 <code>type</code> 属性值来确定它是否支持该资源，如果支持则会下载它，如果不支持则忽略它，这样可以在浏览器不支持的情况下不必要地预加载它。</p>
+<h3 id="prerender">prerender</h3>
+<p>在 <code>&lt;link&gt;</code> 元素上有效，表示预渲染，在后台呈现指定的网页，如果用户导航到该网页，则可以加快其加载速度。</p>
+<blockquote>
+<p>由于可能浪费用户带宽，Chrome 使用 <a href="https://developer.chrome.com/blog/nostate-prefetch/"><code>NoState Prefetch</code></a> 替代 <code>prerender</code>——它和 <code>prerender</code> 一样提前获取资源；但它不会执行 JavaScript 或提前渲染页面的任何部分。<code>NoState Prefetch</code> 的目标是使用比预渲染更少的内存，同时仍然减少页面加载时间。</p>
+</blockquote>
+<h3 id="shortlink">shortlink</h3>
+<p>在 <code>&lt;link&gt;</code> 元素上有效，给出当前页面对应的短链接，这样分享链接的时候要更容易。</p>
+<h3 id="stylesheet">stylesheet</h3>
+<p>最常用，在 <code>&lt;link&gt;</code> 元素上有效，定义要用作样式表的外部资源。</p>
+<h3 id="tag">tag</h3>
+<p>在 <code>&lt;a&gt;</code>、<code>&lt;area&gt;</code> 元素上有效，定义适用于当前文档的标签的链接，这样 SEO 会更加精准，质量更高。</p>
+<h2 id="参考资料">参考资料</h2>
+<p><a href="https://www.zhangxinxu.com/wordpress/2019/06/html-a-link-rel/">HTML rel属性值释义大全</a></p>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/zi-fu-chuan-zhuan-dom-de-ji-chong-fang-fa/" class="post-title gt-a-link">
+                    字符串转 DOM 的几种方法和安全措施
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>HTML 字符实体和 Emoji 的使用 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    HTML 字符实体和 Emoji 的使用
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-09-17 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/10MZNKSN7/" class="post-tags">
+                            # HTML
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="html-实体">HTML 实体</h2>
+<p>HTML 实体是一段以连字号（&amp; 或 &amp;#）开头、以分号（;）结尾的文本（字符串）。例如 A、B、C 的实体编号分别为 <code>&amp;#65;</code>、<code>&amp;#66;</code> 和 <code>&amp;#67;</code>。</p>
+<p>HTML 中的预留字符必须被替换为字符实体。例如，如需显示小于号和大于号，我们需要写实体名称：<code>&amp;lt;</code> 和 <code>&amp;gt;</code>，或实体编号：<code>&amp;#60;</code> 和 <code>&amp;#62;</code>。</p>
+<p>HTML 对多个空格会折叠成一个空格，如果需要显示多个空格，需要写多个 <code>&amp;nbsp;</code> 实体名称（多个空格的实体编号 <code>&amp;#32;</code> 也会折叠成一个空格）。</p>
+<p>使用实体名称而不是编号的好处是，名称易于记忆。不过坏处是，浏览器也许不支持所有实体名称（对实体编号的支持却很好）。</p>
+<p>对于没有 HTML 实体名称的字符，可以使用十进制（dec）或十六进制（hex）引用。例如 ♥ 具有实体名称 <code>&amp;hearts;</code>、十进制实体编号 <code>&amp;#9829;</code> 和十六进制实体编号 <code>&amp;#x2665;</code>，而 ♡ 没有实体名称，可以使用十进制实体编号 <code>&amp;#9825;</code> 和十六进制实体编号 <code>&amp;#x2661;</code> 来引用。</p>
+<h2 id="emoji">Emoji</h2>
+<figure data-type="image" tabindex="1"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/27fbad334aea4e8497b53403283270b3~tplv-k3u1fbpfcp-watermark.image?" alt="bg2017041302-1.jpg" loading="lazy"></figure>
+<hr>
+<p>表情符号（Emoji）是来自 UTF-8 字符集（HTML5 中的默认字符集）的字符，2010年10月发布的 Unicode 6.0 版首次收录表情符号编码（分配码点，可通过 HTML 实体书写）。它们可以像 HTML 中的其他任何字符一样复制、显示和调整它们的大小，也就是说，现在的 Emoji 符号就是一个文字，它会被渲染为图形。</p>
+<p>Unicode 只是规定了 Emoji 的码点和含义，并没有规定它的样式。例如，码点 U+1F600 表示一张微笑的脸，但是这张脸长什么样，则由各个系统自己实现。如果用户的系统没有实现这个 Emoji 符号，用户就会看到一个没有内容的方框，因为系统无法渲染这个码点。IOS、安卓、Twitter、Github、Facebook 都有自己的 Emoji 实现。</p>
+<figure data-type="image" tabindex="2"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f8c139fdb2b845d9868485da9969847a~tplv-k3u1fbpfcp-watermark.image?" alt="bg2017041305.jpg" loading="lazy"></figure>
+<h3 id="emoji-组合">Emoji 组合</h3>
+<p>Unicode 除了使用单个码点表示 Emoji，还允许多个码点组合表示一个 Emoji。</p>
+<p>其中的一种方式是&quot;零宽度连接符&quot;（ZERO WIDTH JOINER，缩写 ZWJ）<code>U+200D</code>。举例来说，下面是三个 Emoji 的码点。</p>
+<blockquote>
+<ul>
+<li>U+1F468：男人</li>
+<li>U+1F469：女人</li>
+<li>U+1F467：女孩</li>
+</ul>
+</blockquote>
+<p>上面三个码点使用 <code>U+200D</code> 连接起来，<code>U+1F468 U+200D U+1F469 U+200D U+1F467</code>，就会显示为一个 Emoji 👨‍👩‍👧，表示他们组成的家庭。如果用户的系统不支持这种方法，就还是显示为三个独立的 Emoji 👨👩👧。</p>
+<h3 id="使用方式">使用方式</h3>
+<p>Emoji 虽然是文字，但是无法书写，必须使用其他方法来插入文档中。</p>
+<ol>
+<li>最简单的方法当然是复制/粘贴，你可以到 <a href="https://getemoji.com/">getEmoji.com</a> 选中一个 Emoji 贴在自己的文档即可。</li>
+<li>另一种方法是通过码点输入 Emoji。以 HTML 网页为例，将码点 U+1F600 写成 HTML 实体的形式 <code>&amp;#128512;</code>（十进制）或 <code>&amp;#x1F600;</code>（十六进制），就可以插入网页。码点可以到 <a href="https://emojipedia.org/">emojipedia.org</a> 查询。</li>
+<li>JavaScript 输入 Emoji，可以使用 <a href="https://www.npmjs.com/package/node-emoji">node-emoji</a> 这个库。</li>
+</ol>
+<pre><code class="language-js">const emoji = require('node-emoji');
+// 返回 coffee 的 Emoji，☕️
+emoji.get('coffee'); 
+// 返回 github 风格的 markdown 表情符号对应的 Emoji，❤️
+emoji.get(':heart:');
+// 将文字替换成 Emoji，返回 &quot;I ❤️ ☕️!&quot; 
+emoji.emojify('I :heart: :coffee:!');
+// 随机返回一个 Emoji 
+emoji.random();
+// 查询 Emoji 返回一个数组，`[{ emoji: '☕️', key: 'coffee' }, { emoji: ⚰', key: 'coffin'}]`
+emoji.search('cof');
+</code></pre>
+<ol start="4">
+<li>通过 CSS 插入 Emoji。</li>
+</ol>
+<pre><code class="language-html">&lt;link href=&quot;https://afeld.github.io/emoji-css/emoji.css&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;i class=&quot;em em-baby&quot;&gt;&lt;/i&gt;
+</code></pre>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/css-zi-ding-yi-shu-xing-property-de-shi-yong/" class="post-title gt-a-link">
+                    CSS 自定义属性 @property 的使用
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

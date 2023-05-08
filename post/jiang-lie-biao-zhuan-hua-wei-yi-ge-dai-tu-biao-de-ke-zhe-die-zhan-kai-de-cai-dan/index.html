@@ -1,0 +1,258 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>将列表转化为一个带图标的可折叠/展开的菜单 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    将列表转化为一个带图标的可折叠/展开的菜单
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-10-21 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tags">
+                            # JS
+                        </a>
+                    
+                        <a href="https://zkrisj.github.io/tag/10MZNKSN7/" class="post-tags">
+                            # HTML
+                        </a>
+                    
+                        <a href="https://zkrisj.github.io/tag/5W0xko0tt/" class="post-tags">
+                            # CSS
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p>将一个无序列表转化为一个带图标的可折叠/展开的菜单。下面是三种实现方法。</p>
+<h2 id="使用-web-components">使用 Web Components</h2>
+<ol>
+<li>首先使用 <code>customElements.define()</code> 方法注册一个元素。</li>
+</ol>
+<pre><code class="language-js">customElements.define('expanding-list', ExpandingList, { extends: 'ul' });
+</code></pre>
+<p>第三个参数是一个包含 <code>extends</code> 属性的配置对象，指定了所创建的元素继承自哪个内置元素，可以继承任何内置元素。</p>
+<ol start="2">
+<li>然后，定义这个元素的实现类 <code>ExpandingList</code>，并继承 <code>HTMLUListElement</code>。</li>
+</ol>
+<pre><code class="language-js">class ExpandingList extends HTMLUListElement {
+  constructor() {
+    self = super();
+    self.querySelectorAll('li').forEach(li =&gt; {
+      if (li.querySelector('ul')) {
+        li.setAttribute('class', 'closed');
+        const { firstChild } = li;
+        // 使用 span 替换 li 节点文本，并绑定事件
+        const newSpan = document.createElement('span');
+        newSpan.textContent = firstChild.textContent;
+        newSpan.onclick = self.showul;
+        firstChild.replaceWith(newSpan);
+      }
+    });
+  }
+  // 折叠/展开菜单
+  showul(e) {
+    const nextul = e.target.nextElementSibling;
+    if (nextul.style.display == 'block') {
+      nextul.style.display = 'none';
+      nextul.parentNode.setAttribute('class', 'closed');
+    } else {
+      nextul.style.display = 'block';
+      nextul.parentNode.setAttribute('class', 'open');
+    }
+  };
+}
+</code></pre>
+<ol start="3">
+<li>在页面上使用 <code>&lt;ul&gt;</code> 标签，通过 <code>is</code> 属性指定这个自定义内置元素的名称。</li>
+</ol>
+<pre><code class="language-html">&lt;ul is=&quot;expanding-list&quot;&gt;
+&lt;/ul&gt;
+</code></pre>
+<p><code>is</code> 全局属性是一种使用 Web 组件的方法，是将自定义元素（实现了 Web 组件逻辑）插入页面的另一种方式。</p>
+<ul>
+<li>不是使用自定义元素的名称作为 HTML 标记，而是将名称传递给内置 HTML 元素。</li>
+<li>如果 Web 组件没有在页面上注册，该组件仍可以退回到标准 HTML 元素行为。</li>
+</ul>
+<iframe src="https://code.juejin.cn/pen/7156825074647957518"></iframe>
+<h2 id="使用-details-和-summary-标签配合-marker-伪元素">使用 details 和 summary 标签配合 ::marker 伪元素</h2>
+<ul>
+<li><code>&lt;details&gt;</code> 元素可创建一个部件，仅在被切换成展开状态时，它才会显示内含的信息。</li>
+<li><code>&lt;summary&gt;</code> 元素可为 <code>&lt;details&gt;</code> 部件提供显示的标题信息。默认标题信息左边会有一个小三角形图标。</li>
+<li><code>::marker</code> CSS 伪元素可为设置了 <code>display: list-item</code> 的元素或伪元素上定义样式，例如 <code>&lt;li&gt;</code> 和 <code>&lt;summary&gt;</code>，它们通常含有一个项目符号或者数字。但是，目前只能使用某些 CSS 属性：
+<ul>
+<li>所有字体属性</li>
+<li>white-space</li>
+<li>color</li>
+<li>text-combine-upright, unicode-bidi, direction</li>
+<li>content</li>
+<li>所有 animation 和 transition 属性</li>
+</ul>
+</li>
+</ul>
+<iframe src="https://code.juejin.cn/pen/7156829659248721951"></iframe>
+<h2 id="使用-input-checkbox-和-label-标签">使用 input checkbox 和 label 标签</h2>
+<p>使用单选框以及复选框自带的一些特性，然后配合 CSS 一些特殊的选择器，可以在不使用任何 JavaScript 代码情况下实现元素的显示隐藏、多级下拉列表、选项卡切换效果等。目前兼容性最好。</p>
+<iframe src="https://code.juejin.cn/pen/7156830830696857630"></iframe>
+<h2 id="浏览器支持">浏览器支持</h2>
+<p>目前，Safari 浏览器对前两种方法都不支持。</p>
+<figure data-type="image" tabindex="1"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/800ea9a32ac745acb81e29c3a2abac61~tplv-k3u1fbpfcp-watermark.image?" alt="developer.mozilla.org_zh-CN_docs_Web_HTML_Global_attributes_is.png" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/96bf2c92f9524f8780d22ea77ef580d3~tplv-k3u1fbpfcp-watermark.image?" alt="marker.png" loading="lazy"></figure>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li><a href="https://www.zhangxinxu.com/wordpress/2012/01/css-css3-selector-element-display-tab-listdown/">CSS radio/checkbox单复选框元素显隐技术</a></li>
+</ul>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/form-biao-dan-xin-shu-xing-submitterxin-fang-fa-requestsubmitxin-shi-jian-formdata/" class="post-title gt-a-link">
+                    form 表单新属性 submitter、新方法 requestSubmit、新事件 formdata
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

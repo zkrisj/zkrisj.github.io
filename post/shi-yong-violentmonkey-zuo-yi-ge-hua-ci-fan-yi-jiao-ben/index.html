@@ -1,0 +1,414 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>使用 Violentmonkey 做一个划词翻译脚本 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    使用 Violentmonkey 做一个划词翻译脚本
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-09-06 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/sqhugDzjp/" class="post-tags">
+                            # 工具
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="用户脚本">用户脚本</h2>
+<p>用户脚本是一段 JS 代码，能为网站添加新的功能。编写 JS 脚本比 crx 扩展简单得多，不必为了实现一个简单的功能加入其他的文件。</p>
+<p>使用用户脚本需要安装一个脚本管理器，最常用的就是油猴（Tampermonkey）或暴力猴（Violentmonkey），Firefox 应用商店、Edge 应用商店或 chrome 应用商店搜索 Tampermonkey 或 Violentmonkey，然后下载安装即可。</p>
+<p>如果 chrome 应用商店访问不了先安装下面这个：</p>
+<figure data-type="image" tabindex="1"><a href="https://iguge.xyz/"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1b5c6ee363344ff2b71bf3708217bd96~tplv-k3u1fbpfcp-watermark.image?" alt="微信截图_20220905211545.png" loading="lazy"></a></figure>
+<h2 id="tampermonkey-vs-violentmonkey">Tampermonkey vs Violentmonkey</h2>
+<p>云端备份、导出备份、自动更新、筛选排序这些脚本管理的重要功能，油猴和暴力猴上都有。</p>
+<p>Tampermonkey 多了一些定制，编辑工具功能也多一些。</p>
+<figure data-type="image" tabindex="2"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/dcb87fe0957d46e3a2aaccf97acaac8e~tplv-k3u1fbpfcp-watermark.image?" alt="微信截图_20220905232306.png" loading="lazy"></figure>
+<hr>
+<p>Violentmonkey 安装包体积较小，界面比较清爽一些，设置也比较简单。</p>
+<figure data-type="image" tabindex="3"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/303501d591074b8ca7014de232d00090~tplv-k3u1fbpfcp-watermark.image?" alt="微信截图_20220905232614.png" loading="lazy"></figure>
+<hr>
+<p>Violentmonkey 还多了一个比较实用的功能，为当前网站查找匹配的脚本。</p>
+<figure data-type="image" tabindex="4"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/30d8d29966f24141a1c3ca1cdc3e8425~tplv-k3u1fbpfcp-watermark.image?" alt="微信截图_20220905233157.png" loading="lazy"></figure>
+<h2 id="编写脚本">编写脚本</h2>
+<p>以 Violentmonkey 为例。</p>
+<ol>
+<li>新建脚本。首先点击 Violentmonkey 扩展图标上面的 + 号，新建一个脚本。</li>
+</ol>
+<figure data-type="image" tabindex="5"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/10add441b486490ab24ddf85215514ca~tplv-k3u1fbpfcp-watermark.image?" alt="微信截图_20220905233417.png" loading="lazy"></figure>
+<ol start="2">
+<li>设置脚本。以 <code>// ==UserScript==</code> 开头，<code>// ==/UserScript==</code> 结尾。下面是一些常用的设置：</li>
+</ol>
+<ul>
+<li>@namespace 和 @name 组合是发布到脚本网站时，用户脚本的唯一标识符。</li>
+<li>@author：脚本的作者。</li>
+<li>@version：脚本版本，用于更新发布脚本。</li>
+<li>@description：脚本的描述，可以添加命名来国际化，比如 @description:en。</li>
+<li>@include、@exclude：脚本应该和不应该运行的页面。允许指定多个。</li>
+<li>@require：加载外部脚本的 URL。允许指定多个。</li>
+<li>@resource：一些外部静态资源。可以通过 GM_getResourceURL 和 GM_getResourceText 方法访问。</li>
+</ul>
+<pre><code class="language-js">// @resource logo https://my.cdn.com/logo.png
+// @resource text https://my.cdn.com/some-text.txt
+</code></pre>
+<ul>
+<li>@connect：定义允许被 GM_xmlhttpRequest 方法访问的域名。允许指定多个。</li>
+<li>@grant：给 <code>GM_*</code> 方法授权并可在脚本执行时使用。如果使用任何特殊 API，则必须明确授予。</li>
+</ul>
+<pre><code class="language-js">// @grant GM_getValue
+// @grant GM_setValue
+// @grant GM_setClipboard
+// @grant GM_openInTab
+// @grant GM_xmlhttpRequest
+</code></pre>
+<p>除了GM API之外，还可以授予以下权限：</p>
+<pre><code class="language-js">// @grant window.close
+// @grant window.focus
+// @grant window.onurlchange
+
+if (window.onurlchange === null) {
+    // feature is supported
+    window.addEventListener('urlchange', (info) =&gt; ...);
+}
+</code></pre>
+<ul>
+<li>@run-at：定义脚本何时执行。
+<ul>
+<li>document-end 默认值
+<ul>
+<li>脚本在 DOMContentLoaded 被触发时执行。此时，页面的基本 HTML 已准备就绪，图像等其他资源可能仍在加载中。</li>
+</ul>
+</li>
+<li>document-start
+<ul>
+<li>脚本会尽快执行。不能保证脚本在页面中的其他脚本之前执行。在 Greasemonkey v3 中，甚至可以在加载 HTML 之前确保脚本执行，但对于 Violentmonkey 作为 Web 扩展来说这是不可能的。</li>
+</ul>
+</li>
+<li>document-idle
+<ul>
+<li>脚本在 DOMContentLoaded 触发后执行。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li>加入代码。</li>
+</ol>
+<pre><code class="language-js">// ==UserScript==
+// @name        无需梯子 谷歌划词翻译 translate.google.cn
+// @namespace   https://violentmonkey.github.io
+// @version     1.13
+// @description 基于 translate.google.cn，中译英，英译中，拼音、音标显示
+// @license     https://www.apache.org/licenses/LICENSE-2.0
+// @author      zkrisj
+// @include     *
+// @exclude     https://juejin.cn/editor/drafts/*
+// @exclude     https://translate.google.cn/*
+// @run-at      document-end
+// @connect     translate.google.cn
+// @grant       GM_xmlhttpRequest
+// ==/UserScript==
+(function() {
+  'use strict';
+  // var googleUrl = 'https://translate.google.cn/translate_a/single?client=gtx&amp;dt=t&amp;dt=bd&amp;dj=1&amp;source=input&amp;hl=auto&amp;sl=auto';
+  // 无需梯子
+  var googleUrl = 'https://translate.google.cn/_/TranslateWebserverUi/data/batchexecute?&amp;source-path=%2F&amp;rpcids=MkEWBc&amp;soc-app=1&amp;soc-platform=1&amp;soc-device=1&amp;_reqid=632656&amp;rt=c';
+  var icon = document.createElement('div');
+  var word = '';
+  icon.innerHTML = '&lt;svg style=&quot;position: absolute;margin: 4px;&quot; width=&quot;24&quot; height=&quot;24&quot; viewBox=&quot;0 0 768 768&quot;&gt;' +
+    '&lt;path d=&quot;M672 640.5v-417c0-18-13.5-31.5-31.5-31.5h-282l37.5 129h61.5v-33h34.5v33h115.5v33h-40.5c-10.5 40.5-33 79.5-61.5 112.5l87 85.5-22.5 24-87-85.5-28.5 28.5 25.5 88.5-64.5 64.5h225c18 0 31.5-13.5 31.5-31.5zM447 388.5c7.5 15 19.5 34.5 36 54 39-46.5 49.5-88.5 49.5-88.5h-127.5l10.5 34.5h31.5zM423 412.5l19.5 70.5 18-16.5c-15-16.5-27-34.5-37.5-54zM355.5 339c0-7.381-0.211-16.921-3-22.5h-126v49.5h70.5c-4.5 19.5-24 48-67.5 48-42 0-76.5-36-76.5-78s34.5-78 76.5-78c24 0 39 10.5 48 19.5l3 1.5 39-37.5-3-1.5c-24-22.5-54-34.5-87-34.5-72 0-130.5 58.5-130.5 130.5s58.5 130.5 130.5 130.5c73.5 0 126-52.5 126-127.5zM640.5 160.5c34.5 0 63 28.5 63 63v417c0 34.5-28.5 63-63 63h-256.5l-31.5-96h-225c-34.5 0-63-28.5-63-63v-417c0-34.5 28.5-63 63-63h192l28.5 96h292.5z&quot; style=&quot;fill:#3e84f4;&quot;/&gt;&lt;/svg&gt;';
+  icon.setAttribute('style', 'width:32px;' + 'height:32px;' + 'display:none;' + 'background:#fff;' + 'border-radius:16px;' +
+    'box-shadow:4px 4px 8px #888;' + 'position:absolute;' + 'z-index:2147483647;');
+  // 添加翻译图标到 DOM
+  document.documentElement.appendChild(icon);
+  document.addEventListener('mousedown', function(e) {
+    if (e.target == icon || (e.target.parentNode &amp;&amp; e.target.parentNode == icon) || (e.target.parentNode.parentNode &amp;&amp; e.target.parentNode
+        .parentNode == icon)) { // 点击翻译图标时阻止选中的文本消失
+      e.preventDefault();
+    }
+  });
+  // 选中变化事件
+  document.addEventListener(&quot;selectionchange&quot;, function() {
+    if (!window.getSelection().toString().trim()) {
+      icon.style.display = 'none';
+      // server.containerDestroy();
+    }
+  });
+  // 显示、隐藏翻译图标
+  document.addEventListener('mouseup', function(e) {
+    if (e.target == icon || (e.target.parentNode &amp;&amp; e.target.parentNode == icon) || (e.target.parentNode.parentNode &amp;&amp; e.target.parentNode
+        .parentNode == icon)) { // 点击了翻译图标
+      e.preventDefault();
+      return;
+    }
+    var text = window.getSelection().toString().trim();
+    if (text &amp;&amp; text.length &lt; 800 &amp;&amp; icon.style.display == 'none') {
+      icon.style.top = e.pageY + 12 + 'px';
+      icon.style.left = e.pageX + 'px';
+      icon.style.display = 'block';
+    } else if (!text) {
+      icon.style.display = 'none';
+      for (var i = 0; i &lt; server.rendered.length; i++) { // 点击了翻译内容面板
+        if (e.target == server.rendered[i]) return; // 不再创建翻译图标
+      }
+      server.containerDestroy(); // 销毁翻译内容面板
+    }
+  });
+  // 翻译图标点击事件
+  icon.addEventListener('click', function(e) {
+    var text = window.getSelection().toString().trim();
+    if (text) {
+      icon.style.display = 'none';
+      server.containerDestroy(); // 销毁翻译内容面板
+      // 新建翻译内容面板
+      var container = server.container();
+      container.style.top = e.pageY + 'px';
+      if (e.pageX + 350 &lt;= document.body.clientWidth) // container 面板css最大宽度为250px
+        container.style.left = e.pageX + 'px';
+      else container.style.left = document.body.clientWidth - 350 + 'px';
+      document.body.appendChild(container);
+      server.rendered.push(container);
+      if (isChina(text)) {
+        // ajax(googleUrl + '&amp;tl=en&amp;q=' + encodeURIComponent(text), container);
+        ajax(googleUrl, container, 'POST', &quot;f.req=&quot; + JSON.stringify([[[&quot;MkEWBc&quot;, &quot;[[&quot; + encodeURIComponent(text) + &quot;,'zh-CN','en']]&quot;]]]));
+      } else {
+        // ajax(googleUrl + '&amp;tl=zh&amp;dt=t&amp;q=' + encodeURIComponent(text), container);
+        text = text.replace(/[A-Z][^A-Z ]/g, function(v) { return ' ' + v.toLowerCase() }).replace(/\p{P}/gu, ' ').replace(/  /g, ' ').trim();
+        word = text;
+        ajax(googleUrl, container, 'POST', &quot;f.req=&quot; + JSON.stringify([[[&quot;MkEWBc&quot;, &quot;[[&quot; + encodeURIComponent(text) + &quot;,'auto','zh-CN']]&quot;]]]));
+      }
+    }
+  });
+
+  function isChina(str) {
+    var reg = /^([\u4E00-\u9FA5]|[\uFF00-\uFF20]|[\u3000-\u301C])+$/;
+    return reg.test(str);
+  }
+
+  function ajax(url, element, method, data, headers) {
+    if (!method) method = 'GET';
+    // 因为Tampermonkey跨域访问(a.com)时会自动携带对应域名(a.com)的对应cookie，不会携带当前域名的cookie
+    // 所以，GM_xmlhttpRequest【不存在】cookie跨域访问安全性问题
+    if (!headers) headers = { &quot;content-type&quot;: &quot;application/x-www-form-urlencoded;charset=UTF-8&quot;, };
+    GM_xmlhttpRequest({
+      method: method,
+      url: url,
+      headers: headers,
+      data: data,
+      onload: function(res) {
+        console.log(url, data, res);
+        // google(res.responseText, element);
+        if (res.responseText.startsWith('&lt;!DOCTYPE html&gt;')) {
+          displaycontainer(&quot;获取失败&quot;, element);
+        } else {
+          res = JSON.parse(JSON.parse(res.responseText.match(/^\)]}'\n\n\d+\n(\[\[.*(?!\n\d)\]\])/)[1])[0][2]);
+          var phonetic = res[0][0] ? res[0][0] + &quot;\r\n&quot; : &quot;&quot;;
+          var translation = res[1][0][0][5][0][0];
+          if (res[3] &amp;&amp; word === res[3][0] &amp;&amp; res[3][5] &amp;&amp; res[3][5][0] &amp;&amp; res[3][5][0][0] &amp;&amp; res[3][5][0][0][1] &amp;&amp; res[3][5][0][0][1][0])
+            translation = res[3][5][0][0][1][0][0];
+          displaycontainer(phonetic.toLowerCase() + translation, element);
+        }
+      },
+      onerror: function(res) {
+        displaycontainer(&quot;连接失败&quot;, element);
+      }
+    });
+  }
+
+  function google(rst, element) {
+    var json = JSON.parse(rst), html = '';
+    console.log(json);
+    for (var i = 0; i &lt; json.sentences.length; i++) {
+      html += json.sentences[i].trans;
+    }
+    displaycontainer(html, element);
+    // console.log(word, html, element);
+  }
+
+  function displaycontainer(text, element) {
+    element.textContent = text;
+    element.style.display = 'block'; // 显示结果
+  }
+  var server = {
+    // 存放已经生成的翻译内容面板（销毁的时候用）
+    rendered: [],
+    // 销毁已经生成的翻译内容面板
+    containerDestroy: function() {
+      for (var i = this.rendered.length - 1; i &gt;= 0; i--) {
+        if (this.rendered[i] &amp;&amp; this.rendered[i].parentNode) {
+          this.rendered[i].parentNode.removeChild(this.rendered[i]);
+        }
+      }
+    },
+    // 生成翻译结果面板 DOM （此时还未添加到页面）
+    container: function() {
+      var pre = document.createElement('pre');
+      pre.setAttribute('style', 'display:none;' + 'position:absolute;' + 'font-size:13px;' + 'overflow:auto;' + 'background:#fff;' +
+        'font-family:sans-serif,Arial;' + 'font-weight:normal;' + 'text-align:left;' + 'color:#000;' + 'padding:0.5em 1em;' +
+        'line-height:1.5em;' + 'border-radius:5px;' + 'border:1px solid #ccc;' + 'box-shadow:4px 4px 8px #888;' + 'max-width:350px;' +
+        'max-height:216px;' + 'z-index:2147483647;');
+      return pre;
+    }
+  };
+})();
+</code></pre>
+<p>如果自己使用，不需要分享给其他人，下面步骤就省了。</p>
+<ol start="4">
+<li><a href="https://greasyfork.org/zh-CN">GreasyFork</a> 上面发布。没有注册需要先注册。</li>
+<li>脚本地址：<a href="https://greasyfork.org/zh-CN/scripts/450786-%E6%97%A0%E9%9C%80%E6%A2%AF%E5%AD%90-%E8%B0%B7%E6%AD%8C%E5%88%92%E8%AF%8D%E7%BF%BB%E8%AF%91-translate-google-cn">谷歌划词翻译 translate.google.cn</a>，<a href="https://greasyfork.org/zh-CN/scripts/451371-%E6%97%A0%E9%9C%80%E6%A2%AF%E5%AD%90-%E8%B0%B7%E6%AD%8C%E5%88%92%E8%AF%8D%E7%BF%BB%E8%AF%91-translate-googleapis-com">谷歌划词翻译 translate.googleapis.com</a></li>
+</ol>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/html-de-ye-mian-ke-jian-xing/" class="post-title gt-a-link">
+                    HTML 的页面可见性
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

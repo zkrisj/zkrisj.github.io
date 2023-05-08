@@ -1,0 +1,298 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>使用 Manifest V3 做一个 Chrome 页面右键菜单搜索扩展 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    使用 Manifest V3 做一个 Chrome 页面右键菜单搜索扩展
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-09-07 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/sqhugDzjp/" class="post-tags">
+                            # 工具
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p>如果做一些简单的功能，油猴脚本就可以做到；要做一些复杂的带有界面的功能，就需要 Chrome 扩展来做了。</p>
+<p>Chrome 扩展是基于 HTML、JavaScript 和 CSS 等 Web 技术构建的，在单独的沙盒执行环境中运行，并与 Chrome 浏览器交互。</p>
+<p>Chrome 浏览器可以自定义地址栏搜索引擎，但是切换比较麻烦，如果有一个方便切换搜索引擎的扩展，就很方便我们搜索我们想要的东西了。下面介绍一下，如何做一个 Chrome 右键菜单搜索扩展。</p>
+<p>因为 manifest_version2 会提示过时，所以本例使用的是 manifest_version3 来创建扩展程序。</p>
+<h2 id="创建清单">创建清单</h2>
+<p>每个扩展都要有一个名为 <code>manifest.json</code> 的 JSON 格式的清单文件，第一步要创建这个文件。</p>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;搜索&quot;,
+  &quot;description&quot;: &quot;百度 必应 360 搜狗 谷歌&quot;,
+  &quot;version&quot;: &quot;1.0&quot;,
+  &quot;manifest_version&quot;: 3,
+  &quot;icons&quot;: {
+    &quot;16&quot;: &quot;img/icon.png&quot;,
+    &quot;48&quot;: &quot;img/icon.png&quot;,
+    &quot;128&quot;: &quot;img/icon.png&quot;
+  },
+  &quot;action&quot;: {
+    &quot;default_icon&quot;: &quot;img/icon.png&quot;,
+    &quot;default_title&quot;: &quot;搜索&quot;,
+    &quot;default_popup&quot;: &quot;index.html&quot;
+  },
+  &quot;background&quot;: {
+    &quot;service_worker&quot;: &quot;background.js&quot;
+  },
+  &quot;permissions&quot;: [
+    &quot;notifications&quot;,
+    &quot;contextMenus&quot;
+  ],
+  &quot;content_scripts&quot;: [{
+    &quot;matches&quot;: [&quot;&lt;all_urls&gt;&quot;],
+    &quot;js&quot;: [&quot;content-script.js&quot;],
+    &quot;run_at&quot;: &quot;document_idle&quot;
+  }]
+}
+</code></pre>
+<ol>
+<li>manifest_version、name、version 字段是必须的。</li>
+<li>action 定义扩展的图标、标题和用户界面。</li>
+<li>manifest_version2 的 background.scripts 要替换为 manifest_version3 的 background.service_worker。</li>
+<li>与 DOM 互动要使用 content_scripts 里面的 js 字段配置。matches 字段可使用通配符设置，例如 <code>*://*.juejin.cn/*</code>。</li>
+<li>permissions 字段定义要使用的权限。这里使用了两个：通知和弹出菜单。</li>
+</ol>
+<blockquote>
+<p>manifest_version3 不支持多个后台脚本，但可以将 service_worker 声明为 ES 模块来引入多个文件：</p>
+</blockquote>
+<pre><code class="language-json">// Manifest V2
+{
+  ...
+  &quot;background&quot;: {
+    &quot;scripts&quot;: [
+      &quot;backgroundContextMenus.js&quot;,
+      &quot;backgroundOauth.js&quot;
+    ],
+    &quot;persistent&quot;: false
+  },
+  ...
+}
+// Manifest V3
+{
+  ...
+  &quot;background&quot;: {
+    &quot;service_worker&quot;: &quot;background.js&quot;,
+    &quot;type&quot;: &quot;module&quot; //optional
+  }
+  ...
+}
+</code></pre>
+<h2 id="交互逻辑">交互逻辑</h2>
+<p><code>manifest.json</code> 清单文件里面定义的文件都要保证不能缺少。不然会报错无法使用。</p>
+<h3 id="backgroundjs">background.js</h3>
+<p>这个是 service_worker，用来与浏览器互动，并与 content_scripts 通信。下面定义了两个事件监听，一个点击弹出菜单项的事件，一个点击扩展图标的事件。</p>
+<pre><code class="language-js">const sendData = (data) =&gt; {
+  chrome.tabs.query({
+    active: true,
+    currentWindow: true
+  }).then(tabs =&gt; {
+    chrome.tabs.sendMessage(tabs[0].id, data)
+  });
+};
+// 点击弹出菜单
+chrome.contextMenus.onClicked.addListener(function(item, tab) {
+  if (!tab.url.startsWith('chrome://')) sendData(item);
+});
+// 点击扩展图标
+chrome.runtime.onMessage.addListener(function(data, sender, sendResponse) {
+  sendData(data);
+});
+</code></pre>
+<h3 id="content-scriptjs">content-script.js</h3>
+<p>这个文件是与 background.js 通信，根据收到的数据，可对页面 DOM 进行操作。</p>
+<pre><code class="language-js">chrome.runtime.onMessage.addListener((data, sender, sendResponse) =&gt; {
+  if (data.menuItemId) {
+    switch (data.menuItemId) {
+      case 'bing':
+        url = 'https://cn.bing.com/search?q=';
+        break;
+      case '360':
+        url = 'https://www.so.com/s?q=';
+        break;
+      case 'sogou':
+        url = 'https://sogou.com/web?query=';
+        break;
+      case 'google':
+        url = 'https://www.google.com/search?q=';
+        break;
+      default:
+        url = 'https://www.baidu.com/s?wd=';
+    }
+    window.open(data.selectionText ? url + data.selectionText : new URL(url).origin);
+  }
+});
+</code></pre>
+<h2 id="使用">使用</h2>
+<ol>
+<li>git clone https://github.com/zkrisj/chrome-search.git。</li>
+<li>打开扩展程序管理页面。</li>
+<li>点击右上角开启开发者模式。</li>
+<li>点击 加载已解压的扩展程序。选择第 1 步的文件夹。</li>
+</ol>
+<figure data-type="image" tabindex="1"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/095dc0e947fe4638832d3064b4eac1b8~tplv-k3u1fbpfcp-watermark.image?" alt="捕获.PNG" loading="lazy"></figure>
+<h2 id="效果">效果</h2>
+<figure data-type="image" tabindex="2"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f2c56f301a334b4d85ce09f6f8fca64a~tplv-k3u1fbpfcp-watermark.image?" alt="微信截图_20220907234713.png" loading="lazy"></figure>
+<hr>
+<figure data-type="image" tabindex="3"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a5281b1a762347989ac0832f4fd224f6~tplv-k3u1fbpfcp-watermark.image?" alt="微信图片编辑_20220907235551.jpg" loading="lazy"></figure>
+<h2 id="完整代码仓库地址">完整代码仓库地址</h2>
+<p><a href="https://github.com/zkrisj/chrome-search">https://github.com/zkrisj/chrome-search</a></p>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/html-yuan-su-de-jiao-cha-qu-yu-jian-ce/" class="post-title gt-a-link">
+                    ⛱ HTML 元素的交叉区域检测
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

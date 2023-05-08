@@ -1,0 +1,262 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>使用 &lt;dialog&gt; 元素和 Popup API 自定义对话框 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    使用 &lt;dialog&gt; 元素和 Popup API 自定义对话框
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-11-20 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/10MZNKSN7/" class="post-tags">
+                            # HTML
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p>alert、confirm、prompt 对话框：</p>
+<ul>
+<li>不能自定义样式和复杂的内容。</li>
+<li>会阻塞页面渲染和脚本的执行，直到这个对话框被点击。</li>
+</ul>
+<p>所以在开发的过程中，我们一般根据自己自己的需求来自定义或者使用第三方的 UI 库。随着浏览器 API 的不断更新，我们现在可以很容易地使用浏览器的原生能力来实现自己想要的需求。比如 HTML5 中的 <code>&lt;dialog&gt;</code> 元素和最新的 Popup API。</p>
+<h2 id="dialog">dialog</h2>
+<figure data-type="image" tabindex="1"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c299fc5b264c423da8296ae0c2ea859f~tplv-k3u1fbpfcp-watermark.image?" alt="QQ截图20221120152102.png" loading="lazy"></figure>
+<p>HTML 5.2 推出了一个新的原生模态对话框元素 <code>&lt;dialog&gt;</code>，目前除了 IE，其他浏览器都已支持。<code>&lt;dialog&gt;</code> 元素默认定义了基本的用户代理提供的样式，如自动边距、粗边框样式等，并且可以使用 CSS 自定义。它还提供了一系列的专有属性、方法和事件：</p>
+<ul>
+<li>open 属性用来标识和切换对话框的显示。</li>
+<li>returnValue 属性用来获取对话框的值。</li>
+<li>close() 方法用来关闭对话框。可选传入类字符串参数，用来更新对话框的 returnValue。</li>
+<li>show() 方法用来不带遮罩显示这个对话框，即：打开这个对话框之后依然可以和其他内容进行交互。</li>
+<li>showModal() 方法用来遮罩模式显示这个对话框，并且将会至于所有其他页面元素和对话框的顶层（屏蔽其他页面元素和对话框的交互）。</li>
+<li>cancel 事件当用户按下 Esc 键或单击作为浏览器 UI 一部分的“关闭对话框”按钮时触发。</li>
+<li>close 事件当 <code>&lt;dialog&gt;</code> 元素被关闭时触发。</li>
+</ul>
+<iframe src="https://code.juejin.cn/pen/7134693206738305055"></iframe>
+<h2 id="popup-api">Popup API</h2>
+<p>由 <a href="https://open-ui.org/">Open UI 小组</a> 发布的 <a href="https://open-ui.org/components/popup.research.explainer">Pop-Up API 提案</a>，从 Chrome 106 开始支持。</p>
+<ul>
+<li>目前除了 Chrome 其他浏览器都不支持，所以在兼容性方面比 HTML5 <code>&lt;dialog&gt;</code> 元素差太多。</li>
+<li>它提供了比 <code>&lt;dialog&gt;</code> 更简单的方式来定义弹框：通过在 HTML 元素上定义 popup 属性即可实现将任意元素（除了 template 模板元素）包装为一个弹框，并且将默认地具有用户代理提供的样式。</li>
+</ul>
+<pre><code class="language-js">[popup] {
+  position: fixed;
+  width: fit-content;
+  height: fit-content;
+  color: canvastext;
+  background-color: canvas;
+  inset: 0px;
+  margin: auto;
+  border-width: initial;
+  border-style: solid;
+  border-color: initial;
+  border-image: initial;
+  padding: 0.25em;
+  overflow: auto;
+}
+</code></pre>
+<p>例如，通过以下方式，无需任何 CSS 和 JS，就可以创建一个简单的弹框和一个按钮用来切换显示和关闭：</p>
+<pre><code class="language-html">&lt;div id=&quot;my-first-pop-up&quot; popup&gt;Pop-up content!&lt;/div&gt;
+&lt;button popuptoggletarget=&quot;my-first-pop-up&quot;&gt;Toggle Pop-up&lt;/button&gt;
+</code></pre>
+<h3 id="对比-dialog-元素">对比 <code>&lt;dialog&gt;</code> 元素</h3>
+<ul>
+<li>与 <code>&lt;dialog&gt;</code> 元素的最大区别是它没有遮罩模式。</li>
+<li>Popup 弹框支持 <code>Esc</code> 键关闭弹框，而非遮罩模式 <code>&lt;dialog&gt;</code> 元素不支持 <code>Esc</code> 键关闭。</li>
+<li>form 表单元素支持通过 <code>method=&quot;dialog&quot;</code> 关联父 <code>&lt;dialog&gt;</code> 元素。</li>
+</ul>
+<h3 id="html-属性">HTML 属性</h3>
+<ul>
+<li>defaultopen<br>
+在页面加载时自动打开弹框。</li>
+<li>popup<br>
+将元素变成弹框元素。</li>
+<li>popuptoggletarget<br>
+创建一个触发器元素，用于在显示和隐藏状态之间切换关联的弹框元素。</li>
+<li>popupshowtarget<br>
+创建一个显示关联的弹框元素的触发器元素。</li>
+<li>popuphidetarget<br>
+创建一个触发器元素，用于关闭关联的弹框元素。</li>
+</ul>
+<h3 id="css-属性">CSS 属性</h3>
+<ul>
+<li>::backdrop<br>
+匹配弹框元素后面的其余页面内容，例如，可以设置将其模糊或变暗效果。</li>
+<li>:open<br>
+匹配显示的弹框元素。</li>
+</ul>
+<h3 id="方法">方法</h3>
+<ul>
+<li>showPopUp()<br>
+显示弹框元素。</li>
+<li>hidePopUp()<br>
+关闭弹框元素。</li>
+</ul>
+<h3 id="事件">事件</h3>
+<ul>
+<li>show<br>
+弹框元素显示时触发。</li>
+<li>hide<br>
+弹框元素被关闭时触发。</li>
+</ul>
+<iframe src="https://code.juejin.cn/pen/7168076758657269799"></iframe>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li><a href="https://developer.chrome.com/docs/web-platform/pop-up-api/">The Pop-Up API</a></li>
+</ul>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/canvas-shi-xian-wen-zi-shui-yin-he-tu-pian-shui-yin-he-cheng/" class="post-title gt-a-link">
+                    Canvas 实现文字水印和图片水印合成
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

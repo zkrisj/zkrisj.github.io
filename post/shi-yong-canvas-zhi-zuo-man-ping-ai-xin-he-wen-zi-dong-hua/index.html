@@ -1,0 +1,350 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>使用 Canvas 制作满屏爱心和文字动画 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    使用 Canvas 制作满屏爱心和文字动画
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-11-12 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tags">
+                            # JS
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p><code>&lt;canvas&gt;</code> 最早由 Apple 引入 WebKit，用于 Mac OS X 的 Dashboard，随后被各个浏览器实现。如今，所有主流的浏览器都支持它。Canvas API 提供了一个通过 JavaScript 和 HTML 的 <code>&lt;canvas&gt;</code> 元素来绘制图形的方式。它可以用于动画、游戏画面、数据可视化、图片编辑以及实时视频处理等方面。Canvas 适合绘制大数据量图形元素的图表（如热力图、地理坐标系或平行坐标系上的大规模线图或散点图等），也适合实现某些视觉特效。它还能能够以 png、jpg 或 webp 格式保存图像。Canvas 提供了强大的 Web 绘图能力，所以我们要学会使用它。</p>
+<p>效果如下：</p>
+<figure data-type="image" tabindex="1"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/095e5bd64b2340cf9045200d266fbc41~tplv-k3u1fbpfcp-watermark.image?" alt="CPT2211112159-785x407.gif" loading="lazy"></figure>
+<h2 id="步骤">步骤</h2>
+<ol>
+<li>准备一个 canvas 元素。</li>
+</ol>
+<pre><code class="language-html">&lt;canvas id=&quot;drawHeart&quot;&gt;&lt;/canvas&gt;
+</code></pre>
+<ol start="2">
+<li>获取 canvas 对象和上下文，初始化变量：窗口宽高、爱心和文字总数量、包含爱心和文字的数组，定义爱心图片，图片 src 可以是 base64 字符串类型或者本地图片文件和网络图片链接。</li>
+</ol>
+<pre><code class="language-js">const canvas = document.getElementById('drawHeart');
+const ctx = canvas.getContext('2d');
+let wW = window.innerWidth;
+let wH = window.innerHeight;
+const num = 100;
+const hearts = [];
+const heartImage = new Image();
+heartImage.src = 'data:image/svg+xml;charset=utf-8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 200 200&quot;&gt;&lt;path id=&quot;heart&quot; d=&quot;M10,30 A20,20,0,0,1,50,30 A20,20,0,0,1,90,30 Q90,60,50,90 Q10,60,10,30 Z&quot; fill=&quot;red&quot;/&gt;&lt;/svg&gt;';
+</code></pre>
+<ol start="3">
+<li>定义一个 Heart 类，构造函数参数 type 标识用来判断实例为爱心图片还是文字类型，定义重绘方法 draw 和更新方法 update。</li>
+</ol>
+<pre><code class="language-js">class Heart {
+  constructor(type) {
+    this.type = type;
+    // 初始化生成范围
+    this.x = Math.random() * wW;
+    this.y = Math.random() * wH;
+    this.opacity = Math.random() * .5 + .5;
+    // 偏移量
+    this.vel = {
+      x: (Math.random() - .5) * 5,
+      y: (Math.random() - .5) * 5
+    }
+    this.initialW = wW * .5;
+    this.initialH = wH * .5;
+    // 缩放比例
+    this.targetScale = Math.random() * .15 + .02; // 最小0.02
+    this.scale = Math.random() * this.targetScale;
+    // 文字位置
+    this.fx = Math.random() * wW;
+    this.fy = Math.random() * wH;
+    this.fs = Math.random() * 10;
+    this.text = getText();
+    this.fvel = {
+      x: (Math.random() - .5) * 5,
+      y: (Math.random() - .5) * 5,
+      f: (Math.random() - .5) * 2
+    }
+  }
+  draw() {
+    ctx.save();
+    ctx.globalAlpha = this.opacity;
+    ctx.drawImage(heartImage, this.x, this.y, this.width, this.height);
+    // ctx.scale(this.scale + 1, this.scale + 1);
+    if (!this.type) {
+      // 设置文字属性
+      ctx.fillStyle = getColor();
+      ctx.font = 'italic ' + this.fs + 'px sans-serif';
+      // 填充字符串
+      ctx.fillText(this.text, this.fx, this.fy);
+    }
+    ctx.restore();
+  }
+  update() {
+    this.x += this.vel.x;
+    this.y += this.vel.y;
+    if (this.x - this.width &gt; wW || this.x + this.width &lt; 0) {
+      // 重新初始化位置
+      this.scale = 0;
+      this.x = Math.random() * wW;
+      this.y = Math.random() * wH;
+    }
+    if (this.y - this.height &gt; wH || this.y + this.height &lt; 0) {
+      // 重新初始化位置
+      this.scale = 0;
+      this.x = Math.random() * wW;
+      this.y = Math.random() * wH;
+    }
+    // 放大
+    this.scale += (this.targetScale - this.scale) * .1;
+    this.height = this.scale * this.initialH;
+    this.width = this.height * 1.4;
+    // -----文字-----
+    this.fx += this.fvel.x;
+    this.fy += this.fvel.y;
+    this.fs += this.fvel.f;
+    if (this.fs &gt; 50) {
+      this.fs = 2;
+    }
+    if (this.fx - this.fs &gt; wW || this.fx + this.fs &lt; 0) {
+      // 重新初始化位置
+      this.fx = Math.random() * wW;
+      this.fy = Math.random() * wH;
+    }
+    if (this.fy - this.fs &gt; wH || this.fy + this.fs &lt; 0) {
+      // 重新初始化位置
+      this.fx = Math.random() * wW;
+      this.fy = Math.random() * wH;
+    }
+  }
+}
+</code></pre>
+<ol start="4">
+<li>定义一个获取随机文字的方法，用来动态渲染屏幕文字。</li>
+</ol>
+<pre><code class="language-js">function getText() {
+  const val = Math.random() * 10;
+  if (val &gt; 1 &amp;&amp; val &lt;= 3) {
+    return 'always';
+  } else if (val &gt; 3 &amp;&amp; val &lt;= 5) {
+    return 'zzy';
+  } else if (val &gt; 5 &amp;&amp; val &lt;= 8) {
+    return 'taylor swift';
+  } else {
+    return 'I Love You';
+  }
+}
+</code></pre>
+<ol start="5">
+<li>定义一个获取随机颜色的方法，用来动态渲染屏幕文字颜色。</li>
+</ol>
+<pre><code class="language-js">function getColor() {
+  const val = Math.random() * 10;
+  if (val &gt; 0 &amp;&amp; val &lt;= 1) {
+    return '#00f';
+  } else if (val &gt; 1 &amp;&amp; val &lt;= 2) {
+    return '#f00';
+  } else if (val &gt; 2 &amp;&amp; val &lt;= 3) {
+    return '#0f0';
+  } else if (val &gt; 3 &amp;&amp; val &lt;= 4) {
+    return '#368';
+  } else if (val &gt; 4 &amp;&amp; val &lt;= 5) {
+    return '#666';
+  } else if (val &gt; 5 &amp;&amp; val &lt;= 6) {
+    return '#333';
+  } else if (val &gt; 6 &amp;&amp; val &lt;= 7) {
+    return '#f50';
+  } else if (val &gt; 7 &amp;&amp; val &lt;= 8) {
+    return '#e96d5b';
+  } else if (val &gt; 8 &amp;&amp; val &lt;= 9) {
+    return '#5be9e9';
+  } else {
+    return '#d41d50';
+  }
+}
+</code></pre>
+<ol start="6">
+<li>定义渲染和初始化方法，添加 resize 事件，在窗口调整大小时自动适应。</li>
+</ol>
+<pre><code class="language-js">function init() {
+  canvas.width = wW;
+  canvas.height = wH;
+  for (let i = 0; i &lt; num; i++) {
+    hearts.push(new Heart(i % 5));
+  }
+  render();
+}
+
+function render() {
+  ctx.clearRect(0, 0, wW, wH);
+  for (let i = 0; i &lt; hearts.length; i++) {
+    hearts[i].draw();
+    hearts[i].update();
+  }
+  setTimeout(render, 60);
+}
+
+init();
+window.addEventListener('resize', function() {
+  canvas.width = wW = window.innerWidth;
+  canvas.height = wH = window.innerHeight;
+});
+</code></pre>
+<h2 id="马上掘金">马上掘金</h2>
+<iframe src="https://code.juejin.cn/pen/7164756645069733925"></iframe>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/shi-yong-css-mask-dui-tu-xiang-ying-yong-zhe-zhao-xiao-guo/" class="post-title gt-a-link">
+                    使用 CSS mask 对图像应用遮罩效果
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

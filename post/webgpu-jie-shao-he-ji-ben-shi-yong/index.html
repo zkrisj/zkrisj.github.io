@@ -1,0 +1,323 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>WebGPU 介绍和基本使用 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    WebGPU 介绍和基本使用
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2023-04-12 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/PQppDHkmy/" class="post-tags">
+                            # WebGPU
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<ol>
+<li>WebGL 在 2011 年左右首次出现后，在图形功能方面彻底改变了网络。WebGL 是 OpenGL ES 2.0 图形库的 JavaScript 端口，允许网页将渲染计算直接传递给设备的 GPU 进行处理以非常高的速度，并在元素内渲染结果 <code>&lt;canvas&gt;</code>。</li>
+<li>WebGPU 是 WebGL 的继任者（与 OpenGL ES 无关），提供了与现代 GPU 更好的兼容性、支持通用 GPU 计算、更快的操作以及访问更高级的 GPU 功能。</li>
+<li>WebGPU 的开发始于 2017 年，这项技术的目标是借助现代 GPU 的计算能力来加速图形和计算并且允许在 Web 上进行高性能 3D 图形和数据并行计算。</li>
+<li>与 DirectX 和 Vulkan 等其他图形 API 类似，WebGPU 也提供了直接在 GPU 上渲染和访问高级功能的功能，从而提高图形渲染的速度和效率。</li>
+<li>WebGPU 大幅减少相同图形的 JavaScript 工作量，以及为机器学习模型推理提供 3 倍以上的改进。因为 WebGPU 提供了更灵活的 GPU 编程和访问，从而实现 WebGL 无法提供的高级功能。</li>
+<li>目前已在 Chrome 113 Beta 中默认启用。</li>
+</ol>
+<figure data-type="image" tabindex="1"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8ae6f706e8c64ad0b8b78e24142078cb~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<h2 id="gpu-on-the-web-community-group">GPU on the Web Community Group</h2>
+<ol>
+<li>WebGPU 规范由 Web Community Group 发布，是 W3C（但它不是 W3C 标准，也不在 W3C 标准轨道上）的 GPU for the Web 社区组共同努力的结果，其中包括 Mozilla、Apple、Intel 和 Microsoft 等大公司的贡献。经过 6 年的开发（90 位贡献者，2000 次提交，3000 次发布），从 2017 年的初始设计开始，现在可以在 Chrome 中使用的第一个实现，并在支持 Firefox 和 Safari 进行中。</li>
+<li>GPU on the Web Community Group 的使命是提供 Web 平台与本机系统平台中存在的现代 3D 图形和计算功能之间的接口。</li>
+<li>目标是设计一个新的 Web API，以高效、强大和安全的方式公开这些现代技术，与现有平台 API 一起工作，例如 <a href="https://docs.microsoft.com/en-us/windows/win32/direct3d12/direct3d-12-graphics">Microsoft 的 Direct3D 12</a>、<a href="https://developer.apple.com/metal/">Apple 的 Metal</a> 和 <a href="https://www.vulkan.org/">The Khronos Group 的 Vulkan</a>。即由浏览器封装了现代图形 API（Dx12、Vulkan、Metal），提供给 Web 3D 程序员，将为 Web 释放更多的 GPU 硬件的功能。</li>
+<li>WebGPU 的这个初始版本是未来更新和增强的构建基础。API 将提供更高级的图形功能，鼓励开发人员发送对其他功能的请求。Chrome 团队还计划提供对着色器核心的更深入访问，以便在 WGSL（WebGPU 着色语言）中进行更多的机器学习优化和额外的人体工程学。</li>
+<li>Chromium 的 Dawn 库和 Firefox 的 wgpu 库都可以作为独立包使用，它们提供了出色的可移植性和人体工程学层，可以抽象操作系统 GPU API。在本机应用程序中使用这些库还可以更轻松地通过 Emscripten和 Rust web-sys移植到 WASM。</li>
+<li>一些 WebGL 库已经在实施对 WebGPU 的支持，这意味着使用 WebGPU 可能只需要进行一行更改：</li>
+</ol>
+<ul>
+<li><a href="https://doc.babylonjs.com/setup/support/webGPU">Babylon.js</a>已经拥有完整的 WebGPU 支持。</li>
+<li><a href="https://blog.playcanvas.com/initial-webgpu-support-lands-in-playcanvas-engine-1-62/">PlayCanvas</a>宣布了最初的 WebGPU 支持。</li>
+<li><a href="https://www.npmjs.com/package/@tensorflow/tfjs-backend-webgpu">TensorFlow.js</a>支持大多数运算符的 WebGPU 优化版本。</li>
+<li><a href="https://threejs.org/">Three.js</a> WebGPU 支持正在进行中，请参阅<a href="https://threejs.org/examples/?q=webgpu#webgpu_particles">示例</a>。</li>
+</ul>
+<h2 id="发展">发展</h2>
+<ol>
+<li>2018 年起，Google Chrome 团队就已经宣布着手 WebGPU 标准的实现工作。</li>
+<li>2022 年 11 月，商用开源 3D 引擎 Cocos 发布了支持 WebGPU 的新版本 Cocos Creator 3.6.2，为国内首个支持该渲染后端的开源引擎。</li>
+<li>时至今日，WebGPU 的各类接口、生态、应用已日趋完善，WebGPU 1.0 已于 2023 年初正式推出。</li>
+<li>作为 Google、Apple、Mozilla 等浏览器厂商共同推进的次时代图形标准，WebGPU 毫无疑问会在未来取代 WebGL，这也是 Cocos 投资 WebGPU 技术的核心原因。</li>
+<li>从时间上来看，WebGPU 的出现时间稍晚，但也正因如此，让 WebGPU 得以借助次时代图形 API 的经验，做出更好的设计。未来随着 WebGPU 标准在主流浏览器的逐步落地，其能力将给 H5、小程序等的内容创作与性能表现带来更多可能，也一定会在 Web 平台出现不逊于原生 app 的图形渲染效果，同时基于 Web 端的优势给用户带来更轻量和便捷的体验。</li>
+</ol>
+<h2 id="使用">使用</h2>
+<ol>
+<li>首先，确保用户的浏览器支持 WebGPU。可以使用以下代码检查浏览器是否支持 WebGPU：</li>
+</ol>
+<pre><code class="language-js">if ('gpu' in navigator) {
+  // WebGPU is supported
+} else {
+  // WebGPU is not supported
+}
+</code></pre>
+<ol start="2">
+<li>要使用 WebGPU，首先需要获取一个 <code>GPUDevice</code> 对象。这是与物理 GPU 交互的接口。以下代码用于获取 GPU 设备：</li>
+</ol>
+<pre><code class="language-js">async function getGPUDevice() {
+  const adapter = await navigator.gpu.requestAdapter();
+  const device = await adapter.requestDevice();
+  return device;
+}
+</code></pre>
+<ol start="3">
+<li>为画布（<code>canvas</code>）创建一个 WebGPU 上下文：</li>
+</ol>
+<pre><code class="language-js">const canvas = document.querySelector('canvas');
+const context = canvas.getContext('webgpu');
+</code></pre>
+<ol start="4">
+<li>使用 GPU 设备和上下文创建一个 <code>GPUSwapChain</code>：</li>
+</ol>
+<pre><code>function createSwapChain(device, context) {
+  const swapChainFormat = 'bgra8unorm';
+
+  const swapChainDescriptor = {
+    device: device,
+    format: swapChainFormat
+  };
+
+  context.configureSwapChain(swapChainDescriptor);
+}
+</code></pre>
+<ol start="5">
+<li>在 WebGPU 中，渲染管道定义了如何将顶点、纹理等数据转换为像素。创建一个管道需要提供顶点着色器、片段着色器和其他一些描述符：</li>
+</ol>
+<pre><code class="language-js">async function createRenderPipeline(device) {
+  const vertexShaderModule = device.createShaderModule({
+    code: `...` // GLSL or WGSL code for the vertex shader
+  });
+
+  const fragmentShaderModule = device.createShaderModule({
+    code: `...` // GLSL or WGSL code for the fragment shader
+  });
+
+  const pipelineDescriptor = {
+    vertex: {
+      module: vertexShaderModule,
+      entryPoint: 'main',
+      buffers: [/* ... */], // Vertex buffer layout
+    },
+    fragment: {
+      module: fragmentShaderModule,
+      entryPoint: 'main',
+      targets: [
+        {
+          format: 'bgra8unorm',
+        },
+      ],
+    },
+    primitive: {
+      topology: 'triangle-list',
+    },
+    depthStencil: {/* ... */}, // Depth and stencil state (if needed)
+    multisample: {/* ... */}, // Multisampling configuration (if needed)
+  };
+
+  const pipeline = device.createRenderPipeline(pipelineDescriptor);
+  return pipeline;
+}
+</code></pre>
+<ol start="6">
+<li>创建缓冲区、纹理等资源，并编写绘图命令。这需要使用 <code>GPUBuffer</code>、<code>GPUTexture</code> 等对象，并使用 <code>GPUCommandEncoder</code> 记录命令。</li>
+<li>最后，创建一个渲染循环，用于在每一帧中绘制场景。在渲染循环中，首先需要获取一个 <code>GPUTexture</code>，然后使用管道和资源进行绘图：</li>
+</ol>
+<pre><code class="language-js">function renderLoop() {
+  const texture = context.getCurrentTexture();
+  const renderPassDescriptor = {
+    colorAttachments: [
+      {
+        view: texture.createView(),
+        loadValue: [0, 0, 0, 1],
+        storeOp: 'store',
+      },
+    ],
+  };
+
+  const commandEncoder = device.createCommandEncoder();
+  const passEncoder = commandEncoder.beginRenderPass(renderPassDescriptor);
+
+  passEncoder.setPipeline(pipeline);
+  // Set bind groups, vertex buffers, index buffers, etc.
+  passEncoder.draw(/* ... */);
+  passEncoder.endPass();
+
+  const commandBuffer = commandEncoder.finish();
+  device.queue.submit([commandBuffer]);
+
+  requestAnimationFrame(renderLoop);
+}
+</code></pre>
+<h2 id="示例">示例</h2>
+<ul>
+<li><a href="https://mdn.github.io/dom-examples/webgpu-compute-demo/">基本计算演示</a></li>
+<li><a href="https://mdn.github.io/dom-examples/webgpu-render-demo/">基本渲染演示</a></li>
+<li><a href="https://webgpu.github.io/webgpu-samples/">WebGPU 示例</a></li>
+</ul>
+<h2 id="参考资料">参考资料</h2>
+<ol>
+<li><a href="https://developer.chrome.com/blog/webgpu-release/">Chrome 发布了 WebGPU</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGPU_API">WebGPU API</a></li>
+<li><a href="https://gpuweb.github.io/gpuweb/">WebGPU</a></li>
+</ol>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/ji-yu-dui-hua-shi-jiao-hu-de-sql-ke-hu-duan-sql-chat/" class="post-title gt-a-link">
+                    基于对话式交互的 SQL 客户端 - SQL Chat
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

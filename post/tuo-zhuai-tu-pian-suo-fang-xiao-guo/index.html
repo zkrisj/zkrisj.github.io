@@ -1,0 +1,427 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>拖拽图片缩放效果 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    拖拽图片缩放效果
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2023-05-02 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tags">
+                            # JS
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p>实现下图所示的图片拖拽缩放效果：</p>
+<figure data-type="image" tabindex="1"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7a620935470f4ef68981bb426aa1129a~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<ol>
+<li>通常实现方式都是 <code>&lt;img&gt;</code> 元素外面包裹个 DIV，然后定位一些方框框，然后再去拉伸。如果是非编辑器产品，这么实现并没有多大的问题。</li>
+<li>但是如果是需要实时编辑的产品，IMG 外面还有其他标签，势必会影响很多编辑操作。</li>
+<li>当然，还有方法就是 JS 定位，拖拽层覆盖在图像上，从技术成本上讲，也是一个不错的实现，但如果页面发生了滚动，或者拖拽很快，拖拽的小方块就有可能跟不上（具体要看你的实现）。</li>
+</ol>
+<h2 id="css">CSS</h2>
+<figure data-type="image" tabindex="2"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/110352b459ac47449d52bcbde14f6749~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<p>四个角四个圆圈圈，比较简洁，凡是这种在元素边框（不包括边角）包含规则图形（没有图形也是一种规律）的效果，一定是使用 CSS <code>border-image</code> 属性。</p>
+<p>下图是使用处理后的素材配合 <code>border-image</code> 属性实现的效果：</p>
+<figure data-type="image" tabindex="3"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e82a75e26fa84dfe8e144fbaa5c4e391~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<p>可能图有些小，看不到细节，把边角放大 N 倍看下：</p>
+<figure data-type="image" tabindex="4"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a103f200dd4b408587e42bb460518b04~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<p><code>border-image</code> 生成的图形藏在了图像内容的后面。在 Web 中，<code>content</code> 内容的层级是最高的，<code>outline</code> 轮廓、<code>border</code> 边框、<code>background</code> 背景色等都是比图文内容的层级低的。因此，<code>border-image</code> 的图形在 IMG 元素内容的后面，导致边角的拖拽圈圈显示不全。</p>
+<p>将拖拽图形全部改造为在图像元素的外部，这样就不会有被内容覆盖的问题了：</p>
+<figure data-type="image" tabindex="5"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/661df0e9e65340b1bd8d42b245f0c372~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<p>相关 CSS代码如下：</p>
+<pre><code class="language-css">img.resizable, img[resizable] {
+  border: 3px solid transparent;
+  border-image: url(./作者zhangxinxu.svg) 12 / 12px / 0; 
+}
+</code></pre>
+<h2 id="js-代码">JS 代码</h2>
+<pre><code class="language-js">function onlyImageResize(options) {
+  var doc = document;
+  var win = window;
+  // 参数处理
+  var defaults = {
+    selector: '.resizable, [resizable]',
+    maxWidth: true,
+    whenDisabled: function() {
+      return win.imgResizable === false || doc.imgResizable === false;
+    },
+    // 拖拽完成
+    onFinish: function() {}
+  };
+  options = options || {};
+  var params = {};
+  for (var key in defaults) {
+    params[key] = options[key] || defaults[key];
+  }
+  // 存放临时数据的地方
+  var store = {};
+  // 匹配目标元素的选择器
+  var strSelector = params.selector;
+  var strSelectorImg = strSelector.split(',').map(function(selector) {
+    return 'img' + selector.trim();
+  }).join();
+  var strSelectorActive = strSelector.split(',').map(function(selector) {
+    return selector.trim() + '.active';
+  }).join();
+  // 载入必要的 CSS 样式
+  var eleStyle = document.createElement('style');
+  var strSvg = &quot;data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%23914AFF' d='M2.5 2.5h25v25h-25z'/%3E%3Cpath d='M0 0v12h2V2h10V0H0zM0 30V18h2v10h10v2H0zM30 0H18v2h10v10h2V0zM30 30H18v-2h10V18h2v12z' fill='%23914AFF'/%3E%3C/svg%3E&quot;;
+  eleStyle.innerHTML = strSelectorImg + '{display:inline-block;vertical-align: bottom;font-size:12px;border: 3px solid transparent;margin:-1px;position: relative;-webkit-user-select: none; user-select: none; }' + strSelectorActive + '{border-image: url(&quot;' + strSvg + '&quot;) 12 / 12px / 0; cursor: default; z-index: 1;}';
+  document.head.appendChild(eleStyle);
+  // 先点击图片，进入可拉伸状态
+  doc.addEventListener('click', function(event) {
+    var eleTarget = event.target;
+    if (!eleTarget || !eleTarget.matches) {
+      return;
+    }
+    var eleActive = document.querySelector(strSelectorActive);
+    if (eleActive &amp;&amp; eleActive != eleTarget) {
+      eleActive.classList.remove('active');
+    }
+    if (params.whenDisabled()) {
+      return;
+    }
+    if (eleTarget.matches(strSelector)) {
+      eleTarget.classList.add('active');
+    }
+  });
+  // 设置拉伸触发的标志量
+  doc.addEventListener('mousedown', function(event) {
+    var eleTarget = event.target;
+    if (eleTarget.matches &amp;&amp; eleTarget.matches(strSelectorActive) &amp;&amp; eleTarget.style.cursor) {
+      event.preventDefault();
+      store.reszing = true;
+      store.image = eleTarget;
+      store.clientX = event.clientX;
+      store.clientY = event.clientY;
+      // 此时图片的尺寸
+      store.imageWidth = eleTarget.width || eleTarget.clientWidth;
+      store.imageHeight = eleTarget.height || eleTarget.clientHeight;
+      // 此时图片的拉伸方位
+      store.position = eleTarget.position;
+      // 最大宽度
+      if (typeof params.maxWidth == 'number') {
+        store.maxWidth = params.maxWidth;
+      } else if (params.maxWidth) {
+        // 使用第一个非内联水平的祖先元素的尺寸作为最大尺寸
+        var eleParent = (function(element) {
+          var step = function(ele) {
+            var display = getComputedStyle(ele).style;
+            if (/inline/.test(display)) {
+              return step(ele.parentElement);
+            }
+            return ele;
+          }
+          return step(element);
+        })(eleTarget.parentElement);
+        // 设置最大尺寸
+        if (eleParent) {
+          store.maxWidth = eleParent.clientWidth - 4;
+        }
+      }
+    }
+  });
+  // 设置手形，或者拖拽，视标志量决定
+  doc.addEventListener('mousemove', function(event) {
+    var eleTarget = event.target;
+    if (store.reszing) {
+      event.preventDefault();
+      // 移动距离
+      var distanceX = event.clientX - store.clientX;
+      var distanceY = event.clientY - store.clientY;
+      // 变化的尺寸
+      var width = 0;
+      var height = 0;
+      // 方位计算是加还是减
+      var scale = 1;
+      // 不同方位有着不同的判断逻辑
+      var position = store.position;
+      // 左下角
+      if ((position == 'bottom left' || position == 'top right') &amp;&amp; distanceX * distanceY &lt; 0) {
+        // 左下方是变大，右上是变小
+        // distanceX- distanceY+ 变大，distanceX+ distanceY-是变小
+        // 右上角
+        // 左下方是变小，右上是变大，正好和 'bottom left' 相反
+        if (position == 'top right') {
+          scale = -1;
+        }
+        width = store.imageWidth - distanceX * scale;
+        height = store.imageHeight + distanceY * scale;
+      } else if ((position == 'top left' || position == 'bottom right') &amp;&amp; distanceX * distanceY &gt; 0) {
+        // 左上角
+        // distanceX+, distanceY+是缩小
+        // distanceX-, distanceY-是放大
+        // 如果是右下角，则相反
+        if (position == 'bottom right') {
+          scale = -1;
+        }
+        width = store.imageWidth - distanceX * scale;
+        height = store.imageHeight - distanceY * scale;
+      }
+      if (!width &amp;&amp; !height) {
+        return;
+      }
+      // 目标尺寸
+      var imageWidth = 0;
+      var imageHeight = 0;
+      // 图像的原始比例
+      var ratio = store.imageWidth / store.imageHeight;
+      // 选择移动距离大的方向
+      if (Math.abs(distanceX) &gt; Math.abs(distanceY)) {
+        // 宽度变化为主
+        imageWidth = width;
+        imageHeight = width / ratio;
+      } else {
+        // 高度变化为主
+        imageHeight = height;
+        imageWidth = height * ratio;
+      }
+      // 最终设置图片的尺寸
+      store.image.width = Math.round(imageWidth);
+      store.image.height = Math.round(imageHeight);
+    } else if (eleTarget.matches &amp;&amp; eleTarget.matches(strSelectorActive)) {
+      // 根据位置设置手形
+      var clientX = event.clientX;
+      var clientY = event.clientY;
+      var bounding = eleTarget.getBoundingClientRect();
+      // 边缘判断
+      if ((clientX - bounding.left &lt; 20 &amp;&amp; clientY - bounding.bottom &gt; -20) || (clientX - bounding.right &gt; -20 &amp;&amp; clientY - bounding.top &lt; 20)) {
+        eleTarget.style.cursor = 'nesw-resize';
+        // 判断位置
+        if (clientX - bounding.left &lt; 20) {
+          eleTarget.position = 'bottom left';
+        } else {
+          eleTarget.position = 'top right';
+        }
+      } else if ((clientX - bounding.left &lt; 20 &amp;&amp; clientY - bounding.top &lt; 20) || (clientX - bounding.right &gt; -20 &amp;&amp; clientY - bounding.bottom &gt; -
+          20)) {
+        eleTarget.style.cursor = 'nwse-resize';
+        // 判断位置
+        if (clientX - bounding.left &lt; 20) {
+          eleTarget.position = 'top left';
+        } else {
+          eleTarget.position = 'bottom right';
+        }
+      } else {
+        eleTarget.style.cursor = '';
+        eleTarget.position = '';
+      }
+    }
+  });
+  // 拖拽结束
+  doc.addEventListener('mouseup', function(event) {
+    // 图片尺寸超出100%限制
+    if (store.image &amp;&amp; store.maxWidth &amp;&amp; store.image.width &gt; store.maxWidth) {
+      // 目标尺寸
+      var imageWidth = store.maxWidth;
+      var imageHeight = imageWidth / (store.imageWidth / store.imageHeight);
+      // 最终设置图片的尺寸
+      store.image.width = Math.round(imageWidth);
+      store.image.height = Math.round(imageHeight);
+    }
+    if (store.reszing) {
+      store.reszing = false;
+      params.onFinish();
+    }
+  });
+};
+</code></pre>
+<h2 id="使用">使用</h2>
+<p>在 HTML 页面中直接引入上面 JS 代码就可以使用了：</p>
+<pre><code class="language-html">&lt;script&gt;
+  onlyImageResize({
+    // 参数在这里
+  });
+&lt;/script&gt;
+</code></pre>
+<p>此时，页面中所有设置了类名 <code>.resizable</code>，或者设置了 HTML 属性 <code>resizable</code> 的元素都可以四面拉伸了。</p>
+<p>options 为可选参数，包括：</p>
+<ul>
+<li>
+<p>selector</p>
+<p>字符串值。默认值是 <code>'.resizable, [resizable]'</code>，表示识别为可拉伸图片的选择器。</p>
+</li>
+<li>
+<p>maxWidth</p>
+<p>数值或布尔值。默认是 <code>true</code>，表示有最大宽度限制，最大宽度值是第一个非内联祖先元素的宽度。支持设置为数值，指定最大宽度值。</p>
+</li>
+<li>
+<p>whenDisabled</p>
+<p>函数值，如果返回 <code>true</code>，表示禁用图像的拉伸，如果是 <code>false</code>，则拉伸执行。默认值是：</p>
+<pre><code class="language-js">function () {
+    return window.imgResizable === false || document.imgResizable === false;
+}
+</code></pre>
+<p>表示，如果 <code>window.imgResizable</code> 或者 <code>document.imgResizable</code> 的值是 <code>false</code>，则禁用拉伸。</p>
+</li>
+<li>
+<p>onFinish</p>
+<p>函数值，默认是空函数，拖拽结束的时候触发。</p>
+</li>
+</ul>
+<h2 id="码上掘金">码上掘金</h2>
+<iframe src="https://code.juejin.cn/pen/7228490812546351163"></iframe>
+<h2 id="参考资料">参考资料</h2>
+<ol>
+<li><a href="https://www.zhangxinxu.com/wordpress/2022/11/js-image-resize/">JS之我用单img元素实现了图像resize拉伸效果</a></li>
+<li>体验地址：<a href="https://zhangxinxu.gitee.io/only-img-resize/">https://zhangxinxu.gitee.io/only-img-resize/</a></li>
+</ol>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/shell-jiao-ben-he-bian-cheng-or-qing-xun-ying-bi-ji/" class="post-title gt-a-link">
+                    Shell 脚本和编程 ｜ 青训营笔记
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

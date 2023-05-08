@@ -1,0 +1,220 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>总结了一下 API 与 SDK 之间的区别和联系 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    总结了一下 API 与 SDK 之间的区别和联系
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-10-12 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/hvtmfHfT6/" class="post-tags">
+                            # 术语
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="api">API</h2>
+<p>API（英语：Application Programming Interface，应用程序接口）是对程序而言的，提供编程时的接口，即一系列模块化的类和函数，而无需访问源码，或理解内部工作机制的细节。</p>
+<ul>
+<li>优点：开发成本低，对接比较简单，可以快速验证商业模式和用户体验。</li>
+<li>缺点：会经过对接平台，厂商可以获取对接平台相关数据信息，不具保密性。</li>
+</ul>
+<h3 id="api-标准化">API 标准化</h3>
+<p>存在一些如何定义 API 的行业标准，比如 SOAP、REST、GraphQL 等。</p>
+<h2 id="sdk">SDK</h2>
+<p>SDK（英语：Software Development Kit, 软件开发工具包）是由第三方服务商提供的实现软件产品某项功能的工具包，包括功能（通过 API 访问）、相关库、文档、示例等。</p>
+<ul>
+<li>优点：对接后的功能比较稳定，响应速度快，而且对接平台相关数据不会被获取。</li>
+<li>缺点：需要开发的环节较多，开发工作量大，对接周期略长。</li>
+</ul>
+<h3 id="sdk-组成">SDK 组成</h3>
+<figure data-type="image" tabindex="1"><img src="https://zkrisj.github.io/post-images/1665553822279.png" alt="" loading="lazy"></figure>
+<ul>
+<li>接口文件和库文件<br>
+接口文件和库文件即 API ，将底层的代码进行封装保护，提供给用户一个调用底层代码的接口。</li>
+<li>帮助文档<br>
+帮助文档用来解释接口文件和库文件的功能，以及介绍有关的开发工具、操作教程、常见问题等。</li>
+<li>开发示例<br>
+开发示例包括 DEMO 展示，也包括源代码。</li>
+<li>工具<br>
+工具是用来协助用户进行二次开发的，比如开发向导、API 搜索工具、软件打包工具、测试/分析工具等。</li>
+</ul>
+<h3 id="sdk-举例">SDK 举例</h3>
+<ul>
+<li>使用 App 登录的时候可以选用微信、微博、QQ 等第三方进行登录，这实际上就是将你的 App 接入了第三方的登录 SDK；</li>
+<li>App 里面支持将内容分享到微信、微博、QQ 等第三方平台，这实际上就是将你的 App 接入了第三方的分享 SDK；</li>
+<li>电商类 App 里面支持微信、支付宝、百度钱包等支付方式，这实际上就是将你的 App 接入了第三方的支付 SDK；</li>
+<li>SDK 可以自己配置或者下载第三方提供的，比如 <a href="https://ai.baidu.com/sdk">百度的 AI 市场</a>，提供语音识别、语音合成、文字识别、图像搜索、图像识别、图像效果增强、人体分析、人脸识别、内容审核、语言处理基础技术等 SDK 下载，开发时使用现成的 SDK，节省了研发时间。</li>
+<li>SDK 是帮助提供商向开发人员介绍自己的产品的利器，并能鼓励他们利用其平台或 OS 来创建应用，而这可以在一个集成开发环境中实时进行。所以，大多数 SDK 是免费使用的，开发人员只需下载就能立即开始编程。</li>
+</ul>
+<h3 id="挑选-sdk">挑选 SDK</h3>
+<p>一些 SDK 可能附有相关的规则或协议，必须同意并提交后才能使用，尤其是处于 Alpha 或 Beta 阶段的新产品，或者包含不对外公开（非开源）的算法的软件。SDK 也可能受许可协议约束，因此创建的软件有可能无法在不兼容的许可证下发布。</p>
+<p>开发人员在挑选使用哪些 SDK 进行开发时应仔细考虑上述问题。例如：</p>
+<ul>
+<li>使用专有许可证的 SDK 不适合用于开发开源软件。</li>
+<li>具有通用公共许可证（GPL） 的 SDK 不能用于专有应用。</li>
+<li>利用较宽松公共许可证书（LGPL） 处理含有专有代码元素的项目时，应遵循相关的警告。</li>
+</ul>
+<h2 id="区别和联系">区别和联系</h2>
+<ol>
+<li>SDK 除了提供的完善的接口，还会提供相关的开发环境。而 API 需要在 SDK 环境下调用，大部分 SDK 都包含 API。比如，Java SDK（Java 开发工具包）包含了 API 程序库，编译器、运行时环境和其他杂项工具，而 Java API 只是 Java 的程序库部分。最简单的 SDK 版本可以是一个 API，其中包含一些与特定编程语言进行交互所需的文件。</li>
+<li>很多公司都开放自己的 API，并为了用户调用方便，他们大多采用 SDK 文档方式打包。用户在调用时只需要下载该 SDK 文档，根据相应规范进行调用即可。这样就省去了重写函数去封装 http、https 等请求的工作。比如 <a href="https://ai.baidu.com/ai-doc/index/OCR">百度 AI 文字识别平台文档</a>。</li>
+<li>举例，有一杯密封饮料，它的名字叫做“SDK”，饮料上插着吸管，吸管的名字叫“API”，把你叫做“XX系统”。如果你想喝到饮料（让系统拥有 SDK 中的功能），你必须通过 API 这根吸管来实现（通过 API 连接你的系统和 SDK 工具包）。所以 SDK＝你想要的软件功能的软件包，API＝SDK 上的接口。</li>
+</ol>
+<p>实际开发过程中，如果只是简单功能调用，API 调用方便快捷；如果是复杂功能调用，SDK 功能齐全。</p>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/css-cai-se-zi-ti-de-shi-xian/" class="post-title gt-a-link">
+                    CSS 彩色字体的实现
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

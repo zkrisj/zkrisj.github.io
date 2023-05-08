@@ -1,0 +1,447 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>如何给开源项目提 PR，给 layui - vue 提了个 PR，已合并 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    如何给开源项目提 PR，给 layui - vue 提了个 PR，已合并
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2023-02-23 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/Gh8djQs1V/" class="post-tags">
+                            # Vue
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="pull-request-介绍">Pull Request 介绍</h2>
+<ol>
+<li>贡献者请项目维护者“拉取”修改的软件内容（因此称为拉取请求），若此修改内容应该成为正式代码库的一部分，就需要合并拉取请求中提到的软件内容。</li>
+<li>最常用的方式是“Fork + Pull”模式：如果要为拉取请求创建新分支，又没有仓库的写入权限，可以先对仓库 Fork，仓库参与者不必向仓库创建者申请提交权限，而是在自己的托管空间下建立仓库的派生（Fork）。</li>
+<li>拉取请求只能在不同的两个分支之间打开，可以在创建拉取请求时指定要将更改合并到哪个分支。</li>
+</ol>
+<h3 id="创建拉取请求">创建拉取请求</h3>
+<ol>
+<li>Fork 创建存储库分支。</li>
+<li>进行修复。</li>
+<li>创建拉取请求。</li>
+</ol>
+<ul>
+<li>在存储库的主页“Branch（分支）”菜单中，选择包含提交的分支。</li>
+</ul>
+<figure data-type="image" tabindex="1"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e9428ffb54ae4499bff254b4af12f37f~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<ul>
+<li>在文件列表上方，单击 “拉取请求”。</li>
+</ul>
+<figure data-type="image" tabindex="2"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8940f2b6d2e34cf885c8042ee4c25472~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<ul>
+<li>使用基础分支下拉菜单选择要向其合并更改的分支，然后使用比较分支下拉菜单选择进行了更改的主题分支。</li>
+</ul>
+<figure data-type="image" tabindex="3"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b90d59978e9449c0922ed12ffcd1de51~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<ul>
+<li>为你的拉取请求输标题和说明。</li>
+</ul>
+<figure data-type="image" tabindex="4"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/513141772c8a46e2aa10ad7403ed3e11~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<ul>
+<li>要创建可供审查的拉取请求，请单击“创建拉取请求”。若要创建草稿拉取请求，请使用下拉列表并选择“创建草稿拉取请求”，然后单击“草稿拉取请求”。</li>
+</ul>
+<figure data-type="image" tabindex="5"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/61ce5d4321a34fa9bc56b4c76380c0a5~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<ul>
+<li>
+<p>创建拉取请求后，你可以请求特定人员审查你提议的更改。如果你是组织成员，还可以请求特定团队审查你的更改。</p>
+</li>
+<li>
+<p>在存储库名称下，单击 “拉取请求”。</p>
+</li>
+</ul>
+<figure data-type="image" tabindex="6"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/92415a076c7444099ab6542b142e47b7~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<ul>
+<li>在拉取请求列表中，单击你想要请求特定人员或团队审查的拉取请求。</li>
+<li>导航到右侧边栏中的“审查者”。</li>
+<li>若要向建议的人员请求审查，请在“审查者”下其用户名旁，单击“请求” 。</li>
+</ul>
+<figure data-type="image" tabindex="7"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/dbe5a7fdcabf4535963ed0a8764aab9d~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<ul>
+<li>（可选）若要向建议人员以外的其他人请求审查，请单击“审查者”，然后单击下拉菜单中的姓名。</li>
+</ul>
+<figure data-type="image" tabindex="8"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1a444854a26947958eefa95fdce8e000~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<p>更改后，可以请求审查者重新审查你的拉取请求。导航到右侧边栏中的“审查者”，然后单击你想要其审查的审查者姓名旁边的 <img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7517b840c2a54db0b7194f99b779fe5a~tplv-k3u1fbpfcp-watermark.image?" alt="1.svg" loading="lazy">。</p>
+<figure data-type="image" tabindex="9"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/acd523461d45458fa14e296d87cfe610~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<ul>
+<li>被请求的审查者或团队将收到你请求他们审查拉取请求的通知。如果你请求团队审查，并启用了代码评审分配，则会向特定成员发出请求，并且取消团队作为审查者。</li>
+<li>审查拉取请求后，对仓库具有推送权限的任何人都可以完成合并。</li>
+</ul>
+<h3 id="合并拉取请求">合并拉取请求</h3>
+<ol>
+<li>在存储库名称下，单击 “Pull requests”。</li>
+</ol>
+<figure data-type="image" tabindex="10"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b886027b6fb849b694bd5cb5b1221e5c~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<ol start="2">
+<li>在“Pull Requests（拉取请求）”列表中，单击要合并的拉取请求。</li>
+<li>根据对仓库启用的合并选项，你可以：</li>
+</ol>
+<ul>
+<li>单击“合并拉取请求”，将所有提交合并到基分支中。 如果未显示“合并拉取请求”选项，则单击合并下拉菜单，然后选择“创建合并提交” 。</li>
+</ul>
+<figure data-type="image" tabindex="11"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4cbf7633ce274746b476a921508c93b2~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<ul>
+<li>单击合并下拉菜单，选择“压缩并合并”，然后单击“压缩并合并”按钮，将多个提交压缩为一个提交。</li>
+</ul>
+<figure data-type="image" tabindex="12"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8676ad12855047c1b7b471029402e266~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<ul>
+<li>单击合并下拉菜单，选择“变基并合并”，然后单击“变基并合并”按钮，将多个提交变基为一个基分支。</li>
+</ul>
+<figure data-type="image" tabindex="13"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/87a692e558b243a084b43897a1ba9ac5~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<ol start="4">
+<li>如有提示，输入提交消息，或接受默认消息。</li>
+</ol>
+<figure data-type="image" tabindex="14"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e4d8ae2c21e3485f9d460626d44245bd~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<ol start="5">
+<li>单击“确认合并”、“确认压缩并合并”，或“确认变基并合并” 。</li>
+<li>（可选）删除分支。这有助于仓库的分支列表保持整洁。</li>
+</ol>
+<h2 id="给-layui-vue-提了个-pr已合并">给 layui- vue 提了个 PR，已合并</h2>
+<p>青训营中我们团队做的是组件库项目。因为我负责的是 <code>Pagination</code> 和 <code>Table</code> 组件，但 Ant Design Vue 和 Element Plus 的表格组件都太复杂了，所以我参考的是较简单的 layui - vue。</p>
+<h3 id="bug">Bug</h3>
+<p>由于开发测试完组件后，也需要写对应的组件演示文档。在写文档过程中，发现了 <code>Table</code> 组件演示文档中的一个 Bug：</p>
+<figure data-type="image" tabindex="15"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/84610116a36a4d7a9a8804789c05e6d6~tplv-k3u1fbpfcp-watermark.image?" alt="60cecd3b_2215500.gif" loading="lazy"></figure>
+<p>可以看到，行内编辑图标首次点击无效，只能从上到下开启编辑、从下到上关闭编辑，点击其他行图标也只从首行开始编辑。出问题的代码：</p>
+<pre><code class="language-html">&lt;template&gt;
+  &lt;lay-table :columns=&quot;columns28&quot; :data-source=&quot;dataSource28&quot;&gt;
+    &lt;template #username=&quot;{ data }&quot;&gt;
+      &lt;lay-input v-if=&quot;edingKeys[data.id]&quot; :model-value=&quot;data.username&quot; @input=&quot;changeUsername($event, data)&quot;&gt;
+        &lt;template #suffix&gt;
+          &lt;lay-icon type=&quot;layui-icon-close&quot; style=&quot;right:10px;&quot; v-if=&quot;edingKeys[data.id]&quot; @click=&quot;deleteEdit(data.id)&quot;&gt;&lt;/lay-icon&gt;
+        &lt;/template&gt;
+      &lt;/lay-input&gt;
+      &lt;span v-else&gt;
+        {{ data.username }} 
+        &lt;lay-icon type=&quot;layui-icon-edit&quot; style=&quot;position: absolute;right: 10px;&quot; v-if=&quot;!edingKeys[data.id]&quot; @click=&quot;editHandle(data.id)&quot;&gt;&lt;/lay-icon&gt;
+      &lt;/span&gt;
+    &lt;/template&gt;
+  &lt;/lay-table&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import { ref } from 'vue'
+
+export default {
+  setup() {
+
+    const edingKeys = ref([])
+
+    const columns28 = [
+      {
+        title:&quot;账户&quot;,
+        width:&quot;200px&quot;,
+        key:&quot;username&quot;,
+        customSlot: &quot;username&quot;
+      },{
+        title:&quot;密码&quot;,
+        width: &quot;300px&quot;,
+        key:&quot;password&quot;
+      },{
+        title:&quot;性别&quot;,
+        key:&quot;sex&quot;
+      },{
+        title:&quot;年龄&quot;,
+        width: &quot;300px&quot;,
+        key:&quot;age&quot;
+      },{
+        title:&quot;备注&quot;,
+        width: &quot;180px&quot;,
+        key:&quot;remark&quot;,
+        ellipsisTooltip: true
+      }
+    ]
+
+    const dataSource28 = ref([
+      {id:&quot;1&quot;,username:&quot;root&quot;, password:&quot;root&quot;,sex:&quot;男&quot;, age:&quot;18&quot;, remark: 'layui - vue（谐音：类 UI) '},
+      {id:&quot;2&quot;,username:&quot;root&quot;, password:&quot;root&quot;,sex:&quot;男&quot;, age:&quot;18&quot;, remark: 'layui - vue（谐音：类 UI) '},
+      {id:&quot;3&quot;,username:&quot;woow&quot;, password:&quot;woow&quot;,sex:&quot;男&quot;, age:&quot;20&quot;, remark: 'layui - vue（谐音：类 UI) '},
+      {id:&quot;4&quot;,username:&quot;woow&quot;, password:&quot;woow&quot;,sex:&quot;男&quot;, age:&quot;20&quot;, remark: 'layui - vue（谐音：类 UI) '},
+      {id:&quot;5&quot;,username:&quot;woow&quot;, password:&quot;woow&quot;,sex:&quot;男&quot;, age:&quot;20&quot;, remark: 'layui - vue（谐音：类 UI) '}
+    ])
+
+    const editHandle = (key) =&gt; {
+      edingKeys.value.push(key);
+    }
+
+    const deleteEdit = (key) =&gt; {
+      edingKeys.value.splice(edingKeys.value.indexOf(key),1);
+    }
+
+    const changeUsername = (val, data) =&gt; {
+      dataSource28.value.forEach(element =&gt; {
+        if(element.id == data.id) {
+          element.username = val;
+        }
+      });
+    }
+
+    return {
+      edingKeys,
+      deleteEdit,
+      columns28,
+      editHandle,
+      dataSource28,
+      changeUsername,
+    }
+  }
+}
+&lt;/script&gt;
+</code></pre>
+<p>上面代码在 <code>lay-input</code>、<code>lay-icon type=&quot;layui-icon-close&quot;</code>、<code>lay-icon type=&quot;layui-icon-edit&quot;</code> 这三个组件上使用 <code>v-if</code> 表达式来条件性地渲染元素时，条件分别为 <code>edingKeys[data.id]</code>、<code>edingKeys[data.id]</code> 和 <code>!edingKeys[data.id]</code>。响应式变量 <code>edingKeys</code> 初始化时是一个空数组，在点击行编辑图标时，由绑定的 <code>editHandle</code> 方法将当前行的 <code>id</code> 字段添加到数组中，然后由响应式对象 <code>edingKeys</code> 根据行的 <code>id</code> 字段动态改变上述三个条件表达式的值，从而动态渲染行的编辑状态。</p>
+<p>问题出在：<code>id</code> 字段是数字类型字符串，而 <strong>在 JavaScript 中，可以同时使用字符串 <code>arr[&quot;1&quot;]</code> 或数字 <code>arr[1]</code> 访问对象属性和数组元素。</strong></p>
+<p>例如，当点击第三行的编辑图标时，<code>editHandle</code> 方法会将 <code>&quot;3&quot;</code> 添加到数组中，此时 <code>edingKeys</code> 的值为 <code>[&quot;3&quot;]</code>，数组中只有一个元素，所以只有 <code>edingKeys[0]</code> 的条件为真，而 <code>edingKeys[1]</code>、<code>edingKeys[2]</code> 以后的值都为 <code>undefined</code>，条件都为假，所以第一次点击任何行时都不会有反应。然后我们点击第四行的编辑图标，此时 <code>editHandle</code> 方法会将 <code>&quot;4&quot;</code> 添加到数组中，此时 <code>edingKeys</code> 的值为 <code>[&quot;3&quot;, &quot;4&quot;]</code>，只有 <code>edingKeys[0]</code>、<code>edingKeys[1]</code> 的条件为真，而 <code>edingKeys[2]</code>、<code>edingKeys[3]</code> 以后的值都为 <code>undefined</code>，条件都为假。所以第一行变成了编辑状态，而不是第三行或第四行。</p>
+<p>以此类推，继续点击将依次从从上到下开启编辑状态。当点击任意某个已经开启编辑状态的行上的关闭图标时，<code>deleteEdit</code> 方法会将当前行的 <code>id</code> 字段从 <code>edingKeys</code> 数组中删除，<code>edingKeys</code> 数组的长度将减一。所以会从 <code>edingKeys</code> 数组的长度减一索引处，即从 <code>edingKeys[edingKeys.length-1]</code> 开始取消编辑。继续点击任意关闭图标，将依次从下到上关闭行编辑状态。</p>
+<h3 id="解决方法">解决方法</h3>
+<p>很简单，只需要把三个 <code>v-if</code> 表达式的条件 <code>edingKeys[data.id]</code>、<code>edingKeys[data.id]</code> 和 <code>!edingKeys[data.id]</code> 改为 <code>edingKeys.includes(data.id)</code>、<code>edingKeys.includes(data.id)</code> 和 <code>!edingKeys.includes(data.id)</code>，<code>includes()</code> 方法用来判断一个数组是否包含一个指定的值。</p>
+<p>但更完善的方法是在 <code>editHandle</code> 方法中将整个行数据而不是行的 <code>id</code> 字段添加到数组中，然后使用 <code>edingKeys.includes(data)</code>、<code>edingKeys.includes(data)</code> 和 <code>!edingKeys.includes(data)</code> 来判断编辑状态。因为行的 <code>id</code> 字段如果不是唯一的，即多行的 <code>id</code> 字段值相同，会出现点击一行的编辑和关闭图标，将同时开启和关闭多行的编辑状态。每行的行数据却是唯一的。</p>
+<pre><code class="language-html">&lt;template&gt;
+  &lt;lay-table :columns=&quot;columns28&quot; :data-source=&quot;dataSource28&quot;&gt;
+    &lt;template #username=&quot;{ data }&quot;&gt;
+      &lt;lay-input v-if=&quot;edingKeys.includes(data)&quot; :model-value=&quot;data.username&quot; @input=&quot;changeUsername($event, data)&quot;&gt;
+        &lt;template #suffix&gt;
+          &lt;lay-icon type=&quot;layui-icon-close&quot; style=&quot;right:10px;&quot; v-if=&quot;edingKeys.includes(data)&quot;  @click=&quot;deleteEdit(data)&quot;&gt;&lt;/lay-icon&gt;
+        &lt;/template&gt;
+      &lt;/lay-input&gt;
+      &lt;span v-else&gt;
+        {{ data.username }} 
+        &lt;lay-icon type=&quot;layui-icon-edit&quot; style=&quot;position: absolute;right: 10px;&quot; v-if=&quot;!edingKeys.includes(data)&quot;  @click=&quot;editHandle(data)&quot;&gt;&lt;/lay-icon&gt;
+      &lt;/span&gt;
+    &lt;/template&gt;
+  &lt;/lay-table&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import { ref } from 'vue'
+
+export default {
+  setup() {
+
+    const edingKeys = ref([])
+
+    const columns28 = [
+      {
+        title:&quot;账户&quot;,
+        width:&quot;200px&quot;,
+        key:&quot;username&quot;,
+        customSlot: &quot;username&quot;
+      },{
+        title:&quot;密码&quot;,
+        width: &quot;300px&quot;,
+        key:&quot;password&quot;
+      },{
+        title:&quot;性别&quot;,
+        key:&quot;sex&quot;
+      },{
+        title:&quot;年龄&quot;,
+        width: &quot;300px&quot;,
+        key:&quot;age&quot;
+      },{
+        title:&quot;备注&quot;,
+        width: &quot;180px&quot;,
+        key:&quot;remark&quot;,
+        ellipsisTooltip: true
+      }
+    ]
+
+    const dataSource28 = ref([
+      {id:&quot;1&quot;,username:&quot;root&quot;, password:&quot;root&quot;,sex:&quot;男&quot;, age:&quot;18&quot;, remark: 'layui - vue（谐音：类 UI) '},
+      {id:&quot;2&quot;,username:&quot;root&quot;, password:&quot;root&quot;,sex:&quot;男&quot;, age:&quot;18&quot;, remark: 'layui - vue（谐音：类 UI) '},
+      {id:&quot;3&quot;,username:&quot;woow&quot;, password:&quot;woow&quot;,sex:&quot;男&quot;, age:&quot;20&quot;, remark: 'layui - vue（谐音：类 UI) '},
+      {id:&quot;4&quot;,username:&quot;woow&quot;, password:&quot;woow&quot;,sex:&quot;男&quot;, age:&quot;20&quot;, remark: 'layui - vue（谐音：类 UI) '},
+      {id:&quot;5&quot;,username:&quot;woow&quot;, password:&quot;woow&quot;,sex:&quot;男&quot;, age:&quot;20&quot;, remark: 'layui - vue（谐音：类 UI) '}
+    ])
+
+    const editHandle = (data) =&gt; {
+      edingKeys.value.push(data);
+    }
+
+    const deleteEdit = (data) =&gt; {
+      edingKeys.value.splice(edingKeys.value.indexOf(data),1);
+    }
+
+    const changeUsername = (val, data) =&gt; {
+      dataSource28.value.forEach(element =&gt; {
+        if(element.id == data.id) {
+          element.username = val;
+        }
+      });
+    }
+
+    return {
+      edingKeys,
+      deleteEdit,
+      columns28,
+      editHandle,
+      dataSource28,
+      changeUsername,
+    }
+  }
+}
+&lt;/script&gt;
+</code></pre>
+<p>修复后的效果：</p>
+<figure data-type="image" tabindex="16"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5e1c971fc86249afa43cee61590c10c9~tplv-k3u1fbpfcp-watermark.image?" alt="07df7525_2215500.gif" loading="lazy"></figure>
+<h3 id="提了-pr">提了 PR</h3>
+<p>由于 <a href="https://gitee.com/layui/layui-vue">layui</a> 仓库在 gitee，GitHub 上面的仓库已经撤下了，所以在 gitee 上面提的 PR，gitee PR 操作比 GitHub 更加方便和简单，在 Fork 项目的主页点击 <code>+ Pull Request</code> 按钮，然后选择分支，输入标题和说明即可。</p>
+<figure data-type="image" tabindex="17"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7b0e4b9a9c66410293d537e55465c297~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<p>目前 <strong>已合并</strong>。</p>
+<figure data-type="image" tabindex="18"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/48e9085eb0f449c183001497969e47f1~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/qing-xun-ying-da-xiang-mu-zong-jie-or-qing-xun-ying-bi-ji/" class="post-title gt-a-link">
+                    青训营大项目总结 ｜ 青训营笔记
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

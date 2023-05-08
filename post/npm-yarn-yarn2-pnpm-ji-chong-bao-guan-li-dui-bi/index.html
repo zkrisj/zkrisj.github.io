@@ -1,0 +1,335 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>npm yarn yarn2 pnpm 几种包管理对比 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    npm yarn yarn2 pnpm 几种包管理对比
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-08-29 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/-SviN8-mD/" class="post-tags">
+                            # nodeJS
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="npm">npm</h2>
+<p>2010 年 1 月诞生，<code>NodeJS</code> 的默认包管理工具。</p>
+<h3 id="问题">问题</h3>
+<ol>
+<li>依赖地狱（Dependency Hell）：<code>npm v3</code> 之前采用嵌套的 <code>node_modules</code> 结构，直接依赖会平铺在 <code>node_modules</code> 下，子依赖嵌套在直接依赖的 <code>node_modules</code> 中。例如项目依赖了A 和 C，而 A 和 C 依赖了不同版本的 <code>B@1.0</code> 和 <code>B@2.0</code>，<code>node_modules</code> 结构如下：<pre><code class="language-js">    node_modules
+    ├── A@1.0.0
+    │   └── node_modules
+    │       └── B@1.0.0
+    ├── C@1.0.0
+    │   └── node_modules
+    │       └── B@2.0.0
+    └── D@1.0.0
+        └── node_modules
+            └── B@1.0.0
+</code></pre>
+</li>
+<li>扁平的 <code>node_modules</code> 结构：为了将嵌套的依赖尽量打平，避免过深的依赖树和包冗余，<code>npm v3</code> 将子依赖「提升」（hoist），采用扁平的 <code>node_modules</code> 结构，子依赖会尽量平铺安装在主依赖项所在的目录中。<pre><code class="language-js">    node_modules
+    ├── A@1.0.0
+    ├── B@1.0.0
+    └── C@1.0.0
+        └── node_modules
+            └── B@2.0.0
+    └── D@1.0.0
+</code></pre>
+<ul>
+<li>A 依赖的 <code>B@1.0</code> 不再放在 A 的 <code>node_modules</code> 下了，而是与 A 同层级。</li>
+<li>而 C 依赖的 <code>B@2.0</code> 因为版本号原因还是嵌套在 C 的 <code>node_modules</code> 下。</li>
+<li>这样不会造成大量包的重复安装，依赖的层级也不会太深，解决了依赖地狱问题。</li>
+</ul>
+</li>
+<li>幽灵依赖（Phantom dependencies）：指在 <code>package.json</code> 中未定义的依赖，但项目中依然可以正确地被引用到。
+<ul>
+<li>由于 B 在安装时被提升到了和 A 同样的层级，所以在项目中引用 B 还是能正常工作的。</li>
+<li>幽灵依赖是由依赖的声明丢失造成的，如果某天某个版本的 A 依赖不再依赖 B 或者 B 的版本发生了变化，就会造成依赖缺失或兼容性问题。</li>
+</ul>
+</li>
+<li>不确定性（Non-Determinism）：指同样的 <code>package.json</code> 文件，<code>install</code> 依赖后可能不会得到同样的 <code>node_modules</code> 目录结构。
+<ul>
+<li>A 依赖 <code>B@1.0</code>，C 依赖 <code>B@2.0</code>，依赖安装后应该提升 B 的 1.0 还是 2.0 取决于用户的安装顺序。</li>
+<li>如果有 <code>package.json</code> 变更，本地需要删除 <code>node_modules</code> 重新 <code>install</code>，否则可能会导致生产环境与开发环境 <code>node_modules</code> 结构不同，代码无法正常运行。</li>
+</ul>
+</li>
+<li>依赖分身（Doppelgangers）：假设继续再安装依赖 <code>@B2.0</code> 的 E 模块，此时 <code>B@2.0</code> 会被安装两次，无论提升 <code>B@1.0</code> 还是 <code>B@2.0</code>，都会存在重复版本的 B 被安装，这两个重复安装的 B 就叫依赖分身。虽然看起来模块 C 和 E 都依赖 <code>B@2.0</code>，但其实引用的不是同一个 B，假设 B 在导出之前做了一些缓存或者副作用，那么使用者的项目就会因此而出错。<pre><code class="language-js">node_modules
+├── A@1.0.0
+├── B@1.0.0
+├── D@1.0.0
+├── C@1.0.0
+│   └── node_modules
+│       └── B@2.0.0
+└── E@1.0.0
+    └── node_modules
+        └── B@2.0.0
+</code></pre>
+</li>
+</ol>
+<h2 id="yarn">yarn</h2>
+<p>2016 年发布，定义为快速、安全、可靠的依赖管理。</p>
+<ol>
+<li>并行提升安装速度：
+<ol>
+<li>在 <code>npm</code> 中安装依赖时，安装任务是串行的，会按包顺序逐个执行安装，这意味着它会等待一个包完全安装，然后再继续下一个。</li>
+<li>为了加快包安装速度，<code>yarn</code> 采用了并行操作，在性能上有显著的提高。</li>
+<li>而且在缓存机制上，<code>yarn</code> 会将每个包缓存在磁盘上，在下一次安装这个包时，可以脱离网络实现从磁盘离线安装。</li>
+</ol>
+</li>
+<li><code>lockfile</code> 解决不确定性：
+<ol>
+<li>在依赖安装时，会根据 <code>package.josn</code> 生成一份 <code>yarn.lock</code> 文件。</li>
+<li><code>lockfile</code> 里记录了依赖，以及依赖的子依赖，依赖的版本，获取地址与验证模块完整性的 <code>hash</code>。</li>
+<li>即使是不同的安装顺序，相同的依赖关系在任何的环境和容器中，都能得到稳定的 <code>node_modules</code> 目录结构，保证了依赖安装的确定性。</li>
+<li>而 <code>npm</code> 在一年后的 v5 才发布了 <code>package-lock.json</code>。</li>
+</ol>
+</li>
+<li>与 <code>npm</code> 一样的弊端：<code>yarn</code> 依然和 <code>npm</code> 一样是扁平化的 <code>node_modules</code> 结构，没有解决<strong>幽灵依赖</strong>和<strong>依赖分身</strong>问题。</li>
+</ol>
+<h2 id="yarn2">yarn2</h2>
+<p>2020 年 1 月，<code>yarn2</code> 发布，也叫 <code>yarn berry</code>（v1 叫 <code>yarn classic</code>）。</p>
+<ol>
+<li>对 <code>yarn</code> 的一次重大升级，其中一项重要更新就是 <code>Plug'n'Play</code>（<code>Plug and Play</code> = <code>PnP</code>，即插即用）。</li>
+<li>抛弃 <code>node_modules</code>：
+<ul>
+<li>无论是 <code>npm</code> 还是 <code>yarn</code>，都具备缓存的功能，大多数情况下安装依赖时，其实是将缓存中的相关包复制到项目目录中 <code>node_modules</code> 里。</li>
+<li>而 <code>yarn</code> <code>PnP</code> 则不会进行拷贝这一步，而是在项目里维护一张静态映射表 <code>pnp.cjs</code>。</li>
+<li><code>pnp.cjs</code> 会记录依赖在缓存中的具体位置，所有依赖都存在全局缓存中。同时自建了一个解析器，在依赖引用时，帮助 <code>node</code> 从全局缓存目录中发现依赖，而不是查找 <code>node_modules</code>。</li>
+<li>这样就避免了大量的 <code>I/O</code> 操作同时项目目录也不会有 <code>node_modules</code> 目录生成，同版本的依赖在全局也只会有一份，依赖的安装速度和解析速度都有较大提升。</li>
+<li><code>pnpm</code> 在 2020 年底的 v5.9 也支持了 <code>PnP</code>。</li>
+</ul>
+</li>
+<li>脱离 <code>node</code> 生态：
+<ul>
+<li>因为使用 <code>PnP</code> 不会再有 <code>node_modules</code> 了，但是 <code>Webpack</code>，<code>Babel</code> 等各种前端工具都依赖 <code>node_modules</code>。虽然很多工具比如 <code>pnp-webpack-plugin</code> 已经在解决了，但难免会有兼容性风险。</li>
+<li><code>PnP</code> 自建了依赖解析器，所有的依赖引用都必须由解析器执行，因此只能通过 <code>yarn</code> 命令来执行 <code>node</code> 脚本。</li>
+</ul>
+</li>
+</ol>
+<h2 id="pnpm-performant-npm">pnpm - performant npm</h2>
+<p>2017 年发布，定义为快速的，节省磁盘空间的包管理工具。</p>
+<ol>
+<li>允许跨项目地共享同一版本的依赖。</li>
+<li>如果同一依赖需要使用不同的版本，则仅有版本之间不同的文件会被存储起来。</li>
+<li><code>pnpm</code> 的根目录下的 <code>node_modules</code> 只包含 <code>pakcage.json</code> 中显式声明的依赖，并且这里实际上保存的是依赖的软链。</li>
+</ol>
+<figure data-type="image" tabindex="1"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5b01c53efe3e46bfbd407c622a5333a8~tplv-k3u1fbpfcp-watermark.image?" alt="软链.png" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/de3e7e98d37e401fae3f65ff62876eaa~tplv-k3u1fbpfcp-watermark.image?" alt="实际位置.png" loading="lazy"></figure>
+<ol start="4">
+<li>使用 <code>pnpm</code> 安装依赖后 <code>node_modules</code> 结构如下：</li>
+</ol>
+<pre><code>node_modules
+├── .pnpm
+│   ├── A@1.0.0
+│   │   └── node_modules
+│   │       ├── A =&gt; &lt;store&gt;/A@1.0.0
+│   │       └── B =&gt; ../../B@1.0.0
+│   ├── B@1.0.0
+│   │   └── node_modules
+│   │       └── B =&gt; &lt;store&gt;/B@1.0.0
+│   ├── B@2.0.0
+│   │   └── node_modules
+│   │       └── B =&gt; &lt;store&gt;/B@2.0.0
+│   └── C@1.0.0
+│       └── node_modules
+│           ├── C =&gt; &lt;store&gt;/C@1.0.0
+│           └── B =&gt; ../../B@2.0.0
+│
+├── A =&gt; .pnpm/A@1.0.0/node_modules/A
+└── C =&gt; .pnpm/C@1.0.0/node_modules/C
+</code></pre>
+<h3 id="内容寻址存储-cas">内容寻址存储 CAS</h3>
+<ol>
+<li>与依赖提升和扁平化的 <code>node_modules</code> 不同，<code>pnpm</code> 引入了另一套依赖管理策略：内容寻址存储。</li>
+<li><code>store</code>：该策略会通过 <code>store</code> 来存储所有的 <code>node_modules</code> 依赖，依赖的每个版本只会在系统中安装一次。</li>
+<li><code>.pnpm</code>：虚拟存储目录，所有直接和间接依赖项都链接到此目录中。该目录通过 <code>name@version</code> 来实现相同模块不同版本之间隔离和复用。</li>
+<li>安装依赖：如果某个依赖在 <code>sotre</code> 目录中存在了话，就会直接从 <code>store</code> 目录里面去 <code>hard-link</code>，否则就会去下载一次。</li>
+<li><code>pnpm store prune</code>：提供了一种用于删除一些不被全局项目所引用到的 <code>packages</code> 的功能，例如有个包 <code>axios@1.0.0</code> 被一个项目所引用了，但是某次修改使得项目里这个包被更新到了 <code>1.0.1</code> ，那么 <code>store</code> 里面的 <code>1.0.0</code> 的 <code>axios</code> 就就成了个不被引用的包，执行 <code>pnpm store prune</code> 就可以在 <code>store</code> 里面删掉它了。</li>
+<li>幽灵依赖问题：只有直接依赖会平铺在 <code>node_modules</code> 下，子依赖不会被提升，不会产生幽灵依赖。</li>
+<li>依赖分身问题：相同的依赖只会在全局 <code>store</code> 中安装一次。项目中的都是源文件的副本，几乎不占用任何空间，没有了依赖分身。</li>
+</ol>
+<h3 id="链接">链接</h3>
+<ol>
+<li>硬链接 <code>Hard link</code>，可以理解为源文件的副本，项目里安装的其实是副本。
+<ul>
+<li>用户可以通过路径引用查找到全局 <code>store</code> 中的源文件，而且这个副本根本不占任何空间。</li>
+<li><code>pnpm</code> 会在全局 <code>store</code> 里存储硬链接，不同的项目可以从全局 <code>store</code> 寻找到同一个依赖。</li>
+<li><code>.pnpm</code> 中的每个文件都是来自内容可寻址存储的硬链接，指向全局 <code>store</code> 中安装的依赖。</li>
+</ul>
+</li>
+<li>符号链接 <code>Symbolic link</code>，也叫软连接，在 Windows 中使用的是<a href="https://zkrisj.gitee.io/post/windows-xi-tong-zhong-de-ying-lian-jie-he-ruan-lian-jie/">连接点链接</a>，<code>pnpm</code> 可以通过它找到对应磁盘目录下的依赖地址。</li>
+<li>示例：</li>
+</ol>
+<figure data-type="image" tabindex="3"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/85d07f8a81844d22bef871c653f56a56~tplv-k3u1fbpfcp-watermark.image?" alt="pnpm.png" loading="lazy"></figure>
+<ol>
+<li>项目中有一个依赖 <code>bar@1.0.0</code>。</li>
+<li><code>bar@1.0.0</code> 也有一个依赖 <code>foo@1.0.0</code>。</li>
+<li><code>node_modules</code> 下面有 <code>bar@1.0.0</code> 和 <code>.pnpm</code> 目录，没有 <code>foo@1.0.0</code>。</li>
+<li><code>bar@1.0.0</code> 通过软链接指向 <code>.pnpm/bar@1.0.0/node_modules/bar@1.0.0</code>。</li>
+<li><code>.pnpm/bar@1.0.0/node_modules/bar@1.0.0</code> 又通过硬链接指向 <code>store</code>。</li>
+<li><code>bar@1.0.0</code> 依赖的 <code>foo@1.0.0</code> 会安装在跟自己的同一级。</li>
+<li><code>.pnpm/bar@1.0.0/node_modules/foo@1.0.0</code> 通过软链指向 <code>.pnpm</code> 中的 <code>foo@1.0.0</code>。</li>
+<li><code>.pnpm/foo@1.0.0</code> 一样通过硬链接指向 <code>store</code>。</li>
+</ol>
+<p>pnpm 目前的缺点是兼容性、功能丰富度和社区生态等比较弱。</p>
+<h2 id="总结">总结：</h2>
+<p>以上对比了几种不同的包管理方案：目前还没有完美的依赖管理方案。</p>
+<p>它们有不同的 <code>node_modules</code> 结构，有嵌套，扁平，甚至没有 <code>node_modules</code>，不同的结构也伴随着兼容与安全问题。它们使用不同的依赖存储方式来节约磁盘空间，提升安装速度。但每种管理器都伴随新的工具和命令，不同程度的可配置性和扩展性，影响开发者体验。这些包管理器也对 <code>monorepo</code> 有不同程度的支持，会直接影响项目的可维护性和速度。</p>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/jsonpcors-he-axios-de-kua-yu/" class="post-title gt-a-link">
+                    JSONP、CORS 和 axios 的跨域
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>npm link 的使用 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    npm link 的使用
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-08-29 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/-SviN8-mD/" class="post-tags">
+                            # nodeJS
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p><code>npm install</code> 可以把发布在 <code>npmjs</code> 平台上的模块包下载到本地，<code>npm install -g</code> 可以把包下下来的同时，还帮我们配置好全局变量，让我们可以直接使用命令而不是通过 <code>node</code> 来执行或者配置 <code>package.json</code> 的 <code>scripts</code> 脚本来 <code>run</code>。</p>
+<p>但这仅限于已经发布的包，对于未发布的包，要怎么测试使用？</p>
+<ol>
+<li>我们独立开发好这个依赖包，然后将它直接发布到 <code>npm</code> 镜像站上去，以后在其他项目中使用的时候，直接 <code>npm install moduleName</code>。</li>
+<li><code>npm</code> 另外也给我们提供了测试本地的包的工具指令：<code>npm link</code>。</li>
+</ol>
+<p><code>npm link</code> 是一个命令行工具，用于在开发过程中将本地包符号链接为依赖项。它通常用于在发布之前测试包。</p>
+<h2 id="原理">原理</h2>
+<p>当我们在 <code>npm install -g</code> 的时候，其实是将相关文件安装在<code>/usr/local/lib/node_modules</code> 目录（<code>Windows</code> 目录为 <code>node</code> 安装目录，可以使用 <code>npm root -g</code> 命令查看）下，同时在全局命令 <code>/usr/local/bin</code> 目录下会有一个映射脚本，将其指向 <code>/usr/local/lib</code> 下的真实文件。这么做的好处是，可以在保证只有一份可执行文件的前提下，给命令取别名。</p>
+<p><code>npm link</code> 做的事情也是一样，唯一的区别是，它在 <code>/usr/local/lib</code> 下的 <code>node_modules</code> 里不是存的真实的文件，而是存了一个快捷方式，指向你当前执行 <code>npm link</code> 的目录。如果开发的的是 <code>node</code> 包，则执行的命令名和真实执行的文件入口，会根据项目的 <code>package.json</code> 里 <code>main</code> 的配置来获取。</p>
+<p><code>npm link</code> 可以帮助我们模拟包安装后的状态，它会在系统中做一个快捷方式映射，让本地的包就好像 <code>install</code> 过一样，可以直接使用。</p>
+<h2 id="使用">使用</h2>
+<ol>
+<li>进入需要测试的 <code>my-library</code> 目录（<code>package.json</code> 的 <code>name</code> 属性为 <code>my-library</code>），执行 <code>npm link</code> 命令。在全局环境下，也就是 <code>nodejs</code> 安装目录下的 <code>node_modules</code> 目录下，会生成一个符号链接文件，在 <code>windows</code> 下就是一个快捷方式。</li>
+<li>进入需要引入 <code>my-library</code> 模块的目录，将 <code>my-library</code> 模块与此项目连接起来，执行 <code>npm link my-library</code> 就可以完成它们的连接。</li>
+<li>当项目和模块在同一个目录下，可以使用相对路径 <code>npm link ../my-library</code>，不需要在 <code>my-library</code> 目录执行 <code>npm link</code>。</li>
+<li>使用 <code>npm</code> 中的模块，也可以使用 <code>npm link</code> 命令，比如我们的很多应用都会用到 <code>node-fetch</code> 模块。可以先将 <code>node-fetch</code> 安装到全局模式下：<code>npm install node-fetch -g</code>。然后在每一个要使用 <code>node-fetch</code> 的项目中使用 <code>npm link node-fetch</code>，就可以将 <code>node-fetch</code> 链接到项目的 <code>node_modules</code> 下了。当 <code>npm update node-fetch -g</code> 更新时，所有 <code>link</code> 的项目会同时更新了。</li>
+</ol>
+<h2 id="解除">解除</h2>
+<p><code>npm unlink</code> 其实是 <code>npm uninstall</code> 的别名。</p>
+<ol>
+<li>在使用 <code>npm</code> 包的项目的文件目录下解除链接：</li>
+</ol>
+<pre><code>npm unlink my-library
+</code></pre>
+<ol start="2">
+<li>去除全局链接：</li>
+</ol>
+<pre><code>npm unlink my-library -g
+</code></pre>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/npm-yarn-yarn2-pnpm-ji-chong-bao-guan-li-dui-bi/" class="post-title gt-a-link">
+                    npm yarn yarn2 pnpm 几种包管理对比
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

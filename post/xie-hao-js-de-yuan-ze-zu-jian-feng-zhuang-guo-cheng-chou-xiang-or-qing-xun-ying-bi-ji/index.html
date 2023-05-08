@@ -1,0 +1,449 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>写好 JS 的原则 组件封装、过程抽象 ｜ 青训营笔记 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    写好 JS 的原则 组件封装、过程抽象 ｜ 青训营笔记
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2023-01-24 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tags">
+                            # JS
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p><a href="https://zkrisj.gitee.io//post/htmlcssjs-ge-si-qi-zhi-de-yuan-ze-or-qing-xun-ying-bi-ji/">上篇文章</a>通过一个深夜模式切换的示例，我们知道了写好 JS 的一些原则：</p>
+<ul>
+<li>让 HTML、CSS 和 JS 职能分离。</li>
+<li>应当避免不必要的由 JS 直接操作样式和 HTML。</li>
+<li>用 CSS 类（或伪元素）来表示状态。</li>
+<li>纯展示类交互可以寻求零 JS 方案。</li>
+</ul>
+<p>这样不仅便于后续代码的维护扩展，而且可以做到代码简洁、可读性高。在开发过程中，写好 JS 还有两个重要的原则：组件封装、过程抽象。</p>
+<p>UI 组件是指 Web 页面上抽出来一个个包含模版（HTML）、功能（JS）和样式（CSS）的单元。好的 UI 组件具备正确性、封装性、扩展性、复用性。</p>
+<h2 id="如何实现一个电商网站的轮播图">如何实现一个电商网站的轮播图？</h2>
+<ol>
+<li>HTML - 轮播图是一个典型的列表结构，我们可以使用无序列表 <code>ul</code> 元素来实现。</li>
+<li>CSS - 使用绝对定位将图片重叠在同一个位置，添加 CSS 类表示轮播图切换的状态，轮播图的切换动画使用 CSS transition。</li>
+<li>JS - API 设计应保证原子操作、职责单一、灵活性，并使用自定义事件 CustomEvent 来解耦控制流。</li>
+</ol>
+<h3 id="版本一">版本一</h3>
+<p>定义一个轮播图类，将各功能通过在类中定义一系列方法实现：</p>
+<ul>
+<li>getSelectedItem - 获取当前播放图片。</li>
+<li>getSelectedItemIndex - 获取当前播放图片指针。</li>
+<li>slideTo - 鼠标悬浮底部小圆点时，切换到指定位置图片。</li>
+<li>slideNext - 切换到下一张图片。</li>
+<li>slidePrevious - 切换到上一张图片。</li>
+<li>start - 轮播图开始播放。</li>
+<li>stop - 轮播图暂停播放。</li>
+<li>constructor - 构造函数，在里面定义逻辑和绑定事件。</li>
+</ul>
+<pre><code class="language-js">class Slider{
+  constructor(id, cycle = 3000){
+  }
+  getSelectedItem(){
+  }
+  getSelectedItemIndex(){
+  }
+  slideTo(idx){
+  }
+  slideNext(){
+  }
+  slidePrevious(){
+  }
+  start(){
+  }
+  stop(){
+  }
+}
+
+const slider = new Slider('my-slider');
+slider.start();
+</code></pre>
+<p>这样就实现了轮播图的功能，但是类中的构造器实在是太臃肿了，做了很多本来不应该它要做的事，如果我们要改需求，比如去除底部小圆点的鼠标悬浮切换图片的功能，那我们要在构造函数里面查找这部分功能并删去相应的代码。</p>
+<p>这样看来，我们只做到了封装性和正确性，但是缺乏扩展性和复用性，所以我们需要考虑插件化，将构造器进行简化，将各功能分离出来。</p>
+<iframe src="https://code.juejin.cn/pen/7108187834598555656"></iframe>
+<h3 id="版本二">版本二</h3>
+<p>将控制元素抽取成插件，插件与组件之间通过依赖注入（将依赖对象传入插件初始化函数）的方式建立联系和解耦，这样就提高了组件的可扩展性。</p>
+<p>首先将小圆点的控制抽离成一个插件 pluginController，插件接收的参数就是组件的实例，将控制流中的事件写在这里，插件中的逻辑就是之前构造函数中的逻辑。</p>
+<pre><code class="language-js">function pluginController(slider) {
+  const controller = slider.container.querySelector('.slide-list__control');
+  if (controller) {
+    const buttons = controller.querySelectorAll('.slide-list__control-buttons, .slide-list__control-buttons--selected');
+    controller.addEventListener('mouseover', evt =&gt; {
+      const idx = Array.from(buttons).indexOf(evt.target);
+      if (idx &gt;= 0) {
+        slider.slideTo(idx);
+        slider.stop();
+      }
+    });
+    controller.addEventListener('mouseout', evt =&gt; {
+      slider.start();
+    });
+    slider.addEventListener('slide', evt =&gt; {
+      const idx = evt.detail.index
+      const selected = controller.querySelector('.slide-list__control-buttons--selected');
+      if (selected) selected.className = 'slide-list__control-buttons';
+      buttons[idx].className = 'slide-list__control-buttons--selected';
+    });
+  }
+}
+</code></pre>
+<p>然后，将上一张图片按钮控制抽离成一个插件 pluginPrevious。</p>
+<pre><code class="language-js">function pluginPrevious(slider) {
+  const previous = slider.container.querySelector('.slide-list__previous');
+  if (previous) {
+    previous.addEventListener('click', evt =&gt; {
+      slider.stop();
+      slider.slidePrevious();
+      slider.start();
+      evt.preventDefault();
+    });
+  }
+}
+</code></pre>
+<p>然后，将下一张图片按钮控制抽离成一个插件 pluginPrevious。</p>
+<pre><code class="language-js">function pluginNext(slider) {
+  const next = slider.container.querySelector('.slide-list__next');
+  if (next) {
+    next.addEventListener('click', evt =&gt; {
+      slider.stop();
+      slider.slideNext();
+      slider.start();
+      evt.preventDefault();
+    });
+  }
+}
+</code></pre>
+<p>最后，在轮播图类中定义一个注册插件的方法。</p>
+<pre><code class="language-js">registerPlugins(...plugins) {
+  plugins.forEach(plugin =&gt; plugin(this));
+}
+</code></pre>
+<p>这样，我们就可以通过注册插件 registerPlugins 来使用各种插件，如果我们要去除底部小圆点的鼠标悬浮切换图片的功能，只需要调用 registerPlugins 方法时，不将 pluginController 传入即可。</p>
+<pre><code class="language-js">const slider = new Slider('my-slider');
+slider.registerPlugins(/*pluginController, */pluginPrevious, pluginNext);
+slider.start();
+</code></pre>
+<p>但是这里有了新的问题，下方小圆点虽然失效了，但是在页面上并没有消失，要将小圆点也去除就要手动去操作 HTML，所以我们需要解耦 HTML。</p>
+<iframe src="https://code.juejin.cn/pen/7108191112094973989"></iframe>
+<h3 id="版本三">版本三</h3>
+<p>将 HTML 模板化，也就是让 JavaScript 来渲染组件的 HTML，这样更易于扩展。</p>
+<figure data-type="image" tabindex="1"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/bae081c46ab34cddbeef5e3b7f8f0023~tplv-k3u1fbpfcp-watermark.image?" alt="t0196498fb325ccb123.png" loading="lazy"></figure>
+<p>将 HTML 解耦后，我们只需要一个轮播图容器标签即可。</p>
+<pre><code class="language-html">&lt;div id=&quot;my-slider&quot; class=&quot;slider-list&quot;&gt;&lt;/div&gt;
+</code></pre>
+<p>首先，在轮播图类中定义 render() 渲染方法，根据图片列表返回一段包含 ul 列表元素的 HTML 代码。</p>
+<pre><code class="language-js">render() {
+  const images = this.options.images;
+  const content = images.map(image =&gt; `
+      &lt;li class=&quot;slider-list__item&quot;&gt;
+        &lt;img src=&quot;${image}&quot;/&gt;
+      &lt;/li&gt;    
+    `.trim());
+  return `&lt;ul&gt;${content.join('')}&lt;/ul&gt;`;
+}
+</code></pre>
+<p>然后，在轮播图类中定义一个注册插件的方法。</p>
+<pre><code class="language-js">registerPlugins(...plugins) {
+  plugins.forEach(plugin =&gt; {
+    const pluginContainer = document.createElement('div');
+    pluginContainer.className = '.slider-list__plugin';
+    pluginContainer.innerHTML = plugin.render(this.options.images);
+    this.container.appendChild(pluginContainer);
+    plugin.action(this);
+  });
+}
+</code></pre>
+<p>然后，定义各个插件，插件中也要定义 render() 渲染方法，用来返回该插件对应的 HTML 代码，action() 方法用来定义插件逻辑。</p>
+<pre><code class="language-js">const pluginController = {
+  render(images) {
+    return `
+      &lt;div class=&quot;slide-list__control&quot;&gt;
+        ${images.map((image, i) =&gt; `
+            &lt;span class=&quot;slide-list__control-buttons${i===0?'--selected':''}&quot;&gt;&lt;/span&gt;
+         `).join('')}
+      &lt;/div&gt;    
+    `.trim();
+  },
+  action(slider) {
+    const controller = slider.container.querySelector('.slide-list__control');
+    if (controller) {
+      const buttons = controller.querySelectorAll('.slide-list__control-buttons, .slide-list__control-buttons--selected');
+      controller.addEventListener('mouseover', evt =&gt; {
+        const idx = Array.from(buttons).indexOf(evt.target);
+        if (idx &gt;= 0) {
+          slider.slideTo(idx);
+          slider.stop();
+        }
+      });
+      controller.addEventListener('mouseout', evt =&gt; {
+        slider.start();
+      });
+      slider.addEventListener('slide', evt =&gt; {
+        const idx = evt.detail.index
+        const selected = controller.querySelector('.slide-list__control-buttons--selected');
+        if (selected) selected.className = 'slide-list__control-buttons';
+        buttons[idx].className = 'slide-list__control-buttons--selected';
+      });
+    }
+  }
+};
+const pluginPrevious = {
+  render() {
+    return `&lt;a class=&quot;slide-list__previous&quot;&gt;&lt;/a&gt;`;
+  },
+  action(slider) {
+    const previous = slider.container.querySelector('.slide-list__previous');
+    if (previous) {
+      previous.addEventListener('click', evt =&gt; {
+        slider.stop();
+        slider.slidePrevious();
+        slider.start();
+        evt.preventDefault();
+      });
+    }
+  }
+};
+const pluginNext = {
+  render() {
+    return `&lt;a class=&quot;slide-list__next&quot;&gt;&lt;/a&gt;`;
+  },
+  action(slider) {
+    const previous = slider.container.querySelector('.slide-list__next');
+    if (previous) {
+      previous.addEventListener('click', evt =&gt; {
+        slider.stop();
+        slider.slideNext();
+        slider.start();
+        evt.preventDefault();
+      });
+    }
+  }
+};
+</code></pre>
+<p>最后，定义轮播图的构造函数，跟前面的构造函数不同的是，第二个参数是一个对象。由于轮播图内部 HTML 需要由 JavaScript 来渲染，所以需要手动先调用 this.slideTo(0) 渲染第一张图片。</p>
+<pre><code class="language-js">constructor(id, opts = {
+  images: [],
+  cycle: 3000
+}) {
+  this.container = document.getElementById(id);
+  this.options = opts;
+  this.container.innerHTML = this.render();
+  this.items = this.container.querySelectorAll('.slider-list__item, .slider-list__item--selected');
+  this.cycle = opts.cycle || 3000;
+  this.slideTo(0);
+}
+</code></pre>
+<p>这样，我们就可以通过注册插件 registerPlugins 来使用各种插件，如果我们要去除底部小圆点的鼠标悬浮切换图片的功能，只需要调用 registerPlugins 方法时，不将 pluginController 传入即可，同时底部小圆点也会在页面中去除。</p>
+<pre><code class="language-js">const slider = new Slider('my-slider', {
+  images: ['https://p5.ssl.qhimg.com/t0119c74624763dd070.png', 'https://p4.ssl.qhimg.com/t01adbe3351db853eb3.jpg',
+    'https://p2.ssl.qhimg.com/t01645cd5ba0c3b60cb.jpg', 'https://p4.ssl.qhimg.com/t01331ac159b58f5478.jpg'
+  ],
+  cycle: 3000
+});
+slider.registerPlugins(/*pluginController, */pluginPrevious, pluginNext);
+slider.start();
+</code></pre>
+<p>至此，扩展性有了，但是可复用性还不够，我们继续重构，将组件抽象成一个组件框架，提高组件的复用性。</p>
+<iframe src="https://code.juejin.cn/pen/7108191503301754910"></iframe>
+<h3 id="版本四">版本四</h3>
+<p>将通用的组件模型抽象出来，定义成一个通用组件类，这样我们如果有多个组件，就可以在各个组件中继承和复用这个组件模型。</p>
+<pre><code class="language-js">class Component{
+  constructor(id, opts = {name, data:[]}){
+    this.container = document.getElementById(id);
+    this.options = opts;
+    this.container.innerHTML = this.render(opts.data);
+  }
+  registerPlugins(...plugins){
+    plugins.forEach(plugin =&gt; {
+      const pluginContainer = document.createElement('div');
+      pluginContainer.className = `${this.options.name}__plugin`;
+      pluginContainer.innerHTML = plugin.render(this.options.data);
+      this.container.appendChild(pluginContainer);
+      
+      plugin.action(this);
+    });
+  }
+  render(data) {
+    /* 抽象方法 */
+    return ''
+  }
+}
+
+class Slider extends Component{
+  constructor(id, opts = {name: 'slider-list', data:[], cycle: 3000}){
+    super(id, opts);
+    this.items = this.container.querySelectorAll('.slider-list__item, .slider-list__item--selected');
+    this.cycle = opts.cycle || 3000;
+    this.slideTo(0);
+  }
+}
+</code></pre>
+<p>其他实现和版本三相同，这样我们就实现了一个小型的组件框架（还可以解耦 CSS）。、</p>
+<iframe src="https://code.juejin.cn/pen/7108185460320501774"></iframe>
+<h2 id="总结">总结</h2>
+<ol>
+<li>实现一个组件的步骤：结构设计、展现效果、行为设计。</li>
+<li>组件设计的原则：正确性、封装性、扩展性、复用性。</li>
+<li>组件重构的原则：插件化（扩展性）、模板化（易于扩展）、抽象化（复用性）。</li>
+</ol>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/htmlcssjs-ge-si-qi-zhi-de-yuan-ze-or-qing-xun-ying-bi-ji/" class="post-title gt-a-link">
+                    HTML、CSS、JS 各司其职的原则 ｜ 青训营笔记
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

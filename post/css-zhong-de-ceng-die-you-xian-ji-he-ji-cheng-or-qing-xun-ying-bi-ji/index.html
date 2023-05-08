@@ -1,0 +1,256 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>CSS 中的层叠、优先级和继承 ｜ 青训营笔记 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    CSS 中的层叠、优先级和继承 ｜ 青训营笔记
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2023-01-23 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/5W0xko0tt/" class="post-tags">
+                            # CSS
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p>CSS 中的层叠、优先级和继承决定着如何将 CSS 应用到 HTML 中，以及如何解决冲突。在某些时候，我们在做一个项目过程中会发现一些应该产生效果的样式没有生效，通常的原因是你创建了两个应用于同一个元素的规则，而设计元素样式的规则可能不是期望的规则，因此需要了解这些机制是如何工作的。</p>
+<h2 id="层叠">层叠</h2>
+<p>是 CSS 的一个基本特征，它是一个定义了如何合并来自多个源的属性值的算法。简单地说，就是 CSS 规则的顺序。它在 CSS 处于核心地位，CSS 的全称层叠样式表正是强调了这一点。有三个因素需要考虑，根据重要性排序（递增）如下：</p>
+<ol>
+<li>资源顺序 - 如果你有超过一条规则，而且都是相同的权重，那么最后面的规则会应用。</li>
+<li>优先级 - 决定在发生冲突的时候应该使用哪条规则。例如有些规则在最后出现，但是却应用了前面的具有冲突的规则，这是因为前面的有更高的优先级——它范围更小。</li>
+<li>重要程度 - 特殊的 CSS 规则 !important，用于修改特定属性的值，能够覆盖普通规则的层叠。</li>
+</ol>
+<p>大多数 @规则的 CSS 声明是参与层叠计算的，比如包含于 @media、@documents 或者@supports 的 CSS 声明，但是包含于 @keyframes 和 @font-face 的声明不参与计算，因为它们是作为一个整体参与层叠算法的筛选。另外，@import 和 @charset 遵循特定的算法，不受层叠算法影响。</p>
+<p>还可以使用 CSS @规则 中的 @layer 声明一个级联层，同一层内的规则将级联在一起，优先级的顺序由声明层的顺序来决定，这给予了开发者对层叠机制的更多控制。</p>
+<h2 id="优先级">优先级</h2>
+<p>优先级是基于不同种类选择器组成的匹配规则。浏览器是根据优先级来决定当多个规则有不同选择器对应相同的元素的时候需要使用哪个规则。</p>
+<ul>
+<li>如果一个元素选择器不是很具体，例如选择页面上该类型的所有元素（或伪元素），则它的优先级就会低一些。</li>
+<li>如果一个类选择器稍微具体点，例如选择该页面中有特定 class 属性值（或其他属性选择器）的元素，则它的优先级就要高一点。</li>
+<li>如果一个类选择器更具体点，例如选择该页面中有特定 id 属性值的元素，则它的优先级就要更高一点。</li>
+<li>给元素添加的内联样式 (例如，style=&quot;font-weight:bold&quot;) 总会覆盖外部样式表的任何样式，因此可看作是具有最高的优先级。</li>
+<li>当在一个样式声明中使用一个 !important 规则时，将覆盖任何其他声明，与优先级无关。</li>
+</ul>
+<p>下表列出了样式来源和其对应地重要程度（递增），例如 CSS 动画用 @keyframes @规则定义的值会覆盖全部普通值，但会被 !important 的值覆盖。</p>
+<table>
+<thead>
+<tr>
+<th>重要程度</th>
+<th>来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>用户代理</td>
+</tr>
+<tr>
+<td>2</td>
+<td>用户</td>
+</tr>
+<tr>
+<td>3</td>
+<td>页面作者</td>
+</tr>
+<tr>
+<td>4</td>
+<td>CSS 动画</td>
+</tr>
+<tr>
+<td>5</td>
+<td>页面作者（<code>!important</code>）</td>
+</tr>
+<tr>
+<td>6</td>
+<td>用户（<code>!important</code>）</td>
+</tr>
+<tr>
+<td>7</td>
+<td>用户代理（<code>!important</code>）</td>
+</tr>
+<tr>
+<td>8</td>
+<td>css 过渡 (css transitions)</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>浏览器会有一个基本的样式表来给任何网页设置默认样式，称为用户代理样式。</li>
+<li>网页的作者可以定义文档的样式，这是最常见的样式表。大多数情况下此类型样式表会定义多个，它们构成网站的视觉和体验，即主题。</li>
+<li>读者，作为浏览器的用户，可以使用自定义样式表定制使用体验。</li>
+<li>注意的是，原本级联水平高的声明应用了 !important 后，其优先级反而低，而原本级联水平低的声明应用了 !important 后，优先级反而高。</li>
+</ol>
+<h2 id="继承">继承</h2>
+<p>每个CSS 属性定义的概述都指出了这个属性是默认继承的 (&quot;Inherited: Yes&quot;) 还是默认不继承的 (&quot;Inherited: no&quot;)。这决定了当你没有为元素的属性指定值时该如何计算值。</p>
+<p>例如，你设置一个元素的 color 和 font-family，每个在里面的元素也都会有相同的属性，除非你直接在元素上设置属性。但是如果你在一个元素上设置 width 为 50% ，所有的后代元素则不会是父元素的宽度的 50% 。</p>
+<p>尽管每个 CSS 属性页都列出了属性是否被继承，但我们通常可以通过常识来判断哪些属性属于默认继承。</p>
+<ol>
+<li>inherit 关键字允许显式的声明继承性，它对继承和非继承属性都生效。</li>
+<li>可以使用 all 简写属性一次控制所有属性的继承，该属性将其值应用于所有属性。</li>
+<li>常见可继承属性有：字体系列属性、文本系列属性（color、text-align、letter-spacing 等）。</li>
+<li>常见不可继承属性有：背景系列属性、盒子模型属性（display、max-width、width、height、margin 、outline、border、padding 等）、定位属性（float、clear、position、top、overflow、clip、z-index 等）。</li>
+</ol>
+<h2 id="总结">总结</h2>
+<p>CSS 声明的优先级取决于定义它的样式表和级联层。</p>
+<ol>
+<li>可以设置自定义样式表来覆盖开发人员定义的样式：例如用户可能视力受损，并想在所有网页上设置两倍的正常字体大小，以便更容易进行阅读。</li>
+<li>可以使用新特性级联层：你可以让非分层样式（在任何层之外声明的 CSS 样式会被按声明的顺序组合在一起，形成一个未命名的层，它会被当作最后声明的层）覆盖分层样式，或者你可以让后面的层中声明的样式覆盖先前的层中声明的样式。例如，作为开发人员，你可能无法编辑第三方的样式表，但你可以将外部的样式表导入级联层中，以便你自己的样式可以轻松地覆盖导入的样式，无需担心第三方选择器的优先级。</li>
+</ol>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/html-zhong-de-yu-yi-yuan-su-or-qing-xun-ying-bi-ji/" class="post-title gt-a-link">
+                    HTML 中的语义元素 | 青训营笔记
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

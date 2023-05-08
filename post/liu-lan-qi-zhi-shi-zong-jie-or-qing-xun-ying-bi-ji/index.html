@@ -1,0 +1,295 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>浏览器知识总结 ｜ 青训营笔记 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    浏览器知识总结 ｜ 青训营笔记
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2023-04-28 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/hvtmfHfT6/" class="post-tags">
+                            # 术语
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="浏览器架构">浏览器架构</h2>
+<p>浏览器架构演进：</p>
+<ol>
+<li>单进程架构：所有模块运行在同一个进程里，包含网络、插件、JavaScript运行环境等。</li>
+<li>多进程架构：主进程、网络进程、渲染进程、GPU进程、插件进程。</li>
+<li>面向服务架构：将原来的U儿、数据库、文件、设备、网络等，作为一个独立的基础服务。</li>
+</ol>
+<figure data-type="image" tabindex="1"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/348f1f51ccc343adbc7527941c2f6d3d~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d552a8f4168d4563ae7bf2bf887b9cbc~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<h2 id="浏览器进程">浏览器进程</h2>
+<p>浏览器是一个复杂的软件，它通常会将不同的任务分配给多个进程来提高性能和安全性。以下是常见的浏览器进程：</p>
+<figure data-type="image" tabindex="3"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c88135878f0149ffa3de72b9043d5f52~tplv-k3u1fbpfcp-watermark.image?" alt="浏览器进程2.png" loading="lazy"></figure>
+<h2 id="渲染进程">渲染进程</h2>
+<p>内部是多线程实现，主要负责页面渲染，脚本执行，事件处理，网络请求等。在浏览器中，渲染进程通常使用 HTML、CSS 和 JavaScript 来解析和渲染网页。渲染进程会将 HTML、CSS 和 JavaScript 文件解析成 DOM(文档对象模型)、CSSOM(CSS 对象模型) 和 JavaScript 对象，然后使用这些对象来渲染网页。</p>
+<figure data-type="image" tabindex="4"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b31a5c62170a46268265316e3000f744~tplv-k3u1fbpfcp-watermark.image?" alt="浏览器渲染进程.png" loading="lazy"></figure>
+<h3 id="js-引擎和渲染引擎通信">JS 引擎和渲染引擎通信</h3>
+<ol>
+<li>解析执行 JS。</li>
+<li>XML 解析生成渲染树，显示在屏幕。</li>
+<li>桥接方式通信。</li>
+</ol>
+<h3 id="渲染进程的多线程工作流程">渲染进程的多线程工作流程</h3>
+<figure data-type="image" tabindex="5"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/41fbd685d61b4e8b9370b84b00b4f99f~tplv-k3u1fbpfcp-watermark.image?" alt="渲染进程多线程工作流程.png" loading="lazy"></figure>
+<ol>
+<li>网络线程负责加载网页资源。</li>
+<li>JS 引擎解析 JS 脚本并且执行。</li>
+<li>JS 解析引擎空闲时，渲染线程立即工作。</li>
+<li>用户交互、定时器操作等产生回调函数放入任务队列中。</li>
+<li>事件线程进行事件循环，将队列里的任务取出交给 JS 引擎执行。</li>
+</ol>
+<h2 id="chrome-运行原理">Chrome 运行原理</h2>
+<h3 id="如何展示网页">如何展示网页</h3>
+<p>浏览器地址输入 URL 后发生了什么：</p>
+<figure data-type="image" tabindex="6"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/09e7cb2385a34a29ba82af355457b1ba~tplv-k3u1fbpfcp-watermark.image?" alt="浏览器地址输入URL后发生了什么.png" loading="lazy"></figure>
+<h3 id="输入处理">输入处理</h3>
+<ol>
+<li>用户 URL 框输入内容后，UI 线程会判断输入的是一个 URL 地址还是一个 query 查询条件。</li>
+<li>如果是 URL，直接请求站点资源。</li>
+<li>如果是 query，将输入发送给搜索引擎。</li>
+</ol>
+<h2 id="开始导航">开始导航</h2>
+<figure data-type="image" tabindex="7"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f8ee77a67c7f4da8a5f1afc78b6f48e1~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<ol>
+<li>当用户按下回车，UI 线程通知网络线程发起一个网络请求，来获取站点内容。</li>
+<li>请求过程中，tab 处于 loading 状态。</li>
+</ol>
+<h3 id="读取响应">读取响应</h3>
+<figure data-type="image" tabindex="8"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e24b648a5401443abc354f48e1d3099c~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<ol>
+<li>网络线程接收到 HTTP 响应后，先检查响应头的媒体类型(MIME Type)。</li>
+<li>如果响应主体是一个 HTML 文件，浏览器将内容交给渲染进程处理。</li>
+<li>如果拿到的是其他类型文件，比如 Zip、exe 等，则交给下载管理器处理。</li>
+</ol>
+<h3 id="主进程寻找渲染进程">主进程寻找渲染进程</h3>
+<figure data-type="image" tabindex="9"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/17f85764605e487084e35a25ca167014~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<ol>
+<li>网络线程做完所有检查后，会告知主进程数据已准备完毕，主进程确认后为这个站点寻找一个渲染进程。</li>
+<li>主进程通过 IPC 消息告知渲染进程去处理本次导航。</li>
+<li>渲染进程开始接收数据并告知主进程自己已开始处理，导航结束，进入文档加载阶段。</li>
+</ol>
+<h3 id="渲染进程加载资源">渲染进程加载资源</h3>
+<figure data-type="image" tabindex="10"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5b7fcba3bc364404ad1b6f50baa17b5d~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<ol>
+<li>收到主进程的消息后，开始加载 HTML 文档。</li>
+<li>除此之外，还需要加载子资源，比如一些图片，CSS 样式文件以及 JavaScript 脚本。</li>
+</ol>
+<h3 id="渲染进程构建渲染树">渲染进程构建渲染树</h3>
+<figure data-type="image" tabindex="11"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/67c10f8ecb0c4376bb9470e48241bc42~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<ol>
+<li>构建 DOM 树，将 HTML 文本转化成浏览器能够理解的结构。</li>
+<li>构建 CSSOM 树，浏览器同样不认识 CSS，需要将 CSS 代码转化为可理解的 CSSOM。</li>
+<li>构建渲染树，渲染树是 DOM 树和 CSSOM 树的结合。</li>
+</ol>
+<h3 id="渲染进程进行页面布局">渲染进程进行页面布局</h3>
+<figure data-type="image" tabindex="12"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/da0e147f92a34b68a0af5790fe536ec1~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<ol>
+<li>根据渲染树计算每个节点的位置和大小。</li>
+<li>在浏览器页面区域绘制元素边框。</li>
+<li>遍历渲染树，将元素以盒模型的形式写入文档流。</li>
+</ol>
+<h3 id="渲染进程页面绘制">渲染进程页面绘制</h3>
+<figure data-type="image" tabindex="13"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/db3c90a8ce2d4e818dd1b5b00a5735f3~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<ol>
+<li>构建图层：为特定的节点生成专用图层。</li>
+<li>绘制图层：一个图层分成很多绘制指令，然后将这些指令按顺序组成一个绘制列表，交给合成线程。</li>
+<li>合成线程接收指令生成图块。</li>
+<li>栅格线程将图块进行栅格化。</li>
+<li>展示在屏幕上。</li>
+</ol>
+<figure data-type="image" tabindex="14"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/de43d4fd93f64e77b67f83a96b47f5b1~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<h2 id="前端性能-performance">前端性能 Performance</h2>
+<figure data-type="image" tabindex="15"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/dbdb43549c6d41a28a870e044e683205~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<ol>
+<li>时间都花在哪里。</li>
+<li>什么情况下卡顿。</li>
+</ol>
+<h3 id="首屏优化">首屏优化</h3>
+<ol>
+<li>压缩、分包、删除无用代码。</li>
+<li>静态资源分离。</li>
+<li>JS 脚本非阻塞加载。</li>
+<li>缓存策略。</li>
+<li>SSR。</li>
+<li>预置 loading、骨架屏。</li>
+</ol>
+<h3 id="渲染优化">渲染优化</h3>
+<ol>
+<li>GPU 加速。</li>
+<li>减少回流、重绘。</li>
+<li>离屏渲染。</li>
+<li>懒加载。</li>
+</ol>
+<h3 id="js-优化">JS 优化</h3>
+<ol>
+<li>防止内存泄漏。</li>
+<li>循环尽早 <code>break</code>。</li>
+<li>合理使用闭包。</li>
+<li>减少 Dom 访问。</li>
+<li>防抖、节流。</li>
+<li>使用异步 JavaScript（消息队列，微任务）可以使得主线程在等待请求返回结果的同时继续往下执行。</li>
+<li>Web Workers。</li>
+</ol>
+<h2 id="总结">总结</h2>
+<figure data-type="image" tabindex="16"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c44e408a1f554232b5ceaa40235ead6f~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/mouseevent-shu-biao-shi-jian-xiang-jie/" class="post-title gt-a-link">
+                    MouseEvent 鼠标事件详解
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

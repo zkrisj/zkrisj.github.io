@@ -1,0 +1,223 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>V3 Admin Vite 接口和打包配置 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    V3 Admin Vite 接口和打包配置
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2023-05-02 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/Gh8djQs1V/" class="post-tags">
+                            # Vue
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p><a href="https://github.com/un-pany/v3-admin-vite">V3 Admin Vite</a> 是一个免费开源的中后台管理系统基础解决方案，基于 Vue3、TypeScript、Element Plus、Pinia 和 Vite 等主流技术。另外还有：</p>
+<ul>
+<li>Vue-Cli 5.x 版: <a href="https://github.com/un-pany/v3-admin">v3-admin</a></li>
+<li>Electron 桌面版: <a href="https://github.com/un-pany/v3-electron-vite">v3-electron-vite</a></li>
+</ul>
+<h2 id="接口">接口</h2>
+<ol>
+<li>所有的请求最终都是通过 Axios 来发送的，我们可以找到封装 Axios 的文件，看见后端接口的 <code>baseURL</code> 是 <code>import.meta.env.VITE_BASE_API</code>。</li>
+</ol>
+<figure data-type="image" tabindex="1"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f8f85842a20f43c2940d7bbb6b6cba4d~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<ol start="2">
+<li>可以在 <code>.env</code> 配置文件（<code>.env.development</code> 代表开发环境配置， <code>.env.staging</code> 代表预发布环境配置，<code>.env.production</code> 代表正式环境配置）中找到定义 <code>VITE_BASE_API</code> 的地方：</li>
+</ol>
+<figure data-type="image" tabindex="2"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3871161ed651459ca040fbf25e058034~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<ul>
+<li>这里采用了相对路径 <code>/api/v1</code>，例如开发环境运行在 <code>http://localhost:3333</code> 路径下，也就意味着前端调用后端接口时，调用的具体的 <code>baseURL</code> 将会是 <code>http://localhost:3333/api/v1</code>。</li>
+<li>登录接口的 url 是 <code>users/login</code>，也就意味着，在调用该接口时，最终请求的路径将会是：<code>baseURL</code> + 该接口的 url = <code>http://localhost:3333/api/v1/users/login</code>。</li>
+</ul>
+<figure data-type="image" tabindex="3"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d451db34766e4cf7a8b9dbf562af2d7d~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<ol start="3">
+<li>由于真实后端接口是部署在线上的，假如线上部署的登录接口完整路径是：<br>
+<code>https://mock.mengxuegu.com/mock/6321865fb4c53348ed2bc212/api/ul/users/login</code>，<br>
+那么我们可以通过反向代理来将 <code>http://localhost:3333</code> 代理到 <code>https://mock.mengxuegu.com/mock/63218b5fb4c53348ed2bc212</code>。反向代理配置如图：</li>
+</ol>
+<figure data-type="image" tabindex="4"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a64fe4d5f0cd43f2b1060cf076767a68~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<blockquote>
+<p>这只是开发环境配置好了反向代理，以后部署前端到线上环境的时候，需要采用 Nginx 或其他工具来实现线上环境的反向代理。</p>
+</blockquote>
+<h2 id="打包">打包</h2>
+<ol>
+<li>模板项目本身是需要部署到这个域名下：<code>https://un-pany.github.io/v3-admin-vite/</code>，所以我们需要在 <code>.env.staging</code> 和 <code>.env.production</code> 中设置打包路径：</li>
+</ol>
+<pre><code class="language-sh">## 打包路径（就是网站前缀，例如部署到 https://un-pany.github.io/v3-admin-vite/ 域名下，就需要填写 /v3-admin-vite/）
+VITE_PUBLIC_PATH = '/v3-admin-vite/'
+</code></pre>
+<ul>
+<li>假如是要部署到 <code>https://xxx.com/yyy/</code> 下，那么就需要填写 <code>VITE_PUBLIC_PATH = '/yyy/'</code>。假如是要部署到 <code>https://xxx.com/</code> 下，那么就需要填写 <code>VITE_PUBLIC_PATH = '/'</code>。</li>
+</ul>
+<ol start="2">
+<li>和打包相关的命令是 <code>build</code>，我们以打包正式环境为例，就要运行下面的命令：</li>
+</ol>
+<pre><code class="language-sh">pnpm build:prod
+</code></pre>
+<p>这个命令就会自动去读取我们前文配置好的 <code>.env.production</code> 文件，而 <code>pnpm build:stage</code> 会自动读取 <code>.env.staging</code> 文件，代表的是预发布环境。</p>
+<ol start="3">
+<li>打包完成后，就可以在根目录下，看见一个名为 <code>dist</code> 的静态资源文件夹，这整个文件夹就是需要丢到前端服务器上去的东西。</li>
+</ol>
+<figure data-type="image" tabindex="5"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3e7973a6e6824b028c9c7a94ebe2662e~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<ol start="4">
+<li>然后可以通过运行 <code>pnpm preview:stage</code> 或 <code>pnpm preview:prod</code> 来预览 <code>dist</code> 中的静态资源文件。</li>
+</ol>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/v3-admin-vite-jie-shao-he-ji-ben-shi-yong/" class="post-title gt-a-link">
+                    V3 Admin Vite 介绍和基本使用
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

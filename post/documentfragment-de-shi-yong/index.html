@@ -1,0 +1,245 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>DocumentFragment 的使用 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    DocumentFragment 的使用
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-08-29 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tags">
+                            # JS
+                        </a>
+                    
+                        <a href="https://zkrisj.github.io/tag/10MZNKSN7/" class="post-tags">
+                            # HTML
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p>构建渲染树的任何改变都可能导致重绘或回流，例如：</p>
+<ul>
+<li>添加、删除、更新 <code>DOM</code> 节点。</li>
+<li>使用 <code>display: none</code>（回流和重绘）或 <code>visibility: hidden</code>（仅重绘，因为没有几何形状发生变化）隐藏 <code>DOM</code> 节点。</li>
+<li><code>DOM</code> 节点的移动和动画。</li>
+<li>添加样式表或调整样式属性。</li>
+<li>用户操作，例如调整窗口大小、更改字体大小或滚动页面。</li>
+</ul>
+<p>以前我们可以使用节点的 <code>cloneNode()</code> 方法，在克隆的节点上进行操作，然后再用克隆的节点替换原始节点来优化性能，而现在我们可以使用 <code>DocumentFragment</code>。</p>
+<p><code>DocumentFragment</code>（文档片段），与 <code>document</code> 一样，没有父节点，存储由节点（<code>Node</code>）组成的文档结构。但它不是主 <code>DOM</code> 树的一部分，它的变化不会触发 <code>DOM</code> 树的重新渲染，且不会对性能产生影响。</p>
+<p>因为文档片段存在于内存中，并不在 <code>DOM</code> 树中，所以将子元素插入到文档片段时不会引起页面回流（对元素位置和几何上的计算）。因此，使用文档片段通常会带来 <a href="https://johnresig.com/blog/dom-documentfragments/">更好的性能</a>。</p>
+<h2 id="使用">使用</h2>
+<p>文档片段接口没有特定属性和方法，都继承自其父接口 <code>Node</code>。</p>
+<p>最常用的方法是使用 <code>DocumentFragment</code> 创建并组成一个 <code>DOM</code> 子树，然后将其插入到 <code>DOM</code> 中。这种情况下会插入片段的所有子节点，并留下一个空的 <code>DocumentFragment</code>。因为所有的节点会被一次插入到文档中，所以仅会发生一个重渲染的操作，而不是每个节点分别被插入到文档中从而发生多次重渲染的操作。</p>
+<p>该接口在 <code>Web</code> 组件（<code>Web components</code>）中也非常有用：<code>&lt;template&gt;</code> 元素在其 <code>HTMLTemplateElement.content</code> 属性中包含了一个 <code>DocumentFragment</code>。</p>
+<p>可以使用 <code>document.createDocumentFragment</code> 方法或者构造函数 <code>new DocumentFragment()</code> 来创建一个空的 <code>DocumentFragment</code>。</p>
+<pre><code class="language-js">let fragement = document.createDocumentFragment();
+console.log(fragement.nodeName); // #document-fragment
+console.log(fragement.nodeType); // 11
+console.log(fragement.nodeValue); // null
+console.log(fragement.parentNode); // null
+fragement.append(document.createElement('p'));
+console.log(fragment.childElementCount); // 1
+document.body.append(fragement);
+console.log(fragment.childElementCount); // 0
+</code></pre>
+<h2 id="示例">示例</h2>
+<p>比如，我们要在一个列表中插入 <code>10000</code> 个节点：</p>
+<pre><code class="language-html">&lt;button onclick=&quot;myFunction()&quot;&gt;document&lt;/button&gt;
+&lt;button onclick=&quot;myFunction2()&quot;&gt;DocumentFragment&lt;/button&gt;
+&lt;ul id=&quot;ul&quot;&gt;
+  &lt;li&gt;0&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<p>一个个的插入到 <code>DOM</code>，并计算所用时间：</p>
+<pre><code class="language-js">function myFunction() {
+  console.time('document');
+  for (let i = 1; i &lt;= 10000; i++) {
+    const li = document.createElement('li');
+    li.textContent = 'document';
+    ul.append(li);
+  }
+  console.timeEnd('document');
+}
+</code></pre>
+<p>先把所有节点添加到 <code>DocumentFragment</code>，然后一次性插入 <code>DOM</code>，并计算所用时间：</p>
+<pre><code class="language-js">function myFunction2() {
+  const fragment = new DocumentFragment();
+  console.time('DocumentFragment');
+  for (let i = 1; i &lt;= 10000; i++) {
+    const li = document.createElement('li');
+    li.textContent = 'DocumentFragment';
+    fragment.append(li);
+  }
+  ul.appendChild(fragment);
+  console.timeEnd('DocumentFragment');
+}
+</code></pre>
+<p>可以看到使用 <code>DocumentFragment</code> 在处理大批量 <code>DOM</code> 操作时，可以节省很大的性能，在 <code>DOM</code> 操作越多时，这种优势越明显。</p>
+<figure data-type="image" tabindex="1"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ecaf477fe05c46e7af9b503ca7509b20~tplv-k3u1fbpfcp-watermark.image?" alt="4bd237cfc98c4264ba50a5937ded3c37_tplv-k3u1fbpfcp-zoom-in-crop-mark_3024_0_0_0.awebp" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9cb06ca00950472f9d6480decdf8c609~tplv-k3u1fbpfcp-watermark.image?" alt="02cb8793421b4355bbd7afdb635f068a_tplv-k3u1fbpfcp-zoom-in-crop-mark_3024_0_0_0.awebp" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f129cd5fb616496496e08aaee16a461a~tplv-k3u1fbpfcp-watermark.image?" alt="微信截图_20220818125903.png" loading="lazy"></figure>
+<iframe src="https://code.juejin.cn/pen/7133071969871724581"></iframe>
+<h2 id="引用资料">引用资料：</h2>
+<ol>
+<li><a href="https://juejin.cn/post/6952499015879507982">深入理解DocumentFragment -文档片段</a></li>
+<li><a href="https://www.ruanyifeng.com/blog/2015/09/web-page-performance-in-depth.html">网页性能管理详解</a></li>
+<li><a href="https://johnresig.com/blog/dom-documentfragments/">DOM DocumentFragments</a></li>
+</ol>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/web-components-he-vue-zu-jian-react-zu-jian/" class="post-title gt-a-link">
+                    Web Components 和 Vue 组件、React 组件
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

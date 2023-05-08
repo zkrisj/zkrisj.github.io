@@ -1,0 +1,358 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>V3 Admin Vite 权限控制 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    V3 Admin Vite 权限控制
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2023-05-09 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/Gh8djQs1V/" class="post-tags">
+                            # Vue
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p><a href="https://github.com/un-pany/v3-admin-vite">V3 Admin Vite</a> 是一个免费开源的中后台管理系统基础解决方案，基于 Vue3、TypeScript、Element Plus、Pinia 和 Vite 等主流技术。另外还有：</p>
+<ul>
+<li>Vue-Cli 5.x 版: <a href="https://github.com/un-pany/v3-admin">v3-admin</a></li>
+<li>Electron 桌面版: <a href="https://github.com/un-pany/v3-electron-vite">v3-electron-vite</a></li>
+</ul>
+<h2 id="目录结构">目录结构</h2>
+<pre><code class="language-sh"># v3-admin-vite
+├─ .husky                # 用户提交代码时格式化代码
+├─ .vscode               # 本项目推荐的 vscode 配置和拓展
+├─ public
+│  ├─ favicon.ico
+│  ├─ app-loading.css    # 首屏加载 loading
+├─ src
+│  ├─ api                # api 接口
+│  ├─ assets             # 静态资源
+│  ├─ components         # 全局组件
+│  ├─ config             # 全局配置
+│  ├─ constant           # 常量/枚举
+│  ├─ directives         # 全局指令
+│  ├─ hooks              # 全局 hook
+│  ├─ icons              # svg icon
+│  ├─ layout             # 布局
+│  ├─ plugins            # 全局插件
+│  ├─ router             # 路由
+│  ├─ store              # pinia store
+│  ├─ styles             # 全局样式
+│  ├─ utils              # 全局公共方法
+│  └─ views              # 所有页面
+│  ├─ App.vue            # 入口页面
+│  └─ main.ts            # 入口文件
+├─ tests                 # 单元测试
+├─ types                 # ts 声明
+├─ .env.development      # 开发环境
+├─ .env.production       # 正式环境
+├─ .env.staging          # 预发布环境
+├─ .eslintrc.js          # eslint 配置
+├─ .prettier.config.js   # prettier 配置
+├─ tsconfig.json         # ts 编译配置
+├─ unocss.config.ts      # unocss 配置
+└─ vite.config.ts        # vite 配置
+</code></pre>
+<h2 id="页面权限">页面权限</h2>
+<ol>
+<li>动态路由：<code>@/src/router/index.ts</code> 就是用来存放常驻路由和动态路由的文件，如图所示：</li>
+</ol>
+<figure data-type="image" tabindex="1"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/708d49a7f7294ee1babb74bdd640cfa5~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<p>需要挂载的路由就存放在 <code>constantRoutes</code> 数组下，比如登录页、首页；需要用户登录并根据角色字段来判断是否有权限的路由，就放在 <code>asyncRoutes</code> 数组下，并且要为该路由配置好 <code>roles</code> 和 <code>name</code> 属性。下面是项目中写好的一个动态路由示例：</p>
+<pre><code class="language-ts">{
+  path: &quot;/permission&quot;,
+  component: Layout,
+  redirect: &quot;/permission/page&quot;,
+  name: &quot;Permission&quot;, // 不要忘了写
+  meta: {
+    title: &quot;权限管理&quot;,
+    svgIcon: &quot;lock&quot;,
+    roles: [&quot;admin&quot;, &quot;editor&quot;], // 可以在根路由中设置角色
+    alwaysShow: true // 将始终显示根菜单
+  },
+  children: [
+    {
+      path: &quot;page&quot;,
+      component: () =&gt; import(&quot;@/views/permission/page.vue&quot;),
+      name: &quot;PagePermission&quot;, // 不要忘了写
+      meta: {
+        title: &quot;页面权限&quot;,
+        roles: [&quot;admin&quot;] // 或者在子导航中设置角色
+      }
+    },
+    {
+      path: &quot;directive&quot;,
+      component: () =&gt; import(&quot;@/views/permission/directive.vue&quot;),
+      name: &quot;DirectivePermission&quot;, // 不要忘了写
+      meta: {
+        title: &quot;指令权限&quot; // 如果未设置角色，则表示：该页面不需要权限，但会继承根路由的角色
+      }
+    }
+  ]
+}
+</code></pre>
+<p>登录 <code>admin</code> 账号时，可以看见这两个页面：</p>
+<figure data-type="image" tabindex="2"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2869f2c542b7430bb98d23b3a3da8464~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<p>登录 <code>editor</code> 账号时，只能看见一个页面：</p>
+<figure data-type="image" tabindex="3"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9ebca4a5f48a42b6a49d585ec36a1bb2~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<ol start="2">
+<li>项目默认开启动态路由功能，在 <code>@/src/config/async-route.ts</code> 文件中可以找到是否开启动态路由的开关，源码如下，只需要将下面代码中的 <code>asyncRouteSettings.open</code> 设置为 <code>true</code> 就可以开启动态路由功能：</li>
+</ol>
+<pre><code class="language-ts">/** 动态路由配置 */
+interface IAsyncRouteSettings {
+  /**
+   * 是否开启动态路由功能？
+   * 1. 开启后需要后端配合，在查询用户详情接口返回当前用户可以用来判断并加载动态路由的字段（该项目用的是角色 roles 字段）
+   * 2. 假如项目不需要根据不同的用户来显示不同的页面，则应该将 open: false
+   */
+  open: boolean
+  /** 当动态路由功能关闭时：
+   * 1. 应该将所有路由都写到常驻路由里面（表明所有登陆的用户能访问的页面都是一样的）
+   * 2. 系统自动给当前登录用户赋值一个没有任何作用的默认角色
+   */
+  defaultRoles: Array&lt;string&gt;
+}
+
+const asyncRouteSettings: IAsyncRouteSettings = {
+  open: true,
+  defaultRoles: [&quot;DEFAULT_ROLE&quot;]
+}
+
+export default asyncRouteSettings
+</code></pre>
+<p>开启以后，主要是作用于路由守卫 <code>@/src/router/permission.ts</code> 中的这样一段代码：</p>
+<pre><code class="language-ts">if (asyncRouteSettings.open) {
+  // 注意：角色必须是一个数组！ 例如: ['admin'] 或 ['developer', 'editor']
+  await userStore.getInfo()
+  const roles = userStore.roles
+  // 根据角色生成可访问的 Routes（可访问路由 = 常驻路由 + 有访问权限的动态路由）
+  permissionStore.setRoutes(roles)
+} else {
+  // 没有开启动态路由功能，则启用默认角色
+  userStore.setRoles(asyncRouteSettings.defaultRoles)
+  permissionStore.setRoutes(asyncRouteSettings.defaultRoles)
+}
+</code></pre>
+<p>如果开启该功能，那么通过用户详情接口拿到用户角色数组后，根据角色去过滤动态路由，然后再通过 <code>router.addRoute()</code> 挂载过滤之后的动态路由。</p>
+<ol start="3">
+<li>如果选择关闭动态路由功能，要记得将所有路由都写在常驻路由数组里面（虽然写在动态路由数组里也行，因为程序兼容了这种偷懒），这样的话，所有登陆的用户能访问的页面都是一模一样的了。</li>
+</ol>
+<h2 id="内容权限">内容权限</h2>
+<ol>
+<li><code>@/src/utils/permission.ts</code> 文件里，有一个 <code>checkPermission</code> 权限判断函数：</li>
+</ol>
+<pre><code class="language-ts">import { useUserStoreHook } from &quot;@/store/modules/user&quot;
+
+/** 权限判断函数 */
+export const checkPermission = (value: string[]): boolean =&gt; {
+  if (value &amp;&amp; value instanceof Array &amp;&amp; value.length &gt; 0) {
+    const roles = useUserStoreHook().roles
+    const permissionRoles = value
+    return roles.some((role) =&gt; {
+      return permissionRoles.includes(role)
+    })
+  } else {
+    console.error(&quot;need roles! Like checkPermission(['admin','editor'])&quot;)
+    return false
+  }
+}
+</code></pre>
+<p>向该函数传递一个权限数组，然后它会去对比当前登录用户的角色数组，如果能匹配上，就返回 <code>true</code>，它的使用方法非常简单，<code>checkPermission</code> 函数配合 <code>v-if</code> 即可：</p>
+<pre><code class="language-html">// 引入
+import { checkPermission } from &quot;@/utils/permission&quot;
+</code></pre>
+<pre><code class="language-html">// 使用
+&lt;el-button v-if=&quot;checkPermission(['admin'])&quot;&gt;按钮&lt;/el-button&gt;
+</code></pre>
+<p>更多详细的使用案例，可见 <code>@/views/permission/directive.vue</code> 页面。</p>
+<ol start="2">
+<li><code>@/directives/permission/index.ts</code> 文件里，写好了权限判断指令 <code>v-permission</code>：</li>
+</ol>
+<pre><code class="language-ts">import { type Directive } from &quot;vue&quot;
+import { useUserStoreHook } from &quot;@/store/modules/user&quot;
+
+/** 权限指令 */
+export const permission: Directive = {
+  mounted(el, binding) {
+    const { value } = binding
+    const roles = useUserStoreHook().roles
+    if (value &amp;&amp; value instanceof Array &amp;&amp; value.length &gt; 0) {
+      const permissionRoles = value
+      const hasPermission = roles.some((role) =&gt; {
+        return permissionRoles.includes(role)
+      })
+      if (!hasPermission) {
+        el.style.display = &quot;none&quot;
+      }
+    } else {
+      throw new Error(`need roles! Like v-permission=&quot;['admin','editor']&quot;`)
+    }
+  }
+}
+</code></pre>
+<p>向该指令传递一个权限数组，然后它会去对比当前登录用户的角色数组，如果不能匹配上，就通过 CSS <code>style.display = &quot;none&quot;</code> 将其隐藏，<code>v-permission</code> 已经通过 <code>app.directive()</code> 挂载完成，可以直接在 <code>template</code> 中直接使用：</p>
+<pre><code class="language-html">&lt;el-button v-permission=&quot;['admin']&quot;&gt;按钮&lt;/el-button&gt;
+</code></pre>
+<p>更多详细的使用案例，可见 <code>@/views/permission/directive.vue</code> 页面。</p>
+<h2 id="参考资料">参考资料</h2>
+<ol>
+<li><a href="https://juejin.cn/post/7226261250576597050">【V3 Admin Vite】教程五：前端权限（涉及角色、动态路由、权限函数、权限指令）</a></li>
+</ol>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/v3-admin-vite-lu-you-pei-zhi-bu-ju-pei-zhi-quan-ju-yang-shi/" class="post-title gt-a-link">
+                    V3 Admin Vite 路由配置、布局配置、全局样式
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

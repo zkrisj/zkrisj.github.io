@@ -1,0 +1,260 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>跨端容器简介 ｜ 青训营笔记 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    跨端容器简介 ｜ 青训营笔记
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2023-04-28 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/hvtmfHfT6/" class="post-tags">
+                            # 术语
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p>跨端容器（Cross-platform container）是一种软件技术，它可以将应用程序在不同的操作系统和/或硬件平台上运行，而无需修改应用程序代码。跨端容器通常提供了一层抽象，使得应用程序可以在不同的平台上运行，而无需了解底层平台的细节。</p>
+<p>跨端容器通常使用虚拟化技术来实现平台无关性。例如，Java 虚拟机（JVM）是一种跨平台容器，它可以在不同的操作系统上运行 Java 应用程序。类似地，Docker 是一种跨平台容器，它可以将应用程序和其依赖项打包到容器中，以保证在不同的环境中具有一致的行为。</p>
+<p>在移动应用开发中，跨平台容器也被称为跨平台开发框架或混合开发框架。常见的跨端容器包括 React Native、Flutter、Ionic 等。这些框架可以让开发者使用常见的 Web 技术（如 HTML、CSS 和 JavaScript）来构建原生应用程序，并在多个平台上运行，包括 iOS、Android 和 Web 等。</p>
+<h2 id="为什么需要跨端">为什么需要跨端</h2>
+<figure data-type="image" tabindex="1"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b2e2e379db394d6c94de65ec9dd8407c~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<ol>
+<li>开发成本、效率。</li>
+<li>一致性体验。</li>
+<li>前端开发生态。</li>
+</ol>
+<h2 id="webview">Webview</h2>
+<ol>
+<li>Webview，即网页视图，用于加载网页 Url,并展示其内容的控件。</li>
+<li>可以内嵌在移动端 App 内，实现前端混合开发，大多数混合框架都是基于 Webview 的二次开发；比如 Ionic、Cordova。</li>
+<li>下面列出了常用的 Webview：</li>
+</ol>
+<figure data-type="image" tabindex="2"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4d4886e4fe3c4eb4a08f09d6a05648e8~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<h3 id="webview-优势">Webview 优势</h3>
+<ol>
+<li>一次开发，处处使用，学习成本低。</li>
+<li>随时发布，即时更新，不用下载安装包。</li>
+<li>移动设备性能不断提升，性能有保障。</li>
+<li>通过 JSBridge 和原生系统交互，实现复杂功能。</li>
+</ol>
+<h3 id="webview-使用原生能力">Webview 使用原生能力</h3>
+<p>Javascript 调用 Native：</p>
+<ol>
+<li>API 注入：Native 获取 Javascript 环境上下文，对其挂载的对象或者方法进行拦截</li>
+<li>使用 Webview URL Scheme 跳转拦截</li>
+<li>IOS 上 window.webkit.messageHandler 直接通信</li>
+</ol>
+<p>Native 调用 Javascript：</p>
+<ol>
+<li>直接通过 Webview 暴露的 API 执行 JS 代码</li>
+<li>IOS webview.stringByEvaluatingJavaScriptFromString</li>
+<li>Android webview.evaluateJavascript</li>
+</ol>
+<h3 id="webview-和-native-通信">Webview 和 Native 通信</h3>
+<figure data-type="image" tabindex="3"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/32e718fa15224feeadbcec11590466f1~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<ol>
+<li>JS 环境中提供通信的 JSBridge。</li>
+<li>Native 端提供 SDK 响应 JSBridge 发出的调用前端和客户端分别实现对应功能模块。</li>
+</ol>
+<h3 id="实现一个简易-jsbridge">实现一个简易 JSBridge</h3>
+<img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2c404a88c9a0490bb1554d1576b02615~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" width="48%" />
+<img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/53cf79f1e13b4507a0b934dadcc6ce72~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" width="49%" />
+<h2 id="小程序">小程序</h2>
+<figure data-type="image" tabindex="4"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/178b0f7669fb4047a8b51e4167b04a70~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<ol>
+<li>微信、支付宝、百度小程序、小米直达号</li>
+<li>渲染层-Webview</li>
+<li>双线程，多 Webview 架构</li>
+<li>数据通信，Native 转发</li>
+</ol>
+<h2 id="react-nativeweex">React Native/WeeX</h2>
+<figure data-type="image" tabindex="5"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/47d6ac1fc4e04330a5f8817eb10a2e59~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<ol>
+<li>原生组件渲染</li>
+<li>React/Vue框架</li>
+<li>virtual dom</li>
+<li>JSBridge</li>
+</ol>
+<h2 id="lynx">Lynx</h2>
+<figure data-type="image" tabindex="6"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/fc72752c72b44d98b7376a9c9088cdb3~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<ol>
+<li>Vue</li>
+<li>JS Core /V8</li>
+<li>JSBinding</li>
+<li>Native Ul/Skia</li>
+</ol>
+<h2 id="flutter">Flutter</h2>
+<figure data-type="image" tabindex="7"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4300c9dc2ee142579cb4073acc220cbf~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<ol>
+<li>wideget</li>
+<li>dart vm</li>
+<li>skia 图形库</li>
+</ol>
+<h2 id="通用原理">通用原理</h2>
+<figure data-type="image" tabindex="8"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f54073609a314c038f48395901e07c03~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<ol>
+<li>UI 组件</li>
+<li>渲染引擎</li>
+<li>逻辑控制引擎</li>
+<li>通信桥梁</li>
+<li>底层 API 抹平表现差异</li>
+</ol>
+<h2 id="跨端方案对比">跨端方案对比</h2>
+<figure data-type="image" tabindex="9"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5e17feabaae54d87ad36a48613b1fb07~tplv-k3u1fbpfcp-watermark.image?" alt="compare.png" loading="lazy"></figure>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/liu-lan-qi-zhi-shi-zong-jie-or-qing-xun-ying-bi-ji/" class="post-title gt-a-link">
+                    浏览器知识总结 ｜ 青训营笔记
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

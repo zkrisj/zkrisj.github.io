@@ -1,0 +1,358 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>「青训营 X 码上掘金」制作一个翻转动效的个人名片 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    「青训营 X 码上掘金」制作一个翻转动效的个人名片
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2023-01-16 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/5W0xko0tt/" class="post-tags">
+                            # CSS
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<blockquote>
+<p>名片（Business card），是一种载有关于公司或个人的联系信息的卡片，常用于商务往来场合之中，作为一种便利和记忆辅助工具的共享。名片通常包括：姓名、单位或商业机构名称（通常带有商标）、以及联系信息（如：街道地址、电话号码、传真号码、电子邮件地址及网站）。</p>
+</blockquote>
+<p>名片是向人介绍自我的重要工具，作为一名程序员用代码做自我介绍是一件非常酷炫的事情。用代码制作一张名片最直观地介绍给别人的方式就是通过使用 HTML 绘制一个网页来显示了，下面我们就来制作一个翻转动效的个人名片。</p>
+<h2 id="实现">实现</h2>
+<ol>
+<li>创建一个外部容器用来封装名片内部各个元素，一个内部容器用来实现翻转动效。</li>
+</ol>
+<pre><code class="language-html">&lt;div class=&quot;flip-card&quot;&gt;
+  &lt;div class=&quot;flip-card-inner&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p>翻转动效需要使用 CSS transform、transform-style 属性和 rotateY 函数，rotateY 函数定义了一个 2D 转换，它可以让一个元素围绕纵坐标 (垂直轴) 旋转，transform-style 设置元素的子元素是位于 3D 空间中还是平面中。</p>
+<pre><code class="language-css">.flip-card {
+  width: 480px;
+  height: 320px;
+  margin-bottom: 1em;
+}
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+.rotate {
+  transform: rotateY(180deg);
+}
+</code></pre>
+<ol start="2">
+<li>创建名片正面的元素。</li>
+</ol>
+<pre><code class="language-html">&lt;div class=&quot;flip-card-front&quot;&gt;
+  &lt;figure class=&quot;snip&quot;&gt;
+    &lt;figcaption&gt;
+      &lt;h2&gt;斯图尔特 &lt;span&gt;怀特&lt;/span&gt;
+      &lt;/h2&gt;
+      &lt;p&gt;我想如果我们不能嘲笑那些没有意义的事情，我们就无法对很多生活做出反应。&lt;/p&gt;
+      &lt;div class=&quot;icons&quot;&gt;
+        &lt;a href=&quot;#&quot;&gt;
+          &lt;i class=&quot;ion-ios-home&quot;&gt;&lt;/i&gt;
+        &lt;/a&gt;
+        &lt;a href=&quot;#&quot;&gt;
+          &lt;i class=&quot;ion-ios-email&quot;&gt;&lt;/i&gt;
+        &lt;/a&gt;
+        &lt;a href=&quot;#&quot;&gt;
+          &lt;i class=&quot;ion-ios-telephone&quot;&gt;&lt;/i&gt;
+        &lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/figcaption&gt;
+    &lt;img src=&quot;https://i.328888.xyz/2023/01/15/2wXwF.jpeg&quot;&gt;
+    &lt;div class=&quot;position&quot;&gt;网站设计者&lt;/div&gt;
+  &lt;/figure&gt;
+&lt;/div&gt;
+</code></pre>
+<p>由于要使用网络字体和图标，所以要通过链接引入（也可以使用 link 元素）。</p>
+<pre><code class="language-css">@import url(https://fonts.googleapis.com/css?family=Raleway:400,200,300,800);
+@import url(https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);
+body {
+  font-family: 'Raleway', Arial, sans-serif;
+  background-color: #212121;
+}
+</code></pre>
+<ol start="3">
+<li>创建名片背面的元素。</li>
+</ol>
+<pre><code class="language-html">&lt;div class=&quot;flip-card-back&quot; style=&quot;--img: url(https://i.328888.xyz/2023/01/15/2wXwF.jpeg)&quot;&gt;
+  &lt;h2&gt;电话：123&lt;/h2&gt;
+  &lt;h2&gt;邮箱：123@qq.com&lt;/h2&gt;
+  &lt;h2&gt;地址：浙江省·杭州市&lt;/h2&gt;
+  &lt;h2&gt;网址：https://zkrisj.gitee.io&lt;/h2&gt;
+&lt;/div&gt;
+</code></pre>
+<p>背面是个人信息的详细资料，背景设置为正面图片+径向渐变，由于字体颜色容易被背景色光线干扰，所以加了一个 background-blend-mode CSS 属性，它用来定义该元素的背景图片与背景色如何混合。</p>
+<pre><code class="language-css">.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  z-index: 1;
+}
+.flip-card-front {
+  background-color: #bbb;
+}
+.flip-card-back {
+  background: var(--img) 0 / 100% 100%, radial-gradient(#e4d8fb, #3F51B5);
+  background-blend-mode: darken;
+  color: white;
+  transform: rotateY(180deg);
+  display: grid;
+}
+.flip-card-back h2 {
+  margin-left: 1em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+figure.snip {
+  position: relative;
+  overflow: hidden;
+  margin: auto;
+  width: 480px;
+  height: 320px;
+  background: #ffffff;
+  color: #000000;
+}
+figure.snip * {
+  box-sizing: border-box;
+}
+figure.snip&gt;img {
+  width: 50%;
+  border-radius: 50%;
+  border: 4px solid #ffffff;
+  transition: all 0.35s ease-in-out;
+  transform: scale(1.6);
+  position: relative;
+  float: right;
+  right: -15%;
+}
+figure.snip figcaption {
+  padding: 20px 30px 20px 20px;
+  position: absolute;
+  left: 0;
+  width: 50%;
+}
+figure.snip figcaption h2,
+figure.snip figcaption p {
+  margin: 0;
+  text-align: left;
+  padding: 10px 0;
+  width: 100%;
+}
+figure.snip figcaption h2 {
+  font-size: 1.3em;
+  font-weight: 300;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+figure.snip figcaption h2 span {
+  font-weight: 800;
+}
+figure.snip figcaption p {
+  font-size: 0.9em;
+  opacity: 0.8;
+}
+figure.snip figcaption .icons {
+  width: 100%;
+  text-align: left;
+}
+figure.snip figcaption .icons i {
+  font-size: 28px;
+  padding: 5px;
+  top: 50%;
+  color: #000000;
+}
+figure.snip figcaption a {
+  opacity: 0.3;
+  transition: opacity 0.35s;
+}
+figure.snip figcaption a:hover {
+  opacity: 0.8;
+}
+figure.snip .position {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: left;
+  padding: 15px 30px;
+  font-size: 0.9em;
+  opacity: 1;
+  font-style: italic;
+  color: #ffffff;
+  background: #000000;
+  clear: both;
+}
+</code></pre>
+<ol start="4">
+<li>绑定点击事件，当点击正面图片时，名片将翻转到背面，而点击背面背景时切换回正面。</li>
+</ol>
+<pre><code class="language-js">for (const f of document.querySelectorAll('.flip-card-inner')) {
+  f.querySelectorAll('img, .flip-card-back').forEach(v =&gt; v.onclick = e =&gt; {
+    f.classList.toggle('rotate');
+  });
+}
+</code></pre>
+<h2 id="完整代码码上掘金">完整代码+码上掘金</h2>
+<iframe src="https://code.juejin.cn/pen/7188753914756333625"></iframe>
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/tu-liao-ge-tu-chun-css-zhi-zuo-tu-zi-qi-qiu-dong-hua/" class="post-title gt-a-link">
+                    「兔了个兔」纯 CSS 制作兔子、气球动画
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

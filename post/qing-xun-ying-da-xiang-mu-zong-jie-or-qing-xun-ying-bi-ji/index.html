@@ -1,0 +1,1177 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>青训营大项目总结 ｜ 青训营笔记 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    青训营大项目总结 ｜ 青训营笔记
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2023-02-23 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/-SviN8-mD/" class="post-tags">
+                            # nodeJS
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p>青训营大项目：</p>
+<ul>
+<li>基于 NextJS 开发仿掘金站点</li>
+<li>组件库</li>
+<li>关于新冠疫情的数据可视化作品</li>
+</ul>
+<p>我们团队做的是组件库项目。</p>
+<h2 id="项目需求">项目需求</h2>
+<p>虽然业界已经有非常多知名组件库(antd/iview/material design 等)，但实际工作中各团队通常也会应设计规范要求，自行开发属于团队内部的基础/业务组件库，对于高阶前端，开发一个属于自己的组件库已经是一种普遍但重要的基本技能。</p>
+<p>实际开发中有许多需要考虑的细节：</p>
+<h3 id="使用何种语言开发组件库">使用何种语言开发组件库？</h3>
+<ul>
+<li>ts/es6 + babel + flow</li>
+<li>less/sass/stylus/postcss/atomic-css</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Sass/Less</th>
+<th>Atomic CSS</th>
+<th>css-in-js</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>完全支持样式覆盖</td>
+<td>✅</td>
+<td>✅</td>
+<td>❗(需要使用className支持)</td>
+</tr>
+<tr>
+<td>支持rem布局</td>
+<td>✅</td>
+<td>✅</td>
+<td>❗(大部分库支持)</td>
+</tr>
+<tr>
+<td>可读性</td>
+<td>强</td>
+<td>稍弱</td>
+<td>强</td>
+</tr>
+<tr>
+<td>上手成本</td>
+<td>低</td>
+<td>中</td>
+<td>高</td>
+</tr>
+<tr>
+<td>是否支持SSR</td>
+<td>天然支持</td>
+<td>天然支持</td>
+<td>需要额外支持</td>
+</tr>
+<tr>
+<td>是否支持流式渲染</td>
+<td>天然支持</td>
+<td>天然支持</td>
+<td>需要额外支持</td>
+</tr>
+<tr>
+<td>支持postcss</td>
+<td>✅</td>
+<td>✅</td>
+<td>❗(有自己的plugin生态)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="如何保证组件库质量工程化">如何保证组件库质量（工程化）？</h3>
+<h4 id="单测-e2e-测试">单测、e2e 测试</h4>
+<ol>
+<li>组件库的质量保障从流程上来说，主要是 code review 和严格的 UI 验收、QA 测试等流程。从技术层面来说可以收敛发包权限，以及在 CI/CD 中实现自动发包，杜绝研发过程中在非 master 分支上随意发包的危险操作。还有单元测试、快照测试、e2e 测试等常用的技术手段。</li>
+</ol>
+<p>尽可能接入测试工具，包括：</p>
+<ul>
+<li>jest、chai、enzyme、karma</li>
+<li>@testing-library/react</li>
+<li>benchmark</li>
+</ul>
+<ol start="2">
+<li>lint、lint-staged、prettier、style-lint 等。</li>
+</ol>
+<p>制定规范的目的在于保证质量、方便业务方使用和增加组件库的可扩展性。比如上文提到的对于样式的封装、常用 mixin 封装，强制使用颜色变量等。还有设计统一的组件库 API 风格规范，能降低业务方的使用成本。</p>
+<p>拆解来看：</p>
+<ul>
+<li>代码提交：
+<ul>
+<li>husky</li>
+<li>commitlint</li>
+<li>lint-staged</li>
+</ul>
+</li>
+<li>代码风格：
+<ul>
+<li>eslint + prettier</li>
+<li>stylelint</li>
+<li>commit-lint</li>
+</ul>
+</li>
+<li>文档风格：
+<ul>
+<li>remark-lint</li>
+</ul>
+</li>
+<li>组件模板：
+<ul>
+<li>plop.js</li>
+</ul>
+</li>
+<li>依赖管理：
+<ul>
+<li>lint-deps</li>
+</ul>
+</li>
+<li>目录规范</li>
+</ul>
+<h3 id="如何编写文档站">如何编写文档站？</h3>
+<p>组件库一般有一个演示站点。</p>
+<ul>
+<li>对于移动端组件库，可以通过 webpack 别名的方法重写它们的组件，以支持移动端预览，方便 UI 验收。</li>
+<li>对于国际化的组件，可以提供类似 vconsole 形式的 devtools，可视化切换 dark/light Mode、rtl/lrt 等能力，提高开发和测试流程中的效率。</li>
+</ul>
+<p>常见的文档站技术选型：</p>
+<ul>
+<li>docz：一个非常成熟的 md 文档站工具，同样支持嵌入 react 组件</li>
+<li>dumi：还能支持组件调试</li>
+<li>changelog</li>
+<li>Github Pages</li>
+<li>vitepress</li>
+<li>storybook</li>
+<li>remark</li>
+<li>docsearch</li>
+</ul>
+<h3 id="核心需求">核心需求</h3>
+<ul>
+<li>通用型组件: 比如 Button, Icon 等</li>
+<li>布局型组件: 比如 Grid, Layout 布局等</li>
+<li>导航型组件: 比如面包屑 Breadcrumb, 下拉菜单 Dropdown, 菜单 Menu 等</li>
+<li>数据录入型组件: 比如 form 表单, Switch 开关, Upload 文件上传，日期选择，下拉选择等</li>
+<li>数据展示型组件: 比如 Avator 头像, Table 表格, List 列表等</li>
+<li>反馈型组件: 比如 Progress 进度条, Drawer 抽屉, Modal 对话框等</li>
+</ul>
+<p>具体效果，可参考 <a href="https://www.antdv.com/components/overview-cn/">antd</a>。</p>
+<h2 id="技术选用">技术选用</h2>
+<h5 id="核心技术栈">核心技术栈</h5>
+<ul>
+<li>ts +vue3</li>
+<li>sass</li>
+<li>vite</li>
+</ul>
+<h5 id="测试工具">测试工具</h5>
+<ul>
+<li>vitest</li>
+</ul>
+<h5 id="规范工具">规范工具</h5>
+<ul>
+<li>代码提交规范：husky（提交时自动检查）+ commitlint（提交信息样式检查）</li>
+<li>代码风格：eslint（语法）+ prettier（格式）+ husky（提交时自动检查）</li>
+</ul>
+<h5 id="文档工具">文档工具</h5>
+<ul>
+<li>vitepress</li>
+</ul>
+<h5 id="包管理工具">包管理工具</h5>
+<ul>
+<li>pnpm</li>
+</ul>
+<h2 id="项目结构">项目结构</h2>
+<pre><code>.
+├── .husky               # gi t提交时触发的钩子函数
+├── config               # 配置文件
+├── coverage             # 覆盖率报告
+├── demo                 # 代码范例
+├── docs                 # 静态站点相关配置
+├── internal 		 # 里面放置的有 eslint 配置、打包配置
+├── node_modules  
+├── packages             # 项目的核心目录，组件的编写	
+├── scripts              # 脚本发布、提交信息检查
+├── src                  # 组件代码
+└── types                # TS类型定义
+</code></pre>
+<h3 id="组件目录结构">组件目录结构</h3>
+<p>以 button 组件为例：</p>
+<pre><code>├── src                  # 组件代码
+    └── button           # 组件包名
+         ├── index.ts    # 组件入口
+         ├── Button.tsx  # 组件代码  
+         └── __tests__   # 测试用例
+                  └── Button.spec.ts
+</code></pre>
+<ul>
+<li>包名：小写 + 中划线；</li>
+<li>统一入口文件： index.ts；</li>
+<li>组件代码： 大驼峰；</li>
+<li>测试用例代码 ： 测试对象名+ .spec.ts。</li>
+</ul>
+<p>以 button 组件为例子的测试：</p>
+<ol>
+<li>定义测试文件 <code>src/button/__tests__/Button.test.ts</code>。</li>
+</ol>
+<h2 id=""><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1a64f1a93c6f4f6aa3082bca5fe9d882~tplv-k3u1fbpfcp-zoom-1.image" alt="" loading="lazy"></h2>
+<pre><code>1. 在测试文件中创建一个 `describe` 分组。
+2. 在第一个参数中输入 `'Button'`，表明是针对 `Button` 组件的测试。
+3. 编写测试用例 `test`。
+4. 使用 `shallowMount` 初始化组件，测试按钮是否工作正常，只需要断言判断按钮中的字符串是否正确就可以了。
+</code></pre>
+<ol start="2">
+<li>配置 package.json。</li>
+</ol>
+<h2 id="-2"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/39bbc040113248f6bb586b56446ddcf5~tplv-k3u1fbpfcp-zoom-1.image" alt="" loading="lazy"></h2>
+<ol start="3">
+<li>在控制台启动测试命令，并查看结果。</li>
+</ol>
+<pre><code>pnpm test
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9326e27a1a52450196473df92e1386fe~tplv-k3u1fbpfcp-zoom-1.image" alt="" loading="lazy"></figure>
+<blockquote>
+<p>在代码编写阶段，建议只对重点功能进行测试，没必要一定追求过高的测试覆盖率。</p>
+</blockquote>
+<h2 id="monorepo">monorepo</h2>
+<p>pnpm 原生支持 monorepo 方案：</p>
+<ul>
+<li>pnpm-workspace.yaml 定义了工作空间的根目录。</li>
+<li>如果我们要单独对某一个项目下安装一些包时，可以到该项目目录下安装，或者在根目录下使用 <code>pnpm i 包 --filter 项目名</code>。</li>
+<li>当我们要在根目录下安装某些包，需要加上 <code>-w</code> 后缀。</li>
+</ul>
+<pre><code># pnpm-workspace.yaml
+packages:
+  - packages/*
+  - docs
+  - play
+  - internal/*
+</code></pre>
+<h2 id="git-flow">git flow</h2>
+<ol>
+<li>代码提交形式为：<code>type: 提交信息</code>。</li>
+</ol>
+<h2 id="-3"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/131cc95daaae40768f44c2ba73ae880b~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></h2>
+<ol start="2">
+<li>主要有以下分支：</li>
+</ol>
+<ul>
+<li>main 分支：跟线上发布版本保持一致</li>
+<li>develop 分支：开发的主分支，保证最新的代码</li>
+<li>其他分支：完成一个新的功能时用到的分支</li>
+</ul>
+<ol start="3">
+<li>需要注意的是：</li>
+</ol>
+<ul>
+<li>main 分支不要动！</li>
+<li>当功能完成之后需要合并时，合并到 develop 分支，注意合并之前先拉取 develop 分支，合并时建议多使用 rebase 指令，保证提交记录的简洁</li>
+</ul>
+<h2 id="文档">文档</h2>
+<ol>
+<li>在 packages/components/index.ts 中按格式<strong>导出组件</strong>。</li>
+</ol>
+<pre><code class="language-ts">import { App } from 'vue'
+import DateTimePicker from './DatePicker/DateTimePicker/DateTimePicker.vue'
+import Input from './input/Input.vue'
+import Pagination from './Pagination/index'
+import WvTable from './Table/index'
+import WvRadio from './Table/radio'
+import Button from &quot;./Button/src/Button.vue&quot;;
+import Col from './Layout/src/col.vue';
+import Row from './Layout/src/row.vue'
+import Notification from './notification/Notification.vue'
+import { Dropdown, DropdownItem, DropdownMenu } from './Dropdown'
+import WVcarousel from './carousel/WV-carousel.vue'
+
+// 导出单独组件
+export {
+  DateTimePicker,
+  Input,
+  Pagination,
+  Button,
+  Col,
+  Row,
+  Notification,
+  WvTable,
+  WvRadio,
+  Dropdown,
+  DropdownMenu,
+  DropdownItem
+}
+
+// 编写一个插件，实现一个install方法
+export default {
+  install(app: App): void {
+    app.component('DateTimePicker', DateTimePicker);
+    app.component('Input', Input);
+    app.component('Pagination', Pagination);
+    app.component('WvTable', WvTable)
+    app.component('WvRadio', WvRadio)
+    app.component('WButton', Button);
+    app.component('WRow', Row);
+    app.component('WCol', Col);
+    app.component(Notification.name, Notification)
+    app.component('WDropdown', Dropdown)
+    app.component('WDropdownMenu', DropdownMenu)
+    app.component('WDropdownItem', DropdownItem)
+    app.component(&quot;WVcarousel&quot;, WVcarousel);
+  },
+}
+</code></pre>
+<ol start="2">
+<li>配置 <code>docs/.vitepress/config.ts</code>，添加左侧导航栏条目。</li>
+</ol>
+<pre><code class="language-ts">const sidebar = {
+  '/': [
+    { text: '快速开始', link: '/' },
+    {
+      text: '通用',
+      children: [
+        { text: 'Button 按钮', link: '/components/Button/' },
+        { text: 'Layout 布局', link: '/components/Layout/' },
+      ]
+    },
+    {
+      text: 'Form表单组件',
+      children: [
+        { text: 'DateTimePicker 日期选择器', link: '/components/DateTimePicker/' },
+        { text: 'Input 输入框', link: '/components/Input/' },
+      ]
+    },
+    {
+      text: 'Data 数据展示',
+      children: [
+        { text: 'Table 表格', link: '/components/Table/' },
+        { text: 'Pagination 分页', link: '/components/Pagination/' }
+      ]
+    },
+    {
+      text: 'Feedback 反馈组件',
+      children: [
+        { text: 'Notification 通知', link: '/components/Notification/' }
+      ]
+    },
+    {
+      text: 'Navigation 导航',
+      children: [
+        { text: 'Dropdown 下拉菜单', link: '/components/Dropdown/' }
+      ]
+    },
+    {
+      text: 'Others 其他',
+      children: [
+        { text: 'carousel 轮播图', link: '/components/carousel/' }
+      ]
+    },
+  ]
+}
+export default {
+  title: &quot;🔨 weView&quot;,
+  themeConfig: {
+    sidebar,
+  },
+
+  markdown: {
+    config: (md) =&gt; {
+      const { demoBlockPlugin } = require('vitepress-theme-demoblock')
+      md.use(demoBlockPlugin)
+    }
+  }
+}
+</code></pre>
+<ol start="3">
+<li>新建主题配置文件 <code>docs/.vitepress/theme/index.ts</code>，导入默认主题、已安装主题、在 packages/components/index.ts 中导出的组件和需要的字体样式文件。</li>
+</ol>
+<pre><code class="language-ts">import DefaultTheme from 'vitepress/theme'
+// 主题样式
+import 'vitepress-theme-demoblock/theme/styles/index.css'
+// 插件的组件，主要是demo组件
+import Demo from 'vitepress-theme-demoblock/components/Demo.vue'
+import DemoBlock from 'vitepress-theme-demoblock/components/DemoBlock.vue'
+import weView from '../../../packages/components/index.ts'
+import '../../../packages/fonts/iconfont.css'
+
+export default {
+  ...DefaultTheme,
+  enhanceApp({ app }) {
+    app.use(weView)
+    app.component('Demo', Demo)
+    app.component('DemoBlock', DemoBlock)
+  },
+}
+</code></pre>
+<ol start="4">
+<li>在 docs/components/ 下面新建<strong>组件名称</strong>文件夹，名字为 <code>link</code> 属性值对应路径 <code>/components/</code> 后的单词。</li>
+</ol>
+<h2 id="-4"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ec81bf1e54a648bea8374ccc8567ee76~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></h2>
+<ol start="5">
+<li>在<strong>组件名称</strong>文件夹中新建 <code>index.md</code> 文件，可以在里面引入和使用外部 Vue 组件。例如：</li>
+</ol>
+<pre><code class="language-html">:::demo 基础使用
+```vue
+&lt;template&gt;
+ &lt;Input v-model=&quot;inputText2&quot; placeholder=&quot;请输入...&quot; clearable/&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import { ref } from 'vue'
+
+export default {
+  setup() {
+    const inputText2 = ref('')
+    return {
+      inputText2
+    }
+  },
+}
+&lt;/script&gt;
+\```
+:::
+</code></pre>
+<p>会渲染出以下内容：</p>
+<figure data-type="image" tabindex="2"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/556d2a9315e34beeb5472aa0c1732134~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<h2 id="分页和表格">分页和表格</h2>
+<p>因为我负责的是 <code>Pagination</code> 和 <code>Table</code> 组件，但 Ant Design Vue 和 Element Plus 的表格组件都太复杂了，所以我参考的是较简单的 layui - vue。</p>
+<h3 id="pagination">Pagination</h3>
+<h4 id="html-结构">HTML 结构</h4>
+<pre><code class="language-html">&lt;template&gt;
+  &lt;div class=&quot;pager pager-default&quot;&gt;
+    &lt;!-- 辅助标签, 为 total computed 逻辑正常执行而创建的临时标签 --&gt;
+    &lt;div style=&quot;display: none&quot;&gt;{{ totalPage }}&lt;/div&gt;
+    &lt;span v-if=&quot;showCount&quot; class=&quot;pager-count&quot;&gt;共 {{ total }} 条 {{ maxPage }}
+      页&lt;/span&gt;
+    &lt;a href=&quot;javascript:;&quot; class=&quot;pager-prev&quot; :class=&quot;[
+        currentPage === 1 ? 'disabled' : '',
+        theme &amp;&amp; currentPage !== 1 ? 'pager-a-' + theme : '',
+      ]&quot; @click=&quot;prev()&quot;&gt;
+      &lt;slot v-if=&quot;slots.prev&quot; name=&quot;prev&quot; /&gt;
+      &lt;template v-else&gt;上一页&lt;/template&gt;
+    &lt;/a&gt;
+    &lt;template v-if=&quot;showPage&quot;&gt;
+      &lt;template v-for=&quot;index of totalPage&quot; :key=&quot;index&quot;&gt;
+        &lt;span v-if=&quot;index === currentPage&quot; class=&quot;pager-curr&quot;&gt;
+          &lt;em class=&quot;pager-em&quot; :class=&quot;[theme ? 'bg-' + theme : '']&quot; /&gt;
+          &lt;em&gt;{{ index }}&lt;/em&gt;
+        &lt;/span&gt;
+        &lt;a v-else href=&quot;javascript:;&quot; @click=&quot;jump(index)&quot;
+          :class=&quot;[theme ? 'pager-a-' + theme : '']&quot;&gt;{{ index }}&lt;/a&gt;
+      &lt;/template&gt;
+    &lt;/template&gt;
+    &lt;a href=&quot;javascript:;&quot; class=&quot;pager-next&quot; :class=&quot;[
+        currentPage === maxPage || maxPage === 0 ? 'disabled' : '',
+        theme &amp;&amp; currentPage !== maxPage &amp;&amp; maxPage !== 0
+          ? 'pager-a-' + theme
+          : '',
+      ]&quot; @click=&quot;next()&quot;&gt;
+      &lt;slot v-if=&quot;slots.next&quot; name=&quot;next&quot; /&gt;
+      &lt;template v-else&gt;下一页&lt;/template&gt;
+    &lt;/a&gt;
+    &lt;span v-if=&quot;showLimit&quot; class=&quot;pager-limits&quot;&gt;
+      &lt;select v-model=&quot;inlimit&quot; @change=&quot;changelimit&quot;&gt;
+        &lt;option v-for=&quot;val of limits&quot; :key=&quot;val&quot; :value=&quot;val&quot;&gt;
+          {{ val }} 条/页
+        &lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/span&gt;
+    &lt;a v-if=&quot;showRefresh&quot; href=&quot;javascript:;&quot; @click=&quot;refresh&quot;
+      class=&quot;pager-refresh&quot;&gt;
+      &lt;i class=&quot;wv-icon wv-icon-refresh&quot; /&gt;
+    &lt;/a&gt;
+    &lt;span v-if=&quot;props.showSkip&quot; class=&quot;pager-skip&quot;&gt;
+      到第
+      &lt;input v-model=&quot;currentPageShow&quot; @keypress.enter=&quot;jumpPage()&quot;
+        type=&quot;number&quot; class=&quot;input input-number&quot; /&gt;页
+      &lt;button type=&quot;button&quot; class=&quot;pager-btn&quot; @click=&quot;jumpPage()&quot;
+        :disabled=&quot;currentPageShow &gt; maxPage || currentPageShow == currentPage&quot;&gt;
+        确认
+      &lt;/button&gt;
+    &lt;/span&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+</code></pre>
+<ol>
+<li>
+<p>最外层是分页组件容器（<code>div.pager</code>），内容从左到右为：总条数和总页数文本（<code>span</code>）、上一页链接（<code>a</code>）、页码（<code>template</code>&gt;<code>span</code>&gt;<code>em</code>）、下一页链接（<code>a</code>）、每页数量选择框（<code>span</code>&gt;<code>select</code>）、刷新按钮图标（<code>a</code>&gt;<code>i</code>）、跳转文本、跳转输入框（<code>input</code>）、跳转确定按钮（<code>button</code>）。</p>
+</li>
+<li>
+<p>有以下插槽：</p>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>插槽</th>
+<th>描述</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>prev</code></td>
+<td>上一页</td>
+<td>上一页</td>
+</tr>
+<tr>
+<td><code>next</code></td>
+<td>下一页</td>
+<td>下一页</td>
+</tr>
+</tbody>
+</table>
+<h4 id="js-代码">JS 代码</h4>
+<ol>
+<li><code>props</code>，有以下属性和默认值：</li>
+</ol>
+<pre><code class="language-ts">interface PageProps {
+  total: number
+  limit: number
+  theme?: string
+  showPage?: boolean
+  showSkip?: boolean
+  showCount?: boolean
+  showLimit?: boolean
+  showRefresh?: boolean
+  pages?: number
+  limits?: number[]
+  modelValue?: number
+}
+
+const props = withDefaults(defineProps &lt; PageProps &gt; (), {
+  limit: 10, // 每页数量
+  pages: 10, // 页码链接最大数量
+  modelValue: 1, // 当前页
+  theme: 'blue', // 主题色
+  showPage: false, // 显示页码
+  showSkip: false, // 显示跳转
+  showCount: false, // 显示总数
+  showLimit: true, // 显示每页数量选择框
+  showRefresh: false, // 显示刷新按钮图标
+  limits: () =&gt; [10, 20, 30, 40, 50], // 每页数量选择框的选项
+})
+</code></pre>
+<ol start="2">
+<li><code>emits</code>，有以下事件：</li>
+</ol>
+<pre><code class="language-ts">const emit = defineEmits([
+  'update:modelValue', // 当前页变化
+  'update:limit', // 每页数量选择框的选项变化
+  'change', // 当前页和每页数量选择框的选项变化
+])
+</code></pre>
+<ol start="3">
+<li><code>watch</code>，有以下在数据更改时调用的侦听回调：</li>
+</ol>
+<pre><code class="language-ts">watch( // 监听传入每页数量参数时，赋值给 inlimit
+  () =&gt; props.limit,
+  () =&gt; {
+    inlimit.value = props.limit
+  }
+)
+watch(inlimit, () =&gt; { // 监听每页数量选择框的选项变化时，触发事件
+  emit('update:limit', inlimit.value)
+})
+watch(currentPage, () =&gt; { // 监听当前页码变化时，更新 currentPage、currentPageShow 的值，触发事件
+  const min = totalPage.value[0]
+  const max = totalPage.value[totalPage.value.length - 1]
+  if (currentPage.value &gt; max) currentPage.value = max
+  if (currentPage.value &lt; min) currentPage.value = min
+  currentPageShow.value = currentPage.value
+  emit('update:modelValue', currentPage.value)
+})
+watch( // 监听传入当前页码参数时，更新 currentPage、currentPageShow 的值
+  () =&gt; props.modelValue,
+  () =&gt; {
+    currentPage.value = props.modelValue
+    currentPageShow.value = currentPage.value
+  }
+)
+</code></pre>
+<h3 id="table">Table</h3>
+<h4 id="html-结构-2">HTML 结构</h4>
+<pre><code class="language-html">&lt;template&gt;
+  &lt;div ref=&quot;tableRef&quot;&gt;
+    &lt;table class=&quot;wv-hide&quot; wv-filter=&quot;test&quot; /&gt;
+    &lt;div class=&quot;wv-form wv-border-box wv-table-view&quot; :class=&quot;classes&quot;&gt;
+      &lt;div v-if=&quot;defaultToolbar || slot.toolbar&quot; class=&quot;wv-table-tool&quot;&gt;
+        &lt;div class=&quot;wv-table-tool-temp&quot;&gt;
+          &lt;slot name=&quot;toolbar&quot; /&gt;
+        &lt;/div&gt;
+        &lt;div v-if=&quot;defaultToolbar&quot; class=&quot;wv-table-tool-self&quot;&gt;
+          &lt;!-- 筛选 --&gt;
+          &lt;wv-dropdown v-if=&quot;showToolbar('filter')&quot; updateAtScroll
+            :style=&quot;toolbarStyle('filter')&quot;&gt;
+            &lt;div class=&quot;wv-inline&quot; title=&quot;筛选&quot; wv-event&gt;
+              &lt;i class=&quot;wv-icon wv-icon-slider&quot; /&gt;
+            &lt;/div&gt;
+            &lt;template #content&gt;
+              &lt;div class=&quot;wv-table-tool-checkbox&quot;&gt;
+                &lt;wv-checkbox v-for=&quot;column in tableHeadColumns[0]&quot;
+                  v-model=&quot;tableColumnKeys&quot; skin=&quot;primary&quot;
+                  :disabled=&quot;!!column.children&quot; :key=&quot;column.key&quot;
+                  :value=&quot;column.key&quot;&gt;{{ column.title }}&lt;/wv-checkbox&gt;
+              &lt;/div&gt;
+            &lt;/template&gt;
+          &lt;/wv-dropdown&gt;
+
+          &lt;!-- 导出 --&gt;
+          &lt;div v-if=&quot;showToolbar('export')&quot; class=&quot;wv-inline&quot; title=&quot;导出&quot;
+            wv-event :style=&quot;toolbarStyle('export')&quot; @click=&quot;exportData()&quot;&gt;
+            &lt;i class=&quot;wv-icon wv-icon-export&quot; /&gt;
+          &lt;/div&gt;
+
+          &lt;!-- 打印 --&gt;
+          &lt;div v-if=&quot;showToolbar('print')&quot; :style=&quot;toolbarStyle('print')&quot;
+            class=&quot;wv-inline&quot; title=&quot;打印&quot; wv-event @click=&quot;print()&quot;&gt;
+            &lt;i class=&quot;wv-icon wv-icon-print&quot; /&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&quot;wv-table-box-header&quot; v-if=&quot;slot.header&quot;&gt;
+        &lt;slot name=&quot;header&quot; /&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&quot;wv-table-box&quot;&gt;
+        &lt;!-- 表头 --&gt;
+        &lt;div class=&quot;wv-table-header&quot;&gt;
+          &lt;!-- :style=&quot;[{ 'padding-right': `${scrollWidthCell}px` }]&quot; --&gt;
+          &lt;div class=&quot;wv-table-header-wrapper&quot; ref=&quot;tableHeader&quot;&gt;
+            &lt;table class=&quot;wv-table&quot; :wv-size=&quot;size&quot; :wv-skin=&quot;skin&quot;
+              ref=&quot;tableHeaderTable&quot;&gt;
+              &lt;colgroup&gt;
+                &lt;template v-for=&quot;column in tableBodyColumns&quot; :key=&quot;column&quot;&gt;
+                  &lt;template v-if=&quot;tableColumnKeys.includes(column.key)&quot;&gt;
+                    &lt;col :width=&quot;column.width&quot; :style=&quot;{
+                        minWidth: column.minWidth ? column.minWidth : '50px',
+                      }&quot; /&gt;
+                  &lt;/template&gt;
+                &lt;/template&gt;
+              &lt;/colgroup&gt;
+              &lt;thead&gt;
+                &lt;template v-for=&quot;(
+                    tableHeadColumn, tableHeadColumnIndex
+                  ) in tableHeadColumns&quot; :key=&quot;tableHeadColumnIndex&quot;&gt;
+                  &lt;tr&gt;
+                    &lt;template v-for=&quot;(column, columnIndex) in tableHeadColumn&quot;
+                      :key=&quot;column&quot;&gt;
+                      &lt;th v-if=&quot;tableColumnKeys.includes(column.key)&quot;
+                        :colspan=&quot;column.colspan&quot; :rowspan=&quot;column.rowspan&quot;
+                        class=&quot;wv-table-cell&quot; :class=&quot;[
+                          renderFixedClassName(column, columnIndex),
+                          column.fixed ? `wv-table-fixed-${column.fixed}` : '',
+                          column.type == 'checkbox'
+                            ? 'wv-table-cell-checkbox'
+                            : '',
+                          column.type == 'radio' ? 'wv-table-cell-radio' : '',
+                          column.type == 'number' ? 'wv-table-cell-number' : '',
+                        ]&quot; :style=&quot;[
+                          {
+                            textAlign: column.align,
+                          },
+                          renderHeadFixedStyle(
+                            column,
+                            columnIndex,
+                            tableHeadColumn,
+                            tableHeadColumnIndex,
+                            tableHeadColumns
+                          ),
+                        ]&quot;&gt;
+                        &lt;template v-if=&quot;column.type == 'checkbox'&quot;&gt;
+                          &lt;wv-checkbox v-model=&quot;hasChecked&quot;
+                            :is-indeterminate=&quot;!allChecked&quot; skin=&quot;primary&quot;
+                            value=&quot;all&quot; @change=&quot;changeAll&quot; /&gt;
+                        &lt;/template&gt;
+                        &lt;template v-else&gt;
+                          &lt;span&gt;
+                            &lt;template v-if=&quot;column.titleSlot&quot;&gt;
+                              &lt;slot :name=&quot;column.titleSlot&quot; /&gt;
+                            &lt;/template&gt;
+                            &lt;template v-else&gt;
+                              {{ column.title }}
+                            &lt;/template&gt;
+                          &lt;/span&gt;
+                          &lt;!-- 插槽 --&gt;
+                          &lt;span v-if=&quot;column.sort&quot;
+                            class=&quot;wv-table-sort wv-inline&quot; wv-sort&gt;
+                            &lt;i @click.stop=&quot;sortTable($event, column.key, 'asc')&quot;
+                              class=&quot;wv-edge wv-table-sort-asc&quot; title=&quot;升序&quot; /&gt;
+                            &lt;i @click.stop=&quot;
+                                sortTable($event, column.key, 'desc')
+                              &quot; class=&quot;wv-edge wv-table-sort-desc&quot;
+                              title=&quot;降序&quot; /&gt;
+                          &lt;/span&gt;
+                        &lt;/template&gt;
+                      &lt;/th&gt;
+                    &lt;/template&gt;
+                  &lt;/tr&gt;
+                &lt;/template&gt;
+              &lt;/thead&gt;
+            &lt;/table&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;!-- 表身 --&gt;
+        &lt;div class=&quot;wv-table-body wv-table-main&quot;
+          :style=&quot;{ height: height, maxHeight: maxHeight }&quot; ref=&quot;tableBody&quot;&gt;
+          &lt;table class=&quot;wv-table&quot;
+            v-if=&quot;tableDataSource.length &gt; 0 &amp;&amp; loading == false&quot;
+            :class=&quot;{ 'wv-table-even': props.even }&quot; :wv-size=&quot;size&quot;
+            :wv-skin=&quot;skin&quot;&gt;
+            &lt;colgroup&gt;
+              &lt;template v-for=&quot;(column, columnIndex) in tableBodyColumns&quot;
+                :key=&quot;columnIndex&quot;&gt;
+                &lt;template v-if=&quot;tableColumnKeys.includes(column.key)&quot;&gt;
+                  &lt;col :width=&quot;column.width&quot; :style=&quot;{
+                      minWidth: column.minWidth ? column.minWidth : '50px',
+                    }&quot; /&gt;
+                &lt;/template&gt;
+              &lt;/template&gt;
+            &lt;/colgroup&gt;
+            &lt;tbody&gt;
+              &lt;!-- 渲染 --&gt;
+              &lt;template v-for=&quot;(children, index) in tableDataSource&quot;
+                :key=&quot;index&quot;&gt;
+                &lt;table-row :id=&quot;id&quot; :index=&quot;index&quot; :data=&quot;children&quot; :page=&quot;page&quot;
+                  :columns=&quot;tableBodyColumns&quot; :columnSlotNames=&quot;columnSlotNames&quot;
+                  :indent-size=&quot;indentSize&quot;
+                  :currentIndentSize=&quot;currentIndentSize&quot;
+                  :tableColumnKeys=&quot;tableColumnKeys&quot;
+                  :expandSpace=&quot;childrenExpandSpace&quot; :expandIndex=&quot;expandIndex&quot;
+                  :cellStyle=&quot;cellStyle&quot; :cellClassName=&quot;cellClassName&quot;
+                  :rowStyle=&quot;rowStyle&quot; :rowClassName=&quot;rowClassName&quot;
+                  :spanMethod=&quot;spanMethod&quot; :defaultExpandAll=&quot;defaultExpandAll&quot;
+                  :getCheckboxProps=&quot;getCheckboxProps&quot;
+                  :getRadioProps=&quot;getRadioProps&quot;
+                  v-model:expandKeys=&quot;tableExpandKeys&quot;
+                  v-model:selectedKeys=&quot;tableSelectedKeys&quot;
+                  v-model:selectedKey=&quot;tableSelectedKey&quot; @row=&quot;rowClick&quot;
+                  @row-double=&quot;rowDoubleClick&quot;
+                  @row-contextmenu=&quot;rowContextmenu&quot;&gt;
+                  &lt;template v-for=&quot;name in columnSlotNames&quot; #[name]=&quot;slotProp: {
+                      data: any,
+                      column: any,
+                      row: any,
+                      rowIndex: number,
+                      columnIndex: number,
+                    }&quot;&gt;
+                    &lt;slot :name=&quot;name&quot; :row=&quot;slotProp.data&quot;
+                      :data=&quot;slotProp.data&quot; :column=&quot;slotProp.column&quot;
+                      :rowIndex=&quot;slotProp.rowIndex&quot;
+                      :columnIndex=&quot;slotProp.columnIndex&quot; /&gt;
+                  &lt;/template&gt;
+                  &lt;template v-if=&quot;slot.expand&quot;
+                    #expand=&quot;slotProp: { data: any, row: any }&quot;&gt;
+                    &lt;slot name=&quot;expand&quot; :data=&quot;slotProp.data&quot;
+                      :row=&quot;slotProp.row&quot; /&gt;
+                  &lt;/template&gt;
+                &lt;/table-row&gt;
+              &lt;/template&gt;
+              &lt;tr v-if=&quot;hasTotalRow&quot; class=&quot;wv-table-total&quot;&gt;
+                &lt;template v-for=&quot;(column, columnIndex) in columns&quot;
+                  :key=&quot;columnIndex&quot;&gt;
+                  &lt;template v-if=&quot;tableColumnKeys.includes(column.key)&quot;&gt;
+                    &lt;td :style=&quot;[
+                        {
+                          textAlign: column.align,
+                          whiteSpace: column.ellipsisTooltip
+                            ? 'nowrap'
+                            : 'normal',
+                        },
+                        renderFixedStyle(column, columnIndex),
+                      ]&quot; :class=&quot;[
+                        'wv-table-cell',
+                        renderFixedClassName(column, columnIndex),
+                        column.fixed ? `wv-table-fixed-${column.fixed}` : '',
+                      ]&quot; v-html=&quot;renderTotalRowCell(column)&quot; /&gt;
+                  &lt;/template&gt;
+                &lt;/template&gt;
+              &lt;/tr&gt;
+            &lt;/tbody&gt;
+          &lt;/table&gt;
+          &lt;template v-if=&quot;tableDataSource.length == 0 &amp;&amp; loading == false&quot;&gt;
+            &lt;wv-empty /&gt;
+            &lt;div :style=&quot;{ width: tableBodyEmptyWidth }&quot; /&gt;
+          &lt;/template&gt;
+          &lt;template v-if=&quot;loading == true&quot;&gt;
+            &lt;div class=&quot;wv-table-loading&quot;&gt;
+              &lt;i
+                class=&quot;wv-icon-loading wv-icon wv-anim wv-anim-rotate wv-anim-loop&quot; /&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;wv-table-footer&quot; v-if=&quot;slot.footer&quot;&gt;
+          &lt;slot name=&quot;footer&quot; /&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div v-if=&quot;page &amp;&amp; page.total &gt; 0&quot; class=&quot;wv-table-page&quot;&gt;
+        &lt;table-page :total=&quot;page.total&quot; :pages=&quot;page.pages&quot; :theme=&quot;page.theme&quot;
+          :limits=&quot;page.limits&quot; :showSkip=&quot;page.showSkip&quot;
+          :show-page=&quot;page.showPage&quot; :showRefresh=&quot;page.showRefresh&quot;
+          :showLimit=&quot;page.showLimit&quot; :showCount=&quot;page.showCount&quot;
+          v-model:current=&quot;page.current&quot; v-model:limit=&quot;page.limit&quot;
+          @change=&quot;change&quot; /&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+</code></pre>
+<ol>
+<li>
+<p>最外层是表格组件容器（<code>div.wv-table-view</code>），内容从上到下为：工具栏（<code>div.wv-table-tool</code>）、header插槽（<code>div.wv-table-box-header</code>）、表格（<code>div.wv-table-box</code>）、分页（<code>div.wv-table-page</code>）。</p>
+</li>
+<li>
+<p>有以下插槽：</p>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>插槽</th>
+<th>描述</th>
+<th>参数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>toolbar</code></td>
+<td>自定义工具栏</td>
+<td>--</td>
+</tr>
+<tr>
+<td><code>header</code></td>
+<td>顶部扩展</td>
+<td>--</td>
+</tr>
+<tr>
+<td><code>footer</code></td>
+<td>底部扩展</td>
+<td>--</td>
+</tr>
+<tr>
+<td><code>column.titleSlot</code></td>
+<td>列标题</td>
+<td></td>
+</tr>
+<tr>
+<td><code>expand</code></td>
+<td>嵌套面板</td>
+<td><code>{ row } </code></td>
+</tr>
+<tr>
+<td><code>customSlot</code></td>
+<td>自定义列插槽</td>
+<td><code>{ row，rowIndex，column，columnIndex }</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="js-代码-2">JS 代码</h4>
+<ol>
+<li><code>props</code>，有以下属性和默认值：</li>
+</ol>
+<pre><code class="language-ts">interface TableProps {
+  id?: string
+  skin?: string
+  size?: string
+  page?: Recordable
+  columns: Recordable[]
+  dataSource: Recordable[]
+  defaultToolbar?: boolean | any[]
+  selectedKey?: string
+  selectedKeys?: Recordable[]
+  indentSize?: number
+  childrenColumnName?: string
+  height?: number
+  maxHeight?: string
+  even?: boolean
+  expandIndex?: number
+  rowClassName?: string | Function
+  cellClassName?: string | Function
+  rowStyle?: string | Function
+  cellStyle?: string | Function
+  spanMethod?: Function
+  defaultExpandAll?: boolean
+  expandKeys?: Recordable[]
+  loading?: boolean
+  getCheckboxProps?: Function
+  getRadioProps?: Function
+}
+
+const props = withDefaults(defineProps&lt;TableProps&gt;(), {
+  id: 'id', // 主键
+  size: 'md', // 尺寸
+  indentSize: 30, // 树表行级缩进
+  childrenColumnName: 'children', // 树节点字段
+  dataSource: () =&gt; [], // 数据源
+  selectedKeys: () =&gt; [], // 选中项 (多选)
+  defaultToolbar: false, // 工具栏
+  selectedKey: '', // 选中项 (单选)
+  maxHeight: 'auto', // 表格最大高度
+  even: false, // 斑马条纹
+  rowClassName: '', // 行类名称
+  cellClassName: '', // 列类名称
+  expandIndex: 0, // 展开所在列
+  rowStyle: '', // 行样式
+  cellStyle: '', // 列样式
+  defaultExpandAll: false, // 默认展开所有列
+  spanMethod: () =&gt; {}, // 合并算法
+  expandKeys: () =&gt; [], // 展开的列
+  loading: false, // 加载动画
+  getCheckboxProps: () =&gt; {}, // 多选行属性
+  getRadioProps: () =&gt; {}, // 单选行属性
+})
+</code></pre>
+<ol start="2">
+<li><code>emits</code>，有以下事件：</li>
+</ol>
+<pre><code class="language-ts">const emit = defineEmits([
+  'update:current', // 当前页变化
+  'update:limit', // 每页数量选择框的选项变化
+  'change', // 当前页和每页数量选择框的选项变化
+  'update:expandKeys', // 展开树节点
+  'update:selectedKeys', // 多选行选中
+  'update:selectedKey', // 单选行选中
+  'row-contextmenu', // 行右击
+  'row-double', // 行双击
+  'row', // 行单击
+])
+</code></pre>
+<ol start="3">
+<li><code>watch</code>，有以下在数据更改时调用的侦听回调：</li>
+</ol>
+<pre><code class="language-ts">watch( // 监听传入高度、数据源参数变化时，更新表格滚动宽度
+  () =&gt; [props.height, props.maxHeight, props.dataSource],
+  () =&gt; {
+    nextTick(() =&gt; {
+      getScrollWidth()
+    })
+  }
+)
+
+watch( // 监听 columns 变化时，计算列内容
+  tableColumns,
+  () =&gt; {
+    tableColumnKeys.value = []
+    tableBodyColumns.value = []
+    tableHeadColumns.value = []
+
+    findFindNode(tableColumns.value)
+    findFindNodes(tableColumns.value)
+    findFinalNode(0, tableColumns.value)
+  },
+  { immediate: true }
+)
+
+watch( // 监听传入多选行选中参数变化时，更新 tableSelectedKeys
+  () =&gt; props.selectedKeys,
+  () =&gt; {
+    tableSelectedKeys.value = props.selectedKeys
+  },
+  { deep: true }
+)
+
+watch( // 监听传入树节点展开参数变化时，更新 tableExpandKeys
+  () =&gt; props.expandKeys,
+  () =&gt; {
+    tableExpandKeys.value = props.expandKeys
+  },
+  { deep: true }
+)
+
+watch( // 监听传入数据源参数变化时，更新 tableDataSource、tableSelectedKeys、tableSelectedKey
+  () =&gt; props.dataSource,
+  () =&gt; {
+    tableDataSource.value = [...props.dataSource]
+    tableSelectedKeys.value = []
+    tableSelectedKey.value = s
+  },
+  { deep: true }
+)
+
+watch( // 监听多选行选中变化时，更新 allChecked、hasChecked（图标改变），触发事件
+  tableSelectedKeys,
+  () =&gt; {
+    if (tableSelectedKeys.value.length === props.dataSource.length) {
+      allChecked.value = true
+    } else {
+      allChecked.value = false
+    }
+    if (tableSelectedKeys.value.length &gt; 0) {
+      hasChecked.value = true
+    } else {
+      hasChecked.value = false
+    }
+    emit('update:selectedKeys', tableSelectedKeys.value)
+  },
+  { deep: true, immediate: true }
+)
+
+watch( // 监听展开树节点时，触发事件
+  tableExpandKeys,
+  () =&gt; {
+    emit('update:expandKeys', tableExpandKeys.value)
+  },
+  { deep: true, immediate: true }
+)
+</code></pre>
+<h2 id="项目地址">项目地址</h2>
+<ul>
+<li>项目地址：https://github.com/linhr123/weView</li>
+<li>演示地址：https://zzy003527.github.io</li>
+</ul>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/vitest-zhi-shi-zong-jie-or-qing-xun-ying-bi-ji/" class="post-title gt-a-link">
+                    Vitest 知识总结 ｜ 青训营笔记
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

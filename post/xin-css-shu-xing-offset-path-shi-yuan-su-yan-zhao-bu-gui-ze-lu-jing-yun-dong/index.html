@@ -1,0 +1,253 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>新 CSS 属性 offset-path 使元素沿着不规则路径运动 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    新 CSS 属性 offset-path 使元素沿着不规则路径运动
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-11-09 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/5W0xko0tt/" class="post-tags">
+                            # CSS
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <hr>
+<h2 id="theme-nico">theme: nico</h2>
+<p><em><strong>本文正在参加<a href="https://juejin.cn/post/7162096952883019783" title="https://juejin.cn/post/7162096952883019783">「金石计划 . 瓜分6万现金大奖」</a></strong></em></p>
+<h2 id="介绍">介绍</h2>
+<p>SVG SMIL animation 可以很容易实现元素沿着不规则的路径运动动画，但由于其依赖 SVG 元素和 HTML 属性，容易造成复用时的冗余，不利于维护。新 CSS 属性 offset-path 可以看成是其替代方案，它指定了元素的运动路径，并定义元素在父容器或 SVG 坐标系中的定位。</p>
+<figure data-type="image" tabindex="1"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/bf225d6fb2c142fcb00103eebc816f05~tplv-k3u1fbpfcp-watermark.image?" alt="微信截图_20221109205634.png" loading="lazy"></figure>
+<p>与其相关的几个属性：</p>
+<ul>
+<li>offset-distance 指定元素沿 offset-path 路径运动的距离，可以是数值或者百分比单位，100% 则表示把所有的路径都跑完了。</li>
+<li>offset-position 定义元素的 offset-path 初始位置，类似于属性 background-position。</li>
+<li>offset-anchor 指定 offset-path 路径框内的原点，其属性值和 transform-origin 类似。</li>
+<li>offset-rotate 定义元素沿 offset-path 路径的角度，默认是 auto，表示自动计算当前路径的切线方向，并朝着这个方向前进。</li>
+</ul>
+<p>offset-anchor、offset-distance、offset-path、offset-position、offset-rotate 可以简写为一个属性 offset。</p>
+<pre><code>[ &lt;'offset-position'&gt;? [ &lt;'offset-path'&gt; [ &lt;'offset-distance'&gt; || &lt;'offset-rotate'&gt; ]? ]? ]! [ / &lt;'offset-anchor'&gt; ]?  
+</code></pre>
+<h2 id="使用">使用</h2>
+<p>只需要设置元素的 offset-path 和原路径重合即可。</p>
+<iframe src="https://code.juejin.cn/pen/7164021657483345933"></iframe>
+<p>作为对比，下面是使用 SVG SMIL animateMotion 元素实现的动画。</p>
+<iframe src="https://code.juejin.cn/pen/7163848226150285326"></iframe>
+<h2 id="示例">示例</h2>
+<p>下面这个示例则是一个剪刀沿着一个房子图形运动的轨迹动画。</p>
+<pre><code class="language-html">&lt;body&gt;
+  &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot;
+    width=&quot;700&quot;
+    height=&quot;450&quot;
+    viewBox=&quot;350 0 1400 900&quot;&gt;
+    &lt;rect x=&quot;595&quot; y=&quot;423&quot; width=&quot;610&quot; height=&quot;377&quot; fill=&quot;blue&quot; /&gt;
+    &lt;polygon points=&quot;506,423 900,190 1294,423&quot; fill=&quot;yellow&quot; /&gt;
+    &lt;polygon points=&quot;993,245 993,190 1086,190 1086,300&quot; fill=&quot;red&quot; /&gt;
+    &lt;path
+      id=&quot;house&quot;
+      d=&quot;M900,190 L993,245 V201 A11,11 0 0,1 1004,190 H1075 A11,11 0 0,1 1086,201 V300 L1294,423 H1216 A11,11 0 0,0 1205,434 V789 A11,11 0 0,1 1194,800 H606 A11,11 0 0,1 595,789 V434 A11,11 0 0,0 584,423 H506 L900,190&quot;
+      fill=&quot;none&quot;
+      stroke=&quot;black&quot;
+      stroke-width=&quot;13&quot;
+      stroke-linejoin=&quot;round&quot;
+      stroke-linecap=&quot;round&quot; /&gt;
+    &lt;path
+      class=&quot;scissorHalf&quot;
+      d=&quot;M30,0 H-10 A10,10 0 0,0 -20,10 A20,20 0 1,1 -40,-10 H20 A10,10 0 0,1 30,0 M-40,20 A10,10 1 0,0 -40,0 A10,10 1 0,0 -40,20 M0,0&quot;
+      transform=&quot;translate(0,0)&quot;
+      fill=&quot;green&quot;
+      stroke=&quot;black&quot;
+      stroke-width=&quot;5&quot;
+      stroke-linejoin=&quot;round&quot;
+      stroke-linecap=&quot;round&quot;
+      fill-rule=&quot;evenodd&quot; /&gt;
+    &lt;path
+      class=&quot;scissorHalf&quot;
+      d=&quot;M30,0 H-10 A10,10 0 0,1 -20,-10 A20,20 0 1,0 -40,10 H20 A10,10 0 0,0 30,0 M-40,-20 A10,10 1 0,0 -40,0 A10,10 1 0,0 -40,-20 M0,0&quot;
+      transform=&quot;translate(0,0)&quot;
+      fill=&quot;forestgreen&quot;
+      stroke=&quot;black&quot;
+      stroke-width=&quot;5&quot;
+      stroke-linejoin=&quot;round&quot;
+      stroke-linecap=&quot;round&quot;
+      fill-rule=&quot;evenodd&quot; /&gt;
+  &lt;/svg&gt;
+&lt;/body&gt;
+&lt;style&gt;
+  .scissorHalf {
+    offset-path: path(
+      &quot;M900,190  L993,245 V201  A11,11 0 0,1 1004,190  H1075  A11,11 0 0,1 1086,201  V300  L1294,423 H1216  A11,11 0 0,0 1205,434  V789  A11,11 0 0,1 1194,800  H606  A11,11 0 0,1 595,789  V434  A11,11 0 0,0 584,423  H506 L900,190&quot;
+    );
+    animation: followpath 10s linear infinite;
+  }
+  @keyframes followpath {
+    to {
+      offset-distance: 100%;
+    }
+  }
+&lt;/style&gt;
+</code></pre>
+<iframe src="https://code.juejin.cn/pen/7164022969734266894"></iframe>
+<h2 id="浏览器兼容">浏览器兼容</h2>
+<p>目前只有 Safari 浏览器不支持 offset-path 的路径函数。</p>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li><a href="https://www.zhangxinxu.com/wordpress/2017/03/offset-path-css-animation/">使用 CSS offset-path 让元素沿着不规则路径运动</a></li>
+</ul>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/svg-animation-dong-hua-de-shi-yong/" class="post-title gt-a-link">
+                    SVG animation 动画的使用
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

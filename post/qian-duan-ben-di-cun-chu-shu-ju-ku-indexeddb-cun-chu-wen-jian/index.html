@@ -1,0 +1,261 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>前端本地存储数据库 IndexedDB 存储文件 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    前端本地存储数据库 IndexedDB 存储文件
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-12-16 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tags">
+                            # JS
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<figure data-type="image" tabindex="1"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ff12ea5c5c484009a4776744a294b685~tplv-k3u1fbpfcp-watermark.image?" alt="微信截图_20221209222347.png" loading="lazy"></figure>
+<p>IndexedDB 是一种浏览器底层 API，目前各浏览器都已支持，兼容性很好。</p>
+<h2 id="特点">特点</h2>
+<ol>
+<li>IndexedDB 内部采用对象仓库（object store）存放键值对数据。可以存储结构化克隆算法支持的任何对象。每一个数据记录都有对应的主键，主键是独一无二的，并且不能有重复。</li>
+<li>使用索引实现对数据的高性能搜索。</li>
+<li>IndexedDB API 大部分都是异步的。不会通过返回值提供数据，而是要传递一个回调函数来获取返回值。</li>
+<li>同大多数 Web 存储解决方案一样，IndexedDB 遵循同源策略。即可以访问相同域内存储的数据，但无法跨不同域访问数据。</li>
+<li>可以存储文件、二进制对象。</li>
+<li>在 Web Worker 中可用。</li>
+<li>IndexedDB 属于 NoSQL 和事务型面向对象数据库系统。对数据库的所有操作，都要通过事务完成。</li>
+</ol>
+<p>IndexedDB 允许存储和检索用键索引的对象，它可以存储结构化克隆算法支持的任何对象。</p>
+<h2 id="结构化克隆">结构化克隆</h2>
+<p>结构化克隆是由 HTML5 规范定义的用于复制复杂 JavaScript 对象的算法，例如 <code>structuredClone()</code> 函数的调用，<code>Workers</code> 的 <code>postMessage()</code> 方法或使用 <code>IndexedDB</code> 存储对象时在内部的调用。结构化克隆算法使 <code>postMessage()</code> 在 <code>Worker</code> 和主线程之间不再仅仅传输字符串类型，还可以传输包括 <code>File</code>, <code>Blob</code>, <code>ArrayBuffer</code>, <code>JSON</code> 对象类型。支持的类型：</p>
+<ul>
+<li><code>symbols</code> 除外的所有原始类型。</li>
+<li><code>Boolean</code> <code>String</code> 原始类型包装对象。</li>
+<li><code>Array</code> <code>Map</code> <code>Set</code> <code>Date</code> <code>RegExp</code> 内置对象。</li>
+<li><code>Blob</code> <code>File</code> <code>FileList</code> 文件类型对象。</li>
+<li><code>ArrayBuffer</code> <code>TypedArray</code> <code>DataView</code> <code>Buffer</code> 类型对象。</li>
+<li><code>ImageBitmap</code> <code>ImageData</code> 图形对象。</li>
+<li><code>Object</code> 仅包括普通对象，例如对象字面量。</li>
+<li><code>Error</code>, <code>EvalError</code>, <code>RangeError</code>, <code>ReferenceError</code>, <code>SyntaxError</code>, <code>TypeError</code>, <code>URIError</code> 错误类型，其他类型错误 <code>name</code> 属性会被转成 <code>Error</code>，<code>message</code> 属性会丢失。</li>
+</ul>
+<h2 id="indexeddb-存储文件">IndexedDB 存储文件</h2>
+<p>下面我们通过在页面中定义一个文件上传按钮，选择图片文件后，会将文件保存到 IndexedDB 数据库中，当我们刷新页面，或关闭页面后，再次进入，会发现图片文件可以从 IndexedDB 数据库中读取，然后在页面中显示。</p>
+<pre><code class="language-html">&lt;body&gt;
+  &lt;label for=&quot;fileImg&quot;&gt;上传图片&lt;/label&gt;
+  &lt;input type=&quot;file&quot; id=&quot;fileImg&quot; accept=&quot;image/*&quot; hidden&gt;
+  &lt;p id=&quot;result&quot;&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;script&gt;
+  let db;
+  const request = indexedDB.open('the_file', 1);
+  request.onerror = console.log;
+  request.onsuccess = function(ev) {
+    console.log('打开');
+    db = request.result;
+    db.transaction(db.objectStoreNames).objectStore('files').openCursor().onsuccess = function(event) {
+      const cursor = event.target.result;
+      if (cursor) {
+        console.log(cursor.value);
+        const img = new Image();
+        img.src = URL.createObjectURL(cursor.value.file);
+        result.append(img);
+        cursor.continue();
+      }
+    }
+  };
+  request.onupgradeneeded = function(ev) {
+    console.log('升级');
+    db = request.result;
+    if (!db.objectStoreNames.contains('files')) {
+      const table = db.createObjectStore('files', { keyPath: 'id', autoIncrement: true });
+      table.createIndex('file', 'file', { unique: false });
+    }
+  };
+  fileImg.onchange = e =&gt; {
+    const file = fileImg.files[0];
+    const request = db.transaction(['files'], 'readwrite').objectStore('files').add({ file });
+    request.onsuccess = function(event) {
+      console.log('数据写入成功');
+      const img = new Image();
+      img.src = URL.createObjectURL(file);
+      result.append(img);
+    };
+    request.onerror = function(event) { console.log('数据写入失败'); }
+  };
+&lt;/script&gt;
+&lt;style&gt;
+  label {
+    display: inline-block;
+    padding: 1em;
+    border-radius: .5em;
+    background: red;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif
+  }
+&lt;/style&gt;
+</code></pre>
+<h2 id="码上掘金">码上掘金</h2>
+<iframe src="https://code.juejin.cn/pen/7177758045026385980"></iframe>
+<h2 id="历史相关文章">历史相关文章</h2>
+<ul>
+<li><a href="https://juejin.cn/post/7176211543330144315">前端本地存储数据库 IndexedDB 的增删改查</a></li>
+<li><a href="https://juejin.cn/post/7176556381376348215">前端本地存储数据库 IndexedDB 和 Web SQL、Web Storage 的对比</a></li>
+<li><a href="https://juejin.cn/post/7177069487349301306">前端本地存储数据库 IndexedDB 的范围查询和对结果计数</a></li>
+</ul>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/qian-duan-ben-di-cun-chu-shu-ju-ku-indexeddb-de-fan-wei-sou-suo-he-ji-shu/" class="post-title gt-a-link">
+                    前端本地存储数据库 IndexedDB 的范围查询和对结果计数
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

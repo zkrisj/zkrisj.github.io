@@ -1,0 +1,505 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>前端本地存储数据库 IndexedDB 的范围查询和对结果计数 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    前端本地存储数据库 IndexedDB 的范围查询和对结果计数
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-12-15 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tags">
+                            # JS
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<figure data-type="image" tabindex="1"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ff12ea5c5c484009a4776744a294b685~tplv-k3u1fbpfcp-watermark.image?" alt="微信截图_20221209222347.png" loading="lazy"></figure>
+<p>IndexedDB 是一种浏览器底层 API，目前各浏览器都已支持，兼容性很好。</p>
+<ol>
+<li>IndexedDB 内部采用对象仓库（object store）存放键值对数据。可以存储结构化克隆算法支持的任何对象。每一个数据记录都有对应的主键，主键是独一无二的，并且不能有重复。</li>
+<li>使用索引实现对数据的高性能搜索。</li>
+<li>IndexedDB API 大部分都是异步的。不会通过返回值提供数据，而是要传递一个回调函数来获取返回值。</li>
+<li>同大多数 Web 存储解决方案一样，IndexedDB 遵循同源策略。即可以访问相同域内存储的数据，但无法跨不同域访问数据。</li>
+<li>可以存储文件/二进制对象。</li>
+<li>在 Web Worker 中可用。</li>
+<li>IndexedDB 属于 NoSQL 和事务型面向对象数据库系统。对数据库的所有操作，都要通过事务完成。</li>
+</ol>
+<p>后端开发者都知道，SQL 语句中有 BETWEEN 操作符和 COUNT() 函数可以用来对匹配的记录进行过滤和计数。IndexedDB 也提供了 IDBKeyRange 接口和 IDBObjectStore.count() 方法可以实现相同的目的。</p>
+<pre><code class="language-sql">SELECT COUNT(*) FROM Persons WHERE LastName BETWEEN 'Adams' AND 'Carter';
+</code></pre>
+<h2 id="范围搜索">范围搜索</h2>
+<p>键集合 IDBKeyRange 对象通过使用一个键或某个范围的键从 IDBObjectStore 和 IDBIndex 对象中检索记录，并可以使用下限和上限来限制范围。下表给出了检索特定范围内的方法：</p>
+<table>
+<thead>
+<tr>
+<th>特定范围</th>
+<th>方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>All keys ≥ x</td>
+<td>IDBKeyRange.lowerBound (x)</td>
+</tr>
+<tr>
+<td>All keys &gt; x</td>
+<td>IDBKeyRange.lowerBound (x, true)</td>
+</tr>
+<tr>
+<td>All keys ≤ y</td>
+<td>IDBKeyRange.upperBound (y)</td>
+</tr>
+<tr>
+<td>All keys &lt; y</td>
+<td>IDBKeyRange.upperBound (y, true)</td>
+</tr>
+<tr>
+<td>All keys ≥ x &amp;&amp; ≤ y</td>
+<td>IDBKeyRange.bound (x, y)</td>
+</tr>
+<tr>
+<td>All keys &gt; x &amp;&amp;&lt; y</td>
+<td>IDBKeyRange.bound (x, y, true, true)</td>
+</tr>
+<tr>
+<td>All keys &gt; x &amp;&amp; ≤ y</td>
+<td>IDBKeyRange.bound (x, y, true, false)</td>
+</tr>
+<tr>
+<td>All keys ≥ x &amp;&amp;&lt; y</td>
+<td>IDBKeyRange.bound (x, y, false, true)</td>
+</tr>
+<tr>
+<td>The key = z</td>
+<td>IDBKeyRange.only (z)</td>
+</tr>
+</tbody>
+</table>
+<p>bound()、only()、lowerBound()、upperBound() 方法即是方法名字面意思：“范围内”、“仅仅是”、“小于某值、“大于某值”。方法最后还支持两个布尔值参数，布尔值参数为 true 的时候表示不含范围边界。</p>
+<h2 id="结果计数">结果计数</h2>
+<p>IDBObjectStore 接口的 count(query) 方法返回一个 IDBRequest 对象，并在单独的线程中返回与提供的键或匹配的记录总数。其中 query 参数可以是键属性或 IDBKeyRange 对象。如果未提供参数，则返回存储中的记录总数。</p>
+<h2 id="使用">使用</h2>
+<p>下面我们在 IndexedDB 存储中插入一系列数据，然后通过 IDBKeyRange 对象对结果进行范围搜索，并使用 IDBObjectStore 接口的 count(query) 方法对结果进行计数。</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;body&gt;
+  &lt;ul&gt;&lt;/ul&gt;
+  &lt;form&gt;
+    &lt;div&gt;
+      &lt;div&gt;
+        &lt;label for=&quot;none&quot;&gt;不筛选&lt;/label&gt;
+        &lt;input type=&quot;radio&quot; name=&quot;value&quot; value=&quot;none&quot; id=&quot;none&quot; checked /&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;div&gt;
+        &lt;label for=&quot;only&quot;&gt;单个值筛选&lt;/label&gt;
+        &lt;input type=&quot;radio&quot; name=&quot;value&quot; value=&quot;only&quot; id=&quot;only&quot; /&gt;
+      &lt;/div&gt;
+      &lt;div&gt;
+        &lt;label for=&quot;onlytext&quot;&gt;值&lt;/label&gt;
+        &lt;input type=&quot;text&quot; name=&quot;onlytext&quot; id=&quot;onlytext&quot; /&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;div&gt;
+        &lt;label for=&quot;range&quot;&gt;筛选范围内的值&lt;/label&gt;
+        &lt;input type=&quot;radio&quot; name=&quot;value&quot; value=&quot;range&quot; id=&quot;range&quot; /&gt;
+      &lt;/div&gt;
+      &lt;div&gt;
+        &lt;label for=&quot;rangelowertext&quot;&gt;范围下限&lt;/label&gt;
+        &lt;input type=&quot;text&quot; name=&quot;rangelowertext&quot; id=&quot;rangelowertext&quot; /&gt;
+      &lt;/div&gt;
+      &lt;div&gt;
+        &lt;label for=&quot;rangeuppertext&quot;&gt;范围上限&lt;/label&gt;
+        &lt;input type=&quot;text&quot; name=&quot;rangeuppertext&quot; id=&quot;rangeuppertext&quot; /&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;div&gt;
+        &lt;label for=&quot;lower&quot;&gt;筛选不低于下限的值&lt;/label&gt;
+        &lt;input type=&quot;radio&quot; name=&quot;value&quot; value=&quot;lower&quot; id=&quot;lower&quot; /&gt;
+      &lt;/div&gt;
+      &lt;div&gt;
+        &lt;label for=&quot;lowerboundtext&quot;&gt;下限&lt;/label&gt;
+        &lt;input type=&quot;text&quot; name=&quot;lowerboundtext&quot; id=&quot;lowerboundtext&quot; /&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;div&gt;
+        &lt;label for=&quot;upper&quot;&gt;筛选不高于上限的值&lt;/label&gt;
+        &lt;input type=&quot;radio&quot; name=&quot;value&quot; value=&quot;upper&quot; id=&quot;upper&quot; /&gt;
+      &lt;/div&gt;
+      &lt;div&gt;
+        &lt;label for=&quot;upperboundtext&quot;&gt;上限&lt;/label&gt;
+        &lt;input type=&quot;text&quot; name=&quot;upperboundtext&quot; id=&quot;upperboundtext&quot; /&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;div&gt;
+        &lt;input type=&quot;radio&quot; name=&quot;filterIndex&quot; value=&quot;fThing&quot; id=&quot;thing&quot; checked /&gt;
+        &lt;label for=&quot;thing&quot;&gt;按名称筛选和排序&lt;/label&gt;
+      &lt;/div&gt;
+      &lt;div&gt;
+        &lt;input type=&quot;radio&quot; name=&quot;filterIndex&quot; value=&quot;fRating&quot; id=&quot;rating&quot; /&gt;
+        &lt;label for=&quot;rating&quot;&gt;按评分筛选和排序&lt;/label&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;input class=&quot;run&quot; type=&quot;submit&quot; value=&quot;查询&quot;&gt;
+  &lt;/form&gt;
+&lt;/body&gt;
+&lt;script&gt;
+  var db;
+  var things = [
+    { fThing: &quot;Drum kit&quot;, fRating: 10 },
+    { fThing: &quot;Family&quot;, fRating: 10 },
+    { fThing: &quot;Batman&quot;, fRating: 9 },
+    { fThing: &quot;Brass eye&quot;, fRating: 9 },
+    { fThing: &quot;The web&quot;, fRating: 9 },
+    { fThing: &quot;Mozilla&quot;, fRating: 9 },
+    { fThing: &quot;Firefox OS&quot;, fRating: 9 },
+    { fThing: &quot;Curry&quot;, fRating: 9 },
+    { fThing: &quot;Paneer cheese&quot;, fRating: 8 },
+    { fThing: &quot;Mexican food&quot;, fRating: 8 },
+    { fThing: &quot;Chocolate&quot;, fRating: 7 },
+    { fThing: &quot;Heavy metal&quot;, fRating: 10 },
+    { fThing: &quot;Monty Python&quot;, fRating: 8 },
+    { fThing: &quot;Aphex Twin&quot;, fRating: 8 },
+    { fThing: &quot;Gaming&quot;, fRating: 7 },
+    { fThing: &quot;Frank Zappa&quot;, fRating: 9 },
+    { fThing: &quot;Open minds&quot;, fRating: 10 },
+    { fThing: &quot;Hugs&quot;, fRating: 9 },
+    { fThing: &quot;Ale&quot;, fRating: 9 },
+    { fThing: &quot;Christmas&quot;, fRating: 8 },
+    ];
+  var list = document.querySelector(&quot;ul&quot;);
+  var form = document.querySelector(&quot;form&quot;);
+  var thing = document.querySelector(&quot;#thing&quot;);
+  var rating = document.querySelector(&quot;#rating&quot;);
+  var button = document.querySelector(&quot;button&quot;);
+  var onlyText = document.querySelector(&quot;#onlytext&quot;);
+  var rangeLowerText = document.querySelector(&quot;#rangelowertext&quot;);
+  var rangeUpperText = document.querySelector(&quot;#rangeuppertext&quot;);
+  var lowerBoundText = document.querySelector(&quot;#lowerboundtext&quot;);
+  var upperBoundText = document.querySelector(&quot;#upperboundtext&quot;);
+  window.onload = function() {
+    rating.onchange = e =&gt; {
+      document.querySelectorAll('input[type=text]').forEach(v =&gt; {
+        v.setAttribute('pattern', '[0-9]');
+        v.title = '请输入数字！';
+      });
+    };
+    thing.onchange = e =&gt; {
+      document.querySelectorAll('input[type=text]').forEach(v =&gt; {
+        v.setAttribute('pattern', '[A-Z]{1}');
+        v.title = '请输入单个大写字母！';
+      });
+    };
+    form.onsubmit = e =&gt; {
+      e.preventDefault();
+      displayData();
+    };
+    window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+    window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
+    window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
+    var DBOpenRequest = window.indexedDB.open(&quot;fThings&quot;, 1);
+    DBOpenRequest.onsuccess = function(event) {
+      db = DBOpenRequest.result;
+      populateData();
+    };
+    DBOpenRequest.onupgradeneeded = function(event) {
+      var db = event.target.result;
+      db.onerror = function(event) {
+        note.innerHTML += &quot;&lt;li&gt;Error loading database.&lt;/li&gt;&quot;;
+      };
+      var objectStore = db.createObjectStore(&quot;fThings&quot;, { keyPath: &quot;fThing&quot; });
+      objectStore.createIndex(&quot;fRating&quot;, &quot;fRating&quot;, { unique: false });
+    };
+
+    function populateData() {
+      var transaction = db.transaction([&quot;fThings&quot;], &quot;readwrite&quot;);
+      var objectStore = transaction.objectStore(&quot;fThings&quot;);
+      for (i = 0; i &lt; things.length; i++) {
+        var request = objectStore.put(things[i]);
+      }
+      transaction.oncomplete = function() {
+        displayData();
+      };
+    }
+    var keyRangeValue = null;
+
+    function displayData() {
+      checkedValue = document.querySelector('input[name=&quot;value&quot;]:checked').value;
+      var transaction = db.transaction([&quot;fThings&quot;], &quot;readonly&quot;);
+      var objectStore = transaction.objectStore(&quot;fThings&quot;);
+      var filterIndex = document.querySelector('input[name=&quot;filterIndex&quot;]:checked').value;
+      if (filterIndex == &quot;fThing&quot;) {
+        if (checkedValue == &quot;none&quot;) {
+          keyRangeValue = null;
+        } else if (checkedValue == &quot;only&quot;) {
+          keyRangeValue = IDBKeyRange.only(onlyText.value);
+        } else if (checkedValue == &quot;range&quot;) {
+          keyRangeValue = IDBKeyRange.bound(rangeLowerText.value, rangeUpperText.value, false, false);
+        } else if (checkedValue == &quot;lower&quot;) {
+          keyRangeValue = IDBKeyRange.lowerBound(lowerBoundText.value);
+        } else if (checkedValue == &quot;upper&quot;) {
+          keyRangeValue = IDBKeyRange.upperBound(upperBoundText.value);
+        }
+      } else {
+        //遍历 fRating 索引而不是对象存储：
+        objectStore = objectStore.index(&quot;fRating&quot;);
+        if (checkedValue == &quot;none&quot;) {
+          keyRangeValue = null;
+        } else if (checkedValue == &quot;only&quot;) {
+          keyRangeValue = IDBKeyRange.only(parseFloat(onlyText.value));
+        } else if (checkedValue == &quot;range&quot;) {
+          keyRangeValue = IDBKeyRange.bound(parseFloat(rangeLowerText.value), parseFloat(rangeUpperText.value), false, false);
+        } else if (checkedValue == &quot;lower&quot;) {
+          keyRangeValue = IDBKeyRange.lowerBound(parseFloat(lowerBoundText.value));
+        } else if (checkedValue == &quot;upper&quot;) {
+          console.log(upperBoundText.value);
+          keyRangeValue = IDBKeyRange.upperBound(parseFloat(upperBoundText.value));
+        }
+      }
+      if (keyRangeValue != null) {
+        const { lower, upper, lowerOpen, upperOpen } = keyRangeValue;
+        console.log(`范围的下限: ${lower},下限值是否包含在键范围内: ${lowerOpen}\n
+          范围的上限: ${upper}, 上限值是否包含在键范围内: ${upperOpen}`);
+      }
+      list.innerHTML = &quot;&quot;;
+      objectStore.openCursor(keyRangeValue).onsuccess = function(event) {
+        var cursor = event.target.result;
+        if (cursor) {
+          var listItem = document.createElement(&quot;li&quot;);
+          listItem.innerHTML = &quot;&lt;strong&gt;&quot; + cursor.value.fThing + &quot;&lt;/strong&gt;, &quot; + cursor.value.fRating;
+          list.appendChild(listItem);
+          cursor.continue();
+        }
+      };
+      var countRequest = objectStore.count(keyRangeValue);
+      countRequest.onsuccess = function() {
+        var listItem = document.createElement(&quot;li&quot;);
+        listItem.innerHTML = &quot;&lt;strong&gt;总计&lt;/strong&gt;: &quot; + countRequest.result;
+        list.insertAdjacentElement('afterbegin', listItem);
+      };
+    };
+  };
+&lt;/script&gt;
+&lt;style&gt;
+  ul {
+    list-style-type: none;
+    flex: 100px;
+    margin-right: 1em;
+    padding: 2rem 1rem;
+    text-align: center;
+    background: white linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
+    box-shadow: 3px 3px 10px black;
+  }
+  li {
+    padding-bottom: 1rem;
+  }
+  body {
+    display: flex;
+  }
+  form {
+    flex: 5;
+    margin-top: 1rem;
+  }
+  form&gt;div {
+    margin-bottom: 1rem;
+    padding: 1rem 1rem 2rem;
+    background: white linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
+    box-shadow: 3px 3px 10px black;
+  }
+  form div div {
+    clear: both;
+    margin-top: 1rem;
+  }
+  form div label {
+    width: 55%;
+    clear: both;
+  }
+  form div input {
+    float: right;
+  }
+  form div input[type=&quot;text&quot;] {
+    width: 30%;
+  }
+  form div input[type=&quot;radio&quot;] {
+    margin-right: 10px;
+  }
+  button {
+    display: block;
+    width: 30%;
+    margin: 0 auto;
+    line-height: 1.5;
+    box-shadow: 1px 1px 2px black;
+  }
+  :invalid {
+    outline-color: red;
+  }
+&lt;/style&gt;
+</code></pre>
+<h2 id="马上掘金">马上掘金</h2>
+<iframe src="https://code.juejin.cn/pen/7177060500306395140"></iframe>
+<h2 id="其他">其他</h2>
+<ul>
+<li><a href="https://juejin.cn/post/7176211543330144315">前端本地存储数据库 IndexedDB 的增删改查</a></li>
+<li><a href="https://juejin.cn/post/7176556381376348215">前端本地存储数据库 IndexedDB 和 Web SQL、Web Storage 的对比</a></li>
+</ul>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/qian-duan-ben-di-cun-chu-shu-ju-ku-indexeddb-he-web-sqlweb-storage-de-dui-bi/" class="post-title gt-a-link">
+                    前端本地存储数据库 IndexedDB 和 Web SQL、Web Storage 的对比
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

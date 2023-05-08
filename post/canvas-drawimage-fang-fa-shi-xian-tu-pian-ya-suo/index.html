@@ -1,0 +1,238 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>Canvas drawImage() 方法实现图片压缩 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    Canvas drawImage() 方法实现图片压缩
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-11-17 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tags">
+                            # JS
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="图片压缩原理">图片压缩原理</h2>
+<ol>
+<li>CanvasRenderingContext2D.drawImage() 方法可以从页面 DOM 元素作为图像源来根据坐标和大小重新绘制该图像。</li>
+<li>HTMLCanvasElement.toDataURL() 和 HTMLCanvasElement.toBlob() 方法支持导出为 base64 字符串或 Blob 对象。</li>
+</ol>
+<h2 id="canvasrenderingcontext2ddrawimage">CanvasRenderingContext2D.drawImage()</h2>
+<pre><code class="language-js">drawImage(image, dx, dy)
+drawImage(image, dx, dy, dWidth, dHeight)
+drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
+</code></pre>
+<ul>
+<li>image
+<ul>
+<li>绘制到上下文的元素。允许任何的画布图像源，包括 canvas、img、svg、video 元素和 ImageBitmap 对象等。</li>
+</ul>
+</li>
+<li>dx, dy, dWidth, dHeight
+<ul>
+<li>这几个属性表示在 canvas 画布上指定一片区域用来放置图片，dx、dy 指定图片的左上角在 canvas 上的坐标，dWidth、dHeight 指定图片在 canvas 上绘制的区域宽高。如果没有指定 sx、sy、sWidth、sHeight 这4个参数，则图片会被拉伸或缩放在 canvas 区域内。</li>
+</ul>
+</li>
+<li>sx, sy, swidth, sheight
+<ul>
+<li>这几个属性是针对图片元素的，表示图片在 canvas 画布上显示的大小和位置。sx、sy 表示在图片上作为左上角的坐标，然后往右下角方向 swidth、sheight 尺寸范围作为最终在 canvas 上显示的图片内容。</li>
+</ul>
+</li>
+</ul>
+<p>图片压缩，需要使用的是 CanvasRenderingContext2D.drawImage() 5个参数的语法，即指定图片的左上角在 canvas 上的坐标为 0 0，图片在 canvas 上绘制的区域宽高为 canvas 的宽高。例如，图片的原始尺寸是 <code>4000*3000</code>，现在要把尺寸限制为 <code>400*300</code> 大小。</p>
+<pre><code class="language-js">const canvas = document.createElement('canvas');
+const context = canvas.getContext('2d');
+canvas.width = 400;
+canvas.height = 300;
+context.drawImage(img,0,0,canvas.width,canvas.height);
+</code></pre>
+<blockquote>
+<p>如果需要将转换后的图像渲染到页面 DOM 元素，可以使用 HTMLCanvasElement.toDataURL() 方法来获取转换后的图像 base64 格式信息的字符串传递给 img 元素的 src。或使用 HTMLCanvasElement.toBlob() 方法获取 Blob 格式的对象，然后使用 URL.createObjectURL() 获取对象 URL 传递给 img 元素的 src。也可以将该 base64 字符串或 Blob 对象上传到后端服务器。</p>
+</blockquote>
+<h2 id="htmlcanvaselementtodataurl">HTMLCanvasElement.toDataURL()</h2>
+<p>该方法将图片转换成 base64 格式信息的字符串表示法。</p>
+<pre><code class="language-js">toDataURL()
+toDataURL(type)
+toDataURL(type, encoderOptions)
+</code></pre>
+<ul>
+<li>type 可选
+<ul>
+<li>图片格式，默认为 image/png。File 或 Blob 对象中的 type 属性可以传到此参数。</li>
+</ul>
+</li>
+<li>encoderOptions 可选
+<ul>
+<li>在指定图片格式为 image/jpeg 或 image/webp 时，可以从 0 到 1 的区间内选择图片的质量。默认值 0.92 是一个比较合理的图片质量输出参数，通常情况下，我们无需再设定。如果超出取值范围，或使用其他类型参数会被忽略。</li>
+</ul>
+</li>
+</ul>
+<h3 id="htmlcanvaselementtoblob">HTMLCanvasElement.toBlob()</h3>
+<ul>
+<li>比 HTMLCanvasElement.toDataURL() 方法多了一个 callback 参数，其他参数相同。</li>
+<li>该方法是异步的，无返回值，需要在 callback 回调方法中处理转换结果。</li>
+<li>callback 回调方法参数是转换好的包含 canvas 画布上的图像的 Blob 对象，如果图像未被成功创建，可能会获得 null 值。</li>
+</ul>
+<pre><code class="language-js">toBlob(callback)
+toBlob(callback, type)
+toBlob(callback, type, quality)
+</code></pre>
+<h2 id="示例">示例</h2>
+<p>下面原始图片 <code>1920*1200</code> 的大小为 84867 字节（大约 83KB），压缩成 <code>400*300</code> 后大小仅为 16354 字节（约 16KB）。</p>
+<iframe src="https://code.juejin.cn/pen/7166639452587032583"></iframe>
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/css-background-positionclip-path-he-svg-sprites-xiao-tu-biao-sheng-cheng-fang-fa/" class="post-title gt-a-link">
+                    CSS background-position、clip-path 和 SVG Sprites 小图标生成方法
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

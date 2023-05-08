@@ -1,0 +1,370 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>兔年让这只🐇发射💣来爆破你的所有坏运 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    兔年让这只🐇发射💣来爆破你的所有坏运
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2023-01-08 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tags">
+                            # JS
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="前言">前言</h2>
+<p>Hello，掘友们好！又是一年新春之际，祝福大家兔年快乐！给大家介绍一个有趣的动效（兼容 IE），页面右下角有一只搞怪的兔子，鼠标在页面中悬停时，兔子会跟着做出不同的动作和表情。然后可以在页面中任意位置（离兔子太近不能发射，会伤到兔子😆）点击鼠标，将从兔子眼睛👀里发射炮弹，随之击中爆破的是你的霉 运、压 力、贫 穷、疾 病😮‍💨。</p>
+<figure data-type="image" tabindex="1"><img src="https://zkrisj.github.io/post-images/1673192334096.gif" alt="" loading="lazy"></figure>
+<h2 id="实现">实现</h2>
+<ol>
+<li>定义一个随机文本块。</li>
+</ol>
+<pre><code class="language-html">&lt;p id=&quot;p1&quot;&gt;&lt;/p&gt;
+</code></pre>
+<ol start="2">
+<li>定义兔子的构造函数。</li>
+</ol>
+<pre><code class="language-js">function HoverRabbit() {
+  this.explodeImage = new Image();
+  this.explodeImage.src = &quot;img/explode.png&quot;;
+  for (var i = 1; i &lt;= 6; i++) {
+    this.images[i] = new Image();
+    this.images[i].src = &quot;img/s&quot; + i + &quot;.png&quot;;
+  }
+  if (typeof(CanvasGradient) != 'undefined') {
+    this.canvas = document.createElement(&quot;canvas&quot;);
+    this.canvas.width = screen.width + 100;
+    this.canvas.height = screen.height;
+    this.canvas.style.position = 'absolute';
+    this.canvas.style.left = '0px';
+    this.canvas.style.top = '0px';
+    this.canvas.style.display = 'none';
+    document.body.appendChild(this.canvas);
+    this.canvas.style.position = 'fixed';
+  }
+}
+</code></pre>
+<ol start="3">
+<li>定义兔子原型的属性和方法。</li>
+</ol>
+<pre><code class="language-js">HoverRabbit.prototype = {
+  images: [],
+  explodeImage: null,
+  eyePositions: [],
+  current: 1,
+  frame: 1,
+  canvas: null,
+  interval: null,
+  start: function() {
+    var me = this;
+    this.eyePositions[1] = {
+      eye1x: 123,
+      eye1y: 47,
+      eye2x: 104,
+      eye2y: 53
+    };
+    this.eyePositions[2] = {
+      eye1x: 120,
+      eye1y: 50,
+      eye2x: 101,
+      eye2y: 54
+    };
+    this.eyePositions[3] = {
+      eye1x: 119,
+      eye1y: 54,
+      eye2x: 97,
+      eye2y: 56
+    };
+    this.eyePositions[4] = {
+      eye1x: 112,
+      eye1y: 61,
+      eye2x: 90,
+      eye2y: 61
+    };
+    this.eyePositions[5] = {
+      eye1x: 105,
+      eye1y: 64,
+      eye2x: 85,
+      eye2y: 61
+    };
+    this.eyePositions[6] = {
+      eye1x: 98,
+      eye1y: 68,
+      eye2x: 79,
+      eye2y: 56
+    };
+    document.onmousemove = function(e) {
+      me.onmousemove(e);
+    }
+    if (this.canvas) {
+      document.addEventListener(&quot;click&quot;, function(e) {
+        me.ondblclick(e);
+      });
+    }
+  },
+  onmousemove: function(e) {
+    var event = e || window.event;
+    var deg = Math.abs(screen.height - event.screenY) / (Math.abs(screen.width - event.screenX) + 1);
+    var n = 1;
+    if (deg &gt; 2) n = 6;
+    else if (deg &gt; 1.4) n = 5;
+    else if (deg &gt; 0.7) n = 4;
+    else if (deg &gt; 0.45) n = 3;
+    else if (deg &gt; 0.2) n = 2;
+    this.deg = n;
+    if (this.current != n) {
+      document.body.style.backgroundImage = &quot;url(&quot; + this.images[n].src + &quot;)&quot;;
+      this.current = n;
+    }
+  },
+  drawBomb: function(ctxt, n, x, y) {
+    var sx = 64 * (n % 4);
+    var sy = 64 * (Math.floor(n / 4));
+    ctxt.drawImage(this.explodeImage, sx, sy, 64, 64, x - 32, y - 32, 64, 64);
+  },
+  ondblclick: function(e) {
+    if (this.canvas.style.display != 'none') return;
+    var me = this;
+    if (e.clientX &gt; window.innerWidth - 200 &amp;&amp; e.clientY &gt; window.innerHeight - 200) return;
+    var ctxt = this.canvas.getContext(&quot;2d&quot;);
+    this.frame = 1;
+    this.interval = setInterval(function(e2) {
+      ctxt.clearRect(0, 0, me.canvas.width, me.canvas.height);
+      switch (me.frame) {
+        case 1:
+          ctxt.strokeStyle = 'rgba(247,166,71,1)';
+          me.canvas.style.display = 'block';
+        case 2:
+          if (me.frame == 2) {
+            ctxt.strokeStyle = 'rgba(247,166,71,0.5)';
+            me.drawBomb(ctxt, 0, e.clientX, e.clientY);
+          }
+          case 3:
+            if (me.frame == 3) {
+              ctxt.strokeStyle = 'rgba(247,166,71,0.1)';
+              me.drawBomb(ctxt, 1, e.clientX, e.clientY);
+            }
+            var eye1x = window.innerWidth - me.eyePositions[me.current].eye1x;
+            var eye1y = window.innerHeight - me.eyePositions[me.current].eye1y;
+            ctxt.lineWidth = 3;
+            ctxt.beginPath();
+            ctxt.moveTo(eye1x, eye1y);
+            ctxt.lineTo(e.clientX, e.clientY);
+            ctxt.stroke();
+            var eye2x = window.innerWidth - me.eyePositions[me.current].eye2x;
+            var eye2y = window.innerHeight - me.eyePositions[me.current].eye2y;
+            ctxt.beginPath();
+            ctxt.moveTo(eye2x, eye2y);
+            ctxt.lineTo(e.clientX, e.clientY);
+            p1.textContent = ['霉 运', '压 力', '贫 穷', '疾 病'][Math.floor(Math.random() * 4)];
+            p1.style.display = 'block';
+            p1.style.transform = 'rotate(' + (-150 + me.deg * 30) + 'deg)';
+            p1.style.left = e.clientX - 30 + 'px';
+            p1.style.top = e.clientY - 30 + 'px';
+            fade(p1);
+            ctxt.stroke();
+            break;
+          case 4:
+            me.drawBomb(ctxt, 2, e.clientX, e.clientY);
+            break;
+          case 14:
+            me.canvas.style.display = 'none';
+            window.clearInterval(me.interval);
+            break;
+          default:
+            me.drawBomb(ctxt, me.frame - 2, e.clientX, e.clientY);
+      }
+      me.frame++;
+    }, 50);
+  }
+};
+</code></pre>
+<p>各个属性和方法说明：</p>
+<ul>
+<li>images - 兔子不同的动作的图片数组。</li>
+<li>explodeImage - 炮弹图片元素。</li>
+<li>eyePositions - 兔子眼睛位置的数组。</li>
+<li>current - 整型数字，兔子当前动作的指针。</li>
+<li>frame - 整型数字，发射炮弹动画的帧数指针。</li>
+<li>canvas - 画布元素。</li>
+<li>interval - 发射炮弹动画时间间隔定时器的 interval ID。</li>
+<li>start - 启动页面交互的方法，在这里初始化了兔子眼睛位置的数组数据，绑定页面鼠标移动事件、点击事件。</li>
+<li>onmousemove - 定义页面鼠标移动的实现方法。</li>
+<li>ondblclick - 定义页面鼠标点击的实现方法。</li>
+<li>drawBomb - 定义绘制和更新炮弹动画的方法。</li>
+</ul>
+<ol start="4">
+<li>定义文字淡出的动画。</li>
+</ol>
+<pre><code class="language-js">function fade(e) {
+  var s = e.style;
+  s.opacity = 1;
+  (function hide() {
+    (s.opacity -= .01) &lt; 0 ? s.display = &quot;none&quot; : requestAnimationFrame(hide);
+  })();
+}
+</code></pre>
+<ol start="5">
+<li>创建兔子对象，调用启动交互方法。</li>
+</ol>
+<pre><code class="language-js">var s = new HoverRabbit();
+s.start();
+</code></pre>
+<h2 id="码上掘金">码上掘金</h2>
+<iframe src="https://code.juejin.cn/pen/7186181146755989562"></iframe>
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/shi-yong-echarts-zhi-zuo-jue-jin-ge-ren-xin-xi-bao-biao/" class="post-title gt-a-link">
+                    使用 ECharts 制作掘金个人信息报表
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

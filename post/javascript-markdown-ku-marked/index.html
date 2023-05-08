@@ -1,0 +1,313 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>JavaScript Markdown 库 marked | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    JavaScript Markdown 库 marked
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2023-04-30 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tags">
+                            # JS
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p>marked 是一个基于 JavaScript 的 Markdown 解析器和编译器。它可以将 Markdown 语法解析为 HTML，并且可以扩展 Markdown 的功能。Marked 可以在浏览器端和 Node.js 环境下运行。</p>
+<p>使用 Marked 可以轻松地将 Markdown 文本转换为 HTML 文档，而无需手动编写 HTML 代码。它支持 Markdown 的所有基本语法，如标题、段落、列表、链接、图片等。此外，Marked 还支持一些扩展语法，如表格、代码块、代码高亮、删除线、粗体、斜体等。</p>
+<h2 id="npm-方式">npm 方式</h2>
+<p>下面是 Vue3 的官网示例 - 一个简单的 markdown 编辑器。通过 ES Module 方式导入 <code>marked</code> 对象，然后通过 <code>computed</code> 计算属性根据左侧文本框内容将生成的 HTML 代码插入到右侧页面元素中，动态更新其内容，这里配合指令 <code>v-html</code> 将内容直接作为普通 HTML 插入。还使用了 <code>lodash-es</code> 模块的防抖函数 <code>debounce</code>，防止输入频率导致的性能问题。</p>
+<pre><code class="language-html">&lt;template&gt;
+  &lt;div class=&quot;editor&quot;&gt;
+    &lt;textarea class=&quot;input&quot; :value=&quot;input&quot; @input=&quot;update&quot;&gt;&lt;/textarea&gt;
+    &lt;div class=&quot;output&quot; v-html=&quot;output&quot;&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+&lt;script setup&gt;
+  import { marked } from 'marked'
+  import { debounce } from 'lodash-es'
+  import { ref, computed } from 'vue'
+  const input = ref('# hello')
+  const output = computed(() =&gt; marked(input.value))
+  const update = debounce((e) =&gt; {
+    input.value = e.target.value
+  }, 100)
+&lt;/script&gt;
+&lt;style&gt;
+  body {
+    margin: 0;
+  }
+  .editor {
+    height: 100vh;
+    display: flex;
+  }
+  .input,
+  .output {
+    overflow: auto;
+    width: 50%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 0 20px;
+  }
+  .input {
+    border: none;
+    border-right: 1px solid #ccc;
+    resize: none;
+    outline: none;
+    background-color: #f6f6f6;
+    font-size: 14px;
+    font-family: 'Monaco', courier, monospace;
+    padding: 20px;
+  }
+  code {
+    color: #f66;
+  }
+&lt;/style&gt;
+</code></pre>
+<iframe src="https://code.juejin.cn/pen/7227610957688602682"></iframe>
+<h2 id="cdn-方式">CDN 方式</h2>
+<p>只需要在你的 HTML 文档中引入 <code>marked.js</code> 文件，然后使用 JavaScript 代码调用 <code>marked</code> 对象的函数即可将 Markdown 文本转换为 HTML。</p>
+<pre><code class="language-html">&lt;body&gt;
+  &lt;div class=&quot;editor&quot;&gt;
+    &lt;textarea class=&quot;input&quot; id=&quot;input&quot;&gt;&lt;/textarea&gt;
+    &lt;div class=&quot;output&quot; id=&quot;output&quot;&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;script src=&quot;&lt;script src=&quot;https://cdn.jsdelivr.net/npm/marked/marked.min.js&quot;&gt;&lt;/script&gt;&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+  function debounce(fn, delay = 200) {
+    let timer;
+    return function() {
+      clearTimeout(timer);
+      timer = setTimeout(fn.bind(this, ...arguments), delay);
+    }
+  }
+  input.value = '# hello'
+  output.innerHTML = marked.parse(input.value)
+  input.oninput = debounce((e) =&gt; {
+    input.value = e.target.value
+    output.innerHTML = marked.parse(input.value)
+  }, 500)
+&lt;/script&gt;
+&lt;style&gt;
+  body {
+    margin: 0;
+  }
+  .editor {
+    height: 100vh;
+    display: flex;
+  }
+  .input,
+  .output {
+    overflow: auto;
+    width: 50%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 0 20px;
+  }
+  .input {
+    border: none;
+    border-right: 1px solid #ccc;
+    resize: none;
+    outline: none;
+    background-color: #f6f6f6;
+    font-size: 14px;
+    font-family: 'Monaco', courier, monospace;
+    padding: 20px;
+  }
+  code {
+    color: #f66;
+  }
+&lt;/style&gt;
+</code></pre>
+<iframe src="https://code.juejin.cn/pen/7227610927128903738"></iframe>
+<h2 id="配置">配置</h2>
+<p>marked 提供了许多配置选项，可以用来自定义转换过程中的行为和输出结果。</p>
+<ol>
+<li><code>gfm</code>：启用 GitHub 风格的 Markdown。默认为 <code>true</code>。</li>
+<li><code>breaks</code>：将行内的换行符转换为 <code>&lt;br&gt;</code>。默认为 <code>false</code>。</li>
+<li><code>sanitize</code>：启用 HTML 标签的转义。默认为 <code>false</code>。</li>
+<li><code>smartLists</code>：启用智能列表。默认为 <code>true</code>，即自动将 <code>-</code> 和 <code>*</code> 转换为无序列表，而将数字和 <code>.</code> 转换为有序列表。</li>
+<li><code>smartypants</code>：启用智能标点。默认为 <code>false</code>，即不自动将引号和破折号转换为智能标点。</li>
+<li><code>highlight</code>：用于高亮代码块的函数。默认为 <code>null</code>，即不进行代码高亮。</li>
+<li><code>renderer</code>：用于自定义输出 HTML 的渲染器。默认为 <code>new marked.Renderer()</code>，即使用默认的渲染器。</li>
+</ol>
+<p>这些配置选项可以通过一个 JavaScript 对象进行设置，然后作为第二个参数传递给 marked 函数。例如：</p>
+<pre><code class="language-js">const marked = require('marked');
+
+const markdown = '# Hello, world!';
+const options = {
+  gfm: true,
+  breaks: true,
+  smartLists: true,
+  highlight: function(code) {
+    return require('highlight.js').highlightAuto(code).value;
+  }
+};
+
+const html = marked(markdown, options);
+console.log(html);
+</code></pre>
+<p>上面的代码将一个 Markdown 字符串转换为 HTML，并启用了 GitHub 风格的 Markdown、智能列表和代码高亮等功能。</p>
+<h2 id="仓库和文档地址">仓库和文档地址</h2>
+<ol>
+<li>https://github.com/markedjs/marked</li>
+<li><a href="https://marked.js.org/">Marked Documentation</a></li>
+</ol>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/javascript-bi-bao-or-qing-xun-ying-bi-ji/" class="post-title gt-a-link">
+                    JavaScript 闭包
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,239 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>开发者工具网络面板中的 Request Payload 和 Form Data | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    开发者工具网络面板中的 Request Payload 和 Form Data
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-08-29 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/sqhugDzjp/" class="post-tags">
+                            # 工具
+                        </a>
+                    
+                        <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tags">
+                            # JS
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p>Request Payload 和 Form Data 是浏览器传输给接口的两种格式，这两种方式浏览器是通过 <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type"><code>Content-Type</code></a> 来进行区分的，如果是 <code>application/x-www-form-urlencoded</code>，则为 Form Data 方式，如果是 <code>application/json</code> 或 <code>multipart/form-data</code>，则为 Request Payload 的方式。</p>
+<h2 id="开发者工具网络面板">开发者工具网络面板</h2>
+<p>Chrome 96 之前，Request Payload 和 Form Data 信息信息出现在报头边栏里。</p>
+<p>比如如下使用 ajax 方式的提交 post 请求得到的响应标头（默认：<code>content-type:text/plain;charset=UTF-8</code>）：</p>
+<figure data-type="image" tabindex="1"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/14018deec22744758dfd46b1e2c8da27~tplv-k3u1fbpfcp-watermark.image?" alt="微信截图_20220816232651.png" loading="lazy"></figure>
+<p><code>content-type:multipart/form-data</code> 提交 post 请求得到的响应标头：</p>
+<figure data-type="image" tabindex="2"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f9230a71c33e4b4f98ef0ccbae61ccab~tplv-k3u1fbpfcp-watermark.image?" alt="微信截图_20220816232707.png" loading="lazy"></figure>
+<p><code>content-type:application/x-www-form-urlencoded</code> 提交 post 请求得到的响应标头：</p>
+<figure data-type="image" tabindex="3"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8bfe4000619e4eea9e71165ad433f87d~tplv-k3u1fbpfcp-watermark.image?" alt="微信截图_20220816232623.png" loading="lazy"></figure>
+<p>Chrome 96 开始，当您想查看网络请求中的 Request Payload 和 Form Data 信息时，可以使用网络面板里面的 Payload（载荷）边栏。</p>
+<p><code>content-type:application/json</code> 提交 post 请求得到的响应标头：</p>
+<figure data-type="image" tabindex="4"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f2530d410c604d23bfc22a410061e84c~tplv-k3u1fbpfcp-watermark.image?" alt="微信截图_20220816233328.png" loading="lazy"></figure>
+<p><code>content-type:application/x-www-form-urlencoded</code> 提交 post 请求得到的响应标头：</p>
+<figure data-type="image" tabindex="5"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b62b0d95fa5c40d5bbc7065ac8c6a210~tplv-k3u1fbpfcp-watermark.image?" alt="微信截图_20220816233239.png" loading="lazy"></figure>
+<p><code>content-type:application/x-www-form-urlencoded</code> 请求标头代码：</p>
+<pre><code class="language-js">const res = await fetch('https://www.runoob.com/try/ajax/demo_post2.php', {
+  method: 'post',
+  body: 'fname=Henry&amp;lname=Ford',
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded'
+  }
+}).then(res =&gt; res.text());
+
+console.log(res); // &lt;p style='color:red;'&gt;你好，Henry Ford，今天过得怎么样？&lt;/p&gt;
+</code></pre>
+<p><code>content-type:application/json</code> 请求标头代码：</p>
+<pre><code class="language-js">const res = await fetch('https://www.runoob.com/try/ajax/demo_post2.php', {
+  method: 'post',
+  body: '{&quot;fname&quot;:&quot;Henry&quot;,&quot;lname&quot;:&quot;Ford&quot;}',
+  headers: {
+    'Content-Type': 'application/json'
+  }
+}).then(res =&gt; res.text());
+
+console.log(res); // &lt;p style='color:red;'&gt;你好， ，今天过得怎么样？&lt;/p&gt;
+</code></pre>
+<p>可以看到不能得到正确响应，<code>fname</code> 和 <code>lname</code> 没有传递成功，也就是后台只接受 Form Data 的参数，不接受 Request Payload 的参数。</p>
+<h2 id="默认请求标头-content-type">默认请求标头 Content-Type</h2>
+<ol>
+<li>
+<p><code>fetch</code> 默认请求标头为：<code>'Content-Type': 'text/plain;charset=UTF-8'</code>。所以使用 <code>fetch</code> 提交 <code>post</code> 或其他 <code>非 get</code> 请求时，一定要设置 <code>Content-Type</code> 请求标头。</p>
+</li>
+<li>
+<p>axios 默认请求标头为：<code>'Content-Type': 'application/x-www-form-urlencoded'</code>。</p>
+</li>
+</ol>
+<pre><code class="language-js">axios({
+  method: 'post',
+  url: 'https://www.runoob.com/try/ajax/demo_post2.php',
+  data: 'fname=Henry&amp;lname=Ford'
+});
+// 或者
+axios.post('https://www.runoob.com/try/ajax/demo_post2.php', 'fname=Henry&amp;lname=Ford');
+</code></pre>
+<ol start="3">
+<li>html 表单 <code>enctype</code> 默认：<code>application/x-www-form-urlencoded</code>，<code>get</code> 请求时设置 <code>enctype</code> 属性其他值会被忽略。</li>
+</ol>
+<pre><code class="language-html">&lt;form action=&quot;https://www.runoob.com/try/ajax/demo_post2.php&quot; method=&quot;post&quot;&gt;
+  &lt;input name=&quot;fname&quot;&gt;
+  &lt;input name=&quot;lname&quot;&gt;
+  &lt;input type=&quot;submit&quot;&gt;
+&lt;/form&gt;
+</code></pre>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/shi-yong-liu-lan-qi-yuan-sheng-de-lessdialoggreater-yuan-su-ti-huan-alertconfirmprompt-dui-hua-kuang/" class="post-title gt-a-link">
+                    使用浏览器原生的 &lt;dialog&gt; 元素替换 alert、confirm、prompt 对话框
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

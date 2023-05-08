@@ -1,0 +1,276 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>🎉JavaScript 五彩纸屑库 js-confetti | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    🎉JavaScript 五彩纸屑库 js-confetti
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2023-03-08 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tags">
+                            # JS
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p>如果您有一个页面，您希望用五彩纸屑特效引起您的用户注意，那么这个插件就是为您准备的。去年介绍过一个很好用的插件 <a href="https://juejin.cn/post/7150201876066074661">canvas-confetti</a>，掘金年度作者投票按钮的特效就是使用的这个，两者对比如下：</p>
+<ol>
+<li>两者都提供了 npm 安装和从 cdn 导入两种使用方式。</li>
+<li><code>canvas-confetti</code> 提供了很多自定义的选项，包括：发射原点、发射数量、扩散角度、发射角度、重力、消失的速度、颜色和形状等。而 <code>js-confetti</code> 自定义的选项比较少，但是体积也小了，压缩文件只有 6KB 多。</li>
+<li><code>js-confetti</code> npm 包体积 35.8 kB，<code>canvas-confetti</code> npm 包体积 66.3 kB。</li>
+<li><code>js-confetti</code> 支持表情符号作为五彩纸屑。</li>
+<li>两者特效调用函数都返回 <code>Promise</code> 对象，当添加的五彩纸屑由于五彩纸屑的重力物理而从用户屏幕上消失时变成 <code>resolved</code> 状态。</li>
+<li>另外，<code>js-confetti</code> npm 包中包含内置的 TypeScript 类型声明，而 <code>canvas-confetti</code> 需要额外的 npm 包 <a href="https://www.npmjs.com/package/@types/canvas-confetti">@types/canvas-confetti</a> 提供 TypeScript 的类型声明。</li>
+</ol>
+<h2 id="使用方式">使用方式</h2>
+<ol>
+<li>NPM 安装：</li>
+</ol>
+<pre><code>npm i js-confetti
+</code></pre>
+<pre><code class="language-js">import JSConfetti from 'js-confetti'
+
+const confetti = new JSConfetti()
+
+function showConfetti() {
+  confetti.addConfetti()
+}
+
+showConfetti()
+</code></pre>
+<iframe src="https://code.juejin.cn/pen/7208105546606444603"></iframe>
+<ol start="2">
+<li>从 CDN 导入 HTML 页面中（也可以将 JS 文件下载到本地）：</li>
+</ol>
+<pre><code>&lt;script src=&quot;https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<p>然后访问 <code>JSConfetti</code> 全局变量。</p>
+<pre><code class="language-js">const confetti = new JSConfetti()
+
+function showConfetti() {
+  confetti.addConfetti()
+}
+
+showConfetti()
+</code></pre>
+<iframe src="https://code.juejin.cn/pen/7208109119847759906"></iframe>
+<blockquote>
+<p>注意：<code>new JSConfetti()</code> 将创建 HTML <code>Canvas</code> 元素并将其添加到页面，因此可以只创建一个并复用它。</p>
+</blockquote>
+<h2 id="类型定义">类型定义</h2>
+<p>通过 npm 安装 <code>js-confetti</code>，其内置的 TypeScript 类型声明文件如下：</p>
+<pre><code class="language-ts">// Type definitions for js-confetti
+// TypeScript Version: 4.1.2
+
+export = JSConfetti;
+
+interface IJSConfettiConfig {
+  canvas?: HTMLCanvasElement,
+}
+
+interface IAddConfettiConfig {
+  confettiRadius?: number,
+  confettiNumber?: number,
+  confettiColors?: string[],
+  emojis?: string[],
+  emojiSize?: number,
+}
+
+declare class JSConfetti {
+  constructor(jsConfettiConfig?: IJSConfettiConfig);
+
+  addConfetti(confettiConfig?: IAddConfettiConfig): Promise&lt;void&gt;;
+  clearCanvas(): void;
+}
+</code></pre>
+<h2 id="自定义-canvas-元素">自定义 <code>canvas</code> 元素</h2>
+<p>如果需要在自定义 <code>canvas</code> 元素中使用特效，可以将 <code>canvas</code> 元素作为参数传递给 <code>JSConfetti</code> 构造函数。</p>
+<pre><code class="language-js">const canvas = document.getElementById('your_custom_canvas_id')
+const jsConfetti = new JSConfetti({ canvas })
+</code></pre>
+<iframe src="https://code.juejin.cn/pen/7208110991475736635"></iframe>
+<h2 id="使用表情符号">使用表情符号</h2>
+<p>通过向 <code>addConfetti</code> 方法传递选项参数 <code>emojis</code> 和 <code>emojiSize</code> 来使用表情符号作为五彩纸屑。</p>
+<pre><code class="language-js">const jsConfetti = new JSConfetti()
+jsConfetti.addConfetti({
+   emojis: ['🌈', '⚡️', '💥', '✨', '💫', '🌸'],
+   emojiSize: 20,
+})
+</code></pre>
+<h2 id="自定义五彩纸屑颜色">自定义五彩纸屑颜色</h2>
+<p>通过向 <code>addConfetti</code> 方法传递选项参数 <code>confettiColors</code> 来自定义五彩纸屑颜色。</p>
+<pre><code class="language-js">const jsConfetti = new JSConfetti()
+jsConfetti.addConfetti({
+  confettiColors: [
+    '#ff0a54', '#ff477e', '#ff7096', '#ff85a1', '#fbb1bd', '#f9bec7',
+  ],
+})
+</code></pre>
+<h2 id="自定义五彩纸屑半径和数量">自定义五彩纸屑半径和数量</h2>
+<p>通过向 <code>addConfetti</code> 方法传递选项参数 <code>confettiRadius</code> 和 <code>confettiNumber</code> 来使用表情符号作为五彩纸屑。</p>
+<pre><code class="language-js">const jsConfetti = new JSConfetti()
+jsConfetti.addConfetti({
+  confettiRadius: 6,
+  confettiNumber: 500,
+})
+</code></pre>
+<iframe src="https://code.juejin.cn/pen/7208114926719041592"></iframe>
+<h2 id="清除画布和结束">清除画布和结束</h2>
+<p>通过 <code>JSConfetti</code> 类的实例上的 <code>clearCanvas</code> 方法清除画布。<code>addConfetti</code> 方法返回 <code>Promise</code> 对象，特效结束时变成 <code>resolved</code> 状态。</p>
+<iframe src="https://code.juejin.cn/pen/7208132023825891383"></iframe>
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/zui-xin-vue-zhong-de-xiang-ying-xing-yu-fa-tang-yi-fei-qi/" class="post-title gt-a-link">
+                    最新，Vue 中的响应性语法糖已废弃
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

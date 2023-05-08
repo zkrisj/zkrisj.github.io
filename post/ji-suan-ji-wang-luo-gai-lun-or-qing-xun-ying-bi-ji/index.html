@@ -1,0 +1,409 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>计算机网络概论 ｜ 青训营笔记 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    计算机网络概论 ｜ 青训营笔记
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2023-05-01 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/hvtmfHfT6/" class="post-tags">
+                            # 术语
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p>建立对计算机网络的整体认知，对计算机网络中的各种概念（网络分层、网络协议、网络应用等)有初步的理解，进而可以在后续的实际工作中能高效解决网络问题。</p>
+<h2 id="课程内容">课程内容</h2>
+<ol>
+<li>通过一个示例建立对计算机网络的整体认识</li>
+<li>建立对网络协议分层的认知</li>
+<li>分析 HTTP1、2、3的关系</li>
+<li>介绍 CDN 运行的基本原理</li>
+<li>了解网络安全的最基本原则</li>
+</ol>
+<p>但不包括：</p>
+<ol>
+<li>详细描述如何开发一个基于HTTP协议（或者其他协议)的网络应用</li>
+<li>深入介绍课程中所涉及协议的规范（Specification）内容和实现细节</li>
+</ol>
+<h3 id="分析方法">分析方法</h3>
+<ol>
+<li>
+<p>自底向上</p>
+<ul>
+<li>从简单开始，逐渐变复杂</li>
+<li>将模块逐步拼凑成一个系统</li>
+</ul>
+</li>
+<li>
+<p>自顶向下</p>
+<ul>
+<li>从复杂开始，逐渐变简单</li>
+<li>从复杂的系统问题入手，拆分为模块问题</li>
+</ul>
+</li>
+</ol>
+<h2 id="蟹堡王帝国">蟹堡王帝国</h2>
+<p>蟹老板想挣一个“小目标”，三步走战略：</p>
+<ol>
+<li>在比奇堡开通外卖</li>
+<li>在北京和上海开分店</li>
+<li>在全国开分店并开通外卖</li>
+</ol>
+<h2 id="计算机网络基础">计算机网络基础</h2>
+<h3 id="网络组成部分">网络组成部分</h3>
+<ol>
+<li>主机：客户端和服务端</li>
+<li>路由器</li>
+<li>网络协议</li>
+</ol>
+<h3 id="网络结构网络的网络">网络结构：网络的网络</h3>
+<ol>
+<li>比奇堡和小区网络：本地网络</li>
+<li>北京和上海分店+比奇堡：三个本地网络节点的网络</li>
+<li>全国通信网络：本地网络的网络</li>
+<li>区域网络、城域网和广域网</li>
+</ol>
+<h3 id="网络分层">网络分层</h3>
+<ol>
+<li>快递员不关心包裹内容</li>
+<li>卡车司机不关心车厢里拉的是什么</li>
+<li>高速公路不关心开的什么车</li>
+</ol>
+<h3 id="协议">协议</h3>
+<p>协议的存在依赖于连接。</p>
+<pre><code>01001000011001010110110001101100011011110010110000100000
+010101110110111101110010011011000110010000100001
+7210110810811144328711111410810033
+H e l l o ,  W o r l d !
+</code></pre>
+<p>协议定义了在两个或多个通信实体之间交换的报文<strong>格式</strong>和<strong>顺序</strong>，以及报文发送和接受一条报文或其他事件所采取的动作。</p>
+<h3 id="标头和载荷">标头和载荷</h3>
+<p>收件人、寄件人关注：</p>
+<ol>
+<li>收件地址、寄件地址</li>
+<li>收件人、寄件人的姓名和电话</li>
+<li>包裹内容</li>
+</ol>
+<p>快递公司关注：</p>
+<ol>
+<li><strong>收件人、寄件人关注的东西</strong></li>
+<li>该由哪个集散点发出，哪个集散点收</li>
+<li>哪个网点派送</li>
+</ol>
+<h3 id="http-协议示例">HTTP 协议示例</h3>
+<h4 id="链路层-本地帧头部">链路层-本地帧头部</h4>
+<figure data-type="image" tabindex="1"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7c1335ac5bff43fd9ecb8c3693c44dc9~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<h4 id="链路层-ip协议头部">链路层-IP协议头部</h4>
+<figure data-type="image" tabindex="2"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ebc835e0fa1441b3925b8e45aa3e9e6a~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<h4 id="运输层-tcp协议头部">运输层-TCP协议头部</h4>
+<figure data-type="image" tabindex="3"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/77979a6e444046aa921a8b51314a161f~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<h4 id="应用层-http协议头部">应用层-HTTP协议头部</h4>
+<figure data-type="image" tabindex="4"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/793ab70627f34bd89de0615922c1797b~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<h4 id="tcp-协议格式">TCP 协议格式</h4>
+<figure data-type="image" tabindex="5"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/425584abd44e4eef9b2276f6d8deed99~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<h3 id="小结">小结</h3>
+<ol>
+<li>网络组成部分：由主机、路由器、交换机等组成</li>
+<li>网络结构：网络的网络</li>
+<li>信息交换方式：电路交换和分组交换</li>
+<li>网络分层：分清职责，物理层、链路层、网络层、运输层和应用层</li>
+<li>网络协议：标头和载荷</li>
+</ol>
+<h2 id="web-中的网络">Web 中的网络</h2>
+<h3 id="http-协议">HTTP 协议</h3>
+<figure data-type="image" tabindex="6"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/418b22e2977842b28ab7ffbcb49f4159~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<h3 id="http-连接模型">HTTP 连接模型</h3>
+<figure data-type="image" tabindex="7"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2641fa70ba644866b476cfee5e2ddc63~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<blockquote>
+<p>队头堵塞（Head of Line Blocking）</p>
+</blockquote>
+<h3 id="http11无法多路复用">HTTP1.1：无法多路复用</h3>
+<figure data-type="image" tabindex="8"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2b470c4b24d84055a70e5b3b2998b826~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<figure data-type="image" tabindex="9"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/fdc41c1e899a40d8ad182cb061e16402~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<figure data-type="image" tabindex="10"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e9381e0d0de84f2c9e7779017464e949~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<h3 id="http2帧">HTTP2：帧</h3>
+<figure data-type="image" tabindex="11"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/964d8627daaa46129a01c7d2bf929558~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<figure data-type="image" tabindex="12"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/87c5fa37ac684d54bee4185cc9089b64~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<figure data-type="image" tabindex="13"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ef93a88a90084d4e93ae5a89153c6805~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<h3 id="http2帧带来的额外好处">HTTP2：帧带来的额外好处</h3>
+<ol>
+<li>调整响应传输的优先级</li>
+<li>头部压缩</li>
+<li>Server Push</li>
+</ol>
+<h3 id="http23rtt启动http-2队头堵塞但是在-tcp-上">HTTP2：3RTT启动（HTTP 2：队头堵塞，但是在 TCP 上）</h3>
+<ol>
+<li>HTTP客户端：我要和大哥说话！</li>
+<li>TCP客户端默默对HTTP客户端说，我知道你很急，但你先别急。</li>
+<li>TCP客户端：嗨！服务端，你在吗？</li>
+<li>TCP服务端：嗨！客户端，我在，你在吗？</li>
+<li>TLS客户端：Helo!能给我把钥匙吗？</li>
+<li>TLS服务端：Hello!给！你的钥匙！</li>
+<li>HTTP客户端：终于到我了，我要index.html!</li>
+</ol>
+<h3 id="http3quic">HTTP3：QUIC</h3>
+<ol>
+<li>Quick UDP Internet Connection</li>
+<li>现存网络设备对TCP和UDP支持已经僵化</li>
+<li>UDP不靠谱但是QUIC靠谱</li>
+<li>QUIC可以为除HTTP协议以外的应用层协议提供支持</li>
+</ol>
+<h3 id="http-3quic-1-rtt">HTTP 3：QUIC-1 RTT</h3>
+<ol>
+<li>（QUIC第一次访问）HTTP客户端：我要和大哥说话！</li>
+<li>QUC客户端：嗨！服务端，你在吗？在的话能给我把钥匙吗？</li>
+<li>QU1C服务端：嗨！客户端，我在，这是你的钥匙！</li>
+<li>HTTP客户端：今天这么快？我要index.html!</li>
+<li>QUIC服务端（偷偷地告诉客户端）：这还有把钥匙，下次找我可以不用问，直接用。</li>
+</ol>
+<h3 id="httpquic-0-rtt">HTTP：QUIC-0 RTT</h3>
+<ol>
+<li>（QUIC第二次访问）HTTP客户端：我要和大哥说话！</li>
+<li>QU1C客户端：嗨！服务端，你在吗？后面的话我已经用上次你给我的钥匙加密过了，HTTP那小子肯定要index.html!</li>
+<li>QUlC服务端：嗨！客户端，我在，我知道你要index.html,给你！</li>
+<li>HTTP客户端：？</li>
+</ol>
+<h3 id="cdn">CDN</h3>
+<p>速度：</p>
+<ul>
+<li>HTTP 3 快吗?</li>
+<li>快!</li>
+<li>那从美国到中国，HTTP 3 要多久?</li>
+<li>150 ms!</li>
+<li>和北京到上海比，还快吗?</li>
+<li>好像不够?</li>
+</ul>
+<p>收费：</p>
+<ul>
+<li>流量多少钱一个 G?</li>
+<li>1块</li>
+<li>那我在北京给工海的人发一部 10 G 电影得 10 块?</li>
+<li>对!</li>
+<li>发10 次一样的电影要 100 块?</li>
+<li>是的!</li>
+<li>我都发到上海了，不能内部共享下吗?</li>
+</ul>
+<p>流量：</p>
+<ul>
+<li>我们有几台服务器?</li>
+<li>1台</li>
+<li>他能抗多少流量?</li>
+<li>100G!</li>
+<li>双一一峰值得 1000G 啊，扛得住吗?</li>
+<li>不一定，可能挂.....</li>
+</ul>
+<p>还得是我：<br>
+北京<br>
+上海<br>
+广州<br>
+成都<br>
+长沙<br>
+兰州<br>
+长春</p>
+<figure data-type="image" tabindex="14"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4358d433fc0a45cd9410db944b814319~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<figure data-type="image" tabindex="15"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/07844b75c45642a09ed5d324efb56fb5~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<h3 id="dns-劫持">DNS 劫持</h3>
+<ol>
+<li>域名解析一般由网站自己处理</li>
+<li>要加速的域名则重定向到 CDN 厂商的域名解析服务处理</li>
+<li>CDN 厂商根据来源确定最近的 CDN 服务器的 IP</li>
+<li>用户直接访问最近的 CDN 服务器</li>
+</ol>
+<h2 id="websocket">WebSocket</h2>
+<ol>
+<li>有状态的持久连接</li>
+<li>服务端可以主动推送消息</li>
+<li>用 WebSocket 发送消息延迟比 HTTP 低</li>
+</ol>
+<p>服务端：</p>
+<figure data-type="image" tabindex="16"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0f00151e74454aa4a8c7e0881d8160ee~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<p>客户端：</p>
+<figure data-type="image" tabindex="17"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7150df25487a41fd97e7dc6e5d53c337~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<p>请求头：</p>
+<figure data-type="image" tabindex="18"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6843c6469eb848c69f4c0c9c8aefc2f6~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<figure data-type="image" tabindex="19"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7cfb22bf64fb42b581e5a605c4f0b64a~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<p>响应头：</p>
+<figure data-type="image" tabindex="20"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/22fb1c17648945e985f23abd8f83a08a~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<p>客户端消息：</p>
+<figure data-type="image" tabindex="21"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/50a8d3d329e34ecb9910ae71354117f4~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<p>服务端消息：</p>
+<figure data-type="image" tabindex="22"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ec5af4b739e14a9e8d0f0d27302419f4~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<h2 id="网络安全">网络安全</h2>
+<ol>
+<li>网络安全三要素: 机密性、完整性和身份验证</li>
+<li>在没有提前交换秘密信息的前提下，无法在不安全的信道交换秘密信息</li>
+<li>PKI 保证了普通用户不需要”面对面”和根证书机构交换根证书</li>
+<li>HTTPS 使用 PKI 完成了除客户端身份验证以外的特性，客户端身份验证靠HTTP 协议实现</li>
+</ol>
+<h2 id="总结">总结</h2>
+<ol>
+<li>HTTP 1 2 3 的演进历史。</li>
+<li>CDN 解决了 HTTP 协议之外的问题。</li>
+<li>WebSocket 从 HTTP 协议升级而来。</li>
+<li>网络安全三要素：
+<ol>
+<li>机密性: 攻击者无法获知通信内容</li>
+<li>完整性:攻击者对内容进行篡改时能被发现</li>
+<li>身份验证: 攻击者无法伪装成通信双方的任意一方与另一方通信</li>
+</ol>
+</li>
+</ol>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/typescript-zong-jie/" class="post-title gt-a-link">
+                    TypeScript 总结
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

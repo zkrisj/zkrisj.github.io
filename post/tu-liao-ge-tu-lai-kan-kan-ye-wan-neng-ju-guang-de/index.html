@@ -1,0 +1,278 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>「兔了个兔」来看看夜晚能聚光的🐇 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    「兔了个兔」来看看夜晚能聚光的🐇
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2023-01-13 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/5W0xko0tt/" class="post-tags">
+                            # CSS
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p>宠物科普：小兔是有各种颜色的，它们的眼睛也是有不一样颜色的。那是因为它们身体里有一种叫色素的东西。兔子眼睛的颜色与它们的皮毛颜色有关系，黑兔子的眼睛是黑色的，灰兔子的眼睛是灰色的，白兔子的眼睛红色的。因为兔子是夜行动物，所以它的眼睛能大量聚光，即使在微暗处也能看到东西。</p>
+<figure data-type="image" tabindex="1"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/29237c86e29f41f6ada56603319669a1~tplv-k3u1fbpfcp-watermark.image?" alt="RabbitMomBabies.jpg" loading="lazy"></figure>
+<p>下面我们来做一个 svg 动效，一群在夜晚的兔子，眼睛发射着聚光，当我们在光标悬停在 svg 元素上或通过键盘 Tab 键导航来聚焦到 svg 元素时时，将切换到白天正常的状态。</p>
+<figure data-type="image" tabindex="2"><img src="https://zkrisj.github.io/post-images/1673677956697.gif" alt="" loading="lazy"></figure>
+<h2 id="实现">实现</h2>
+<ol>
+<li>定义 SVG 容器，设置视口在用户空间中的位置为 0 0，尺寸为 500 500。</li>
+</ol>
+<pre><code class="language-svg">&lt;svg viewBox=&quot;0 0 500 500&quot; tabIndex=&quot;0&quot;&gt;
+&lt;/svg&gt;
+</code></pre>
+<p>设置 tabindex=&quot;0&quot;，表示 SVG 元素是可聚焦的，并且可以通过键盘 Tab 键导航来聚焦到该元素。</p>
+<ol start="2">
+<li>定义一个公共（可重用）的 svg symbol 图形模板对象元素。</li>
+</ol>
+<pre><code class="language-svg">&lt;symbol id=&quot;creature&quot; viewBox=&quot;0 0 100 100&quot;&gt;
+&lt;/symbol&gt;
+</code></pre>
+<ol start="3">
+<li>在 symbol 元素中定义兔子各个身体元素，并创建眼睛 eyes CSS 类，设置 visibility 属性为 visible。</li>
+</ol>
+<pre><code class="language-svg">&lt;g id=&quot;body&quot;&gt;
+  &lt;!-- 右后腿 --&gt;
+  &lt;path d=&quot;M80,85 C85,90 75,90 60,92S 60,85 67,83
+           C50,70 60,60 65,60&quot; transform=&quot;translate(-5,-1)&quot; /&gt;
+  &lt;!-- 右前腿 --&gt;
+  &lt;path id=&quot;limb&quot; d=&quot;M33,80C28,85 28,95 24,94 S20,85 27,77&quot; /&gt;
+  &lt;!-- 肚子 --&gt;
+  &lt;ellipse cx=&quot;45&quot; cy=&quot;65&quot; rx=&quot;40&quot; ry=&quot;20&quot; /&gt;
+  &lt;!-- 左后腿 --&gt;
+  &lt;path d=&quot;M30,45C70,30 85,50 90,70 C92.5,80 85,83 80,85
+           C85,90 75,90 60,92S 60,85 67,83
+           C50,70 60,60 65,60&quot; /&gt;
+  &lt;!-- 左前腿 --&gt;
+  &lt;use href=&quot;#limb&quot; x=&quot;4&quot; y=&quot;2&quot; /&gt;
+  &lt;!-- 脑袋 --&gt;
+  &lt;path d=&quot;M40,70C30,85 0,85 0,60 C0,50 5,45 10,40
+           C0,30 0,0 5,0S20,25 20,35 Q22,34 25,35
+           C25,25 30,-2 35,0 S38,28 35,38 C40,42 43,45 45,55&quot; /&gt;
+  &lt;!-- 尾巴 --&gt;
+  &lt;path d=&quot;M89,72c-2,-5 9,-7 8,-2 
+           c1,3 -3,9 -5,7 c-1,3 -4,5 -5,-2&quot; /&gt;
+&lt;/g&gt;
+&lt;!-- 脸 --&gt;
+&lt;g id=&quot;face&quot;&gt;
+  &lt;!-- 耳朵 --&gt;
+  &lt;g fill=&quot;lightSalmon&quot; fill-opacity=&quot;0.75&quot;&gt;
+    &lt;ellipse ry=&quot;15&quot; rx=&quot;4&quot; transform=&quot;translate(10,21)rotate(-15)&quot; /&gt;
+    &lt;ellipse ry=&quot;14&quot; rx=&quot;3&quot; transform=&quot;translate(32,21)rotate(10)&quot; /&gt;
+  &lt;/g&gt;
+  &lt;!-- 鼻子 --&gt;
+  &lt;path fill=&quot;coral&quot; stroke=&quot;lightCoral&quot; stroke-linejoin=&quot;round&quot; d=&quot;M12,65L17,65 15,69 Q17,72 20,70 Q15,73 10,70 Q13,72 15,69Z&quot; /&gt;
+  &lt;!-- 眼睛 --&gt;
+  &lt;g class=&quot;eyes&quot; fill=&quot;white&quot;&gt;
+    &lt;!-- 眼圈 --&gt;
+    &lt;g stroke=&quot;none&quot;&gt;
+      &lt;ellipse ry=&quot;7&quot; rx=&quot;5&quot; cx=&quot;10&quot; cy=&quot;55&quot; /&gt;
+      &lt;ellipse ry=&quot;7&quot; rx=&quot;5&quot; cx=&quot;20&quot; cy=&quot;55&quot; /&gt;
+    &lt;/g&gt;
+    &lt;!-- 眼珠 --&gt;
+    &lt;g fill=&quot;#222&quot; stroke=&quot;#444&quot; stroke-width=&quot;0.5&quot;&gt;
+      &lt;ellipse ry=&quot;3&quot; rx=&quot;2.5&quot; cx=&quot;10&quot; cy=&quot;58&quot; /&gt;
+      &lt;ellipse ry=&quot;3&quot; rx=&quot;2.5&quot; cx=&quot;20&quot; cy=&quot;58&quot; /&gt;
+    &lt;/g&gt;
+  &lt;/g&gt;
+&lt;/g&gt;
+</code></pre>
+<ol start="4">
+<li>创建组合兔子元素对象的容器，并创建 dark CSS 类，设置 visibility 属性为 hidden。通过 use 元素，根据 symbol 图形模板对象元素 id，创建多个不同颜色和尺寸的小兔子。</li>
+</ol>
+<pre><code class="language-svg">&lt;g class=&quot;dark&quot;&gt;
+  &lt;!-- 白色兔子 银色轮廓 --&gt;
+  &lt;use href=&quot;#creature&quot; stroke=&quot;silver&quot; fill=&quot;white&quot; width=&quot;80&quot; height=&quot;80&quot; x=&quot;300&quot; y=&quot;20&quot; /&gt;
+  &lt;!-- 粉色兔子 褐色轮廓 --&gt;
+  &lt;use href=&quot;#creature&quot; stroke=&quot;tan&quot; fill=&quot;pink&quot; width=&quot;100&quot; height=&quot;100&quot; x=&quot;50&quot; y=&quot;20&quot; /&gt;
+  &lt;!-- 巧克力色兔子 --&gt;
+  &lt;use href=&quot;#creature&quot; stroke=&quot;chocolate&quot; fill=&quot;chocolate&quot; width=&quot;100&quot; height=&quot;100&quot; x=&quot;400&quot; y=&quot;100&quot; /&gt;
+  &lt;!-- 黑色兔子 --&gt;
+  &lt;use href=&quot;#creature&quot; stroke=&quot;black&quot; fill=&quot;black&quot; width=&quot;120&quot; height=&quot;120&quot; x=&quot;200&quot; y=&quot;120&quot; /&gt;
+  &lt;!-- 白色兔子 --&gt;
+  &lt;use href=&quot;#creature&quot; stroke=&quot;white&quot; fill=&quot;white&quot; width=&quot;120&quot; height=&quot;120&quot; x=&quot;50&quot; y=&quot;150&quot; /&gt;
+  &lt;!-- 粉色兔子 --&gt;
+  &lt;use href=&quot;#creature&quot; stroke=&quot;pink&quot; fill=&quot;pink&quot; width=&quot;140&quot; height=&quot;140&quot; x=&quot;350&quot; y=&quot;170&quot; /&gt;
+  &lt;!-- 灰色兔子 --&gt;
+  &lt;use href=&quot;#creature&quot; stroke=&quot;gray&quot; fill=&quot;gray&quot; width=&quot;150&quot; height=&quot;150&quot; x=&quot;70&quot; y=&quot;300&quot; /&gt;
+  &lt;!-- 棕色兔子 --&gt;
+  &lt;use href=&quot;#creature&quot; stroke=&quot;saddlebrown&quot; fill=&quot;saddlebrown&quot; width=&quot;160&quot; height=&quot;160&quot; x=&quot;340&quot; y=&quot;330&quot; /&gt;
+&lt;/g&gt;
+</code></pre>
+<ol start="5">
+<li>设置默认样式：兔子元素不可见，但眼睛元素可见。svg 元素在光标悬停在元素上或通过键盘 Tab 键导航来聚焦到 svg 元素时设置 dark CSS 类的 visibility 属性为 visible，切换兔子元素为可见。</li>
+</ol>
+<pre><code class="language-css">.dark {
+  visibility: hidden;
+}
+
+.eyes {
+  visibility: visible;
+}
+
+svg:hover .dark,
+svg:focus .dark {
+  visibility: visible;
+}
+</code></pre>
+<h2 id="完整代码码上掘金">完整代码+码上掘金</h2>
+<iframe src="https://code.juejin.cn/pen/7188111289636356156"></iframe>
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/tu-nian-rang-zhe-ge-tu-zi-fa-she-bao-po-ni-de-pi-yun/" class="post-title gt-a-link">
+                    兔年让这只🐇发射💣来爆破你的所有坏运
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

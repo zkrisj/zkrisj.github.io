@@ -1,0 +1,666 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <div class="main-content">
+        <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+
+        <div class="post-list-container">
+    <div class="post-inner">
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://zkrisj.github.io/post/zong-jie-yi-xia-jquery-de-yuan-sheng-ti-dai-fang-fa/">
+                            <span class="post-title gt-c-content-color-first">总结一下 jQuery 的原生替代方法</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2022-10-15 ·
+                        </time>
+                        
+                            <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tag">
+                                # JS
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://zkrisj.github.io/post/2022-javascript-nian-du-bao-gao-fan-yi/">
+                            <span class="post-title gt-c-content-color-first">2022 JavaScript 年度报告（翻译）</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2022-10-14 ·
+                        </time>
+                        
+                            <a href="https://zkrisj.github.io/tag/-SviN8-mD/" class="post-tag">
+                                # nodeJS
+                            </a>
+                        
+                            <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tag">
+                                # JS
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://zkrisj.github.io/post/2022-zui-shou-huan-ying-de-css-lei-ming-id-he-xuan-ze-qi-shi-shi-me/">
+                            <span class="post-title gt-c-content-color-first">2022 最受欢迎的 CSS 类名、ID 和选择器是什么</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2022-10-13 ·
+                        </time>
+                        
+                            <a href="https://zkrisj.github.io/tag/5W0xko0tt/" class="post-tag">
+                                # CSS
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://zkrisj.github.io/post/zong-jie-liao-yi-xia-api-yu-sdk-zhi-jian-de-qu-bie-he-lian-xi/">
+                            <span class="post-title gt-c-content-color-first">总结了一下 API 与 SDK 之间的区别和联系</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2022-10-12 ·
+                        </time>
+                        
+                            <a href="https://zkrisj.github.io/tag/hvtmfHfT6/" class="post-tag">
+                                # 术语
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://zkrisj.github.io/post/css-cai-se-zi-ti-de-shi-xian/">
+                            <span class="post-title gt-c-content-color-first">CSS 彩色字体的实现</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2022-10-07 ·
+                        </time>
+                        
+                            <a href="https://zkrisj.github.io/tag/5W0xko0tt/" class="post-tag">
+                                # CSS
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://zkrisj.github.io/post/css-kuai-ji-ge-shi-shang-xia-wen-bfche-flow-root-bu-ju/">
+                            <span class="post-title gt-c-content-color-first">CSS 块级格式上下文（BFC）和 flow-root 布局</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2022-10-05 ·
+                        </time>
+                        
+                            <a href="https://zkrisj.github.io/tag/5W0xko0tt/" class="post-tag">
+                                # CSS
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://zkrisj.github.io/post/canvas-confetti-wu-cai-zhi-xie-te-xiao/">
+                            <span class="post-title gt-c-content-color-first">Canvas Confetti 五彩纸屑特效</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2022-10-03 ·
+                        </time>
+                        
+                            <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tag">
+                                # JS
+                            </a>
+                        
+                            <a href="https://zkrisj.github.io/tag/10MZNKSN7/" class="post-tag">
+                                # HTML
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://zkrisj.github.io/post/reflect-api-he-object-jing-tai-fang-fa-de-dui-bi/">
+                            <span class="post-title gt-c-content-color-first">Reflect API 和 Object 静态方法的对比</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2022-09-30 ·
+                        </time>
+                        
+                            <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tag">
+                                # JS
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://zkrisj.github.io/post/windows-xi-tong-zhong-de-ying-lian-jie-he-ruan-lian-jie/">
+                            <span class="post-title gt-c-content-color-first">Windows 系统中的硬链接和软链接</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2022-09-30 ·
+                        </time>
+                        
+                            <a href="https://zkrisj.github.io/tag/-SviN8-mD/" class="post-tag">
+                                # nodeJS
+                            </a>
+                        
+                            <a href="https://zkrisj.github.io/tag/sqhugDzjp/" class="post-tag">
+                                # 工具
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://zkrisj.github.io/post/cookiestore-de-shi-yong/">
+                            <span class="post-title gt-c-content-color-first">cookieStore 的使用</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2022-09-30 ·
+                        </time>
+                        
+                            <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tag">
+                                # JS
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://zkrisj.github.io/post/css-xin-xuan-ze-qi-is-where-has/">
+                            <span class="post-title gt-c-content-color-first">CSS 新选择器 :is() :where() :has()</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2022-09-30 ·
+                        </time>
+                        
+                            <a href="https://zkrisj.github.io/tag/5W0xko0tt/" class="post-tag">
+                                # CSS
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://zkrisj.github.io/post/proxy-zhong-de-this-zhi-xiang/">
+                            <span class="post-title gt-c-content-color-first">Proxy 中的 this 指向</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2022-09-29 ·
+                        </time>
+                        
+                            <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tag">
+                                # JS
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://zkrisj.github.io/post/vue2-he-vue3-de-shu-ju-bang-ding-yuan-li-he-shi-xian/">
+                            <span class="post-title gt-c-content-color-first">Vue2 和 Vue3 的数据绑定原理和实现</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2022-09-27 ·
+                        </time>
+                        
+                            <a href="https://zkrisj.github.io/tag/Gh8djQs1V/" class="post-tag">
+                                # Vue
+                            </a>
+                        
+                            <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tag">
+                                # JS
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://zkrisj.github.io/post/shi-yong-grid-area-shi-xian-yuan-su-ceng-die-xiao-guo-he-dui-bi-qi-ta-fang-fa/">
+                            <span class="post-title gt-c-content-color-first">使用 grid-area 实现元素层叠效果和对比其他方法</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2022-09-26 ·
+                        </time>
+                        
+                            <a href="https://zkrisj.github.io/tag/5W0xko0tt/" class="post-tag">
+                                # CSS
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://zkrisj.github.io/post/css-contain-shu-xing-he-xin-te-xing-rong-qi-cha-xun/">
+                            <span class="post-title gt-c-content-color-first">CSS contain 属性和新特性容器查询</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2022-09-20 ·
+                        </time>
+                        
+                            <a href="https://zkrisj.github.io/tag/5W0xko0tt/" class="post-tag">
+                                # CSS
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://zkrisj.github.io/post/html-zi-fu-shi-ti-he-emoji/">
+                            <span class="post-title gt-c-content-color-first">HTML 字符实体和 Emoji 的使用</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2022-09-17 ·
+                        </time>
+                        
+                            <a href="https://zkrisj.github.io/tag/10MZNKSN7/" class="post-tag">
+                                # HTML
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://zkrisj.github.io/post/css-zi-ding-yi-shu-xing-property-de-shi-yong/">
+                            <span class="post-title gt-c-content-color-first">CSS 自定义属性 @property 的使用</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2022-09-15 ·
+                        </time>
+                        
+                            <a href="https://zkrisj.github.io/tag/5W0xko0tt/" class="post-tag">
+                                # CSS
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://zkrisj.github.io/post/css-layer-gui-ze-de-shi-yong/">
+                            <span class="post-title gt-c-content-color-first">CSS @layer 规则的使用</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2022-09-14 ·
+                        </time>
+                        
+                            <a href="https://zkrisj.github.io/tag/5W0xko0tt/" class="post-tag">
+                                # CSS
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://zkrisj.github.io/post/css-de-gui-ze/">
+                            <span class="post-title gt-c-content-color-first">CSS 的 @规则</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2022-09-14 ·
+                        </time>
+                        
+                            <a href="https://zkrisj.github.io/tag/5W0xko0tt/" class="post-tag">
+                                # CSS
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://zkrisj.github.io/post/ye-mian-gun-dong-ding-bu-zhi-shi-jin-du-tiao-js-he-css-shi-xian/">
+                            <span class="post-title gt-c-content-color-first">页面滚动顶部指示进度条 JS 和 CSS 实现</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2022-09-13 ·
+                        </time>
+                        
+                            <a href="https://zkrisj.github.io/tag/5W0xko0tt/" class="post-tag">
+                                # CSS
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+    </div>
+</div>
+
+        <div class="pagination-container">
+    
+        <a href="https://zkrisj.github.io/page/5/" class="prev-page gt-a-link">上一页</a>
+    
+    
+        <a href="https://zkrisj.github.io/page/7/" class="prev-page gt-a-link">下一页</a>
+    
+</div>
+
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

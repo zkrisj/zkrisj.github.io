@@ -1,0 +1,234 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>基于对话式交互的 SQL 客户端 - SQL Chat | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    基于对话式交互的 SQL 客户端 - SQL Chat
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2023-04-11 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/n3R2WF3SN/" class="post-tags">
+                            # SQL
+                        </a>
+                    
+                        <a href="https://zkrisj.github.io/tag/fbmc4-bp-/" class="post-tags">
+                            # AI
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p>SQL Chat 是一个基于聊天的 SQL 客户端，可以使用自然语言询问数据库问题和查询数据库。由 Next.js 构建，国内可直接部署到腾讯云 Web 应用托管服务，国外也可一键部署到 Vercel，同样支持私有化部署。现支持以下数据库，预计以后会添加更多数据库的支持：</p>
+<ul>
+<li>MySQL</li>
+<li>PostgreSQL</li>
+</ul>
+<figure data-type="image" tabindex="1"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9576ebb858544a6bab059c0a3e034a17~tplv-k3u1fbpfcp-zoom-1.image" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/19b3ced89de84acf933670bf02e2e19c~tplv-k3u1fbpfcp-zoom-1.image" alt="" loading="lazy"></figure>
+<h2 id="数据隐私">数据隐私</h2>
+<ol>
+<li>所有数据库连接配置都存储在本地浏览器中，还可以访问浏览器设置以清除数据。</li>
+<li>只有数据库模式会被发送到 OpenAI API，而不会发送表数据。</li>
+</ol>
+<h2 id="本地安装">本地安装</h2>
+<ol>
+<li>复制示例环境变量文件；</li>
+</ol>
+<pre><code>cp .env.example .env
+</code></pre>
+<ol start="2">
+<li>将您的 <a href="https://platform.openai.com/account/api-keys">API 密钥</a> 和 OpenAI API 端点（Endpoint，可选）添加到新创建的 <code>.env</code> 文件中；</li>
+<li>安装依赖项并启动开发服务器；</li>
+</ol>
+<pre><code>pnpm i &amp;&amp; pnpm dev
+</code></pre>
+<h2 id="使用">使用</h2>
+<ol>
+<li>SQL Chat提供了连接数据库与数据库建立连接的功能，可以直接连接到一个公网数据库：</li>
+</ol>
+<figure data-type="image" tabindex="3"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/50ea42ad69d247678ea0127cd2c4ef86~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<ol start="2">
+<li>连上数据库之后，其最大的作用是可以对连接的数据库执行查询：</li>
+</ol>
+<figure data-type="image" tabindex="4"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/15ae6d34e287424ea38089a6f572d5af~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<ol start="3">
+<li>点这个小三角，就可以在连接的数据库中执行该查询 sql:</li>
+</ol>
+<figure data-type="image" tabindex="5"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f0acc80e4dfb4a6091723a43ef385bb2~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<ol start="4">
+<li>它只支持去执行查询，查询以外的操作是无法支持的。比如 <code>insert</code> 语句就没有可执行的小三角了。</li>
+</ol>
+<figure data-type="image" tabindex="6"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b63f1ed0322243028b37a90a8d3bcbd9~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<ol start="5">
+<li>可以根据提供的 SQL 提供常规的优化建议，对于很长的 sql 可以直接丢进去分析一波。</li>
+</ol>
+<figure data-type="image" tabindex="7"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3f437e9f7d614e499a406a6b3e775fe0~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="8"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/836b70c1adf84993b162e356f3ef0b77~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="9"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7f7ecb3150cd4397ba1f771466ac58f5~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<h2 id="总结">总结</h2>
+<ol>
+<li>集成了数据库连接会话功能，可以对 SQL Chat 回答的查询语句进行执行认证，这是一个亮点的功能。</li>
+<li>其次在 SQL 优化建议方面的回答也似乎比 ChatGPT 更完善一些。</li>
+<li>不足之处是会话功能仅支持执行 sql 查询操作，如果能执行所有的 SQL 操作，能进行写操作和执行 DDL 语句，即可以通过回答的 sql 来直接管理数据库，这将是一个不错的体验。</li>
+</ol>
+<h2 id="参考资料">参考资料</h2>
+<ol>
+<li><a href="https://juejin.cn/post/7220243380621590584">Bytebase SQL Chat 功能体验</a></li>
+<li><a href="https://github.com/sqlchat/sqlchat">仓库地址</a></li>
+</ol>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/ji-cheng-gpt-4-de-dai-ma-bian-ji-qi-openai-cursoryi-xian-zhi-shi-yong-he-shou-fei/" class="post-title gt-a-link">
+                    集成 GPT-4 的代码编辑器 - OpenAI Cursor（已限制使用和收费）
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

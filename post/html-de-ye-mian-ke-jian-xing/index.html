@@ -1,0 +1,286 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>HTML 的页面可见性 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    HTML 的页面可见性
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-09-04 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/10MZNKSN7/" class="post-tags">
+                            # HTML
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p>开发者在过去通常通过监听 blur 和 focus 事件来了解页面是否处于活动状态，虽然 onblur 和 onfocus 会告诉你用户是否切换窗口，但不一定意味着它是隐藏的。当用户切换选项卡或最小化包含选项卡的浏览器窗口时，页面才会隐藏。</p>
+<p>页面可见性可以通过让页面在文档不可见时避免执行不必要的任务，从而来节省资源和提高性能。例如：</p>
+<ul>
+<li>网站有图片轮播效果，只有在用户观看轮播的时候，才会自动展示下一张幻灯片。</li>
+<li>显示信息仪表盘的应用程序不希望在页面不可见时轮询服务器进行更新。</li>
+<li>页面想要检测是否正在渲染，以便可以准确的计算网页浏览量。</li>
+<li>网站想要在设备处于待机模式时关闭声音（用户按下电源按钮关闭屏幕）。</li>
+<li>网站正在播放视频，它可以在用户将选项卡置于后台时暂停视频，并在用户返回选项卡时恢复播放。</li>
+</ul>
+<ol>
+<li>当用户最小化窗口或切换到另一个选项卡时，Document 会发送 <code>visibilitychange</code> 事件，让监听者知道页面状态已更改，然后可以检测事件并执行某些操作。</li>
+<li>iframe 的可见性状态与父文档相同。使用 CSS 属性（例如 <code>display: none;</code>）隐藏 iframe 不会触发可见性事件或更改框架中包含的文档的状态。</li>
+</ol>
+<h2 id="接口">接口</h2>
+<p>目前页面可见性 API 有两个属性，一个事件：</p>
+<p>Document.hidden 已弃用 只读</p>
+<ul>
+<li>如果页面处于被认为对用户隐藏的状态，则返回 true，否则返回 false。</li>
+</ul>
+<p>Document.visibilityState 只读</p>
+<ul>
+<li>
+<p>指示文档当前可见性状态的字符串。可能的值为：</p>
+<p>visible</p>
+<ul>
+<li>页面内容可能至少部分可见。实际上，这意味着页面是非最小化窗口的前景选项卡。</li>
+</ul>
+<p>hidden</p>
+<ul>
+<li>该页面的内容对用户不可见，原因可能是文档的选项卡位于背景中，或者是最小化窗口的一部分，或者是因为设备的屏幕已关闭。</li>
+</ul>
+<p>prerender</p>
+<ul>
+<li>页面内容正在预呈现，用户看不到。一个文档可以从该 prerender 状态开始，但永远不会从任何其他状态切换到该状态，因为一个文档只能预渲染一次。</li>
+<li>注意：并非所有浏览器都支持预渲染。</li>
+</ul>
+<p>unloaded</p>
+<ul>
+<li>该页面正在从内存中卸载。</li>
+<li>注意：并非所有浏览器都支持该 unloaded 值。</li>
+</ul>
+</li>
+</ul>
+<p>visibilitychange</p>
+<ul>
+<li>当标签的内容变得可见或隐藏时被触发的事件。</li>
+</ul>
+<h2 id="示例1">示例1</h2>
+<p>当切换或打开另一个标签时，视频应该暂停，并在返回选项卡时再次播放。这可以降低功耗或停止烦人的背景音频。</p>
+<pre><code class="language-html">&lt;body&gt;
+  &lt;video id=&quot;videoElement&quot; src=&quot;../assets/cat2.mp4&quot; width=&quot;320&quot; height=&quot;240&quot; controls autoplay&gt;&lt;/video&gt;
+&lt;/body&gt;
+&lt;script&gt;
+  document.onvisibilitychange = e =&gt; {
+    if (document.visibilityState === 'visible') videoElement.play();
+    else if (document.visibilityState === 'hidden') videoElement.pause();
+  }
+  videoElement.addEventListener(&quot;pause&quot;, () =&gt; {
+    document.title = 'Paused';
+  }, false);
+  videoElement.addEventListener(&quot;play&quot;, () =&gt; {
+    document.title = 'Playing';
+  }, false);
+&lt;/script&gt;
+</code></pre>
+<h2 id="示例2">示例2</h2>
+<p>比如以下场景：</p>
+<ol>
+<li>打开网站，未登录状态下，进入首页。</li>
+<li>然后新窗口打开任意页面，登录成功。</li>
+<li>再次访问刚才打开的首页，发现页面还是未登录状态，实际上用户已经登录了。</li>
+</ol>
+<p>有了页面可见性 API，我们就可以在步骤 2 设置登录状态，然后在步骤 3 通过 visibilitychange 事件获取登录状态并登录。</p>
+<pre><code class="language-html">&lt;body&gt;
+  &lt;p id=&quot;info&quot;&gt;您尚未登录，请&lt;a href=&quot;login.html&quot; target=&quot;_blank&quot;&gt;登录&lt;/a&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;script&gt;
+  window.onload = login;
+  document.onvisibilitychange = e =&gt; {
+    if (document.visibilityState === 'visible') login();
+  }
+
+  function login() {
+    const {
+      username
+    } = localStorage;
+    if (username) info.textContent = 'Hi, ' + username;
+    else info.innerHTML = '您尚未登录，请&lt;a href=&quot;login.html&quot; target=&quot;_blank&quot;&gt;登录&lt;/a&gt;';
+  }
+&lt;/script&gt;
+</code></pre>
+<p>登录页面：</p>
+<pre><code class="language-html">&lt;body&gt;
+  &lt;form id=&quot;loginForm&quot; method=&quot;post&quot;&gt;
+    &lt;p&gt;用户名：
+      &lt;input type=&quot;text&quot; name=&quot;username&quot; required&gt;
+    &lt;/p&gt;
+    &lt;p&gt;密码：
+      &lt;input type=&quot;password&quot; name=&quot;password&quot; required&gt;
+    &lt;/p&gt;
+    &lt;p&gt;
+      &lt;input type=&quot;submit&quot;&gt;
+    &lt;/p&gt;
+  &lt;/form&gt;
+&lt;/body&gt;
+&lt;script&gt;
+  loginForm.addEventListener('submit', function(e) {
+    localStorage.username = this.username.value;
+    alert('登录成功！回到刚才的页面查看效果！');
+    this.reset();
+    e.preventDefault();
+  });
+&lt;/script&gt;
+</code></pre>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/javascript-de-shi-jian-xun-huan-he-bing-fa-mo-xing/" class="post-title gt-a-link">
+                    理解 JavaScript 的事件循环和并发模型
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

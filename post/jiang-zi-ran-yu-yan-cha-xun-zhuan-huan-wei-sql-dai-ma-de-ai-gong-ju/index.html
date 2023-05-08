@@ -1,0 +1,231 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>将自然语言查询转换为 SQL 代码的 AI 工具 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    将自然语言查询转换为 SQL 代码的 AI 工具
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2023-03-19 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/fbmc4-bp-/" class="post-tags">
+                            # AI
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p>人工智能可以帮助我们实现将自然语言查询和 SQL 代码进行互相转换，这种技术通过自然语言处理（NLP）和机器学习，训练模型来理解和生成自然语言和 SQL 代码之间的映射关系。</p>
+<p><a href="https://www.sqltranslate.app/">SQL Translator</a> 是一个使用人工智能（OPENAI API）将自然语言查询和 SQL 代码互相转换的工具。通过使用 SQL 和自然语言翻译器，你可以简单地用自然语言输入您的查询并获得相应的 SQL 代码，或者输入您的 SQL 代码并获得人类可读的翻译，使你无需了解 SQL 的专业知识，即可方便地查询和分析数据库中的数据。这个项目是 100% 免费和开源的（MIT 许可证）。</p>
+<blockquote>
+<p>SQL（Structured Query Language，结构化查询语言）是一种用于管理和操作关系数据库中数据的编程语言，虽然它是一种强大的工具，但它也是相当复杂且难以理解的。相反，自然语言是我们在日常生活中说和写的语言，对于不熟悉技术术语的人来说，它通常是首选的交流方式。</p>
+</blockquote>
+<h2 id="功能">功能</h2>
+<ul>
+<li>SQL 到自然语言和自然语言到 SQL</li>
+<li>自带黑暗模式</li>
+<li>小写 / 大写切换</li>
+<li>可复制到剪贴板</li>
+<li>SQL 语法高亮</li>
+<li>schema awareness（测试版）</li>
+<li>可查询历史</li>
+</ul>
+<h2 id="本地安装">本地安装</h2>
+<ol>
+<li>克隆存储库：<pre><code>git clone https://github.com/whoiskatrin/sql-translator.git
+</code></pre>
+</li>
+<li>安装所需的包：<pre><code>cd sql-translator
+npm install
+</code></pre>
+</li>
+<li>在 <code>.env</code> 文件中输入您的 OPENAI API 密钥，您可以 <a href="https://beta.openai.com/account/api-keys">在此处</a> 获取您的 API 密钥：<pre><code>OPENAI_API_KEY=$YOUR_API_KEY
+</code></pre>
+</li>
+<li>启动开发服务器：<pre><code>npm run dev
+</code></pre>
+</li>
+<li>构建并启动生产服务器：<pre><code>npm run build
+npm start
+</code></pre>
+</li>
+<li>在 Web 浏览器中导航至 <code>http://localhost:3000</code> 来访问该应用程序。</li>
+</ol>
+<h2 id="使用">使用</h2>
+<p>SQL Translator 支持中文翻译，所以可以直接使用中文。</p>
+<ol>
+<li>从自然语言翻译成 SQL：</li>
+</ol>
+<p>找出蓝色的车</p>
+<figure data-type="image" tabindex="1"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/bad1c29bcccb4e9f9527743d433dfb07~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<p>可以通过添加表结构，使其根据指定的表字段进行翻译：</p>
+<p>找出2023年的帕萨特的280TSI商务版的白色的车</p>
+<figure data-type="image" tabindex="2"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3c668b74b24e41f88cda0b4d050ac068~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<p>结果面板的 <code>AA</code> 复选框按钮可以切换生成的 SQL 语句的大小写。</p>
+<ol start="2">
+<li>从 SQL 翻译成自然语言：</li>
+</ol>
+<pre><code class="language-sql">SELECT * FROM cars WHERE year = 2023 AND brand = '帕萨特' AND model = '280TSI商务版' AND color = '白色';
+</code></pre>
+<figure data-type="image" tabindex="3"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/02c159534b7b43fcba27e5483ea95058~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<p>自然语言的翻译结果是英文的，可以使用翻译工具再转成中文。</p>
+<h2 id="仓库地址">仓库地址</h2>
+<ol>
+<li>SQL Translator (SQL to Natural Language and Natural Language to SQL)：https://github.com/whoiskatrin/sql-translator</li>
+<li>在线使用：https://www.sqltranslate.app/</li>
+</ol>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/visual-chatgpt-yong-tu-xiang-jiao-hu-de-fang-shi-gen-chatgpt-liao-tian/" class="post-title gt-a-link">
+                    Visual ChatGPT - 用图像交互的方式，跟 ChatGPT 聊天
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

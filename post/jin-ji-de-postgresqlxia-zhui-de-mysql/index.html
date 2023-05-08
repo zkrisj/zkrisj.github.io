@@ -1,0 +1,201 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>进击的 PostgreSQL，下坠的 MySQL | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    进击的 PostgreSQL，下坠的 MySQL
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-11-05 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/480J-VNIN/" class="post-tags">
+                            # 数据库
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="2022-开发者调查报告">2022 开发者调查报告</h2>
+<figure data-type="image" tabindex="1"><img src="https://zkrisj.github.io/post-images/1667629484787.png" alt="" loading="lazy"></figure>
+<p>StackOverflow 发布的 2022 开发者调查报告中，在专业开发者群体受欢迎排行榜中，PostgreSQL（46.48%）首次超越 MySQL（45.68%）拔得头筹。专业开发者与初学者的不同之处在于，他们更倾向于选择 Redis、PostgreSQL、Microsoft SQL Server 和 Elasticsearch。</p>
+<p>初学者群体当中，MySQL 也并不乐观，紧随其后的 MongoDB 位居第二，占比近1/3。“这很合理，因为它支持大量的语言和应用开发平台。”</p>
+<p>值得一提的是，正在使用 MySQL 的开发者同样也在考虑、希望或想要使用别的数据库工作，下图展示了调查结果。</p>
+<figure data-type="image" tabindex="2"><img src="https://zkrisj.github.io/post-images/1667629346508.png" alt="" loading="lazy"></figure>
+<p>有 11185 名 MySQL 开发者想使用 PostgreSQL 工作，以及 9520 名 MySQL 开发者想使用 MongoDB 工作。</p>
+<p>不止 StackOverflow 的报告，根据最新的 10 月 DB-Engines 流行趋势上看，也可以看见 MySQL 的受欢迎程度已经连续几年呈现下滑趋势。</p>
+<figure data-type="image" tabindex="3"><img src="https://zkrisj.github.io/post-images/1667629514354.png" alt="" loading="lazy"></figure>
+<h2 id="下坠的-mysql">下坠的 MySQL</h2>
+<p>可以判断，如果不出意外，同样在开源关系型数据库之列的 PostgreSQL ，超越 MySQL 只是时间的问题。</p>
+<ol>
+<li>如今，行业的发展开始向金融、电信、物联网、零售、制造等传统行业倾斜，这些行业与二十年前的互联网相比，更加注重数据可靠性、安全性、规范性。</li>
+<li>疫情以来，企业基础设施的现代化要求加速提上议程，旨在让企业更加灵活，并对快速变化的客户需求做出反应。而承担这些项目的全球系统集成商们，往往选择应用最容易部署的技术，从而为其服务带来最佳利润，然而，商业版 MySQL 是需要付费的，且 MySQL 对于多语言的支持明显存在自身的瓶颈。</li>
+<li>MySQL 的客户端遵循 GPL 许可协议，所以开发人员必须向 Oracle 付费或者将自己的应用程序开源。而 PostgreSQL 采用类似 MIT 的许可协议，允许开发人员做任何事情，包括在开源或闭源产品中商用。从这个层面讲，不管出于商用还是其他，PostgreSQL 都是最有利的选择。</li>
+</ol>
+<h2 id="进击的-postgresql">进击的 PostgreSQL</h2>
+<p>前面我们从开源热情、行业发展、商用的角度分析了 MySQL 停滞的原因。这里我们以开发者的视角，具体列举一些 PostgreSQL 的好处：</p>
+<ol>
+<li>支持多种可用于商业解决方案的性能优化，包括地理空间数据支持、无读锁并发等，被广泛应用于大型系统；</li>
+<li>对于需要执行复杂查询的系统最为有利；</li>
+<li>在商业智能（BI）应用程序中表现良好，更适合需要快速读/写速度的数据分析和数据仓库应用程序，因此，它也适用于 OLTP/OLAP 系统；</li>
+<li>可以在单个产品中存储结构化和非结构化数据类型，它支持大多数数据类型，比如对 JSON 的支持。多年来 PostgreSQL 的最大创新之一是在其 PostgreSQL 9.2 中引入了生成 JSON 数据功能。</li>
+</ol>
+<figure data-type="image" tabindex="4"><img src="https://zkrisj.github.io/post-images/1667629521808.png" alt="" loading="lazy"></figure>
+<p>另外，云计算公司 Joyent 的解决方案工程总监 Elijah Zupancic 也提到了文档的重要性，“从开发的角度来看，使用它是一种乐趣，其文档很精彩，数据类型反映了开发人员的工作类型。”</p>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li><a href="https://mp.weixin.qq.com/s/27SH8RFoWInD9zM3Dt1h1Q">再见，下坠的 MySQL！</a></li>
+</ul>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/shi-yong-mix-blend-mode-shi-xian-bu-tao-biao-qian-sou-suo-guan-jian-zi-gao-liang/" class="post-title gt-a-link">
+                    使用 mix-blend-mode 实现不套标签搜索关键字高亮
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

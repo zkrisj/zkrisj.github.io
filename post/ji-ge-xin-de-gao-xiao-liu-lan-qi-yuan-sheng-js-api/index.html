@@ -1,0 +1,240 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>几个新的高效浏览器原生 JS API | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    几个新的高效浏览器原生 JS API
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-10-24 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tags">
+                            # JS
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p>随着浏览器的更新，有些功能，我们使用浏览器自带的 API，而不必依赖第三方库，或使用复杂的代码就可以实现。</p>
+<h2 id="复制内容到剪贴板">复制内容到剪贴板</h2>
+<p>document.execCommand 只能复制选中状态的文本（getSelection()），而 Clipboard API 提供了完整的响应剪贴板命令（剪切、复制和粘贴）与异步读写系统剪贴板的能力。但当前 document 需要处于焦点状态，例如在控制台使用会报错。</p>
+<pre><code class="language-js">const copyToClipboard = async text =&gt; await navigator.clipboard.writeText(text);
+</code></pre>
+<h2 id="数字转中文">数字转中文</h2>
+<p>将阿拉伯数字转成中文数字。</p>
+<pre><code class="language-js">const fmt = new Intl.NumberFormat('zh-Hans-CN-u-nu-hanidec'); // 大批量处理数字时可以重复使用
+const toCnNumber = number =&gt; fmt.format(number);
+toCnNumber(123); // 一二三
+</code></pre>
+<h2 id="金额转中文">金额转中文</h2>
+<p>将阿拉伯数字转成中文金额。</p>
+<pre><code class="language-js">const toCnCurrency = number =&gt; new Intl.NumberFormat('zh-CN', { notation: 'compact',style: 'currency', currency: 'CNY' }).format(number);
+toCnCurrency(123456789); // ¥1.2亿
+</code></pre>
+<h2 id="公历转农历">公历转农历</h2>
+<p>将日期转为农历日期。</p>
+<pre><code class="language-js">const toCnDate = date =&gt; date.toLocaleString('zh-u-ca-chinese', { dateStyle: 'full' }) + ' ' + date.toLocaleTimeString(0, { hour12: false });
+toCnDate(new Date); // 2022壬寅年九月廿九星期一 21:45:11
+</code></pre>
+<h2 id="生成随机-uuid">生成随机 uuid</h2>
+<p>在 chrome 92 开始可用，使用加密安全随机数生成器生成 v4 版本 UUID（用连字符分隔的 5 个十六进制的长度 36 位的字符串）。</p>
+<pre><code class="language-js">const uuid = () =&gt; crypto.randomUUID();
+uuid(); // 6eae9ae-0ca0-4a78-94c8-0cd2dae671e2
+</code></pre>
+<h2 id="url-参数解析">URL 参数解析</h2>
+<p>解析一个 URL 并返回解析的参数键值对象。</p>
+<pre><code class="language-js">const parseURL = url =&gt; Object.fromEntries([...new URL(url).searchParams]);
+</code></pre>
+<h2 id="深克隆">深克隆</h2>
+<p>structuredClone 在 chrome 98 开始可用，深克隆一个可序列化对象（DOM 节点、函数对象都是不可序列化对象），支持克隆递归引用。</p>
+<pre><code class="language-js">const o1 = { a: { b: 1 }, c: 1 };
+o1.myself = o1;
+const o2 = window.structuredClone(o1);
+o1.a.b = 2;
+o1.c = 2;
+console.log(o2.a.b, o2.c , o2.myself === o2, o1.a === o2.a); // 1 1 true false
+</code></pre>
+<h2 id="匹配媒体查询">匹配媒体查询</h2>
+<p>检测是否匹配当前媒体查询。返回的 MediaQueryList 对象在一个 document 上维持着一系列的媒体查询，并可以使用 change 事件监听媒体查询在其 document 上发生的变化。</p>
+<pre><code class="language-js">const isMatch = media =&gt;  window.matchMedia &amp;&amp; window.matchMedia(`(${media})`).matches;
+isMatch('max-width: 600px');
+isMatch('prefers-color-scheme: dark');
+</code></pre>
+<h2 id="朗读文本">朗读文本</h2>
+<pre><code class="language-js">const speechSynthesis = message =&gt; {
+  const msg = new SpeechSynthesisUtterance(message);
+  msg.voice = window.speechSynthesis.getVoices()[0];
+  window.speechSynthesis.speak(msg);
+};
+speechSynthesis('Hello, World');
+</code></pre>
+<h2 id="管理-cookie">管理 cookie</h2>
+<p>cookieStore 在 chrome 87 开始可用（目前只有 chrome 和 edge 支持），是一个用于管理 cookie 的 API。</p>
+<pre><code class="language-js">await cookieStore.set('cookie1', 'cookie1-value');
+const day = 24 * 60 * 60 * 1000;
+await cookieStore.set({
+  name: 'cookie2',
+  value: 'cookie2-value',
+  expires: Date.now() + day,
+  domain: '127.0.0.1'
+});
+const cookie = await cookieStore.get('cookie2');
+const allCookies = await cookieStore.getAll();
+await cookieStore.delete('cookie1');
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5c23d45a26f349dc8d525be54d6f0daa~tplv-k3u1fbpfcp-watermark.image?" alt="CookieStore.png" loading="lazy"></figure>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/xue-liao-canvas-api-hou-shi-yong-ta-lai-mo-ni-yi-ge-cai-se-shi-zhong/" class="post-title gt-a-link">
+                    使用 Canvas API 简单制作一个彩色时钟
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

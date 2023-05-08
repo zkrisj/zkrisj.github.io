@@ -1,0 +1,281 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>制作一个循环滚动的相册集 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    制作一个循环滚动的相册集
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-10-28 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/5W0xko0tt/" class="post-tags">
+                            # CSS
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p>效果如下：</p>
+<figure data-type="image" tabindex="1"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/de93d2d098a04945b5b147ad83bb311b~tplv-k3u1fbpfcp-watermark.image?" alt="chrome-capture-2022-9-28.gif" loading="lazy"></figure>
+<h2 id="html">HTML</h2>
+<p>相册最后要补一个第一张图片的 img 元素，可以无缝循环。</p>
+<pre><code class="language-html">&lt;div id=&quot;homeCarousel&quot;&gt;
+  &lt;div id=&quot;homeCarouselWrap&quot;&gt;
+    &lt;img src=&quot;https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3a1c406fa6844c33aa2097917494e643~tplv-k3u1fbpfcp-watermark.image?&quot;&gt;
+    &lt;img src=&quot;https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d7898bd97e2449b5b72b76c114e84dfc~tplv-k3u1fbpfcp-watermark.image?&quot;&gt;
+    &lt;img src=&quot;https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d25a89459f264d3d860c4533bdef6a68~tplv-k3u1fbpfcp-watermark.image?&quot;&gt;
+    &lt;img src=&quot;https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3a1c406fa6844c33aa2097917494e643~tplv-k3u1fbpfcp-watermark.image?&quot;&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&quot;modal&quot;&gt;
+  &lt;span id=&quot;closeBtn&quot;&gt;×&lt;/span&gt;
+  &lt;img id=&quot;img2&quot;&gt;
+&lt;/div&gt;
+</code></pre>
+<h2 id="css">CSS</h2>
+<ul>
+<li>--s CSS 变量表示相册的图片数量（不包括最后一个补上的）。</li>
+<li>--w CSS 变量表示相册的宽度。</li>
+<li>:hover 伪类控制鼠标悬浮时，停止滚动。</li>
+<li>animation 是 animation-name，animation-duration, animation-timing-function，animation-delay，animation-iteration-count，animation-direction，animation-fill-mode 和 animation-play-state 属性的一个简写形式。</li>
+<li><code>animation: move calc(1s * var(--s)) linear infinite reverse;</code> 的第二个参数表示 animation-duration，动画的时长，这里使用了 calc 函数，1 秒乘以相册中图片的数量；最后一个参数 animation-direction 的值 reverse 表示反向运行动画，每周期结束动画由尾到头运行。改成 normal，相册将从右向左循环滚动。</li>
+</ul>
+<pre><code class="language-css">body {
+  display: grid;
+  place-items: center;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+}
+#homeCarousel {
+  width: 400px;
+  height: 240px;
+  line-height: 240px;
+  overflow: hidden;
+  border: solid rgba(0, 0, 0, 0.1);
+}
+#homeCarousel #homeCarouselWrap {
+  display: flex;
+  --w: 400;
+  --s: 3;
+  animation: move calc(1s * var(--s)) linear infinite reverse;
+}
+#homeCarousel #homeCarouselWrap&gt;img {
+  flex-shrink: 0;
+  width: 100%;
+  height: 240px;
+  cursor: pointer;
+  vertical-align: middle;
+}
+@keyframes move {
+  0% {
+    transform: translate(0, 0px);
+  }
+  100% {
+    transform: translate(calc(var(--s) * var(--w) * -1px), 0);
+  }
+}
+#homeCarousel #homeCarouselWrap:hover {
+  animation-play-state: paused;
+}
+#modal {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: -100%;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.9);
+  transition-duration: 0.4s;
+  text-align: center;
+}
+#img2 {
+  width: 75%;
+  max-height: 80%;
+}
+#closeBtn {
+  position: absolute;
+  top: 5%;
+  right: 2.5%;
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+}
+@media(max-width: 400px) {
+  #closeBtn {
+    top: 0;
+  }
+}
+</code></pre>
+<h2 id="js">JS</h2>
+<p>添加鼠标事件，点击相册时预览当前图片。</p>
+<pre><code class="language-js">homeCarousel.onclick = function(e) {
+  if(e.target.tagName === 'IMG') {
+    modal.style.top = 0;
+    modal.style.paddingTop = '12%';
+    img2.src = e.target.src;
+  }
+};
+closeBtn.onclick = function() {
+  modal.style.top = '-100%';
+  modal.style.paddingTop = 0;
+};
+</code></pre>
+<h2 id="马上掘金">马上掘金</h2>
+<iframe src="https://code.juejin.cn/pen/7159562726228885541"></iframe>
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/vue3-zhong-shi-yong-definecustomelement-ding-yi-zu-jian/" class="post-title gt-a-link">
+                    Vue3 中使用 defineCustomElement 定义组件
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,270 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>Web Animations API 的使用 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    Web Animations API 的使用
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-08-29 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tags">
+                            # JS
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p><code>Web Animations API</code> 可以把 <code>CSS3</code> 实现的 <code>animation</code> 动画由 <code>JS</code> 代码实现。它通过组合两个模型来实现：时序模型（<code>CSS transitions</code>）和动画模型（<code>CSS animations</code>）。</p>
+<h2 id="接口">接口</h2>
+<ul>
+<li><code>document.getAnimations()</code></li>
+<li>返回当前对文档中的元素有效的 <code>Animation</code> 对象的数组。</li>
+<li><code>Element.getAnimations()</code></li>
+<li>返回正在或即将影响当前元素的 <code>Animation</code> 对象的数组。</li>
+<li><code>Element.animate(keyframes, options)</code></li>
+<li>用于在元素上创建和播放动画，返回创建的 <code>Animation</code> 对象实例。
+<ul>
+<li><code>keyframes</code> 可以为任何<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties"><code>css 动画属性</code></a> 属性名称使用驼峰命名法指定，例如 <code>background-color</code> 变成 <code>backgroundColor</code>，<code>background-position-x</code> 变成 <code>backgroundPositionX</code>。也可以使用简写属性，例如 margin。
+<ul>
+<li>两个特殊的 css 属性：</li>
+<li><code>float</code>, 必须写成 <code>cssFloat</code> ，因为 <code>float</code> 是 <code>JavaScript</code> 的关键字。</li>
+<li><code>offset</code>, 必须写成 <code>cssOffset</code> ，因为 <code>offset</code> 已经用来表示关键帧的偏移量。</li>
+<li>还可以指定以下特殊属性：</li>
+<li><code>offset</code> 关键帧的偏移量，介于 <code>0.0</code> 和 <code>1.0</code> 之间的数字或为 <code>null</code>。这相当于在 CSS 样式表中使用 <code>@keyframes</code> 以百分比指定开始和结束状态。如果为 <code>null</code> 或未指定，则关键帧将在相邻关键帧之间均匀分布。</li>
+<li><code>easing</code> 从当前 <code>keyframe</code> 到下一个 <code>keyframe</code> 所使用的 <code>timing function</code>。</li>
+<li><code>composite</code> 将 <code>keyframe</code> 中指定的值与基础值组合。</li>
+</ul>
+</li>
+<li><code>options</code> 表示动画持续时间（以毫秒为单位）的整数，或包含以下一项或多项的对象：
+<ul>
+<li><code>delay</code> 延迟开始的毫秒数。默认为 <code>0</code>。</li>
+<li><code>direction</code> 动画的方向。默认为 <code>normal</code>，其他值包括：<code>reverse</code>，<code>alternate</code>，<code>alternate-reverse</code>。</li>
+<li><code>duration</code> 动画每次迭代完成所需的毫秒数。默认为 0。虽然这是可选的，但请记住，如果此值为 0，您的动画将不会运行。</li>
+<li><code>easing</code> 动画随时间变化的速率。接受预定义值 <code>linear</code>、<code>ease</code>、<code>ease-in</code>、<code>ease-out</code> 和 <code>ease-in-out</code>，或自定义 <code>cubic-bezier</code> 值，如 <code>cubic-bezier( 0.42、0、0.58、1)</code>。默认为 <code>linear</code>。</li>
+<li><code>endDelay</code> 动画结束后延迟的毫秒数。这主要用于根据另一个动画的结束时间对动画进行排序时使用。默认为 <code>0</code>。</li>
+<li><code>fill</code> 决定动画的效果是否应该先播放第一帧（<code>backwards</code>），在动画完成播放后保留最后一帧（<code>forwards</code>），或两者都有（<code>both</code>）。默认两者都不（<code>none</code>）。</li>
+<li><code>iterationStart</code> 描述动画应该在迭代中的哪个点开始。例如，<code>0.5</code> 表示在第一次迭代的中途开始，并且使用此值设置后，具有两次迭代的动画将在第三次迭代的中途结束。默认为 <code>0.0</code>。</li>
+<li><code>iterations</code> 动画重复的次数。默认为 <code>1</code>，也可以取 <code>Infinity</code>，使其在元素存在时重复。</li>
+<li><code>iterationComposite</code> 动画中如何迭代。可以设置为 <code>accumulate</code> 或 <code>replace</code>。默认 <code>replace</code>。</li>
+<li><code>composite</code> 如何在此动画和其他未指定其 <code>composite</code> 的单独动画之间组合。默认 <code>replace</code>，即用新值覆盖以前的值。其他值包括：<code>add</code>：例如 <code>translateX(-200px)</code> 和以前的 <code>rotate(20deg)</code> 会变成 <code>translateX(-200px) rotate(20deg)</code>；<code>accumulate</code>：例如 <code>blur(2)</code> 和 <code>blur(5)</code> 会变成 <code>blur(7)</code>。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="使用">使用</h2>
+<ol>
+<li>一个由多个关键帧（<code>keyframe</code>）的属性和值组成的对象所构成的数组：</li>
+</ol>
+<pre><code class="language-js">element.animate([
+  { // from
+    opacity: 0,
+    color: &quot;#fff&quot;
+  },
+  { // to
+    opacity: 1,
+    color: &quot;#000&quot;
+  }
+], 2000);
+</code></pre>
+<ol start="2">
+<li>对每个关键帧的偏移可以通过提供一个offset来指定：</li>
+</ol>
+<pre><code class="language-js">element.animate([ { opacity: 1 },
+  { opacity: 0.1, offset: 0.7 },
+  { opacity: 0 } ],
+2000);
+</code></pre>
+<p><code>offset</code> 的值必须是在 <strong>[0.0, 1.0]</strong> 这个区间内，且须升序排列。并非所有的关键帧都需要设置 <code>offset</code>。没有指定 <code>offset</code> 的关键帧将与相邻的关键帧均匀间隔。</p>
+<ol start="3">
+<li>通过提供 <code>easing</code> 过渡来给指定关键帧之间应用过渡效果：</li>
+</ol>
+<pre><code class="language-js">element.animate([ { opacity: 1, easing: 'ease-out' },
+  { opacity: 0.1, easing: 'ease-in' },
+  { opacity: 0 } ],
+2000);
+</code></pre>
+<p>指定的 <code>easing</code> 仅适用于指定它的关键帧到下一帧之间。但是在 <code>options</code> 中指定的 <code>easing</code> 值都将应用在一个动画的整个持续时间里。</p>
+<ol start="4">
+<li>包含动画的属性和要循环变化的值的数组：</li>
+</ol>
+<pre><code class="language-js">element.animate({
+  opacity: [ 0, 1 ],          // [ from, to ]
+  color:   [ &quot;#fff&quot;, &quot;#000&quot; ] // [ from, to ]
+}, 2000);
+</code></pre>
+<ol start="5">
+<li>每个数组的元素数量不必相等，所提供的值将独立分开：</li>
+</ol>
+<pre><code class="language-js">element.animate({
+  opacity: [ 0, 1 ], // offset: 0, 1
+  backgroundColor: [ &quot;red&quot;, &quot;yellow&quot;, &quot;green&quot; ], // offset: 0, 0.5, 1
+}, 2000);
+</code></pre>
+<ol start="6">
+<li><code>offset</code>，<code>easing</code> 和 <code>composite</code> 可以与属性值一起指定：</li>
+</ol>
+<pre><code class="language-js">element.animate({
+  opacity: [ 0, 0.9, 1 ],
+  offset: [ 0, 0.8 ], // [ 0, 0.8, 1 ] 的简写
+  easing: [ 'ease-in', 'ease-out' ],
+}, 2000);
+</code></pre>
+<h2 id="示例">示例</h2>
+<p>下面示例的四个动画都使用了三个关键帧：第一帧完全透明，第二帧完全不透明，第三帧完全透明。<code>offset</code> 对应 <code>CSS3 animation</code> 中的百分比，<code>{ opacity: 1, offset: 0.5 }</code> 等同于 CSS 中 <code>@keyframes xxx { 50% { opacity: 1; } }</code>，也就是动画进程 <code>50%</code> 位置透明度为 <code>1</code>。不设置 <code>offset</code> 和 <code>offset</code> 设置为 <code>0.5</code> 都将在相邻关键帧之间均匀分布，效果相同。<code>easing: 'steps(8, end)'</code> 定义了一个 <code>timing function</code>，以等距步长划分动画进程。</p>
+<iframe src="https://code.juejin.cn/pen/7131575373527482383"></iframe>
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/css-easing-function-de-shi-yong/" class="post-title gt-a-link">
+                    CSS easing-function 的使用
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

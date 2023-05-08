@@ -1,0 +1,336 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>Web 应用程序的文件系统写入能力 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    Web 应用程序的文件系统写入能力
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-12-01 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tags">
+                            # JS
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p>NodeJS 之前，JS 操作文件只能通过 HTML <code>&lt;input type=&quot;file&quot;&gt;</code> 元素或 XMLHttpRequest（或之后的 fetch），来对本地文件进行一些浏览和上传操作。NodeJS 给予了 JS 操作系统底层 API 的能力，但这只能局限在 NodeJS 项目中。</p>
+<p>File System Access API 允许直接读取、写入或保存对用户设备上的文件和文件夹的更改。此 API 使开发人员能够构建功能强大的 Web 应用程序，例如 IDE、文本编辑器、图片编辑器和视频编辑器等等。</p>
+<figure data-type="image" tabindex="1"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b440a3ae50bf45848683501dbaa87889~tplv-k3u1fbpfcp-watermark.image?" alt="微信截图_20221127210410.png" loading="lazy"></figure>
+<p>从 Chrome 86 开始支持 File System Access API，目前只有基于 Chromium 系列的浏览器全面支持，Safari 部分支持（支持读取，不支持写入和保存），而 Firefox 未支持。</p>
+<p>下面我们从制作一个网页文本编辑器，来演示文件系统访问 API。</p>
+<h2 id="读取文件">读取文件</h2>
+<p>大多数与文件和目录的交互都是通过句柄（FileSystemHandle 的子类）完成的。获取句柄的方法通常是 window.showOpenFilePicker 和 window.showDirectoryPicker，调用必须在<a href="https://developer.mozilla.org/zh-CN/docs/Web/Security/Secure_Contexts">安全上下文</a>中完成，并且必须从用户手势（事件触发）中调用。</p>
+<pre><code class="language-js">let fileHandle;
+butOpenFile.addEventListener('click', async () =&gt; {
+  [fileHandle] = await window.showOpenFilePicker();
+});
+</code></pre>
+<p>保留对文件句柄的引用很有帮助，以便以后可以使用。例如，需要它来保存对文件的更改，或执行任何其他文件操作。</p>
+<p>获取了文件的句柄，您可以获取文件的属性，或访问文件本身。调用 handle.getFile() 将返回一个 File 对象，然后我们可以通过 slice(), stream(), text(), 或 arrayBuffer() 等方法对其处理。</p>
+<pre><code class="language-js">const file = await fileHandle.getFile();
+const contents = await file.text();
+</code></pre>
+<blockquote>
+<p>注意：FileSystemFileHandle.getFile() 返回的 File 对象只有在磁盘上的文件未更改时才可读。如果磁盘上的文件被修改，File 对象将变得不可读，您将需要再次调用 getFile() 以获取新的 File 对象来读取更改后的数据。</p>
+</blockquote>
+<p>下面当点击按钮时，浏览器会显示一个文件选择器。一旦他们选择了一个文件，应用程序就会读取内容并将它们放入一个 <code>&lt;textarea&gt;</code> 内显示。</p>
+<pre><code class="language-js">let fileHandle;
+butOpenFile.addEventListener('click', async () =&gt; {
+  [fileHandle] = await window.showOpenFilePicker();
+  const file = await fileHandle.getFile();
+  const contents = await file.text();
+  textArea.value = contents;
+});
+</code></pre>
+<h2 id="写入文件">写入文件</h2>
+<p>将数据写入磁盘需要使用一个 FileSystemWritableFileStream 对象，通过文件句柄对象调用 fileHandle.createWritable() 来创建该可写流。</p>
+<h3 id="filesystemwritablefilestreamwritedata">FileSystemWritableFileStream.write(data)</h3>
+<figure data-type="image" tabindex="2"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c30717a02afa4339978a8c278cdf3ebf~tplv-k3u1fbpfcp-watermark.image?" alt="微信截图_20221201202900.png" loading="lazy"></figure>
+<p>在当前文件光标偏移处将内容写入调用该方法的文件中。</p>
+<p>参数 data 可以为以下类型：ArrayBuffer、TypedArray、DataView、Blob、String 类型或包含以下属性的对象：</p>
+<ul>
+<li>type<br>
+为以下之一的字符串：&quot;write&quot;、&quot;seek&quot; 或 &quot;truncate&quot;。</li>
+<li>data<br>
+要写入的文件数据，可以为以下类型：ArrayBuffer、TypedArray、DataView、Blob。如果 type 设置为 &quot;write&quot;，则此属性是必需的。</li>
+<li>position<br>
+如果 type 设置为 &quot;seek&quot;，表示当前文件光标应移动到的字节位置。如果 type 设置为 &quot;write&quot;，表示开始写入的位置。</li>
+<li>size<br>
+一个无符号 long 类型，表示流应包含的字节数。如果 type 设置为 &quot;truncate&quot;，则此属性是必需的。</li>
+</ul>
+<p>该方法返回一个包含 undefined 的 Promise。</p>
+<pre><code class="language-js">// 只传入数据
+writableStream.write(data);
+// 从确定的位置将数据写入流
+writableStream.write({ type: &quot;write&quot;, position, data });
+// 将当前文件光标偏移量更新到指定位置
+writableStream.write({ type: &quot;seek&quot;, position });
+// 将文件大小调整为 size 字节长
+writableStream.write({ type: &quot;truncate&quot;, size });
+</code></pre>
+<p>要注意的是，在流关闭之后，才会将更改写入磁盘上的实际文件。</p>
+<pre><code class="language-js">async function writeFile(fileHandle, contents) {
+  const writable = await fileHandle.createWritable();
+  await writable.write(contents);
+  await writable.close();
+}
+</code></pre>
+<p>另外，还可以将流直接通过管道传递给写入流，下面 pipeTo() 方法调用后，默认关闭目标管道，无需再关闭写入流。</p>
+<pre><code class="language-js">async function writeURLToFile(fileHandle, url) {
+  const writable = await fileHandle.createWritable();
+  const response = await fetch(url);
+  await response.body.pipeTo(writable);
+}
+</code></pre>
+<h3 id="showsavefilepickeroptions">showSaveFilePicker(options)</h3>
+<figure data-type="image" tabindex="3"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/fc8cae6752be496494199a77fe8a9d13~tplv-k3u1fbpfcp-watermark.image?" alt="微信截图_20221201202940.png" loading="lazy"></figure>
+<p>显示一个允许用户保存文件的文件选择器。返回处理后的包含 FileSystemFileHandle 对象的 Promise。</p>
+<p>参数 options 可选，支持以下属性：</p>
+<ul>
+<li>id<br>
+通过指定一个 id，浏览器可以记住上次使用的目录。</li>
+<li>startIn<br>
+起始目录，例如 &quot;desktop&quot;（桌面）, &quot;documents&quot;（文档）, &quot;downloads&quot;（下载）, &quot;music&quot;（音乐）, &quot;pictures&quot;（图片）, &quot;videos&quot;（视频）。还可以将现有文件或目录句柄传递到此参数。</li>
+<li>suggestedName<br>
+文件名。</li>
+<li>excludeAcceptAllOption<br>
+默认为 false，是否排除 types 中的 accept 文件类型列表。</li>
+<li>types<br>
+可选择的文件类型数组，每个数组项也是个对象，支持下面两个参数：
+<ul>
+<li>description<br>
+文件或者文件夹的描述，字符串，可选。</li>
+<li>accept<br>
+一个对象，键为 MIME 类型，值为保存的扩展名数组。</li>
+</ul>
+</li>
+</ul>
+<p>如果需要保存为一个 .txt 扩展名的文本文件：</p>
+<pre><code class="language-js">async function getNewFileHandle() {
+  const opts = {
+    types: [{
+      description: 'Text file',
+      accept: {'text/plain': ['.txt']},
+    }],
+  };
+  return await window.showSaveFilePicker(opts);
+}
+</code></pre>
+<p>一般在文本编辑器中，有两种保存文件的方法：保存和另存为。保存只是使用先前检索到的文件句柄将更改写回原始文件。但是另存为会创建一个新文件，因此需要一个新的文件句柄。</p>
+<h2 id="注意事项">注意事项</h2>
+<ol>
+<li>需要 https 协议，如果是本地 localhost 不受此限制。</li>
+<li>不能在 iframe 内使用，会报 SecurityError。所以很遗憾，马上掘金上面不能体验了。</li>
+</ol>
+<pre><code>Uncaught (in promise) {&quot;name&quot;:&quot;SecurityError&quot;,&quot;message&quot;:&quot;Failed to execute 'showSaveFilePicker' on 'Window': Cross origin sub frames aren't allowed to show a file picker.&quot;,&quot;stack&quot;:&quot;Error: Failed to execute 'showSaveFilePicker' on 'Window': Cross origin sub frames aren't allowed to show a file picker.\n at HTMLButtonElement. (:17:37)&quot;}
+</code></pre>
+<h2 id="使用">使用</h2>
+<p>下面定义两个按钮，分别写入文本和图片并保存。文本和图片 URL 可以根据需求自定义。</p>
+<pre><code class="language-html">&lt;body&gt;
+  &lt;button id=&quot;saveText&quot;&gt;保存文本文件&lt;/button&gt;
+  &lt;button id=&quot;saveImg&quot;&gt;保存图片&lt;/button&gt;
+&lt;/body&gt;
+&lt;script&gt;
+  async function writeFile(fileHandle, contents) {
+    const writable = await fileHandle.createWritable();
+    await writable.write(contents);
+    await writable.close();
+  }
+  async function writeURLToFile(fileHandle, url) {
+    const writable = await fileHandle.createWritable();
+    const response = await fetch(url);
+    await response.body.pipeTo(writable);
+  }
+  saveText.addEventListener('click', async function() {
+    const opts = {
+      startIn: 'downloads',
+      types: [{
+        description: 'Text file',
+        accept: { 'text/plain': ['.txt'] },
+      }],
+      suggestedName: 'Untitled',
+      id: 0,
+    };
+    await writeFile(await window.showSaveFilePicker(opts), '你好！');
+  });
+  saveImg.addEventListener('click', async function() {
+    const opts = {
+      startIn: 'downloads',
+      types: [{
+        description: 'Image file',
+        accept: { 'image/jpg': ['.jpg'] },
+      }],
+      suggestedName: 'Untitled',
+      id: 0,
+    };
+    await writeURLToFile(await window.showSaveFilePicker(opts),
+      'https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/211a1a5980f94f0095a46017e9bc9755~tplv-k3u1fbpfcp-watermark.image?');
+  });
+&lt;/script&gt;
+&lt;style&gt;
+  button {
+    border: 0;
+    border-radius: .5em;
+    padding: 1em;
+    background: coral;
+    color: white;
+  }
+&lt;/style&gt;
+</code></pre>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/bu-shi-yong-input-file-yuan-su-js-ru-he-cao-zuo-wen-jian/" class="post-title gt-a-link">
+                    不使用 input file 元素，JS 如何操作文件
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

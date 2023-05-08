@@ -1,0 +1,271 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>不使用 input file 元素，JS 如何操作文件 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    不使用 input file 元素，JS 如何操作文件
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-11-30 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tags">
+                            # JS
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p>NodeJS 之前，JS 操作文件只能通过 HTML <code>&lt;input type=&quot;file&quot;&gt;</code> 元素或 XMLHttpRequest（或之后的 fetch），来对本地文件进行一些浏览和上传操作。NodeJS 给予了 JS 操作系统底层 API 的能力，但这只能局限在 NodeJS 项目中。</p>
+<figure data-type="image" tabindex="1"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b440a3ae50bf45848683501dbaa87889~tplv-k3u1fbpfcp-watermark.image?" alt="微信截图_20221127210410.png" loading="lazy"></figure>
+<p>从 Chrome 86 开始，在浏览器中 File System Access API 提供了 JS 操作文件的能力，目前只有基于 Chromium 系列的浏览器全面支持，Safari 部分支持，而 Firefox 未支持。该 API 允许<strong>读取文件、写入或保存文件以及访问目录结构</strong>，包括本地文件系统和网络文件系统。</p>
+<h2 id="接口">接口</h2>
+<p>大多数与文件和目录的交互都是通过句柄（FileSystemHandle 的子类）完成的。FileSystemHandle 有两个子类：FileSystemFileHandle 和 FileSystemDirectoryHandle，分别用于文件和目录。</p>
+<p>获取句柄的方法通常是 window.showOpenFilePicker 和 window.showDirectoryPicker（另外，DataTransferItem.getAsFileSystemHandle() 也可以获取文件系统访问句柄），并且这些方法都是异步的，返回值为 Promise。这些方法被调用后，文件选择器就会弹出，用户可以选择一个或多个文件或目录来获取句柄。</p>
+<h3 id="showopenfilepickeroptions">showOpenFilePicker(options)</h3>
+<p>用来显示一个文件选择器，用户选择一个或多个文件后返回包含所选择文件的句柄数组的 Promise。</p>
+<p>参数 options 可选，支持以下属性：</p>
+<ul>
+<li>multiple<br>
+默认为 false，设置为 true 时，可以选择多个文件。</li>
+<li>excludeAcceptAllOption<br>
+默认为 false，是否排除 types 中的 accept 文件类型列表。</li>
+<li>types<br>
+可选择的文件类型数组，每个数组项也是个对象，支持下面两个参数：
+<ul>
+<li>description<br>
+文件或者文件夹的描述，字符串，可选。</li>
+<li>accept<br>
+一个对象，表示接受的文件类型，对象的键是文件的 MIME 类型，值表示支持的文件后缀的数组。</li>
+</ul>
+</li>
+</ul>
+<h3 id="showdirectorypickeroptions">showDirectoryPicker(options)</h3>
+<p>用来显示一个目录选择器，用户选择一个目录后返回包含所选择的目录的句柄的 Promise。</p>
+<p>参数 options 可选，支持下以下属性：</p>
+<ul>
+<li>id<br>
+通过指定 id，可以用来区分不同的目录，相同 id 将打开同一目录。</li>
+<li>mode<br>
+读写模式，默认为 read，可以设置为 readwrite。</li>
+<li>startIn<br>
+起始目录，例如 &quot;desktop&quot;（桌面）, &quot;documents&quot;（文档）, &quot;downloads&quot;（下载）, &quot;music&quot;（音乐）, &quot;pictures&quot;（图片）, &quot;videos&quot;（视频）。</li>
+</ul>
+<h2 id="使用">使用</h2>
+<p>以前我们想要更改 input type=file 文件选择框的样式，要么隐藏文件选择输入框，然后使用 <code>&lt;label&gt;</code> 元素模拟文件选择框，或者使用 CSS 伪元素 ::file-selector-button。现在有了 File System Access API，我们可以直接在页面中任意元素上来触发文件操作。</p>
+<pre><code class="language-html">&lt;body&gt;
+  &lt;button id=&quot;selectFile&quot;&gt;选择文件&lt;/button&gt;
+  &lt;button id=&quot;selectDirectory&quot;&gt;选择目录&lt;/button&gt;
+&lt;/body&gt;
+&lt;script&gt;
+  selectFile.addEventListener('click', async function() {
+    const arrFileHandle = await window.showOpenFilePicker({
+      types: [{
+        accept: {
+          'image/*': ['.png', '.gif', '.jpeg', '.jpg', '.webp']
+        }
+      }],
+      multiple: true
+    });
+    for (const fileHandle of arrFileHandle) {
+      const fileData = await fileHandle.getFile();
+      document.body.insertAdjacentHTML('beforeend', `&lt;img src=&quot;${URL.createObjectURL(fileData)}&quot;&gt;`);
+    }
+  });
+  selectDirectory.addEventListener('click', async function() {
+    const dirHandle = await window.showDirectoryPicker({
+      startIn: 'pictures'
+    });
+    const values = dirHandle.values();
+    const files = [];
+    let next;
+    async function getFile() {
+      next = await values.next();
+      const { value } = next;
+      if (value) {
+        if (value.kind === 'file') files.push(await value.getFile());
+        else console.log('是目录', value.name);
+      }
+    }
+    await getFile();
+    while (!next.done) await getFile();
+    files.forEach(file =&gt; {
+      /^image\/.+/.test(file.type) &amp;&amp; document.body.insertAdjacentHTML('beforeend', `&lt;img src=&quot;${URL.createObjectURL(file)}&quot;&gt;`);
+    });
+  });
+&lt;/script&gt;
+&lt;style&gt;
+  button {
+    border: 0;
+    border-radius: .5em;
+    padding: 1em;
+    background: coral;
+    color: white;
+  }
+  img {
+    max-width: 100%;
+  }
+&lt;/style&gt;
+</code></pre>
+<h2 id="注意事项">注意事项</h2>
+<ol>
+<li>需要 https 协议，如果是本地 localhost 不受此限制。</li>
+<li>不能在 iframe 内使用，会报 SecurityError。所以很遗憾，马上掘金上面不能体验了。</li>
+</ol>
+<pre><code>Uncaught (in promise) {&quot;name&quot;:&quot;SecurityError&quot;,&quot;message&quot;:&quot;Failed to execute 'showOpenFilePicker' on 'Window': Cross origin sub frames aren't allowed to show a file picker.&quot;,&quot;stack&quot;:&quot;Error: Failed to execute 'showOpenFilePicker' on 'Window': Cross origin sub frames aren't allowed to show a file picker.\n at HTMLButtonElement. (:3:38)&quot;}
+</code></pre>
+<p>关于 File System Access API 的写入和保存文件的能力，后续补充。</p>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/ru-he-geng-jian-dan-di-geng-gai-input-typefile-wen-jian-xuan-ze-kuang-de-yang-shi/" class="post-title gt-a-link">
+                    如何更简单地更改 input type=file 文件选择框的样式
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

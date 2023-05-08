@@ -1,0 +1,279 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>拖拽删除元素、拖拽排序、拖拽预览图片和拖拽移动元素 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    拖拽删除元素、拖拽排序、拖拽预览图片和拖拽移动元素
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-11-25 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tags">
+                            # JS
+                        </a>
+                    
+                        <a href="https://zkrisj.github.io/tag/10MZNKSN7/" class="post-tags">
+                            # HTML
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<figure data-type="image" tabindex="1"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8ee9c79dd8d9415ebccadf1c262895b1~tplv-k3u1fbpfcp-watermark.image?" alt="微信截图_20221124171306.png" loading="lazy"></figure>
+<p>HTML5 提供了专门的拖拽与拖放的 API，目前各浏览器都已支持，包括 IE。HTML 拖放（Drag and Drop）接口使应用程序能够在浏览器中使用拖放功能。例如，用户可使用鼠标选择可拖拽（draggable）元素，将元素拖拽到可放置（droppable）元素，并释放鼠标按钮以放置这些元素。</p>
+<h2 id="事件类型">事件类型</h2>
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>On 型事件处理程序</th>
+<th>触发时刻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>drag</td>
+<td>ondrag</td>
+<td>当拖拽元素或选中的文本时触发。</td>
+</tr>
+<tr>
+<td>dragend</td>
+<td>ondragend</td>
+<td>当拖拽操作结束时触发 (比如松开鼠标按键或敲 Esc 键)。</td>
+</tr>
+<tr>
+<td>dragenter</td>
+<td>ondragenter</td>
+<td>当拖拽元素或选中的文本到一个可释放目标时触发。</td>
+</tr>
+<tr>
+<td>dragleave</td>
+<td>ondragleave</td>
+<td>当拖拽元素或选中的文本离开一个可释放目标时触发。</td>
+</tr>
+<tr>
+<td>dragover</td>
+<td>ondragover</td>
+<td>当元素或选中的文本被拖到一个可释放目标上时触发（每 100 毫秒触发一次）。</td>
+</tr>
+<tr>
+<td>dragstart</td>
+<td>ondragstart</td>
+<td>当用户开始拖拽一个元素或选中的文本时触发。</td>
+</tr>
+<tr>
+<td>drop</td>
+<td>ondrop</td>
+<td>当元素或选中的文本在可释放目标上被释放时触发。</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>注意：当从操作系统向浏览器中拖拽文件时，不会触发 dragstart 和dragend 事件。</p>
+</blockquote>
+<h2 id="接口">接口</h2>
+<p>给应用程序添加 HTML 拖放功能，主要使用 DragEvent 和 DataTransfer 这两个接口。</p>
+<h3 id="dragevent">DragEvent</h3>
+<p>继承自 MouseEvent，有一个 dataTransfer 属性（DataTransfer 对象），在拖放交互期间传输的数据主要通过这个属性完成。</p>
+<h3 id="datatransfer">DataTransfer</h3>
+<p>保存着拖拽操作中的数据，例如拖拽事件的类型（如拷贝 copy 或者移动 move），拖拽的数据（一个或者多个项）和每个拖拽项的类型（MIME 类型）。</p>
+<h4 id="items-属性">items 属性</h4>
+<p>包含包含所有拖动数据 DataTransferItem 对象的列表（DataTransferItemList 对象，包括 add、remove 和 clear 方法）。一个 DataTransferItem 代表一个拖拽项目，每个项目都有一个 kind 属性（值为 string 或 file）和一个表示数据项目 MIME 类型的 type 属性。DataTransferItem 对象也有获取拖拽项目数据的方法：DataTransferItem.getAsFile() 和 DataTransferItem.getAsString()。</p>
+<blockquote>
+<p>DataTransfer 对象使用同步的 getData() 方法去得到拖拽项的数据，而 DataTransferItem 对象使用异步的 getAsString() 方法得到拖拽项的数据。</p>
+</blockquote>
+<h4 id="files-属性">files 属性</h4>
+<p>包含数据传输中可用的所有本地文件的列表（FileList 对象）。如果拖动操作不涉及拖动文件，则此属性为空列表。</p>
+<h3 id="html-draggable-属性">HTML draggable 属性</h3>
+<p>这个属性是枚举类型，而不是布尔类型。这意味着必须显式指定值为 true 或者 false，而不能简写。</p>
+<ul>
+<li>拖拽选中文本、拖拽图像和拖拽链接时，会使用默认拖拽行为。</li>
+<li>拖拽图像或链接时，图像或链接的 URL 被设定为拖拽数据。</li>
+<li>对于其他元素，只有当它们作为被选中的一部分时，才会触发默认拖拽行为。</li>
+</ul>
+<p>除了图像、链接和选择的文本默认的可拖拽行为之外，其他元素在默认情况下是不可拖拽的。如果要使其他的 HTML 元素可拖拽：</p>
+<ol>
+<li>将想要拖拽的元素的 draggable 属性设置成 draggable=&quot;true&quot;。</li>
+<li>为 dragstart 事件添加监听。</li>
+<li>在定义的监听中设置拖拽数据。</li>
+</ol>
+<pre><code class="language-html">&lt;p draggable=&quot;true&quot; ondragstart=&quot;event.dataTransfer.setData('text/plain', 'This text may be dragged')&quot;&gt;
+  This text &lt;strong&gt;may&lt;/strong&gt; be dragged.
+&lt;/p&gt;
+</code></pre>
+<h2 id="拖拽删除元素">拖拽删除元素</h2>
+<p>拖拽右侧的列表项目到左侧时，在列表项目元素中通过 ondragstart 事件获取到当前的拖拽元素，然后在左侧容器元素中通过 ondrop 事件根据当前的拖拽元素，可以删除该列表项目。</p>
+<iframe src="https://code.juejin.cn/pen/7169627955818135582"></iframe>
+<h2 id="拖拽排序">拖拽排序</h2>
+<p>拖拽列表项目时，在列表项目元素中通过 dragstart 事件获取到当前的拖拽元素和事件的 offsetY，然后在列表容器元素中通过 dragover 事件，根据当前拖拽移动在上面的列表元素事件的 offsetY，对比当前拖拽中的元素的 offsetY，对当前拖拽移动在上面的列表元素进行 before 或 after 操作。</p>
+<iframe src="https://code.juejin.cn/pen/7170628532941520904"></iframe>
+<h2 id="拖拽预览图片">拖拽预览图片</h2>
+<p>从本地拖拽文件到页面中时，通过获取 DragEvent 的 DataTransfer 对象的 files 属性，然后由 URL.createObjectURL 创建对象 URL，可以预览该图片。</p>
+<iframe src="https://code.juejin.cn/pen/7169628540244066334"></iframe>
+<h2 id="拖拽效果">拖拽效果</h2>
+<p>HTML Drag and Drop API 方便了我们对拖拽数据的处理，如果需要实现 HTML 元素的拖拽移动，更加方便地是使用 mouse 事件。</p>
+<ol>
+<li>设置要拖拽的元素绝对定位或是相对定位（position:absolute/relative）。</li>
+<li>监听 onmousedown、onmouseup 和 onmousemove 事件，获取 clientX 和 clientY。</li>
+<li>将获取到的 clientX 和 clientY 赋值给元素的 CSS 属性 left 和 top。</li>
+</ol>
+<iframe src="https://code.juejin.cn/pen/7169632570613694496"></iframe>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li><a href="https://www.zhangxinxu.com/wordpress/2010/03/javascript%e5%ae%9e%e7%8e%b0%e6%9c%80%e7%ae%80%e5%8d%95%e7%9a%84%e6%8b%96%e6%8b%bd%e6%95%88%e6%9e%9c/">JavaScript实现最简单的拖拽效果</a></li>
+</ul>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/shi-yong-lessdialoggreater-yuan-su-he-popup-api-zi-ding-yi-dui-hua-kuang/" class="post-title gt-a-link">
+                    使用 &lt;dialog&gt; 元素和 Popup API 自定义对话框
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

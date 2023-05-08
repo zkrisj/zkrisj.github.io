@@ -1,0 +1,569 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>Webpack 知识体系总结 ｜ 青训营笔记 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    Webpack 知识体系总结 ｜ 青训营笔记
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2023-02-12 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/-SviN8-mD/" class="post-tags">
+                            # nodeJS
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="webpack-介绍">Webpack 介绍</h2>
+<p>一个前端项目是由 CSS 样式文件、图片文件、JS 文件、Vue 文件、TS 文件、JSX 文件等部分组成。我们可以手动管理这些资源：</p>
+<ul>
+<li>如果资源文件过多，手工操作流程繁琐。</li>
+<li>当文件之间有依赖关系时，必须严格按依赖顺序书写。</li>
+<li>开发与生产环境需要一致，难以接入 JS 和 TS 的新特性。</li>
+<li>比较难接入 Less、Sass 等。</li>
+<li>JS、图片、CSS 资源管理模型不一致。</li>
+</ul>
+<p>2009年诞生的 Node.js 和2010年诞生的 npm 将前端项目带入了工程化，而 Node.js 的 CommonJS 模块化规范不兼容浏览器。所以相继出现了一些打包工具，比如 Browserify、Gulp、RequireJS、Rollup、Webpack 等。</p>
+<p>Webpack 本质上是一种前端资源编译、打包工具。</p>
+<ul>
+<li>多份资源文件打包成一个 Bundle，减少 http 请求数</li>
+<li>支持 Babel、Eslint、TS、CoffeScript、Less、Sass</li>
+<li>支持模块化处理 CSS、图片等资源文件</li>
+<li>统一图片、CSS、字体等其它资源的处理模型</li>
+<li>支持 HMR + 开发服务器</li>
+<li>支持持续监听、持续构建</li>
+<li>支持代码分离支持 Tree-shaking</li>
+<li>支持 SourceMap</li>
+</ul>
+<figure data-type="image" tabindex="1"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f6336240a642499aaf859b169bb09b8a~tplv-k3u1fbpfcp-watermark.image?" alt="编译.png" loading="lazy"></figure>
+<p>核心流程：</p>
+<ol>
+<li>入口处理：编译入口，webpack 编译的起点，从 <code>entry</code> 文件开始，启动编译流程。</li>
+<li>依赖解析：从 <code>entry</code> 文件开始，根据 <code>require</code> 或 <code>import</code> 等语句找到依赖资源。</li>
+<li>资源解析：根据 <code>module</code> 配置项，调用资源转移器，将图片、CSS 等非标准 JS 资源转译为 JS 内容。webpack 内部所有资源都会以 module 对象形式存在，所有关于资源的操作、转译、合并都是以 module 为基本单位进行的。</li>
+<li>资源合并打包：将转译后的资源内容合并打包为可直接在浏览器运行的 JS 文件。</li>
+</ol>
+<p>其中，2、3 步骤会递归调用，直到所有资源处理完毕。</p>
+<h2 id="使用">使用</h2>
+<p>关于 Webpack 的使用方法，基本都围绕配置展开，而这些配置大致可划分为两类：</p>
+<ul>
+<li>流程类: 作用于流程中某个或若干个环节直接影响打包效果的配置项。
+<ul>
+<li>输入: entry、context</li>
+<li>模块解析: resolve、externals</li>
+<li>模块转译: module</li>
+<li>后处理: optimization、mode、target</li>
+<li>输出：output</li>
+</ul>
+</li>
+<li>工具类: 主流程之外，提供更多工程化能力的配置项。
+<ul>
+<li>开发效率类：watch、devtool、devServer</li>
+<li>性能优化类：cache、performance</li>
+<li>日志类：stats、infrastructureLogging</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>首先，<code>npm i -D webpack webpack-cli</code> 安装。</li>
+<li>定义入口和产物出口。</li>
+</ol>
+<pre><code class="language-js">const path = require(&quot;path&quot;);
+module.exports = {
+  entry: &quot;./src/index&quot;,
+  output: {
+    filename:&quot;[name].js&quot;,
+    path: path.join(__dirname,&quot;./dist&quot;),
+  },
+}
+</code></pre>
+<ol start="3">
+<li>安装 loader 处理 CSS，<code>npm add -D css-loader style-loader</code>。</li>
+</ol>
+<ul>
+<li>webpack.config.js</li>
+</ul>
+<pre><code class="language-js">const path = require(&quot;path&quot;);
+module.exports = {
+  entry:&quot;./src/index&quot;,
+  output: {
+    filename: &quot;[name].js&quot;,
+    path: path.join(__dirname, &quot;./dist&quot;),
+  },
+  module: {
+    // css 处理器
+    rules: [{
+      test: /\.css/i,
+      use: [
+        &quot;style-loader&quot;,
+        &quot;css-loader&quot;,
+      ]
+    }],
+  },
+};
+</code></pre>
+<ul>
+<li>index.js</li>
+</ul>
+<pre><code class="language-js">const styles = require('./index.css');
+// or
+import styles from './index.css';
+</code></pre>
+<ol start="4">
+<li>安装 loader 接入 Babel，<code>npm i -D @babel/core ababel/preset-env babel-loader</code>。</li>
+</ol>
+<ul>
+<li>webpack.config.js</li>
+</ul>
+<pre><code class="language-js">const path = require(&quot;path&quot;);
+module.exports = {
+  entry:&quot;./src/index&quot;,
+  output: {
+    filename: &quot;[name].js&quot;,
+    path: path.join(__dirname, &quot;./dist&quot;),
+  },
+  module: {
+    // Babel 处理器
+    rules: [{
+      test: /\.js?$/,
+      use: [{
+        loader: 'babel-loader',
+        options: {
+          presets: [
+            ['@babel/preset-env']
+          ]
+        }
+      }, ]
+    }],
+  },
+};
+</code></pre>
+<ul>
+<li>index.js</li>
+</ul>
+<pre><code class="language-js">class Person {
+  constructor() {
+    this.name = 'Tecvan';
+  }
+}
+console.log((new Person()).name);
+const say = () =&gt; {};
+</code></pre>
+<ol start="5">
+<li>生成 HTML 需要使用的是插件，<code>npm i -D html-webpack-plugin</code>。</li>
+</ol>
+<ul>
+<li>webpack.config.js</li>
+</ul>
+<pre><code class="language-js">const path = require(&quot;path&quot;);
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+module.exports = {
+  entry:&quot;./src/index&quot;,
+  output: {
+    filename: &quot;[name].js&quot;,
+    path: path.join(__dirname, &quot;./dist&quot;),
+  },
+  plugins: [new HtmlWebpackplugin()]
+};
+</code></pre>
+<ul>
+<li>index.html</li>
+</ul>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;
+&lt;script defer src=&quot;main.js&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<ol start="6">
+<li>Hot Module Replacement（HMR） - 模块热替换。</li>
+</ol>
+<h2 id=""><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ac072be608b045318343a4f07009546c~tplv-k3u1fbpfcp-watermark.image?" alt="HMR.png" loading="lazy"></h2>
+<h2 id="-2"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/226287246b844dc99c0ded2ea42c5b81~tplv-k3u1fbpfcp-watermark.image?" alt="HMR.gif" loading="lazy"></h2>
+<ul>
+<li>webpack.config.js</li>
+</ul>
+<pre><code class="language-js">const path = require(&quot;path&quot;);
+module.exports = {
+  // ...
+  watch: true,
+  devServer: {
+    hot: true,
+    open: true
+  }
+};
+</code></pre>
+<ul>
+<li>命令需要带 serve：npx webpack serve。</li>
+</ul>
+<ol start="7">
+<li>Tree-Shaking -树摇，用于删除 Dead Code：</li>
+</ol>
+<ul>
+<li>代码没有被用到，不可到达</li>
+<li>代码的执行结果不会被用到</li>
+<li>代码只读不写</li>
+</ul>
+<h2 id="-3"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/86b544d8cd254503b95d5e660deba21b~tplv-k3u1fbpfcp-watermark.image?" alt="Tree-Shaking.png" loading="lazy"></h2>
+<ul>
+<li>webpack.config.js</li>
+</ul>
+<pre><code class="language-js">const path = require(&quot;path&quot;);
+module.exports = {
+  // ...
+  mode: &quot;production&quot;,
+  optimization: {
+    usedExports: true,
+  }
+};
+</code></pre>
+<p>对工具类库如 Lodash 有奇效。</p>
+<h2 id="loader">Loader</h2>
+<p>为了处理非标准 JS 资源，设计出资源翻译模块 Loader，最核心的只能是实现内容转换器 —— 将各式各样的资源转化为标准 JavaScript 内容格式，例如：</p>
+<ul>
+<li>less-loader: 实现 less =&gt; css 的转换，输出 css 内容，无法被直接应用在 Webpack 体系下。</li>
+<li>css-loader：将 css 转换为 <code>__WEBPACK_DEFAULT_EXPORT__ = &quot;.a { xxx }&quot;</code> 格式。</li>
+<li>style-loader：将 css 模块包进 <code>require</code> 语句，并在运行时调用 <code>iniectStyle</code> 等函数将内容注入到页面的 <code>link</code>，<code>style</code> 标签，并挂载到 html 中，让 css 代码能够正确运行在浏览器上。</li>
+<li>html-loader：将 html 转换为 <code>__WEBPACK_DEFAULT_EXPORT__ = &quot;&lt;!DOCTYPE html&quot;</code> 格式。</li>
+<li>vue-loader：更复杂一些，会将 <code>.vue</code> 文件转化为多个 JavaScript 函数，分别对应 template、js、css、custom block。</li>
+</ul>
+<figure data-type="image" tabindex="2"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5cee27ccb88e4a0a86172bc96e37828e~tplv-k3u1fbpfcp-watermark.image?" alt="less.png" loading="lazy"></figure>
+<ul>
+<li>webpack.config.js</li>
+</ul>
+<pre><code class="language-js">const path = require(&quot;path&quot;);
+module.exports = {
+  entry:&quot;./src/index&quot;,
+  output: {
+    filename: &quot;[name].js&quot;,
+    path: path.join(__dirname, &quot;./dist&quot;),
+  },
+  module: {
+    // css 处理器
+    rules: [{
+      test: /\.less/i,
+      use: [
+        &quot;style-loader&quot;,
+        &quot;css-loader&quot;,
+        &quot;less-loader&quot;,
+      ]
+    }],
+  },
+};
+</code></pre>
+<ul>
+<li>index.js</li>
+</ul>
+<pre><code class="language-js">import styles from './a.less';
+</code></pre>
+<h3 id="如何编写-loader">如何编写 loader</h3>
+<p>Loader 通常是一个函数，结构如下：</p>
+<pre><code class="language-js">module.exports = function(source, sourceMap?, data?) {
+  // source 为 loader 的输入，可能是文件内容，也可能是上一个 loader 处理结果
+  return source;
+};
+</code></pre>
+<p>Loader 函数接收三个参数，分别为：</p>
+<ul>
+<li><code>source</code>：资源输入，对于第一个执行的 loader 为资源文件的内容；后续执行的 loader 则为前一个 loader 的执行结果。</li>
+<li><code>sourceMap</code>: 可选参数，代码的 sourcemap 结构。</li>
+<li><code>data</code>: 可选参数，其它需要在 Loader 链中传递的信息，比如 posthtml/posthtml-loader 就会通过这个参数传递参数的 AST 对象。</li>
+</ul>
+<p>其中 <code>source</code> 是最重要的参数，大多数 Loader 要做的事情就是将 <code>source</code> 转译为另一种形式的 <code>output</code> ，比如 webpack-contrib/raw-loader 的核心源码：</p>
+<pre><code class="language-js">//... 
+export default function rawLoader(source) {
+  // ...
+  const json = JSON.stringify(source)
+    .replace(/\u2028/g, '\u2028')
+    .replace(/\u2029/g, '\u2029');
+  const esModule =
+    typeof options.esModule !== 'undefined' ? options.esModule : true;
+  return `${esModule ? 'export default' : 'module.exports ='} ${json};`;
+}
+</code></pre>
+<p>这段代码的作用是将文本内容包裹成 JavaScript 模块，例如：</p>
+<pre><code>// source
+I am Tecvan
+// output
+module.exports = &quot;I am Tecvan&quot;
+</code></pre>
+<p>经过模块化包装之后，这段文本内容转身变成 Webpack 可以处理的资源模块，其它 module 也就能引用、使用它了。</p>
+<p>上例通过 <code>return</code> 语句返回处理结果，除此之外 Loader 还可以以 <code>callback</code> 方式返回更多信息，供下游 Loader 或者 Webpack 本身使用，例如在 webpack-contrib/eslint-loader 中：</p>
+<pre><code>export default function loader(content, map) {
+  // ...
+  linter.printOutput(linter.lint(content));
+  this.callback(null, content, map);
+}
+</code></pre>
+<p>通过 <code>this.callback(null, content, map)</code> 语句同时返回转译后的内容与 sourcemap 内容。<code>callback</code> 的完整签名如下：</p>
+<pre><code class="language-ts">this.callback(
+  // 异常信息，Loader 正常运行时传递 null 值即可
+  err: Error | null,
+  // 转译结果
+  content: string | Buffer,
+  // 源码的 sourcemap 信息
+  sourceMap ? : SourceMap,
+  // 任意需要在 Loader 间传递的值
+  // 经常用来传递 ast 对象，避免重复解析
+  data ? : any
+);
+</code></pre>
+<h2 id="插件">插件</h2>
+<p>前端社区里很多有名的框架都各自有一套插件架构，例如 axios、quill、vscode、webpack、vue、rollup 等等。插件架构灵活性高，扩展性强，但是通常需要非常强的架构能力，需要至少解决三个方面的问题：</p>
+<ul>
+<li>接口：需要提供一套逻辑接入方法，让开发者能够将逻辑在特定时机插入特定位置</li>
+<li>输入：如何将上下文信息高效传导给插件</li>
+<li>输出：插件内部通过何种方式影响整套运行体系</li>
+</ul>
+<p>针对这些问题，webpack 为开发者提供了基于 tapable 钩子的插件方案：</p>
+<ol>
+<li>编译过程的特定节点以钩子形式，通知插件此刻正在发生什么事情；</li>
+<li>通过 tapable 提供的回调机制，以参数方式传递上下文信息；</li>
+<li>在上下文参数对象中附带了很多存在 side effect 的交互接口，插件可以通过这些接口改变</li>
+</ol>
+<h3 id="与-loader-区别">与 Loader 区别</h3>
+<p>都是 Webpack 的扩展机制。</p>
+<ul>
+<li>
+<p>Loader 是一个函数，负责代码的转换、编译。在 webpack 读取模块内容之后，生成 AST 语法树之前进行。操作的是文件，比如将 A.scss 转换为 A.css，是单纯的文件转换过程。</p>
+</li>
+<li>
+<p>插件是一个类，利用 webpack 提供的 hooks，当什么时，执行什么。可以在 webpack 整个打包过程中进行。功能更强，能够在各个对象的钩子中插入特化处理逻辑，它可以覆盖 Webpack 全生命流程，能力、灵活性、复杂度都会比 Loader 强很多。甚至，Webpack 本身的很多功能也是基于插件实现的。不直接操作文件，而是基于事件机制工作，会监听 webpack 打包过程中的某些事件钩子，执行任务。通过 plugin 可以访问 compliler 和 compilation 过程，通过钩子拦截 webpack 的执行。</p>
+</li>
+<li>
+<p>使用 html-webpack-plugin + DefinePlugin</p>
+</li>
+</ul>
+<pre><code class="language-js">const path = require(&quot;path&quot;);
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+module.exports = {
+  entry:&quot;./src/index&quot;,
+  output: {
+    filename: &quot;[name].js&quot;,
+    path: path.join(__dirname, &quot;./dist&quot;),
+  },
+  plugins: [
+    new HtmlWebpackplugin(),
+    new webpack.DefinePlugin({
+      PRODUCTION: JSON.stringify(true),
+      VERSION: JSON.stringify('5fa3b9')
+    }
+  ]
+};
+</code></pre>
+<h3 id="如何编写插件">如何编写插件</h3>
+<ol>
+<li>Webpack 的插件体系是一种基于 Tapable 实现的强耦合架构。</li>
+<li>它在特定时机触发钩子时会附带上足够的上下文信息，插件定义的钩子回调中，能也只能与这些上下文背后的数据结构、接口交互产生 side effect（副作用），进而影响到编译状态和后续流程。</li>
+</ol>
+<p>从形态上看，插件通常是一个带有 <code>apply</code> 函数的类：</p>
+<pre><code>class SomePlugin {
+  apply(compiler) {}
+}
+</code></pre>
+<p>Webpack 会在启动后按照注册的顺序逐次调用插件对象的 <code>apply</code> 函数，同时传入编译器对象 <code>compiler</code> ，插件开发者可以以此为起点触达到 webpack 内部定义的任意钩子，例如：</p>
+<pre><code>class SomePlugin {
+  apply(compiler) {
+    compiler.hooks.thisCompilation.tap('SomePlugin', (compilation, params) =&gt; {
+    })
+  }
+}
+</code></pre>
+<ul>
+<li><code>thisCompilation</code> 为 tapable 仓库提供的钩子对象。</li>
+<li><code>tap</code> 为订阅函数，用于注册回调。</li>
+<li><code>compilation</code>、<code>params</code> 参数是 webpack 传递给插件的上下文信息，也是插件能拿到的输入。不同钩子会传递不同的上下文对象，这一点在钩子被创建的时候就定下来了。</li>
+</ul>
+<figure data-type="image" tabindex="3"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/af15b326966d4041a92e5fa1c8a4a405~tplv-k3u1fbpfcp-watermark.image?" alt="钩子.png" loading="lazy"></figure>
+<p>钩子的核心信息：</p>
+<ul>
+<li>时机: 编译过程的特定节点，Webpack 会以钩子形式通知插件此刻正在发生什么事情。</li>
+<li>上下文: 通过 tapable 提供的回调机制，以参数方式传递上下文信息。</li>
+<li>交互: 在上下文参数对象中附带了很多存在副作用的交互接口，插件可以通过这些接口改变。</li>
+</ul>
+<pre><code class="language-js">class EntryPlugin {
+  apply(compiler) {
+    compiler.hooks.compilation.tap(
+      &quot;Entryplugin&quot;,
+      (compilation, { normalModuleFactory }) =&gt; {
+        compilation.dependencyFactories.set(
+          EntryDependency,
+          normalModuleFactory
+        );
+      }
+    );
+    compiler.hooks.make.tapAsync(&quot;EntryPlugin&quot;, (compilation, callback) =&gt; {
+      const { entry, options, context } = this;
+      const dep = EntryPlugin.createDependency(entry, options);
+      compilation.addEntry(context, dep, options, (err) =&gt; {
+        callback(err);
+      });
+    });
+  }
+}
+</code></pre>
+<ul>
+<li>时机：<code>compier.hooks.compilation</code>。</li>
+<li>参数：<code>compilation</code>、<code>callback</code> 等。</li>
+<li>交互：<code>dependencyFactories.set</code>。</li>
+</ul>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/typescript-bian-yi-xuan-xiang-sheng-ming-wen-jian-or-qing-xun-ying-bi-ji/" class="post-title gt-a-link">
+                    TypeScript 编译选项、声明文件 ｜ 青训营笔记
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

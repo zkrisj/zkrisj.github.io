@@ -1,0 +1,439 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>Shell 脚本和编程 ｜ 青训营笔记 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    Shell 脚本和编程 ｜ 青训营笔记
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2023-05-01 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/GI-SKKkTi/" class="post-tags">
+                            # Linux
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<ol>
+<li>Shell 脚本是一种用Shell脚本语言编写的程序，它可以在 UNIX 或类 UNIX 操作系统上运行。Shell 脚本通常用于自动化任务、管理系统和编写小型应用程序。Shell 脚本可以完成许多任务，例如文件操作、进程管理、网络管理、系统配置等。</li>
+<li>Shell 脚本语言基于命令行界面，它使用 Shell 解释器（例如 Bash）解释 Shell 脚本语言。</li>
+<li>Shell 脚本语言的语法非常简单，可以包含各种命令和操作，例如条件语句、循环语句、函数、变量和输入/输出操作等，易于学习和使用。</li>
+</ol>
+<h3 id="学习-shell-的价值">学习 shell 的价值</h3>
+<ol>
+<li>Linux 服务器的基本操作和管理。</li>
+<li>前端 node.is 服务的进程管理、问题排查、资源监控等运维操作。</li>
+<li>使用 shell 编写 TCE、SCM、Docker 脚本，完成服务编译和部署。</li>
+</ol>
+<h2 id="概念">概念</h2>
+<p><strong>物理终端 =&gt;  软件终端 tty =&gt; 终端模拟器  =&gt;  Shell</strong></p>
+<ul>
+<li>终端：获取用户输入，展示运算结果的硬件设备。</li>
+<li>tty：teletypeWriter 的简称，和终端等价，早期指电报打印机，在 linux 中是输入输出环境。</li>
+<li>终端模拟器：Mac Terminal、iTerm2 等，关联虚拟 tty 的输入输出软件。</li>
+<li>Shell：command interpreter，处理来自终端模拟器的输入，解释执行之后输出结果给终端。</li>
+<li>Bash：Shell 的一种具体实现。</li>
+</ul>
+<h2 id="流程">流程</h2>
+<ol>
+<li>tty 或者说终端最开始指的是获取用户输入并输出的物理设备， 比如电传打字机。</li>
+<li>在 linux 中是接收用户输入、输出结果的终端仿真软件， 比如我们用的 mac terminal、 iterm2 等， 更强输入辅助功能、画面绘制输出的模拟终端器；</li>
+<li>而 tty 变成一个虚拟概念， 是 linux 的一个程序，每个终端模拟器关联一个虚拟 tty，和内核打交道。</li>
+<li>我们可以在终端模拟器中输入 tty 查看关联到的虚拟 tty bash 是 shell 的一种具体实现, 可以理解成实例和类的关系。</li>
+</ol>
+<h2 id="发展">发展</h2>
+<ol>
+<li>Ken Thompson（来自贝尔实验室）在 1971 年为 UNIX 开发了第一个 shell，称为 V6 shell</li>
+<li>Stephen Bourne 在贝尔实验室 为 V7 UNIX 所开发的 Bourne shell，即 sh</li>
+<li>开源组织 GNU 为了取代 Bourne shell 开发的 Bourne-Again shell，即 Bash</li>
+</ol>
+<blockquote>
+<p>除了替代 v6 shell，sh 还有几个优点，把控制流程，循环，变量引入了脚本，提供了一种更具功能性的语言</p>
+<p>主流 Linux 系统使用的 shell，许多都以它为锚点。</p>
+<p>bash是 sh 的超集，可以直接执行大部分 sh 脚本。<br>
+Bash 在兼容 Bourne shell 脚本编程的同时，集成了 Korn shell 和 C shell 的功能，包括命令历史，命令行编辑，目录堆栈（pushd 和 popd），一些实用环境变量，命令自动补全等。</p>
+</blockquote>
+<h2 id="语法">语法</h2>
+<ol>
+<li>shell 不仅提供了与内核和设备交互的方法，还集成了一些今天软件开发中通用的设计模式（比如管道和过滤器），具备控制流程，循环，变量，命令查找的机制。</li>
+<li>既是命令解释器，也是一门编程语言，作为命令解释器，它提供给用户接口，使用丰富的 GNU 工具集，第三方的或者内置的，比如 cd、pwd、exec、test、netstat 等。</li>
+</ol>
+<figure data-type="image" tabindex="1"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/451e053dc7664f5f8e64bc56e33c224b~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<h3 id="变量">变量</h3>
+<figure data-type="image" tabindex="2"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e6ebbf7259bf4684b83f5dd58aacd3b8~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<h3 id="父子-shell-的关系">父子 Shell 的关系</h3>
+<figure data-type="image" tabindex="3"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a8b1f909185d40d18eaec097ad30176f~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<h3 id="自定义变量">自定义变量</h3>
+<p><strong>declare [+/-] 选项 变量</strong></p>
+<figure data-type="image" tabindex="4"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3cbb1b735fe641a7a72a61a40feeb16d~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<figure data-type="image" tabindex="5"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2b81ba49314644d296e57dc219a859a0~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<h2 id="环境变量">环境变量</h2>
+<p>Bash Shel 在启动时总要配置其运行环境，例如初始化环境变量、设置命令提示符、指定系统命令路径等。</p>
+<figure data-type="image" tabindex="6"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8d5ba89f74c9480a8a362ac715efd47c~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<h2 id="配置文件加载">配置文件加载</h2>
+<ol>
+<li>通过系统用户登录默认运行的 shell</li>
+<li>非登录交互式运行 shell</li>
+<li>执行脚本运行非交互式 shell</li>
+</ol>
+<figure data-type="image" tabindex="7"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e4685f933d834ff4a781b523f538975e~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<blockquote>
+<p>如果取得 bash 需要完整的登录流程，我们称之为 login shell，比如 ssh 远程登录一台主机。不需要登录的 bash 我们称为 non-login bash，比如在原来的 bash 中执行 bash开启子进程、 执行一些外部命令。如果修改了配置文件，不会立即生效，需要我们重启终端或者执行 source 命令。</p>
+</blockquote>
+<pre><code class="language-sh">source ~/bashrc
+</code></pre>
+<h2 id="运算符和引用">运算符和引用</h2>
+<ol>
+<li>双引号：部分引用，使用这种引用时，<code>$</code>、`(反引号)、\(转义符) 这 3 个还是会解析成特殊的意义</li>
+<li>单引号：完全引用，只原样输出</li>
+<li>反引号：执行命令</li>
+</ol>
+<figure data-type="image" tabindex="8"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/fb041940c17347bf890a586052cc1bde~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<blockquote>
+<p>cmd &amp; 实现让命令在后台运行：</p>
+<p>使用方法一的时候，当我们关闭终端，命令就会停止运行。加上nohup可以在关闭终端后不停止命令</p>
+</blockquote>
+<h2 id="管道与管道符">管道与管道符 |</h2>
+<p>如果需要互通，比如第一个命令的返回传递给第二个命令，就需要用到管道了。管道的本质就是将多个程序进行了一个连接，和信号一样，也是进程通信的方式之一。</p>
+<ol>
+<li>作用：将前一个命令的结果传递给后面的命令</li>
+<li>语法: cmd1 | cmd2</li>
+<li>要求:管道右侧的命令必须能接受标准输入才行，比如 grep 命令，ls、mv等不能直接使用，可以使用 xargs 预处理注意: 管道命令仅仅处理 stdout，对于 stderr 会予以忽略，可以使用 set-o pipefail 设置 shell 遇到管道错误退出</li>
+</ol>
+<figure data-type="image" tabindex="9"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/abd592a75e6a4b3690b0d5d3ca7eb377~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<h2 id="重定向">重定向</h2>
+<p>输出重定向符号：</p>
+<ol>
+<li><code>v</code>：覆盖写入文件</li>
+<li><code>&gt;&gt;</code>：追加写入文件</li>
+<li><code>2&gt;</code>：错误输出写入文件</li>
+<li><code>&amp;&gt;</code>：正确和错误输出统一写入到文件中</li>
+</ol>
+<p>输入重定向符号：<code>&gt;</code> 和 <code>&gt;&gt;</code>。</p>
+<figure data-type="image" tabindex="10"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ffc91cb4374743518376b962c830e565~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<blockquote>
+<p>每个 shell 命令在执行时都会打开三个文件描述符， 文件描述符 0、1、2， 分别对应 stdin、stdout、stderr， 这三个文件描述符默认默认指向 终端输入、终端输出，那么当命令需要获取输入的时候，它会去读取 fd0， 当要输出的时候它会像 fd1、fd2写入， 改变这些描述符指向的行为叫做重定向</p>
+<p>2&gt;&amp;1 必须写在 &gt; 之后</p>
+<p>&lt;&lt; 比较特殊， 表示继续沿用当前的标准输入， 只是当识别到指定的标识符后停止， 将接收到的内容作为 stdin</p>
+<p>实例: 用户在命令行输入内容，当输入 EOF 的时候停止， 所输入的内容写入 foo.txt</p>
+</blockquote>
+<h2 id="判断命令">判断命令</h2>
+<p>shell 中提供了 <code>test</code>、<code>[</code>、<code>[[</code> 三种判断符号，可用于：</p>
+<ol>
+<li>整数测试</li>
+<li>字符串测试</li>
+<li>文件测试</li>
+</ol>
+<p>语法:</p>
+<ol>
+<li><code>test condition</code></li>
+<li><code>[ condition ]</code></li>
+<li><code>[[ condition ]]</code></li>
+</ol>
+<p>注意：</p>
+<ol>
+<li>中括号前后要有空格符</li>
+<li><code>[</code> 和 <code>test</code> 是命令只能使用自己支持的标志位，<code>&lt;</code>、<code>&gt;</code>、<code>=</code> 只能用来比较字符串</li>
+<li>中括号内的变量，最好都是用引号括起来</li>
+<li><code>[[</code> 更丰富，在整型比较中支持 <code>&lt;</code>、<code>&gt;</code>、<code>=</code>，在字符串比较中支持 <code>=</code>、<code>~</code> 正则</li>
+</ol>
+<figure data-type="image" tabindex="11"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ec6aae195eb240cdbbb7c9ae8bbe158d~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<figure data-type="image" tabindex="12"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6f2fd1e577c64b4f84591280016f45a6~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<blockquote>
+<p>根据程序是否正常执行（程序退出的状态）进行判断：</p>
+<ol>
+<li>exit：手动退出 shell 的命令</li>
+<li>exit 10 返回 10 给 shell，返回值非 0 为不正常退出</li>
+<li>$? 用于判读昂当前 shell 前一个进程是否正常退出（非 0 为不正常退出）</li>
+</ol>
+</blockquote>
+<h2 id="分支语句">分支语句</h2>
+<p>语法1:</p>
+<pre><code>if condition ;then
+程序段
+elif condition ; then
+程序段
+esle
+程序段
+fi
+</code></pre>
+<figure data-type="image" tabindex="13"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ed4ffaff364a42778f17212d1eda5b41~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<p>语法2:</p>
+<pre><code>case $变量 in:
+&quot;第一个变量内容&quot;)
+程序段
+;;
+&quot;第一个变量内容&quot;)
+程序段
+;;
+*)
+程序段
+esac
+</code></pre>
+<figure data-type="image" tabindex="14"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a39552b07b4c4095a666374938e81745~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<h2 id="循环">循环</h2>
+<ol>
+<li>
+<p>while循环</p>
+<p>condition ; do 程序段; donewhile</p>
+</li>
+<li>
+<p>unti1循环（当条件成立的时候跳出循环，与 while循环相反）</p>
+<p>until condition ; do 程序段; done</p>
+</li>
+<li>
+<p>for循环</p>
+<p>for var in [words...];do 程序段:done</p>
+</li>
+</ol>
+<figure data-type="image" tabindex="15"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/be81c61cdedd4273a4a4f40420581c35~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<h2 id="函数">函数</h2>
+<ol>
+<li>
+<p>语法一：</p>
+<p>funcName() echo &quot;abc&quot;;</p>
+</li>
+<li>
+<p>语法二：</p>
+<p>function funcName() { echo &quot;abc&quot;; }</p>
+</li>
+</ol>
+<figure data-type="image" tabindex="16"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/85f74524ba664ac597ab65832559b13a~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<ol start="3">
+<li>
+<p>函数也是命令</p>
+<ol>
+<li>exit：手动退出 shell 、命令</li>
+<li>exit 10 返回 10 给 shell，返回值非 0 为不正常退出</li>
+<li>$? 用于判读昂当前 shell 前一个命令是否正常退出（非 0 为不正常退出）</li>
+</ol>
+<p>为了函数内定义的变量不污染全局， 我们最好使用 local 去定义， 或者在函数退出之前使用 unset 去处理一下</p>
+</li>
+</ol>
+<blockquote>
+<p>注意：</p>
+<ol>
+<li>shell 自上而下执行，函数必须在使用前定义</li>
+<li>函数获取变量和 shell script 类似，$0 代表函数名， 后续参数通过 $1、$2 ...获取</li>
+<li>函数内 retun 仅仅表示函数执行状态，不代表函数执行结果</li>
+<li>返回结果一般使用 echo、printf， 在外面使用 $0 获取</li>
+<li>结果如果没有 return ，函数状态是上一条命令的执行状态，存储在 $? 中</li>
+</ol>
+</blockquote>
+<h2 id="模块化">模块化</h2>
+<p>模块化的原理是在当前 she11 内执行函数文件，方式：<code>source [函数库的路径]</code>。</p>
+<figure data-type="image" tabindex="17"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b8eccf571ccc4ec89902eb639d4f5a44~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<figure data-type="image" tabindex="18"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cf34b723d8c14a98a6c11118a73514ce~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<h2 id="常用命令">常用命令</h2>
+<figure data-type="image" tabindex="19"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/12b64125a88d40c199b04ce442c4d34c~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<h2 id="执行">执行</h2>
+<ol>
+<li>shell 脚本文件一般以 <code>.sh</code> 结尾，也可以没有，这是一个约定; 第一行需要指定用什么命令解释器来执行。<code>#!</code> 是内核识别并选择合适的解释器之后，将文本文件再交给解释器执行。</li>
+</ol>
+<figure data-type="image" tabindex="20"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d57c43f8c50a4f12b7d5b0ad47cca008~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<ol start="2">
+<li>启动方式：</li>
+</ol>
+<figure data-type="image" tabindex="21"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/bd3f509d339c466d9cfff7ec11921f4c~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<h2 id="shell-展开">Shell 展开</h2>
+<ol>
+<li>大括号展开 (Brace Expansion) {...}</li>
+<li>波浪号展开 (Tilde Expansion) ~</li>
+<li>参数展开 (Shell Parameter Expansion)</li>
+<li>命令替换 (Command Substitution)</li>
+<li>数学计算 (Arithmetic Expansion) $((..))</li>
+<li>文件名展开 (Filename Expansion) *?[..] 外壳文件名模式匹配</li>
+</ol>
+<h2 id="调试和前端集成">调试和前端集成</h2>
+<ol>
+<li>普通 log，使用 echo、printf</li>
+</ol>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ce4ee0aa2f5942c8898d1d840a00deef~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"><br>
+2. 使用 set 命令</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/eb10427459c641d39e5e976d6e0e2443~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"><br>
+3. vscode debug 插件</p>
+<figure data-type="image" tabindex="22"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6cea617816854762bb1731b09488edfa~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<ol start="4">
+<li>
+<p>node</p>
+<ol>
+<li>
+<p>node中通过 exec、spawn 调用 shell 命令</p>
+</li>
+<li>
+<p>shell 脚本中调用 node 命令</p>
+</li>
+<li>
+<p>借助 zx 等库进行 javascript、 shell script 的融合</p>
+<ol>
+<li>借助 shell 完成系统操作，文件io、内存、磁盘系统状态查借助 nodejs 完成应用层能力， 网络io、计算等</li>
+<li>借助 shell 完成系统操作，文件io、内存、磁盘系统状态查借助 nodejs 完成应用层能力， 网络io、计算等</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<figure data-type="image" tabindex="23"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8d714dd27df54f7b8eece8ab3c038d7d~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<figure data-type="image" tabindex="24"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/26ff6c607ebf4aff971e6edb2f06c765~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<blockquote>
+<p>exec 启动一个子 shell 进程执行传入的命令，并且将执行结果保存在缓冲区中， 并且缓冲区是有大小限制的，执行完毕通过回调函数返回，</p>
+<p>spawn 默认不使用 shell，而是直接启动子进程执行命令，且会直接返回一个 流对象，支持写入或者读取流数据，这个在大数据量交互的场景比较适合</p>
+</blockquote>
+<h2 id="总结">总结</h2>
+<p>shell 的思想和语法和传统的编程语言不太一样，强调一条语句只干一件事，所以万物皆命令， 在执行过程中也是逐行、逐个连接符、逐个空格的解析出最小化的命令执行，执行完之后再解析下一句。了解 shell 的配置加载、执行方式、执行过程、命令解析过程、 必要的语法、常用命令，可以方便的写出自己的自动化脚本。</p>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/linux-ji-chu-or-qing-xun-ying-bi-ji/" class="post-title gt-a-link">
+                    Linux 基础 ｜ 青训营笔记
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

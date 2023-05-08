@@ -1,0 +1,289 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>使用 mix-blend-mode 实现不套标签搜索关键字高亮 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    使用 mix-blend-mode 实现不套标签搜索关键字高亮
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-11-04 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tags">
+                            # JS
+                        </a>
+                    
+                        <a href="https://zkrisj.github.io/tag/5W0xko0tt/" class="post-tags">
+                            # CSS
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="mix-blend-mode">mix-blend-mode</h2>
+<p>一般实现是文字搜索高亮，需要动态给文字内容套一层标签，然后才能改变匹配文字的颜色。现在，通过 mix-blend-mode 混合模式，我们可以在不嵌套任何标签的情况下，让任意的文字颜色变色。</p>
+<p>mix-blend-mode CSS 属性设置元素的内容与元素的背景或元素的直系父元素的内容如何混合。它的取值数据类型为 <code>&lt;blend-mode&gt;</code>，描述当元素重叠时，颜色应当如何呈现。</p>
+<p>当层重叠时，采用前景和背景的颜色值，执行其混合模式计算并返回最终的颜色值。</p>
+<pre><code class="language-md">&lt;blend-mode&gt; = 
+  normal       | 最终颜色都是顶层颜色，无论底层颜色是什么。
+  multiply     | 最终颜色是顶层和底层颜色相乘叠加的结果。
+  screen       | 最终的颜色是反转顶层颜色和底层颜色，将反转后的两个颜色相乘，再反转得到结果。
+  overlay      | 如果底层颜色比顶层颜色深，则最终颜色是 multiply 的结果；
+                 如果底层颜色比顶层颜色浅，则最终颜色是 screen 的结果。
+                 适合实现文字水印效果。
+  darken       | 最终颜色由两层颜色中每个颜色通道的最暗值所组成的颜色。
+  lighten      | 最终颜色由两层颜色中每个颜色通道的最亮值所组成的颜色。
+  color-dodge  | 最终颜色是将底层颜色除以顶层颜色的反色的结果。
+                 可以用来保护底图的高光，适合处理高光下的人物照片。
+  color-burn   | 最终颜色是反转底色并将值除以顶色然后反转该值的结果。
+                 和特定的色彩进行混合，可以营造更加幽深的意境。
+  hard-light   | 如果顶层颜色比底层颜色深，则最终颜色是 multiply 的结果；
+                 如果顶层颜色比底层颜色浅，则最终颜色是 screen 的结果。 
+                 相当于 overlay 两层颠倒的结果。
+                 好像耀眼的聚光灯照射过来，表现为图像亮的地方更亮，暗的地方更暗。
+  soft-light   | 最终颜色类似于 hard-light 的结果，但更加柔和一些。 
+                 好像发散的光源弥漫过来，给图像着色的时候常用此混合模式。
+  difference   | 最终颜色是 两种颜色中较浅的颜色 减去 两种颜色中较深的颜色 得到的结果。
+                 黑色层不会造成变化，而白色层会反转另一层的颜色。
+                 可以实现颜色的反色效果。
+  exclusion    | 最终颜色类似于 difference，但对比度更低一些。 
+  hue          | 最终颜色具有顶层颜色的色调，同时使用底层颜色的饱和度和亮度。
+  saturation   | 最终颜色具有顶层颜色的饱和度，同时使用底层颜色的色调和亮度。
+                 饱和度为零的纯灰色背景层不会造成变化。
+  color        | 最终颜色具有顶层颜色的色调和饱和度，同时使用底层颜色的亮度。
+                 该效果保留了灰度，可用于为前景着色。
+  luminosity   | 最终颜色具有顶层颜色的亮度，同时使用底层颜色的色调和饱和度。
+                 相当于 color 模式两层颠倒的结果。
+</code></pre>
+<h2 id="原理">原理</h2>
+<ol>
+<li>绑定输入事件。</li>
+<li>获取输入的关键字和其文本长度。</li>
+<li>将原文文本根据关键字拆分成数组并遍历。</li>
+<li>对每个拆分子项创建一个 Range 文档片段，设置起始位置为原文文本节点，偏移量为当前子项的长度；设置结束位置为原文文本节点，偏移量为当前子项的长度 + 关键字文本长度。</li>
+<li>获取每个拆分子项的 DOMRect 对象，它包含了 Range 中所有元素组成的矩形边界的信息。</li>
+<li>对每个拆分子项创建一个对应浮层元素，设置绝对定位，左边界为当前 DOMRect 对象的左坐标值，上边界为当前 DOMRect 对象的顶坐标值 + 文档在垂直方向已滚动的像素值，宽高为为当前 DOMRect 对象的宽高。设置浮层元素 mix-blend-mode: overlay。</li>
+</ol>
+<p>HTML 代码如下：</p>
+<pre><code class="language-html">&lt;input id=&quot;search&quot; type=&quot;search&quot; placeholder=&quot;输入内容搜索&quot;&gt;
+&lt;h6 id=&quot;target&quot;&gt;
+上面输入框可以输入任意这段内容中出现的文字或者单词，就会看到文字有高亮效果。但是，这种高亮效果既不是文字选中，也不是通过包裹标签元素实现的，而是直接覆盖在上面，然后通过叠加混合模式实现的。值 overlay 叠加混合模式适合浅色文字，如果是深色文字，可以使用 lighten；如果要高亮背景，可以使用 difference。
+&lt;/h6&gt;
+</code></pre>
+<p>CSS 代码如下：</p>
+<pre><code class="language-css">ui-overlay {
+  position: absolute;
+  background: red;
+  mix-blend-mode: overlay;
+}
+[id] {
+  background: white;
+  color: gray;
+}
+</code></pre>
+<p>JS 代码如下：</p>
+<pre><code class="language-js">search.addEventListener('input', e =&gt; {
+  document.querySelectorAll('ui-overlay').forEach(overlay =&gt; overlay.remove());
+  const value = this.value.trim();
+  const { length } = value;
+  if (!length) return;
+  const arrMatchs = target.textContent.split(value);
+  if (arrMatchs.length &gt; 1) {
+    let start = 0;
+    arrMatchs.forEach((parts, index) =&gt; {
+      if (index === arrMatchs.length - 1) return;
+      const range = document.createRange();
+      start += parts.length;
+      range.setStart(target.firstChild, start);
+      range.setEnd(target.firstChild, start + length);
+      const bound = range.getBoundingClientRect();
+      const eleOverlay = document.createElement('ui-overlay');
+      document.body.appendChild(eleOverlay);
+      eleOverlay.style.left = bound.left + 'px';
+      eleOverlay.style.top = (bound.top + window.pageYOffset) + 'px';
+      eleOverlay.style.width = bound.width + 'px';
+      eleOverlay.style.height = bound.height + 'px';
+      start += length;
+    });
+  }
+});
+</code></pre>
+<h2 id="改进">改进</h2>
+<p>上面的搜索原文只能为文本节点，如果原文嵌套了标签，则无法高亮。所以需要递归遍历原文所有子节点：</p>
+<pre><code class="language-js">function getNodeAndOffset(wrap_dom, start = 0, end = 0) {
+  const txtList = [];
+  // 递归遍历，提取出所有 #text
+  (function map(childNodes) {
+    [...childNodes].forEach(el =&gt; el.nodeName === '#text' ? txtList.push(el) : map(el.childNodes));
+  })(wrap_dom.childNodes);
+  // 计算文本的位置区间 [0,3]、[3, 8]、[8,10]
+  const clips = txtList.reduce((arr, item, index) =&gt; {
+    const end = item.textContent.length + (arr[index - 1] ? arr[index - 1][2] : 0);
+    arr.push([item, end - item.textContent.length, end]);
+    return arr;
+  }, []);
+  // 查找满足条件的范围区间
+  const startNode = clips.find(el =&gt; start &gt;= el[1] &amp;&amp; start &lt; el[2]);
+  const endNode = clips.find(el =&gt; end &gt;= el[1] &amp;&amp; end &lt; el[2]);
+  return [startNode[0], start - startNode[1], endNode[0], end - endNode[1]];
+}
+</code></pre>
+<p>然后设置每个拆分子项对应的 Range 文档片段的起始位置、结束位置、偏移量：</p>
+<pre><code class="language-js">const nodes = getNodeAndOffset(target, start, start + length);
+range.setStart(nodes[0], nodes[1]);
+range.setEnd(nodes[2], nodes[3]);
+</code></pre>
+<h2 id="马上掘金">马上掘金</h2>
+<iframe src="https://code.juejin.cn/pen/7161999028673052679"></iframe>
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/svg-shi-xian-fen-xiang-cai-dan-an-niu-de-nian-zhi-rong-he-xiao-guo/" class="post-title gt-a-link">
+                    SVG 实现分享菜单按钮的粘滞融合效果
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

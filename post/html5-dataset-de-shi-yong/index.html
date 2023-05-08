@@ -1,0 +1,224 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>HTML5 dataset 的使用 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    HTML5 dataset 的使用
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-08-30 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/10MZNKSN7/" class="post-tags">
+                            # HTML
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p>HTML5 是具有扩展性的设计，它初衷是数据应与特定的元素相关联，但不需要任何定义。</p>
+<p><code>data-*</code> 全局属性是一类被称为自定义数据属性的属性，它赋予我们在所有 HTML 元素上嵌入自定义数据属性的能力，并可以通过脚本在 HTML 与 DOM 表现之间进行专有数据的交换。通过添加 <code>data-*</code> 属性，即使是普通的 HTML 元素也能变成相当复杂且强大的编程对象，而不需要使用 DOM 标准额外属性或是 <code>setUserData</code> 之类的技巧。</p>
+<p>其中 * 可以被遵循 xml 规则的任何名称替换，并具有一些限制：</p>
+<ul>
+<li>不能以 xml 开头（不区分大小写）；</li>
+<li>不能包含冒号 <code>:</code>；</li>
+<li>不能包含大写字母。</li>
+</ul>
+<h2 id="使用">使用</h2>
+<ol>
+<li>CSS 访问：因为 <code>data-*</code> 设定为 HTML 属性，所以他们同样能被 CSS 访问。比如你可以通过 CSS <code>content</code> 属性，使用 <code>attr</code> 函数来显示 <code>data-*</code> 的内容：</li>
+</ol>
+<pre><code class="language-html">&lt;ul&gt;
+  &lt;li data-id=&quot;Alex Trevelyan&quot;&gt;006: Agent turned terrorist leader; James' nemesis in &quot;Goldeneye&quot;.&lt;/li&gt;
+  &lt;li data-id=&quot;James Bond&quot;&gt;007: The main man; shaken but not stirred.&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<pre><code class="language-css">li:after {
+  content: 'Data ID: 'attr(data-id);
+  position: absolute;
+  top: -22px;
+  left: 10px;
+  background: black;
+  color: white;
+  padding: 2px;
+  border: 1px solid #eee;
+  opacity: 0;
+  transition: 0.5s opacity;
+}
+
+li:hover:after {
+  opacity: 1;
+}
+</code></pre>
+<ol start="2">
+<li>JavaScript 访问：在外部使用 JavaScript 去访问这些属性的值同样非常简单。你可以使用 <code>Element.getAttribute()</code> 配合它们完整的 HTML 名称去读取它们。但标准定义了一个更简单的方法：通过 <code>HTMLElement.dataset.propertyName</code> (或者 <code>HTMLElement.dataset[&quot;propertyName&quot;]</code>) 来获取属性名中 <code>data-</code> 之后的部分，要注意的是破折号连接的名称需要改写为骆驼拼写法，例如 <code>data-index-number</code> 转换为 <code>indexNumber</code>。</li>
+</ol>
+<pre><code class="language-html">&lt;article
+  id=&quot;electriccars&quot;
+  data-columns=&quot;3&quot;
+  data-index-number=&quot;12314&quot;
+  data-parent=&quot;cars&quot;&gt;
+...
+&lt;/article&gt;
+</code></pre>
+<pre><code class="language-js">const article = document.querySelector('#electriccars');
+
+article.dataset.columns // &quot;3&quot;
+article.dataset.indexNumber // &quot;12314&quot;
+article.dataset.parent // &quot;cars&quot;
+</code></pre>
+<h2 id="示例">示例</h2>
+<iframe src="https://code.juejin.cn/pen/7137503930279264264"></iframe>
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/npm-workspaces-de-shi-yong/" class="post-title gt-a-link">
+                    npm workspaces 的使用
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

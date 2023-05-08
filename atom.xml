@@ -1,0 +1,1876 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://zkrisj.github.io</id>
+    <title>zkrisj</title>
+    <updated>2023-05-08T23:44:13.845Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://zkrisj.github.io"/>
+    <link rel="self" href="https://zkrisj.github.io/atom.xml"/>
+    <subtitle>全栈技术文章记录博客</subtitle>
+    <logo>https://zkrisj.github.io/images/avatar.png</logo>
+    <icon>https://zkrisj.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2023, zkrisj</rights>
+    <entry>
+        <title type="html"><![CDATA[V3 Admin Vite 权限控制]]></title>
+        <id>https://zkrisj.github.io/post/v3-admin-vite-quan-xian-kong-zhi/</id>
+        <link href="https://zkrisj.github.io/post/v3-admin-vite-quan-xian-kong-zhi/">
+        </link>
+        <updated>2023-05-08T23:43:33.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="介绍">介绍</h2>
+<p><a href="https://github.com/un-pany/v3-admin-vite">V3 Admin Vite</a> 是一个免费开源的中后台管理系统基础解决方案，基于 Vue3、TypeScript、Element Plus、Pinia 和 Vite 等主流技术。另外还有：</p>
+<ul>
+<li>Vue-Cli 5.x 版: <a href="https://github.com/un-pany/v3-admin">v3-admin</a></li>
+<li>Electron 桌面版: <a href="https://github.com/un-pany/v3-electron-vite">v3-electron-vite</a></li>
+</ul>
+<h2 id="目录结构">目录结构</h2>
+<pre><code class="language-sh"># v3-admin-vite
+├─ .husky                # 用户提交代码时格式化代码
+├─ .vscode               # 本项目推荐的 vscode 配置和拓展
+├─ public
+│  ├─ favicon.ico
+│  ├─ app-loading.css    # 首屏加载 loading
+├─ src
+│  ├─ api                # api 接口
+│  ├─ assets             # 静态资源
+│  ├─ components         # 全局组件
+│  ├─ config             # 全局配置
+│  ├─ constant           # 常量/枚举
+│  ├─ directives         # 全局指令
+│  ├─ hooks              # 全局 hook
+│  ├─ icons              # svg icon
+│  ├─ layout             # 布局
+│  ├─ plugins            # 全局插件
+│  ├─ router             # 路由
+│  ├─ store              # pinia store
+│  ├─ styles             # 全局样式
+│  ├─ utils              # 全局公共方法
+│  └─ views              # 所有页面
+│  ├─ App.vue            # 入口页面
+│  └─ main.ts            # 入口文件
+├─ tests                 # 单元测试
+├─ types                 # ts 声明
+├─ .env.development      # 开发环境
+├─ .env.production       # 正式环境
+├─ .env.staging          # 预发布环境
+├─ .eslintrc.js          # eslint 配置
+├─ .prettier.config.js   # prettier 配置
+├─ tsconfig.json         # ts 编译配置
+├─ unocss.config.ts      # unocss 配置
+└─ vite.config.ts        # vite 配置
+</code></pre>
+<h2 id="页面权限">页面权限</h2>
+<ol>
+<li>动态路由：<code>@/src/router/index.ts</code> 就是用来存放常驻路由和动态路由的文件，如图所示：</li>
+</ol>
+<figure data-type="image" tabindex="1"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/708d49a7f7294ee1babb74bdd640cfa5~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<p>需要挂载的路由就存放在 <code>constantRoutes</code> 数组下，比如登录页、首页；需要用户登录并根据角色字段来判断是否有权限的路由，就放在 <code>asyncRoutes</code> 数组下，并且要为该路由配置好 <code>roles</code> 和 <code>name</code> 属性。下面是项目中写好的一个动态路由示例：</p>
+<pre><code class="language-ts">{
+  path: &quot;/permission&quot;,
+  component: Layout,
+  redirect: &quot;/permission/page&quot;,
+  name: &quot;Permission&quot;, // 不要忘了写
+  meta: {
+    title: &quot;权限管理&quot;,
+    svgIcon: &quot;lock&quot;,
+    roles: [&quot;admin&quot;, &quot;editor&quot;], // 可以在根路由中设置角色
+    alwaysShow: true // 将始终显示根菜单
+  },
+  children: [
+    {
+      path: &quot;page&quot;,
+      component: () =&gt; import(&quot;@/views/permission/page.vue&quot;),
+      name: &quot;PagePermission&quot;, // 不要忘了写
+      meta: {
+        title: &quot;页面权限&quot;,
+        roles: [&quot;admin&quot;] // 或者在子导航中设置角色
+      }
+    },
+    {
+      path: &quot;directive&quot;,
+      component: () =&gt; import(&quot;@/views/permission/directive.vue&quot;),
+      name: &quot;DirectivePermission&quot;, // 不要忘了写
+      meta: {
+        title: &quot;指令权限&quot; // 如果未设置角色，则表示：该页面不需要权限，但会继承根路由的角色
+      }
+    }
+  ]
+}
+</code></pre>
+<p>登录 <code>admin</code> 账号时，可以看见这两个页面：</p>
+<figure data-type="image" tabindex="2"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2869f2c542b7430bb98d23b3a3da8464~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<p>登录 <code>editor</code> 账号时，只能看见一个页面：</p>
+<figure data-type="image" tabindex="3"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9ebca4a5f48a42b6a49d585ec36a1bb2~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<ol start="2">
+<li>项目默认开启动态路由功能，在 <code>@/src/config/async-route.ts</code> 文件中可以找到是否开启动态路由的开关，源码如下，只需要将下面代码中的 <code>asyncRouteSettings.open</code> 设置为 <code>true</code> 就可以开启动态路由功能：</li>
+</ol>
+<pre><code class="language-ts">/** 动态路由配置 */
+interface IAsyncRouteSettings {
+  /**
+   * 是否开启动态路由功能？
+   * 1. 开启后需要后端配合，在查询用户详情接口返回当前用户可以用来判断并加载动态路由的字段（该项目用的是角色 roles 字段）
+   * 2. 假如项目不需要根据不同的用户来显示不同的页面，则应该将 open: false
+   */
+  open: boolean
+  /** 当动态路由功能关闭时：
+   * 1. 应该将所有路由都写到常驻路由里面（表明所有登陆的用户能访问的页面都是一样的）
+   * 2. 系统自动给当前登录用户赋值一个没有任何作用的默认角色
+   */
+  defaultRoles: Array&lt;string&gt;
+}
+
+const asyncRouteSettings: IAsyncRouteSettings = {
+  open: true,
+  defaultRoles: [&quot;DEFAULT_ROLE&quot;]
+}
+
+export default asyncRouteSettings
+</code></pre>
+<p>开启以后，主要是作用于路由守卫 <code>@/src/router/permission.ts</code> 中的这样一段代码：</p>
+<pre><code class="language-ts">if (asyncRouteSettings.open) {
+  // 注意：角色必须是一个数组！ 例如: ['admin'] 或 ['developer', 'editor']
+  await userStore.getInfo()
+  const roles = userStore.roles
+  // 根据角色生成可访问的 Routes（可访问路由 = 常驻路由 + 有访问权限的动态路由）
+  permissionStore.setRoutes(roles)
+} else {
+  // 没有开启动态路由功能，则启用默认角色
+  userStore.setRoles(asyncRouteSettings.defaultRoles)
+  permissionStore.setRoutes(asyncRouteSettings.defaultRoles)
+}
+</code></pre>
+<p>如果开启该功能，那么通过用户详情接口拿到用户角色数组后，根据角色去过滤动态路由，然后再通过 <code>router.addRoute()</code> 挂载过滤之后的动态路由。</p>
+<ol start="3">
+<li>如果选择关闭动态路由功能，要记得将所有路由都写在常驻路由数组里面（虽然写在动态路由数组里也行，因为程序兼容了这种偷懒），这样的话，所有登陆的用户能访问的页面都是一模一样的了。</li>
+</ol>
+<h2 id="内容权限">内容权限</h2>
+<ol>
+<li><code>@/src/utils/permission.ts</code> 文件里，有一个 <code>checkPermission</code> 权限判断函数：</li>
+</ol>
+<pre><code class="language-ts">import { useUserStoreHook } from &quot;@/store/modules/user&quot;
+
+/** 权限判断函数 */
+export const checkPermission = (value: string[]): boolean =&gt; {
+  if (value &amp;&amp; value instanceof Array &amp;&amp; value.length &gt; 0) {
+    const roles = useUserStoreHook().roles
+    const permissionRoles = value
+    return roles.some((role) =&gt; {
+      return permissionRoles.includes(role)
+    })
+  } else {
+    console.error(&quot;need roles! Like checkPermission(['admin','editor'])&quot;)
+    return false
+  }
+}
+</code></pre>
+<p>向该函数传递一个权限数组，然后它会去对比当前登录用户的角色数组，如果能匹配上，就返回 <code>true</code>，它的使用方法非常简单，<code>checkPermission</code> 函数配合 <code>v-if</code> 即可：</p>
+<pre><code class="language-html">// 引入
+import { checkPermission } from &quot;@/utils/permission&quot;
+</code></pre>
+<pre><code class="language-html">// 使用
+&lt;el-button v-if=&quot;checkPermission(['admin'])&quot;&gt;按钮&lt;/el-button&gt;
+</code></pre>
+<p>更多详细的使用案例，可见 <code>@/views/permission/directive.vue</code> 页面。</p>
+<ol start="2">
+<li><code>@/directives/permission/index.ts</code> 文件里，写好了权限判断指令 <code>v-permission</code>：</li>
+</ol>
+<pre><code class="language-ts">import { type Directive } from &quot;vue&quot;
+import { useUserStoreHook } from &quot;@/store/modules/user&quot;
+
+/** 权限指令 */
+export const permission: Directive = {
+  mounted(el, binding) {
+    const { value } = binding
+    const roles = useUserStoreHook().roles
+    if (value &amp;&amp; value instanceof Array &amp;&amp; value.length &gt; 0) {
+      const permissionRoles = value
+      const hasPermission = roles.some((role) =&gt; {
+        return permissionRoles.includes(role)
+      })
+      if (!hasPermission) {
+        el.style.display = &quot;none&quot;
+      }
+    } else {
+      throw new Error(`need roles! Like v-permission=&quot;['admin','editor']&quot;`)
+    }
+  }
+}
+</code></pre>
+<p>向该指令传递一个权限数组，然后它会去对比当前登录用户的角色数组，如果不能匹配上，就通过 CSS <code>style.display = &quot;none&quot;</code> 将其隐藏，<code>v-permission</code> 已经通过 <code>app.directive()</code> 挂载完成，可以直接在 <code>template</code> 中直接使用：</p>
+<pre><code class="language-html">&lt;el-button v-permission=&quot;['admin']&quot;&gt;按钮&lt;/el-button&gt;
+</code></pre>
+<p>更多详细的使用案例，可见 <code>@/views/permission/directive.vue</code> 页面。</p>
+<h2 id="参考资料">参考资料</h2>
+<ol>
+<li><a href="https://juejin.cn/post/7226261250576597050">【V3 Admin Vite】教程五：前端权限（涉及角色、动态路由、权限函数、权限指令）</a></li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[V3 Admin Vite 路由配置、布局配置、全局样式]]></title>
+        <id>https://zkrisj.github.io/post/v3-admin-vite-lu-you-pei-zhi-bu-ju-pei-zhi-quan-ju-yang-shi/</id>
+        <link href="https://zkrisj.github.io/post/v3-admin-vite-lu-you-pei-zhi-bu-ju-pei-zhi-quan-ju-yang-shi/">
+        </link>
+        <updated>2023-05-08T23:43:00.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="介绍">介绍</h2>
+<p><a href="https://github.com/un-pany/v3-admin-vite">V3 Admin Vite</a> 是一个免费开源的中后台管理系统基础解决方案，基于 Vue3、TypeScript、Element Plus、Pinia 和 Vite 等主流技术。另外还有：</p>
+<ul>
+<li>Vue-Cli 5.x 版: <a href="https://github.com/un-pany/v3-admin">v3-admin</a></li>
+<li>Electron 桌面版: <a href="https://github.com/un-pany/v3-electron-vite">v3-electron-vite</a></li>
+</ul>
+<h2 id="目录结构">目录结构</h2>
+<pre><code class="language-sh"># v3-admin-vite
+├─ .husky                # 用户提交代码时格式化代码
+├─ .vscode               # 本项目推荐的 vscode 配置和拓展
+├─ public
+│  ├─ favicon.ico
+│  ├─ app-loading.css    # 首屏加载 loading
+├─ src
+│  ├─ api                # api 接口
+│  ├─ assets             # 静态资源
+│  ├─ components         # 全局组件
+│  ├─ config             # 全局配置
+│  ├─ constant           # 常量/枚举
+│  ├─ directives         # 全局指令
+│  ├─ hooks              # 全局 hook
+│  ├─ icons              # svg icon
+│  ├─ layout             # 布局
+│  ├─ plugins            # 全局插件
+│  ├─ router             # 路由
+│  ├─ store              # pinia store
+│  ├─ styles             # 全局样式
+│  ├─ utils              # 全局公共方法
+│  └─ views              # 所有页面
+│  ├─ App.vue            # 入口页面
+│  └─ main.ts            # 入口文件
+├─ tests                 # 单元测试
+├─ types                 # ts 声明
+├─ .env.development      # 开发环境
+├─ .env.production       # 正式环境
+├─ .env.staging          # 预发布环境
+├─ .eslintrc.js          # eslint 配置
+├─ .prettier.config.js   # prettier 配置
+├─ tsconfig.json         # ts 编译配置
+├─ unocss.config.ts      # unocss 配置
+└─ vite.config.ts        # vite 配置
+</code></pre>
+<h2 id="路由配置">路由配置</h2>
+<p>路由的定义以及配置在 <code>@/src/router/index.ts</code> 文件里，比如登录路由配置：</p>
+<pre><code class="language-ts">{
+  path: &quot;/login&quot;,
+  component: () =&gt; import(&quot;@/views/login/index.vue&quot;),
+  meta: {
+    hidden: true
+  }
+}
+</code></pre>
+<p>平台自定义的配置项都在 <code>meta</code> 属性下，而其他的比如 <code>path</code>、<code>component</code>、<code>redirect</code>、<code>children</code>、<code>name</code> 属性是 <code>vue-router</code> 自带的。</p>
+<pre><code class="language-ts">// 设置 noRedirect 的时候该路由在面包屑导航中不可被点击
+redirect: 'noRedirect'
+
+// 动态路由：必须设定路由的名字，一定要填写不然重置路由可能会出问题
+// 如果要在 tags-view 中展示，也必须填 name
+name: 'router-name'
+
+meta: {
+  // 设置该路由在侧边栏和面包屑中展示的名字
+  title: 'title'
+  
+  // 设置该路由的图标，记得将 svg 导入 @/icons/svg
+  svgIcon: 'svg name'
+  
+  // 设置该路由的图标，直接使用 Element Plus 的 Icon（与 svgIcon 同时设置时，svgIcon 将优先生效）
+  elIcon: 'element-plus icon name'
+  
+  // 默认 false，设置 true 的时候该路由不会在侧边栏出现
+  hidden: true
+  
+  // 设置该路由进入的权限，支持多个权限叠加（动态路由才需要设置）
+  roles: ['admin', 'editor']
+  
+  // 默认 true，如果设置为 false，则不会在面包屑中显示
+  breadcrumb: false
+  
+  // 默认 false，如果设置为 true，它则会固定在 tags-view 中
+  affix: true
+  
+  // 当一个路由下面的 children 声明的路由大于1个时，自动会变成嵌套的模式
+  // 只有一个时，会将那个子路由当做根路由显示在侧边栏
+  // 若想不管路由下面的 children 声明的个数都显示你的根路由
+  // 可以设置 alwaysShow: true，这样就会忽略之前定义的规则，一直显示根路由
+  alwaysShow: true
+
+  // 示例: activeMenu: &quot;/xxx/xxx&quot;
+  // 当设置了该属性进入路由时，则会高亮 activeMenu 属性对应的侧边栏
+  // 该属性适合使用在有 hidden: true 属性的路由上
+  activeMenu: '/dashboard'
+  
+
+  // 是否缓存该路由页面
+  // 默认为 false，为 true 时代表需要缓存，此时该路由和该页面都需要设置一致的 Name
+  keepAlive: false
+}
+</code></pre>
+<p>为了让编辑器对这些配置项有类型提示，TS 定义文件放在了 <code>@/types/vue-router.d.ts</code> 中，需要改造或者新增配置项时，也应该同步修改这个文件。</p>
+<h3 id="路由缓存">路由缓存</h3>
+<p>设置路由缓存必须同时满足这四个条件：</p>
+<ol>
+<li>路由 <code>keepAlive</code> 为 <code>true</code>。</li>
+<li>路由有 <code>Name</code>。</li>
+<li>页面有 <code>Name</code>。</li>
+<li>路由和页面 <code>Name 保持一致</code>。</li>
+</ol>
+<p>以表格组件路由为例：</p>
+<pre><code class="language-ts">{
+  path: &quot;/table&quot;,
+  component: Layout,
+  redirect: &quot;/table/element-plus&quot;,
+  name: &quot;Table&quot;,
+  meta: {
+    title: &quot;表格&quot;,
+    elIcon: &quot;Grid&quot;
+  },
+  children: [{
+      path: &quot;element-plus&quot;,
+      component: () =&gt; import(&quot;@/views/table/element-plus/index.vue&quot;),
+      name: &quot;ElementPlus&quot;,
+      meta: {
+        title: &quot;Element Plus&quot;,
+        keepAlive: true
+      }
+    },
+    {
+      path: &quot;vxe-table&quot;,
+      component: () =&gt; import(&quot;@/views/table/vxe-table/index.vue&quot;),
+      name: &quot;VxeTable&quot;,
+      meta: {
+        title: &quot;Vxe Table&quot;,
+        keepAlive: true
+      }
+    }
+  ]
+}
+</code></pre>
+<p>两个路由的 <code>Name</code> 分别是 <code>ElementPlus</code> 和 <code>VxeTable</code>，我们还需要去对应的页面上配置相同的 <code>Name</code>：<br>
+<img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/197c6dc309834e548d037511b0cdf509~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></p>
+<figure data-type="image" tabindex="1"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/282face7462649c88b85eae558e3f819~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<p>配置好 <code>Name</code> 后，页面上输入一些筛选条件，然后切换到其他页面再切换回来发现这些数据还在就表示缓存成功了：</p>
+<figure data-type="image" tabindex="2"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6b89e52276214c899739ea10d838e88a~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<h3 id="动态路由">动态路由</h3>
+<ol>
+<li>把不需要判断权限的路由放置在常驻路由 <code>constantRoutes</code> 中，如 <code>/login</code>、<code>/dashboard</code>。</li>
+<li><code>asyncRoutes</code> 中放置需要动态判断权限并通过 <code>addRoute</code> 动态添加的路由。</li>
+<li>注意：动态路由必须配置 <code>name</code> 属性，不然重置路由时，会漏掉没有该属性的动态路由，可能会导致业务 BUG。</li>
+</ol>
+<h2 id="布局配置">布局配置</h2>
+<ol>
+<li>布局的内容大致是：</li>
+</ol>
+<figure data-type="image" tabindex="3"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7ceb0070d6994ecab8edcffbffaa4258~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<p>页面的右侧默认有一个设置按钮，点击设置按钮后展开的布局配置界面，所有内置的可配置的选项：</p>
+<figure data-type="image" tabindex="4"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/118bcd15c21a426d83bac0ccb02927b7~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<p>在 <code>@/src/config/layout.ts</code> 布局配置文件里将 <code>showSettings</code> 配置项的布尔值修改为 <code>false</code> 即可关闭设置按钮。</p>
+<ol start="2">
+<li>每个选项可以通过界面去配置，也可以直接修改他们对应的配置项，这些配置项也是在 <code>@/src/config/layout.ts</code> 中的，配置项和界面的对应关系如下：</li>
+</ol>
+<figure data-type="image" tabindex="5"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b55eae7ad1b0497aa0329a89a75b9d28~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<h2 id="设置标签图标">设置标签图标</h2>
+<ol>
+<li>以首页为例，假如不设置图标，则 <code>svgIcon</code> 或 <code>elIcon</code> 属性为空：</li>
+</ol>
+<pre><code class="language-ts">meta: {
+  title: &quot;首页&quot;,
+  affix: true
+}
+</code></pre>
+<figure data-type="image" tabindex="6"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ffb516549a6b412e899cc0da755ec721~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<ol start="2">
+<li>假如想使用 <code>Element Plus</code> 的 Icon，那你应该去 <a href="https://element-plus.org/zh-CN/component/icon.html#%E5%9B%BE%E6%A0%87%E9%9B%86%E5%90%88">官网</a> 找一个符合要求的图标并复制它的名字。例如这个名为 <code>House</code> 的 Icon，我们直接用 <code>elIcon</code> 配置项使用它：</li>
+</ol>
+<pre><code class="language-ts">meta: {
+  title: &quot;首页&quot;,
+  elIcon: &quot;House&quot;,
+  affix: true
+}
+</code></pre>
+<figure data-type="image" tabindex="7"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/eddc2fad876b45ba98c49f105149b192~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<ol start="3">
+<li>假如想使用本地的 <code>SVG</code> 图标，应该将静态资源复制到 <code>@/src/icons/svg</code> 目录下，例如这个名为 <code>dashboard</code> 的图标：</li>
+</ol>
+<figure data-type="image" tabindex="8"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/896c75abe6f14e4582a4f36748df5cba~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<pre><code class="language-ts">meta: {
+  title: &quot;首页&quot;,
+  svgIcon: &quot;dashboard&quot;,
+  affix: true
+}
+</code></pre>
+<figure data-type="image" tabindex="9"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4147c4dc2caa474188ffc73fd02f2b71~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<h2 id="全局样式">全局样式</h2>
+<p>全局样式相关的的文件，全都在 <code>@/src/styles</code> 目录下：</p>
+<figure data-type="image" tabindex="10"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/abc75587a3654d9d9271bfa69e44727b~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<ol>
+<li>vxe-table.scss：这里可以写样式来覆盖 vxe-table 原本的样式。</li>
+<li>element-plus.scss：这里可以写样式来覆盖 element-plus 原本的样式。</li>
+<li>transition.scss： 这里可以写动画相关的样式。</li>
+<li>mixins.scss：这里可以写和 scss <code>mixin</code> 相关的样式。</li>
+<li>variables.css：这里是本项目内置的一些比较重要的和布局、颜色相关的全局样式。</li>
+<li>index.scss：这里是所有样式的入口，也可以写样式来覆盖原生 html 的样式。</li>
+<li>theme：这里是多主题模式相关的样式文件，目前内置了黑暗模式、深蓝色模式。</li>
+</ol>
+<p>简单修改一下 <code>variables.css</code> 的效果：</p>
+<pre><code class="language-css">/** 全局 CSS 变量，这种变量不仅可以在 CSS 和 SCSS 中使用，还可以导入到 JS 中使用 */
+
+:root {
+  /** 全局背景色 */
+  --v3-body-bg-color: #f2f3f5;
+  /** Header 区域 = NavigationBar 组件 + TagsView 组件 */
+  --v3-header-height: calc(var(--v3-navigationbar-height) + var(--v3-tagsview-height));
+  /** NavigationBar 组件 */
+  --v3-navigationbar-height: 50px;
+  /** Sidebar 组件 */
+  --v3-sidebar-width: 220px;
+  --v3-sidebar-hide-width: 58px;
+  --v3-sidebar-menu-item-height: 60px;
+  --v3-sidebar-menu-tip-line-bg-color: var(--el-color-primary);
+  --v3-sidebar-menu-bg-color: #001428;
+  --v3-sidebar-menu-hover-bg-color: #ffffff10;
+  --v3-sidebar-menu-text-color: #c0c4cc;
+  --v3-sidebar-menu-active-text-color: #ffffff;
+  /** SidebarLogo 组件 */
+  --v3-sidebarlogo-bg-color: #001428;
+  /** TagsView 组件 */
+  --v3-tagsview-height: 34px;
+  --v3-tagsview-tag-text-color: #495060;
+  --v3-tagsview-tag-active-text-color: #ffffff;
+  --v3-tagsview-tag-bg-color: #ffffff;
+  --v3-tagsview-tag-active-bg-color: var(--el-color-primary);
+  --v3-tagsview-tag-border-radius: 2px;
+  --v3-tagsview-tag-border-color: #d8dce5;
+  --v3-tagsview-tag-active-border-color: var(--el-color-primary);
+  --v3-tagsview-tag-active-before-color: #ffffff;
+  --v3-tagsview-tag-icon-hover-bg-color: #00000030;
+  --v3-tagsview-tag-icon-hover-color: #ffffff;
+  /** RightPanel 组件  */
+  --v3-rightpanel-button-bg-color: #001428;
+}
+</code></pre>
+<p>将上面的全局背景色灰白色 <code>--v3-body-bg-color: #f2f3f5</code> 改成黑色 <code>#000000</code> 后效果如下：</p>
+<figure data-type="image" tabindex="11"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ab5960e0640f4e1b976dbc03e3254d1a~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<ol>
+<li>如果想知道某个样式是什么作用，可以直接看注释和命名，因为项目还是非常规范的。</li>
+<li>也可以直接复制变量名在编辑器里搜索，就能查看到该变量在什么地方用到了。</li>
+</ol>
+<h2 id="参考资料">参考资料</h2>
+<ol>
+<li><a href="https://juejin.cn/post/7216621821960781880">【V3 Admin Vite】教程四：平台配置（涉及布局、路由菜单、全局样式配置）</a></li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[V3 Admin Vite 侧边栏、面包屑、发送 HTTP 请求]]></title>
+        <id>https://zkrisj.github.io/post/v3-admin-vite-ce-bian-lan-mian-bao-xie-fa-song-http-qing-qiu/</id>
+        <link href="https://zkrisj.github.io/post/v3-admin-vite-ce-bian-lan-mian-bao-xie-fa-song-http-qing-qiu/">
+        </link>
+        <updated>2023-05-07T21:52:34.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="介绍">介绍</h2>
+<p><a href="https://github.com/un-pany/v3-admin-vite">V3 Admin Vite</a> 是一个免费开源的中后台管理系统基础解决方案，基于 Vue3、TypeScript、Element Plus、Pinia 和 Vite 等主流技术。另外还有：</p>
+<ul>
+<li>Vue-Cli 5.x 版: <a href="https://github.com/un-pany/v3-admin">v3-admin</a></li>
+<li>Electron 桌面版: <a href="https://github.com/un-pany/v3-electron-vite">v3-electron-vite</a></li>
+</ul>
+<h2 id="目录结构">目录结构</h2>
+<pre><code class="language-sh"># v3-admin-vite
+├─ .husky                # 用户提交代码时格式化代码
+├─ .vscode               # 本项目推荐的 vscode 配置和拓展
+├─ public
+│  ├─ favicon.ico
+│  ├─ app-loading.css    # 首屏加载 loading
+├─ src
+│  ├─ api                # api 接口
+│  ├─ assets             # 静态资源
+│  ├─ components         # 全局组件
+│  ├─ config             # 全局配置
+│  ├─ constant           # 常量/枚举
+│  ├─ directives         # 全局指令
+│  ├─ hooks              # 全局 hook
+│  ├─ icons              # svg icon
+│  ├─ layout             # 布局
+│  ├─ plugins            # 全局插件
+│  ├─ router             # 路由
+│  ├─ store              # pinia store
+│  ├─ styles             # 全局样式
+│  ├─ utils              # 全局公共方法
+│  └─ views              # 所有页面
+│  ├─ App.vue            # 入口页面
+│  └─ main.ts            # 入口文件
+├─ tests                 # 单元测试
+├─ types                 # ts 声明
+├─ .env.development      # 开发环境
+├─ .env.production       # 正式环境
+├─ .env.staging          # 预发布环境
+├─ .eslintrc.js          # eslint 配置
+├─ .prettier.config.js   # prettier 配置
+├─ tsconfig.json         # ts 编译配置
+├─ unocss.config.ts      # unocss 配置
+└─ vite.config.ts        # vite 配置
+</code></pre>
+<h2 id="侧边栏">侧边栏</h2>
+<p>侧边栏 <code>@/layout/components/Sidebar</code> 是通过读取路由并结合权限判断而动态生成的（换句话说就是常驻路由 + 有权限的动态路由）。</p>
+<div style="display: flex">
+<img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7746005771b54a798abc258d5b77b412~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?"  />
+<img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/796d157f7af2478a95fca2389702450d~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" />
+</div>
+<p>可以在侧边栏中配置一个外链，只要你在 <code>path</code> 中填写了合法的 <code>url</code> 路径，当你点击侧边栏的外链时就会帮你打开这个页面。</p>
+<pre><code class="language-ts">{
+  path: &quot;/link&quot;,
+  component: Layout,
+  children: [{
+    path: &quot;https://github.com/un-pany/v3-admin-vite&quot;,
+    component: () =&gt; {},
+    name: &quot;Link&quot;,
+    meta: {
+      title: &quot;外链&quot;,
+      icon: &quot;link&quot;
+    }
+  }]
+}
+</code></pre>
+<h2 id="面包屑">面包屑</h2>
+<p>面包屑 <code>@/layout/components/BreadCrumb</code> 也是根据路由动态生成的，为路由设置 <code>breadcrumb: false</code> 时该路由将不会出现在面包屑中，设置 <code>redirect: 'noRedirect'</code> 时该路由在面包屑中不能被点击。</p>
+<figure data-type="image" tabindex="1"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/400ab6098b9c4fe28f3a3057cf0ce235~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp" alt="" loading="lazy"></figure>
+<h2 id="权限">权限</h2>
+<ol>
+<li>登录时通过获取当前用户的权限（角色）去比对路由表，生成当前用户具有的权限可访问的路由表，通过 <code>addRoute</code> 动态挂载到 <code>router</code> 上。</li>
+<li>页面权限：控制代码都在路由守卫 <code>@/router/permission.ts</code> 中，这里可根据具体的业务做相应的修改。</li>
+<li>取消页面权限：假如你的业务场景中没有 <code>动态路由</code> 的概念，那么在 <code>@/config/async-route</code> 里可以关闭该功能，关闭后系统将启用默认角色（一般为最高权限的 <code>admin</code> 角色），即每个登录的用户都可见所有路由：</li>
+</ol>
+<pre><code class="language-ts">/** 动态路由配置 */
+interface IAsyncRouteSettings {
+  /**
+   * 是否开启动态路由功能？
+   * 1. 开启后需要后端配合，在查询用户详情接口返回当前用户可以用来判断并加载动态路由的字段（该项目用的是角色 roles 字段）
+   * 2. 假如项目不需要根据不同的用户来显示不同的页面，则应该将 open: false
+   */
+  open: boolean
+  /** 当动态路由功能关闭时：
+   * 1. 应该将所有路由都写到常驻路由里面（表明所有登陆的用户能访问的页面都是一样的）
+   * 2. 系统自动给当前登录用户赋值一个没有任何作用的默认角色
+   */
+  defaultRoles: Array&lt;string&gt;
+}
+
+const asyncRouteSettings: IAsyncRouteSettings = {
+  open: true,
+  defaultRoles: [&quot;DEFAULT_ROLE&quot;]
+}
+
+export default asyncRouteSettings
+</code></pre>
+<ol start="4">
+<li>指令权限：简单快速的实现按钮级别的权限判断（已注册到全局，可直接使用）：</li>
+</ol>
+<pre><code class="language-html">&lt;el-tag v-permission=&quot;['admin']&quot;&gt;admin可见&lt;/el-tag&gt;
+&lt;el-tag v-permission=&quot;['editor']&quot;&gt;editor可见&lt;/el-tag&gt;
+&lt;el-tag v-permission=&quot;['admin','editor']&quot;&gt;admin和editor都可见&lt;/el-tag&gt;
+</code></pre>
+<p>但在某些情况下，不适合使用 <code>v-permission</code>。例如：element-plus 的 <code>el-tab</code> 或 <code>el-table-column</code> 以及其它动态渲染 dom 的场景。你只能通过手动设置 <code>v-if</code> 来实现。</p>
+<pre><code class="language-ts">import { checkPermission } from '@/utils/permission'
+</code></pre>
+<pre><code class="language-html">&lt;el-tab-pane v-if=&quot;checkPermission(['admin'])&quot; label=&quot;Admin&quot;&gt;admin可见&lt;/el-tab-pane&gt;
+&lt;el-tab-pane v-if=&quot;checkPermission(['editor'])&quot; label=&quot;Editor&quot;&gt;editor可见&lt;/el-tab-pane&gt;
+&lt;el-tab-pane v-if=&quot;checkPermission(['admin','editor'])&quot; label=&quot;AdminEditor&quot;&gt;admin和editor都可见&lt;/el-tab-pane&gt;
+</code></pre>
+<h2 id="发送-http-请求">发送 HTTP 请求</h2>
+<p>大致的流程如下：</p>
+<figure data-type="image" tabindex="2"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/50d9b85bac81431b8b5ad89f8d72058b~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<ol>
+<li>统一管理的 API <code>@/api/login.ts</code>：</li>
+</ol>
+<pre><code class="language-ts">import { request } from &quot;@/utils/service&quot;
+import type * as Login from &quot;./types/login&quot;
+
+/** 获取登录验证码 */
+export function getLoginCodeApi() {
+  return request&lt;Login.LoginCodeResponseData&gt;({
+    url: &quot;login/code&quot;,
+    method: &quot;get&quot;
+  })
+}
+
+/** 登录并返回 Token */
+export function loginApi(data: Login.ILoginRequestData) {
+  return request&lt;Login.LoginResponseData&gt;({
+    url: &quot;users/login&quot;,
+    method: &quot;post&quot;,
+    data
+  })
+}
+
+/** 获取用户详情 */
+export function getUserInfoApi() {
+  return request&lt;Login.UserInfoResponseData&gt;({
+    url: &quot;users/info&quot;,
+    method: &quot;get&quot;
+  })
+}
+</code></pre>
+<ol start="2">
+<li>封装的 <code>@/utils/service.ts</code>：是基于 axios 的封装，封装了全局 <code>request</code> 拦截器、<code>response</code> 拦截器、统一的错误处理、统一做了超时处理、<code>baseURL</code> 设置等。</li>
+</ol>
+<h2 id="参考资料">参考资料</h2>
+<ol>
+<li><a href="https://juejin.cn/post/7089377403717287972">V3 Admin Vite 中文文档</a></li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[V3 Admin Vite 登录模块]]></title>
+        <id>https://zkrisj.github.io/post/v3-admin-vite-deng-lu-mo-kuai/</id>
+        <link href="https://zkrisj.github.io/post/v3-admin-vite-deng-lu-mo-kuai/">
+        </link>
+        <updated>2023-05-07T01:32:58.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="介绍">介绍</h2>
+<p><a href="https://github.com/un-pany/v3-admin-vite">V3 Admin Vite</a> 是一个免费开源的中后台管理系统基础解决方案，基于 Vue3、TypeScript、Element Plus、Pinia 和 Vite 等主流技术。另外还有：</p>
+<ul>
+<li>Vue-Cli 5.x 版: <a href="https://github.com/un-pany/v3-admin">v3-admin</a></li>
+<li>Electron 桌面版: <a href="https://github.com/un-pany/v3-electron-vite">v3-electron-vite</a></li>
+</ul>
+<h2 id="目录结构">目录结构</h2>
+<pre><code class="language-sh"># v3-admin-vite
+├─ .husky                # 用户提交代码时格式化代码
+├─ .vscode               # 本项目推荐的 vscode 配置和拓展
+├─ public
+│  ├─ favicon.ico
+│  ├─ app-loading.css    # 首屏加载 loading
+├─ src
+│  ├─ api                # api 接口
+│  ├─ assets             # 静态资源
+│  ├─ components         # 全局组件
+│  ├─ config             # 全局配置
+│  ├─ constant           # 常量/枚举
+│  ├─ directives         # 全局指令
+│  ├─ hooks              # 全局 hook
+│  ├─ icons              # svg icon
+│  ├─ layout             # 布局
+│  ├─ plugins            # 全局插件
+│  ├─ router             # 路由
+│  ├─ store              # pinia store
+│  ├─ styles             # 全局样式
+│  ├─ utils              # 全局公共方法
+│  └─ views              # 所有页面
+│  ├─ App.vue            # 入口页面
+│  └─ main.ts            # 入口文件
+├─ tests                 # 单元测试
+├─ types                 # ts 声明
+├─ .env.development      # 开发环境
+├─ .env.production       # 正式环境
+├─ .env.staging          # 预发布环境
+├─ .eslintrc.js          # eslint 配置
+├─ .prettier.config.js   # prettier 配置
+├─ tsconfig.json         # ts 编译配置
+├─ unocss.config.ts      # unocss 配置
+└─ vite.config.ts        # vite 配置
+</code></pre>
+<h2 id="建立目录结构">建立目录结构</h2>
+<ol>
+<li><code>@/src/api</code> 目录下的 <code>login</code> 文件夹（没有的话就需要新建一个）即代表了登录模块。</li>
+<li>在 <code>login</code> 文件夹里面再建立一个 <code>types</code> 文件夹（专门放置和登录模块相关的 <code>TS 类型</code>）和 <code>index.ts</code>。</li>
+</ol>
+<figure data-type="image" tabindex="1"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ddeb13d52fed498a992aa7d184af1dd3~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<blockquote>
+<p>假如一个模块叫系统管理 <code>system</code>，里面有两个子模块，分别叫用户管理 <code>user</code>、角色管理 <code>role</code>，那么我们建立的目录大致就应该长这个样子：</p>
+<figure data-type="image" tabindex="2"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a5cee0f1f9484d88a4cd0840f8f0694b~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+</blockquote>
+<h2 id="编写-ts-类型">编写 TS 类型</h2>
+<p>编写接口的 TS 类型，需要根据后端同事提供的接口文档，拿到接口的请求参数和响应数据的格式。</p>
+<ol>
+<li>请求数据类型 <code>ILoginRequestData</code>：</li>
+</ol>
+<pre><code class="language-ts">export interface ILoginRequestData {
+  /** admin 或 editor */
+  username: &quot;admin&quot; | &quot;editor&quot;
+  /** 密码 */
+  password: string
+  /** 验证码 */
+  code: string
+}
+</code></pre>
+<ol start="2">
+<li>响应数据类型 <code>LoginResponseData</code>：</li>
+</ol>
+<pre><code class="language-ts">export type LoginResponseData = IApiResponseData&lt;{ token: string }&gt;
+</code></pre>
+<ol start="3">
+<li><code>IApiResponseData</code> 这个类型作为一个全局类型，被定义在 <code>@/types/api.d.ts</code> 文件里：</li>
+</ol>
+<pre><code class="language-ts">/** 所有 api 接口的响应数据都应该准守该格式 */
+interface IApiResponseData&lt;T&gt; {
+  code: number
+  data: T
+  message: string
+}
+</code></pre>
+<ol start="4">
+<li>所以最终响应数据类型 <code>LoginResponseData</code> 就相当于：</li>
+</ol>
+<pre><code class="language-ts">{
+  code: number
+  data: { token: string }
+  message: string
+}
+</code></pre>
+<ol start="5">
+<li>最终效果如下：</li>
+</ol>
+<figure data-type="image" tabindex="3"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a6479deb94544c98baf0c285a98e2dce~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<h2 id="编写接口">编写接口</h2>
+<ol>
+<li>发送请求是通过封装好的 Axios，所以第一步就是导入相关的方法：</li>
+</ol>
+<pre><code class="language-ts">import { request } from &quot;@/utils/service&quot;
+</code></pre>
+<ol start="2">
+<li>将上文写好的登录接口的类型导入进来：</li>
+</ol>
+<pre><code class="language-ts">import type * as Login from &quot;./types/login&quot;
+</code></pre>
+<ol start="3">
+<li>登录接口的函数名为 <code>loginApi</code>，它接受一个参数 <code>data</code>，类型为 <code>ILoginRequestData</code>。</li>
+</ol>
+<pre><code class="language-ts">/** 登录并返回 Token */
+export function loginApi(data: Login.ILoginRequestData) {
+  return request&lt;Login.LoginResponseData&gt;({
+    url: &quot;users/login&quot;,
+    method: &quot;post&quot;,
+    data
+  })
+}
+</code></pre>
+<ul>
+<li><code>request&lt;Login.LoginResponseData&gt;</code> 则表示的是待会接口响应成功的 <code>data</code> 数据类型为 <code>LoginResponseData</code>。</li>
+<li><code>url</code> 代表接口地址，<code>method</code> 代表接口方法（get/post/put/delete），<code>data</code> 表示请求体数据（如果是 get 请求，则要换成 <code>params</code>）。</li>
+</ul>
+<ol start="6">
+<li>接口写好后如下图：</li>
+</ol>
+<figure data-type="image" tabindex="4"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d1a2151a47f640eebbba3e2661f4ac87~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<h2 id="调用登录接口">调用登录接口</h2>
+<p>首先点击登录按钮将调用的函数是 <code>handleLogin</code>：</p>
+<pre><code class="language-ts">const handleLogin = () =&gt; {
+  loginFormRef.value?.validate((valid: boolean) =&gt; {
+    if (valid) {
+      loading.value = true
+      useUserStore()
+        .login({
+          username: loginForm.username,
+          password: loginForm.password,
+          code: loginForm.code
+        })
+        .then(() =&gt; {
+          router.push({ path: &quot;/&quot; })
+        })
+        .catch(() =&gt; {
+          createCode()
+          loginForm.password = &quot;&quot;
+        })
+        .finally(() =&gt; {
+          loading.value = false
+        })
+    } else {
+      return false
+    }
+  })
+}
+</code></pre>
+<ul>
+<li><code>loginFormRef.value?.validate</code> 是校验登录表单。</li>
+<li><code>useUserStore()</code> 是状态管理器 Pinia 的 <code>Store</code>，调用该 Store 的 <code>login action</code>，并传入用户名、密码、验证码三个参数即可。</li>
+<li><code>login action</code> 返回值是一个 Promise，所以后面链式跟一个 <code>.then</code> 、 <code>.catch</code> 和 <code>.finally</code>，接口调用成功则会执行 <code>.then</code> （跳转到首页），如果途中发生错误，则会执行 <code>.catch</code>，而无论什么情况都会执行 <code>.finally</code>。</li>
+</ul>
+<h2 id="状态管理">状态管理</h2>
+<ol>
+<li>由于点击登录按钮触发了 <code>useUserStore</code> 的 <code>login</code> action，然后在 <code>login</code> action 中调用这个 <code>loginApi</code> 并传入对应参数（<strong>如果这里参数传递错误，那么 TS 就会报错提醒我们，因为我们在上文中定义接口的时候已经约束了类型</strong>）。</li>
+</ol>
+<figure data-type="image" tabindex="5"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3d4630a01f9e49f38625ff31d1dd57ab~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<ol start="2">
+<li>调用登录接口成功时，我们将接口返回的响应数据 <code>res</code> 中的 <code>token</code> 分别保存到 <code>cookie</code>（对应语句 <code>setToken(res.data.token)</code>）和 <code>当前 Store</code>（对应语句 <code>token.value = res.data.token</code>） 中，如果接口失败，则直接 <code>reject</code>。</li>
+<li>如果这里执行了 <code>.then</code> 那么登录页面也将执行 <code>.then</code>，也就会开始跳转路由到首页，那么就会触发路由守卫。</li>
+</ol>
+<h2 id="路由守卫">路由守卫</h2>
+<ol>
+<li><code>@/src/router/permission.ts</code> 包含了路由守卫全部的代码：</li>
+</ol>
+<pre><code class="language-ts">import router from &quot;@/router&quot;
+import { useUserStoreHook } from &quot;@/store/modules/user&quot;
+import { usePermissionStoreHook } from &quot;@/store/modules/permission&quot;
+import { ElMessage } from &quot;element-plus&quot;
+import { whiteList } from &quot;@/config/white-list&quot;
+import { getToken } from &quot;@/utils/cache/cookies&quot;
+import asyncRouteSettings from &quot;@/config/async-route&quot;
+import NProgress from &quot;nprogress&quot;
+import &quot;nprogress/nprogress.css&quot;
+
+NProgress.configure({ showSpinner: false })
+
+router.beforeEach(async (to, _from, next) =&gt; {
+  NProgress.start()
+  const userStore = useUserStoreHook()
+  const permissionStore = usePermissionStoreHook()
+  // 判断该用户是否登录
+  if (getToken()) {
+    if (to.path === &quot;/login&quot;) {
+      // 如果已经登录，并准备进入 Login 页面，则重定向到主页
+      next({ path: &quot;/&quot; })
+      NProgress.done()
+    } else {
+      // 检查用户是否已获得其权限角色
+      if (userStore.roles.length === 0) {
+        try {
+          if (asyncRouteSettings.open) {
+            // 注意：角色必须是一个数组！ 例如: ['admin'] 或 ['developer', 'editor']
+            await userStore.getInfo()
+            const roles = userStore.roles
+            // 根据角色生成可访问的 Routes（可访问路由 = 常驻路由 + 有访问权限的动态路由）
+            permissionStore.setRoutes(roles)
+          } else {
+            // 没有开启动态路由功能，则启用默认角色
+            userStore.setRoles(asyncRouteSettings.defaultRoles)
+            permissionStore.setRoutes(asyncRouteSettings.defaultRoles)
+          }
+          // 将'有访问权限的动态路由' 添加到 Router 中
+          permissionStore.dynamicRoutes.forEach((route) =&gt; {
+            router.addRoute(route)
+          })
+          // 确保添加路由已完成
+          // 设置 replace: true, 因此导航将不会留下历史记录
+          next({ ...to, replace: true })
+        } catch (err: any) {
+          // 过程中发生任何错误，都直接重置 Token，并重定向到登录页面
+          userStore.resetToken()
+          ElMessage.error(err.message || &quot;路由守卫过程发生错误&quot;)
+          next(&quot;/login&quot;)
+          NProgress.done()
+        }
+      } else {
+        next()
+      }
+    }
+  } else {
+    // 如果没有 Token
+    if (whiteList.indexOf(to.path) !== -1) {
+      // 如果在免登录的白名单中，则直接进入
+      next()
+    } else {
+      // 其他没有访问权限的页面将被重定向到登录页面
+      next(&quot;/login&quot;)
+      NProgress.done()
+    }
+  }
+})
+
+router.afterEach(() =&gt; {
+  NProgress.done()
+})
+</code></pre>
+<ul>
+<li>判断用户是否登录，没登录则只能进入白名单页面，比如登录页。</li>
+<li>如果已经登录，将不允许进入登录页。</li>
+<li>如果已经登录，还要检查是否拿到用户角色，如果没有，并且开启了动态路由功能，则要调用用户详情接口。</li>
+<li>如果没有开启动态路由功能，则启用默认角色。</li>
+<li>一旦发生错误，就重置 <code>Token</code>，并重定向到登录页。</li>
+<li>如果通过路由守卫的检查后，就能正常跳转到首页了。</li>
+</ul>
+<h2 id="鉴权">鉴权</h2>
+<ol>
+<li>后续所有的操作，都将携带保存在前端的 <code>token</code> 去调用接口，<code>token</code> 将是后端服务判断当前请求合不合法的依据，项目本身已经写在 Axios 的封装里面了：</li>
+</ol>
+<figure data-type="image" tabindex="6"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d3682dbd5f7744eda74b7b3dc9c12872~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<ol start="2">
+<li>假如 <code>token</code> 已经过期后，理论上接口会抛出一个 <code>http code 401</code> 的错误，我们只需要在响应拦截器里重定向到登录页即可：</li>
+</ol>
+<figure data-type="image" tabindex="7"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9aca133d3dfc4d09949e12478f2fe4b0~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<h2 id="参考资料">参考资料</h2>
+<ol>
+<li><a href="https://juejin.cn/post/7214026775143350329">【V3 Admin Vite】教程三：掌握登录模块（涉及 API、Axios、Pinia、路由守卫、鉴权）</a></li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[使用变量种子计数器扩展 CSS 动画]]></title>
+        <id>https://zkrisj.github.io/post/shi-yong-bian-liang-chong-zi-ji-shu-qi-kuo-zhan-css-dong-hua/</id>
+        <link href="https://zkrisj.github.io/post/shi-yong-bian-liang-chong-zi-ji-shu-qi-kuo-zhan-css-dong-hua/">
+        </link>
+        <updated>2023-05-04T22:06:46.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="介绍">介绍</h2>
+<p>不是所有的 CSS 属性都能使用 <code>animation</code> 属性实现动画效果，最典型的例子就是 <code>background-image</code> 渐变。</p>
+<pre><code class="language-css">.gradient {
+  background-image: linear-gradient(45deg, red 50%, blue 50%);
+}
+</code></pre>
+<p>其中无论是角度（<code>45deg</code>），颜色（<code>red</code>, <code>blue</code>）还是位置（<code>50%</code>）单独作为属性者都是可以动画过渡的，但是合在一起作为渐变背景的时候是无法产生过渡效果的，因为 <code>background-image</code> 的语义是图片。</p>
+<h2 id="变量种子计数器">变量种子计数器</h2>
+<p>Chrome 等浏览器（不包括 Safari）有个特性，就是当我们使用 <code>@keyframes</code> 定义关键帧的时候，关键帧里面设置的属性也是会运行的，典型的案例就是 <code>content</code> 属性与内容变化。</p>
+<p>例如实现一个“正在加载中…”效果：</p>
+<pre><code class="language-html">&lt;button&gt;正在加载中&lt;dot&gt;&lt;/dot&gt;&lt;/button&gt;
+</code></pre>
+<pre><code class="language-css">dot::before {
+  content: '...';
+  position: absolute;
+  animation: dot 3s infinite step-start both;
+}
+dot:after {
+  content: '...';
+  color: transparent;
+}
+@keyframes dot {
+  33% {
+    content: '.';
+  }
+  66% {
+    content: '..';
+  }
+}
+</code></pre>
+<iframe src="https://code.juejin.cn/pen/7228433196566708263"></iframe>
+<p>不仅普通的 CSS 属性可以在 CSS 动画关键帧中运行，CSS 自定义属性（CSS 变量）也可以在 CSS 动画关键帧中运行。例如：</p>
+<pre><code class="language-css">@keyframes var {
+  33% { --someVar: 33%; }
+  66% { --someVar: 66%; }
+}
+</code></pre>
+<p>如果我们某一个 CSS 属性值是基于这个 <code>--someVar</code> 变量构成的，那岂不是就算这个属性值不支持 CSS 动画，我只要让每一个百分比值的间隙足够的小，不也能够实现一个平滑的动画效果？</p>
+<p>具体做法就是，把 CSS 动画关键帧从 0%-100% 分成 101 份，然后每一份从 0 开始依次计数，就像是个计数器一样，然后把这个计数器分配给一个特定的 CSS 变量。最终我们可以得到一个如下所示的 CSS 动画“变量种子计数器”。</p>
+<pre><code class="language-css">@keyframes seed {
+  0%{--seed:0}1%{--seed:1}2%{--seed:2}3%{--seed:3}4%{--seed:4}5%{--seed:5}6%{--seed:6}7%{--seed:7}8%{--seed:8}9%{--seed:9}10%{--seed:10}11%{--seed:11}12%{--seed:12}13%{--seed:13}14%{--seed:14}15%{--seed:15}16%{--seed:16}17%{--seed:17}18%{--seed:18}19%{--seed:19}20%{--seed:20}21%{--seed:21}22%{--seed:22}23%{--seed:23}24%{--seed:24}25%{--seed:25}26%{--seed:26}27%{--seed:27}28%{--seed:28}29%{--seed:29}30%{--seed:30}31%{--seed:31}32%{--seed:32}33%{--seed:33}34%{--seed:34}35%{--seed:35}36%{--seed:36}37%{--seed:37}38%{--seed:38}39%{--seed:39}40%{--seed:40}41%{--seed:41}42%{--seed:42}43%{--seed:43}44%{--seed:44}45%{--seed:45}46%{--seed:46}47%{--seed:47}48%{--seed:48}49%{--seed:49}50%{--seed:50}51%{--seed:51}52%{--seed:52}53%{--seed:53}54%{--seed:54}55%{--seed:55}56%{--seed:56}57%{--seed:57}58%{--seed:58}59%{--seed:59}60%{--seed:60}61%{--seed:61}62%{--seed:62}63%{--seed:63}64%{--seed:64}65%{--seed:65}66%{--seed:66}67%{--seed:67}68%{--seed:68}69%{--seed:69}70%{--seed:70}71%{--seed:71}72%{--seed:72}73%{--seed:73}74%{--seed:74}75%{--seed:75}76%{--seed:76}77%{--seed:77}78%{--seed:78}79%{--seed:79}80%{--seed:80}81%{--seed:81}82%{--seed:82}83%{--seed:83}84%{--seed:84}85%{--seed:85}86%{--seed:86}87%{--seed:87}88%{--seed:88}89%{--seed:89}90%{--seed:90}91%{--seed:91}92%{--seed:92}93%{--seed:93}94%{--seed:94}95%{--seed:95}96%{--seed:96}97%{--seed:97}98%{--seed:98}99%{--seed:99}100%{--seed:100}
+}
+</code></pre>
+<p>上面这段 <code>@keyframes seed{}</code> 相关 CSS 代码就是一个可以无限使用的“动画种子”，无论是那些原本支持 CSS 动画的属性，还是不支持 CSS 动画的属性，只要它的属性值是与数值相关的，都能够借助这个“动画种子”实现动画效果。</p>
+<p>例如一开始那个线性渐变的例子，我们可以让渐变旋转角度和我们“动画种子”中的 <code>--seed</code> 变量相关联，配合 <code>animation</code> 属性就能实现渐变旋转的效果了：</p>
+<pre><code class="language-css">.gradient {
+  width: 150px;
+  height: 150px;
+  background-image: linear-gradient(calc(3.6deg * var(--seed)), red 50%, blue 50%);
+  animation: seed 1s linear infinite;
+}
+</code></pre>
+<iframe src="https://code.juejin.cn/pen/7228431837340074045"></iframe>
+<h2 id="参考资料">参考资料</h2>
+<ol>
+<li><a href="https://www.zhangxinxu.com/wordpress/2019/05/css-variable-seed-extend-animation/">使用“变量种子计数器”扩展CSS动画更多可能性</a></li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[CSS 百叶窗转场动画效果]]></title>
+        <id>https://zkrisj.github.io/post/css-bai-xie-chuang-zhuan-chang-dong-hua-xiao-guo/</id>
+        <link href="https://zkrisj.github.io/post/css-bai-xie-chuang-zhuan-chang-dong-hua-xiao-guo/">
+        </link>
+        <updated>2023-05-03T22:21:16.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="介绍">介绍</h2>
+<p>Chrome 等浏览器（不包括 Safari）有个特性，就是当我们使用 <code>@keyframes</code> 定义关键帧的时候，关键帧里面设置的属性也是会运行的，典型的案例就是 <code>content</code> 属性与内容变化。</p>
+<p>不仅普通的 CSS 属性可以在 CSS 动画关键帧中运行，CSS 自定义属性（CSS 变量）也可以在 CSS 动画关键帧中运行。例如：</p>
+<pre><code class="language-css">@keyframes var {
+  33% { --someVar: 33%; }
+  66% { --someVar: 66%; }
+}
+</code></pre>
+<p>如果我们某一个 CSS 属性值是基于这个 <code>--someVar</code> 变量构成的，那岂不是就算这个属性值不支持 CSS 动画，我只要让每一个百分比值的间隙足够的小，不也能够实现一个平滑的动画效果？</p>
+<p>具体做法就是，把 CSS 动画关键帧从 0%-100% 分成 101 份，然后每一份从 0 开始依次计数，就像是个计数器一样，然后把这个计数器分配给一个特定的 CSS 变量。最终我们可以得到一个如下所示的 CSS 动画“变量种子计数器”。</p>
+<pre><code class="language-css">@keyframes seed {
+  0%{--seed:0}1%{--seed:1}2%{--seed:2}...99%{--seed:99}100%{--seed:100}
+}
+</code></pre>
+<p>上面这段 <code>@keyframes seed{}</code> 相关 CSS 代码就是一个可以无限使用的“动画种子”，无论是那些原本支持 CSS 动画的属性，还是不支持 CSS 动画的属性，只要它的属性值是与数值相关的，都能够借助这个“动画种子”实现动画效果。</p>
+<h2 id="百叶窗转场效果">百叶窗转场效果</h2>
+<p>如果我们的线性渐变是水平方向的，则可以实现百叶窗效果。</p>
+<h5 id="css代码">CSS代码：</h5>
+<pre><code>zxx-slide {
+    display: block;
+    width: 250px; height: 186px;
+    position: relative;
+}
+.zxx-slide-a {
+    position: absolute;
+    display: none;
+}
+.zxx-slide-a.in {
+    z-index: 1;
+}
+.zxx-slide-img {
+    display: block;
+    width: 250px; height: 186px;
+}
+.zxx-slide-index-x {
+    position: absolute;
+    left: 0; right: 0; bottom: 10px;
+    text-align: center;
+    font-size: 0;
+    z-index: 1;
+}
+.zxx-slide-index {
+    display: inline-block;
+    width: 20px; height: 20px;
+    padding: 0; margin: 0;
+    box-sizing: border-box;
+    border: 5px solid transparent;
+    background-color: rgba(0,0,0,.6);
+    background-clip: content-box;
+    border-radius: 50%;
+    transition: background-color .3s;
+    cursor: pointer;
+}
+.zxx-slide-index.active {
+    background-color: rgba(255,0,0,.9);
+}
+@keyframes seed {
+  0%{--seed:0}1%{--seed:1}2%{--seed:2}3%{--seed:3}4%{--seed:4}5%{--seed:5}6%{--seed:6}7%{--seed:7}8%{--seed:8}9%{--seed:9}10%{--seed:10}11%{--seed:11}12%{--seed:12}13%{--seed:13}14%{--seed:14}15%{--seed:15}16%{--seed:16}17%{--seed:17}18%{--seed:18}19%{--seed:19}20%{--seed:20}21%{--seed:21}22%{--seed:22}23%{--seed:23}24%{--seed:24}25%{--seed:25}26%{--seed:26}27%{--seed:27}28%{--seed:28}29%{--seed:29}30%{--seed:30}31%{--seed:31}32%{--seed:32}33%{--seed:33}34%{--seed:34}35%{--seed:35}36%{--seed:36}37%{--seed:37}38%{--seed:38}39%{--seed:39}40%{--seed:40}41%{--seed:41}42%{--seed:42}43%{--seed:43}44%{--seed:44}45%{--seed:45}46%{--seed:46}47%{--seed:47}48%{--seed:48}49%{--seed:49}50%{--seed:50}51%{--seed:51}52%{--seed:52}53%{--seed:53}54%{--seed:54}55%{--seed:55}56%{--seed:56}57%{--seed:57}58%{--seed:58}59%{--seed:59}60%{--seed:60}61%{--seed:61}62%{--seed:62}63%{--seed:63}64%{--seed:64}65%{--seed:65}66%{--seed:66}67%{--seed:67}68%{--seed:68}69%{--seed:69}70%{--seed:70}71%{--seed:71}72%{--seed:72}73%{--seed:73}74%{--seed:74}75%{--seed:75}76%{--seed:76}77%{--seed:77}78%{--seed:78}79%{--seed:79}80%{--seed:80}81%{--seed:81}82%{--seed:82}83%{--seed:83}84%{--seed:84}85%{--seed:85}86%{--seed:86}87%{--seed:87}88%{--seed:88}89%{--seed:89}90%{--seed:90}91%{--seed:91}92%{--seed:92}93%{--seed:93}94%{--seed:94}95%{--seed:95}96%{--seed:96}97%{--seed:97}98%{--seed:98}99%{--seed:99}100%{--seed:100}
+}
+zxx-slide .in {
+  -webkit-mask: linear-gradient(to right, #000 calc(1% * var(--seed)), transparent calc(1% * var(--seed)));
+  -webkit-mask-size: 20px;
+  mask: linear-gradient(to right, #000 calc(1% * var(--seed)), transparent calc(1% * var(--seed)));
+  mask-size: 20px;
+  animation: seed .6s;
+}
+</code></pre>
+<h5 id="html代码">HTML代码：</h5>
+<pre><code>&lt;zxx-slide&gt;
+  &lt;div class=&quot;zxx-slide-x&quot;&gt;
+    &lt;a href class=&quot;zxx-slide-a&quot; style=&quot;display: block;&quot;&gt;&lt;img
+        class=&quot;zxx-slide-img&quot; src=&quot;./ps1.jpg&quot;&gt;&lt;/a&gt;
+    &lt;a href class=&quot;zxx-slide-a&quot;&gt;&lt;img class=&quot;zxx-slide-img&quot; src=&quot;./ps2.jpg&quot;&gt;&lt;/a&gt;
+    &lt;a href class=&quot;zxx-slide-a&quot;&gt;&lt;img class=&quot;zxx-slide-img&quot; src=&quot;./ps3.jpg&quot;&gt;&lt;/a&gt;
+    &lt;a href class=&quot;zxx-slide-a&quot;&gt;&lt;img class=&quot;zxx-slide-img&quot; src=&quot;./ps4.jpg&quot;&gt;&lt;/a&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;zxx-slide-index-x&quot;&gt;
+    &lt;button class=&quot;zxx-slide-index active&quot;&gt;&lt;/button&gt;
+    &lt;button class=&quot;zxx-slide-index&quot;&gt;&lt;/button&gt;
+    &lt;button class=&quot;zxx-slide-index&quot;&gt;&lt;/button&gt;
+    &lt;button class=&quot;zxx-slide-index&quot;&gt;&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/zxx-slide&gt;
+</code></pre>
+<h5 id="js代码">JS代码：</h5>
+<pre><code class="language-js">var eleZxxSlides = document.querySelectorAll('zxx-slide');
+[].slice.call(eleZxxSlides).forEach(function(container) {
+  var timerSlide = null;
+  var indexSlide = 0;
+  container.addEventListener('mouseover', function() {
+    clearTimeout(timerSlide);
+  });
+  container.addEventListener('mouseout', function() {
+    clearTimeout(timerSlide);
+    funSlide();
+  });
+  // 对应的元素
+  var eleSlides = [].slice.call(container.querySelectorAll('a'));
+  var eleButtons = [].slice.call(container.querySelectorAll('button'));
+
+  // hover显示对应幻灯
+  eleButtons.forEach(function(button, index) {
+    ['mouseover', 'click'].forEach(function(eventType) {
+      button.addEventListener(eventType, function() {
+        clearTimeout(timerSlide);
+        indexSlide = index;
+        funSlide();
+      });
+    });
+  });
+
+  eleSlides.forEach(function(slide, index) {
+    slide.addEventListener('animationend', function() {
+      eleSlides.forEach(function(slide2) {
+        if (slide2.classList.contains('in') == false) {
+          slide2.style.display = '';
+        }
+      });
+    });
+  });
+
+  // 切换方法
+  var funSlide = function() {
+    eleSlides.forEach(function(slide, index) {
+      if (indexSlide == index) {
+        slide.classList.add('in');
+        slide.style.display = 'block';
+      } else if (slide.classList.contains('in')) {
+        slide.classList.remove('in');
+      }
+    });
+    eleButtons.forEach(function(button, index) {
+      button.classList.remove('active');
+      if (indexSlide == index) {
+        button.classList.add('active');
+      }
+    });
+
+    timerSlide = setTimeout(function() {
+      indexSlide++;
+      if (indexSlide == eleSlides.length) {
+        indexSlide = 0;
+      }
+      funSlide();
+    }, 4000);
+  }
+
+  indexSlide++;
+
+  setTimeout(funSlide, 1000);
+});
+</code></pre>
+<h2 id="码上掘金">码上掘金</h2>
+<iframe src="https://code.juejin.cn/pen/7228437360743530556"></iframe>
+<h2 id="参考资料">参考资料</h2>
+<ol>
+<li><a href="https://www.zhangxinxu.com/wordpress/2019/05/css-transfer-animation/">你用的那些CSS转场动画可以换一换了</a></li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[V3 Admin Vite 接口和打包配置]]></title>
+        <id>https://zkrisj.github.io/post/v3-admin-vite-jie-kou-he-da-bao-pei-zhi/</id>
+        <link href="https://zkrisj.github.io/post/v3-admin-vite-jie-kou-he-da-bao-pei-zhi/">
+        </link>
+        <updated>2023-05-02T05:40:52.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="介绍">介绍</h2>
+<p><a href="https://github.com/un-pany/v3-admin-vite">V3 Admin Vite</a> 是一个免费开源的中后台管理系统基础解决方案，基于 Vue3、TypeScript、Element Plus、Pinia 和 Vite 等主流技术。另外还有：</p>
+<ul>
+<li>Vue-Cli 5.x 版: <a href="https://github.com/un-pany/v3-admin">v3-admin</a></li>
+<li>Electron 桌面版: <a href="https://github.com/un-pany/v3-electron-vite">v3-electron-vite</a></li>
+</ul>
+<h2 id="接口">接口</h2>
+<ol>
+<li>所有的请求最终都是通过 Axios 来发送的，我们可以找到封装 Axios 的文件，看见后端接口的 <code>baseURL</code> 是 <code>import.meta.env.VITE_BASE_API</code>。</li>
+</ol>
+<figure data-type="image" tabindex="1"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f8f85842a20f43c2940d7bbb6b6cba4d~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<ol start="2">
+<li>可以在 <code>.env</code> 配置文件（<code>.env.development</code> 代表开发环境配置， <code>.env.staging</code> 代表预发布环境配置，<code>.env.production</code> 代表正式环境配置）中找到定义 <code>VITE_BASE_API</code> 的地方：</li>
+</ol>
+<figure data-type="image" tabindex="2"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3871161ed651459ca040fbf25e058034~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<ul>
+<li>这里采用了相对路径 <code>/api/v1</code>，例如开发环境运行在 <code>http://localhost:3333</code> 路径下，也就意味着前端调用后端接口时，调用的具体的 <code>baseURL</code> 将会是 <code>http://localhost:3333/api/v1</code>。</li>
+<li>登录接口的 url 是 <code>users/login</code>，也就意味着，在调用该接口时，最终请求的路径将会是：<code>baseURL</code> + 该接口的 url = <code>http://localhost:3333/api/v1/users/login</code>。</li>
+</ul>
+<figure data-type="image" tabindex="3"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d451db34766e4cf7a8b9dbf562af2d7d~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<ol start="3">
+<li>由于真实后端接口是部署在线上的，假如线上部署的登录接口完整路径是：<br>
+<code>https://mock.mengxuegu.com/mock/6321865fb4c53348ed2bc212/api/ul/users/login</code>，<br>
+那么我们可以通过反向代理来将 <code>http://localhost:3333</code> 代理到 <code>https://mock.mengxuegu.com/mock/63218b5fb4c53348ed2bc212</code>。反向代理配置如图：</li>
+</ol>
+<figure data-type="image" tabindex="4"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a64fe4d5f0cd43f2b1060cf076767a68~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<blockquote>
+<p>这只是开发环境配置好了反向代理，以后部署前端到线上环境的时候，需要采用 Nginx 或其他工具来实现线上环境的反向代理。</p>
+</blockquote>
+<h2 id="打包">打包</h2>
+<ol>
+<li>模板项目本身是需要部署到这个域名下：<code>https://un-pany.github.io/v3-admin-vite/</code>，所以我们需要在 <code>.env.staging</code> 和 <code>.env.production</code> 中设置打包路径：</li>
+</ol>
+<pre><code class="language-sh">## 打包路径（就是网站前缀，例如部署到 https://un-pany.github.io/v3-admin-vite/ 域名下，就需要填写 /v3-admin-vite/）
+VITE_PUBLIC_PATH = '/v3-admin-vite/'
+</code></pre>
+<ul>
+<li>假如是要部署到 <code>https://xxx.com/yyy/</code> 下，那么就需要填写 <code>VITE_PUBLIC_PATH = '/yyy/'</code>。假如是要部署到 <code>https://xxx.com/</code> 下，那么就需要填写 <code>VITE_PUBLIC_PATH = '/'</code>。</li>
+</ul>
+<ol start="2">
+<li>和打包相关的命令是 <code>build</code>，我们以打包正式环境为例，就要运行下面的命令：</li>
+</ol>
+<pre><code class="language-sh">pnpm build:prod
+</code></pre>
+<p>这个命令就会自动去读取我们前文配置好的 <code>.env.production</code> 文件，而 <code>pnpm build:stage</code> 会自动读取 <code>.env.staging</code> 文件，代表的是预发布环境。</p>
+<ol start="3">
+<li>打包完成后，就可以在根目录下，看见一个名为 <code>dist</code> 的静态资源文件夹，这整个文件夹就是需要丢到前端服务器上去的东西。</li>
+</ol>
+<figure data-type="image" tabindex="5"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3e7973a6e6824b028c9c7a94ebe2662e~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<ol start="4">
+<li>然后可以通过运行 <code>pnpm preview:stage</code> 或 <code>pnpm preview:prod</code> 来预览 <code>dist</code> 中的静态资源文件。</li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[V3 Admin Vite 介绍和基本使用]]></title>
+        <id>https://zkrisj.github.io/post/v3-admin-vite-jie-shao-he-ji-ben-shi-yong/</id>
+        <link href="https://zkrisj.github.io/post/v3-admin-vite-jie-shao-he-ji-ben-shi-yong/">
+        </link>
+        <updated>2023-05-02T05:40:28.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="介绍">介绍</h2>
+<p><a href="https://github.com/un-pany/v3-admin-vite">V3 Admin Vite</a> 是一个免费开源的中后台管理系统基础解决方案，基于 Vue3、TypeScript、Element Plus、Pinia 和 Vite 等主流技术。另外还有：</p>
+<ul>
+<li>Vue-Cli 5.x 版: <a href="https://github.com/un-pany/v3-admin">v3-admin</a></li>
+<li>Electron 桌面版: <a href="https://github.com/un-pany/v3-electron-vite">v3-electron-vite</a></li>
+</ul>
+<h2 id="功能">功能</h2>
+<ul>
+<li><strong>用户管理</strong>：登录、登出演示</li>
+<li><strong>权限管理</strong>：内置页面权限（动态路由）、指令权限、权限函数、路由守卫</li>
+<li><strong>多环境</strong>：开发环境（development）、预发布环境（staging）、正式环境（production）</li>
+<li><strong>多主题</strong>：内置普通、黑暗、深蓝三种主题模式</li>
+<li><strong>错误页面</strong>: 403、404</li>
+<li><strong>Dashboard</strong>：根据不同用户显示不同的 Dashboard 页面</li>
+<li><strong>其他内置功能</strong>：SVG、动态侧边栏、动态面包屑、标签页快捷导航、Screenfull 全屏、自适应收缩侧边栏</li>
+</ul>
+<h2 id="特性">特性</h2>
+<ul>
+<li><strong>Vue3</strong>：采用 Vue3 + script setup 最新的 Vue3 组合式 API</li>
+<li><strong>Element Plus</strong>：Element UI 的 Vue3 版本</li>
+<li><strong>Pinia</strong>: 传说中的 Vuex5</li>
+<li><strong>Vite</strong>：真的很快</li>
+<li><strong>Vue Router</strong>：路由路由</li>
+<li><strong>TypeScript</strong>：JavaScript 语言的超集</li>
+<li><strong>PNPM</strong>：更快速的，节省磁盘空间的包管理工具</li>
+<li><strong>Scss</strong>：和 Element Plus 保持一致</li>
+<li><strong>CSS 变量</strong>：主要控制项目的布局和颜色</li>
+<li><strong>ESlint</strong>：代码校验</li>
+<li><strong>Prettier</strong>：代码格式化</li>
+<li><strong>Axios</strong>：发送网络请求（已封装好）</li>
+<li><strong>UnoCSS</strong>：具有高性能且极具灵活性的即时原子化 CSS 引擎</li>
+<li><strong>注释</strong>：各个配置项都写有尽可能详细的注释</li>
+<li><strong>兼容移动端</strong>: 布局兼容移动端页面分辨率</li>
+</ul>
+<h2 id="本地安装">本地安装</h2>
+<ol>
+<li>克隆仓库：</li>
+</ol>
+<pre><code class="language-sh">git clone https://github.com/un-pany/v3-admin-vite.git
+// 或克隆国内镜像仓库
+git clone https://gitee.com/un-pany/v3-admin-vite.git
+</code></pre>
+<ol start="2">
+<li>V3 Admin Vite 是推荐使用 pnpm 命令来安装第三方依赖，而不是直接使用 npm 命令，所以需要安装 pnpm。</li>
+</ol>
+<pre><code class="language-sh">npm install -g pnpm
+</code></pre>
+<ol start="3">
+<li>安装依赖：</li>
+</ol>
+<pre><code class="language-sh">pnpm i
+</code></pre>
+<p>如果安装太慢，可以选择将官方依赖源切换为淘宝依赖源：</p>
+<pre><code class="language-sh">pnpm config set registry https://registry.npmmirror.com
+</code></pre>
+<ol start="4">
+<li>运行开发版预览：</li>
+</ol>
+<pre><code class="language-sh">pnpm dev
+</code></pre>
+<p>如下图所示代表运行成功：</p>
+<figure data-type="image" tabindex="1"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c36fb50ab238498aa8c890069ce344ba~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<p>打开项目地址后，界面如下：</p>
+<figure data-type="image" tabindex="2"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b90b2ee7d0944e9081a87a4558e8c331~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<ol start="5">
+<li>构建和预览：预发布环境、正式环境。</li>
+</ol>
+<pre><code class="language-sh"># 构建预发布环境
+pnpm build:stage
+
+# 预览预发布环境
+pnpm preview:stage
+
+# 构建正式环境
+pnpm build:prod
+
+# 预览正式环境
+pnpm preview:prod
+</code></pre>
+<ol start="6">
+<li>代码格式化和单元测试：</li>
+</ol>
+<pre><code class="language-sh"># 代码格式化
+pnpm lint
+
+# 单元测试
+pnpm test
+</code></pre>
+<h2 id="git-提交规范参考">Git 提交规范参考</h2>
+<ul>
+<li><code>feat</code> 增加新的业务功能</li>
+<li><code>fix</code> 修复业务问题/BUG</li>
+<li><code>perf</code> 优化性能</li>
+<li><code>style</code> 更改代码风格, 不影响运行结果</li>
+<li><code>refactor</code> 重构代码</li>
+<li><code>revert</code> 撤销更改</li>
+<li><code>test</code> 测试相关, 不涉及业务代码的更改</li>
+<li><code>docs</code> 文档和注释相关</li>
+<li><code>chore</code> 更新依赖/修改脚手架配置等琐事</li>
+<li><code>workflow</code> 工作流改进</li>
+<li><code>ci</code> 持续集成相关</li>
+<li><code>types</code> 类型定义文件更改</li>
+<li><code>wip</code> 开发中</li>
+</ul>
+<h2 id="目录结构">目录结构</h2>
+<pre><code class="language-sh"># v3-admin-vite
+├─ .husky                # 用户提交代码时格式化代码
+├─ .vscode               # 本项目推荐的 vscode 配置和拓展
+├─ public
+│  ├─ favicon.ico
+│  ├─ app-loading.css    # 首屏加载 loading
+├─ src
+│  ├─ api                # api 接口
+│  ├─ assets             # 静态资源
+│  ├─ components         # 全局组件
+│  ├─ config             # 全局配置
+│  ├─ constant           # 常量/枚举
+│  ├─ directives         # 全局指令
+│  ├─ hooks              # 全局 hook
+│  ├─ icons              # svg icon
+│  ├─ layout             # 布局
+│  ├─ plugins            # 全局插件
+│  ├─ router             # 路由
+│  ├─ store              # pinia store
+│  ├─ styles             # 全局样式
+│  ├─ utils              # 全局公共方法
+│  └─ views              # 所有页面
+│  ├─ App.vue            # 入口页面
+│  └─ main.ts            # 入口文件
+├─ tests                 # 单元测试
+├─ types                 # ts 声明
+├─ .env.development      # 开发环境
+├─ .env.production       # 正式环境
+├─ .env.staging          # 预发布环境
+├─ .eslintrc.js          # eslint 配置
+├─ .prettier.config.js   # prettier 配置
+├─ tsconfig.json         # ts 编译配置
+├─ unocss.config.ts      # unocss 配置
+└─ vite.config.ts        # vite 配置
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[拖拽图片缩放效果]]></title>
+        <id>https://zkrisj.github.io/post/tuo-zhuai-tu-pian-suo-fang-xiao-guo/</id>
+        <link href="https://zkrisj.github.io/post/tuo-zhuai-tu-pian-suo-fang-xiao-guo/">
+        </link>
+        <updated>2023-05-02T03:55:43.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="介绍">介绍</h2>
+<p>实现下图所示的图片拖拽缩放效果：</p>
+<figure data-type="image" tabindex="1"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7a620935470f4ef68981bb426aa1129a~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<ol>
+<li>通常实现方式都是 <code>&lt;img&gt;</code> 元素外面包裹个 DIV，然后定位一些方框框，然后再去拉伸。如果是非编辑器产品，这么实现并没有多大的问题。</li>
+<li>但是如果是需要实时编辑的产品，IMG 外面还有其他标签，势必会影响很多编辑操作。</li>
+<li>当然，还有方法就是 JS 定位，拖拽层覆盖在图像上，从技术成本上讲，也是一个不错的实现，但如果页面发生了滚动，或者拖拽很快，拖拽的小方块就有可能跟不上（具体要看你的实现）。</li>
+</ol>
+<h2 id="css">CSS</h2>
+<figure data-type="image" tabindex="2"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/110352b459ac47449d52bcbde14f6749~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<p>四个角四个圆圈圈，比较简洁，凡是这种在元素边框（不包括边角）包含规则图形（没有图形也是一种规律）的效果，一定是使用 CSS <code>border-image</code> 属性。</p>
+<p>下图是使用处理后的素材配合 <code>border-image</code> 属性实现的效果：</p>
+<figure data-type="image" tabindex="3"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e82a75e26fa84dfe8e144fbaa5c4e391~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<p>可能图有些小，看不到细节，把边角放大 N 倍看下：</p>
+<figure data-type="image" tabindex="4"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a103f200dd4b408587e42bb460518b04~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<p><code>border-image</code> 生成的图形藏在了图像内容的后面。在 Web 中，<code>content</code> 内容的层级是最高的，<code>outline</code> 轮廓、<code>border</code> 边框、<code>background</code> 背景色等都是比图文内容的层级低的。因此，<code>border-image</code> 的图形在 IMG 元素内容的后面，导致边角的拖拽圈圈显示不全。</p>
+<p>将拖拽图形全部改造为在图像元素的外部，这样就不会有被内容覆盖的问题了：</p>
+<figure data-type="image" tabindex="5"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/661df0e9e65340b1bd8d42b245f0c372~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<p>相关 CSS代码如下：</p>
+<pre><code class="language-css">img.resizable, img[resizable] {
+  border: 3px solid transparent;
+  border-image: url(./作者zhangxinxu.svg) 12 / 12px / 0; 
+}
+</code></pre>
+<h2 id="js-代码">JS 代码</h2>
+<pre><code class="language-js">function onlyImageResize(options) {
+  var doc = document;
+  var win = window;
+  // 参数处理
+  var defaults = {
+    selector: '.resizable, [resizable]',
+    maxWidth: true,
+    whenDisabled: function() {
+      return win.imgResizable === false || doc.imgResizable === false;
+    },
+    // 拖拽完成
+    onFinish: function() {}
+  };
+  options = options || {};
+  var params = {};
+  for (var key in defaults) {
+    params[key] = options[key] || defaults[key];
+  }
+  // 存放临时数据的地方
+  var store = {};
+  // 匹配目标元素的选择器
+  var strSelector = params.selector;
+  var strSelectorImg = strSelector.split(',').map(function(selector) {
+    return 'img' + selector.trim();
+  }).join();
+  var strSelectorActive = strSelector.split(',').map(function(selector) {
+    return selector.trim() + '.active';
+  }).join();
+  // 载入必要的 CSS 样式
+  var eleStyle = document.createElement('style');
+  var strSvg = &quot;data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%23914AFF' d='M2.5 2.5h25v25h-25z'/%3E%3Cpath d='M0 0v12h2V2h10V0H0zM0 30V18h2v10h10v2H0zM30 0H18v2h10v10h2V0zM30 30H18v-2h10V18h2v12z' fill='%23914AFF'/%3E%3C/svg%3E&quot;;
+  eleStyle.innerHTML = strSelectorImg + '{display:inline-block;vertical-align: bottom;font-size:12px;border: 3px solid transparent;margin:-1px;position: relative;-webkit-user-select: none; user-select: none; }' + strSelectorActive + '{border-image: url(&quot;' + strSvg + '&quot;) 12 / 12px / 0; cursor: default; z-index: 1;}';
+  document.head.appendChild(eleStyle);
+  // 先点击图片，进入可拉伸状态
+  doc.addEventListener('click', function(event) {
+    var eleTarget = event.target;
+    if (!eleTarget || !eleTarget.matches) {
+      return;
+    }
+    var eleActive = document.querySelector(strSelectorActive);
+    if (eleActive &amp;&amp; eleActive != eleTarget) {
+      eleActive.classList.remove('active');
+    }
+    if (params.whenDisabled()) {
+      return;
+    }
+    if (eleTarget.matches(strSelector)) {
+      eleTarget.classList.add('active');
+    }
+  });
+  // 设置拉伸触发的标志量
+  doc.addEventListener('mousedown', function(event) {
+    var eleTarget = event.target;
+    if (eleTarget.matches &amp;&amp; eleTarget.matches(strSelectorActive) &amp;&amp; eleTarget.style.cursor) {
+      event.preventDefault();
+      store.reszing = true;
+      store.image = eleTarget;
+      store.clientX = event.clientX;
+      store.clientY = event.clientY;
+      // 此时图片的尺寸
+      store.imageWidth = eleTarget.width || eleTarget.clientWidth;
+      store.imageHeight = eleTarget.height || eleTarget.clientHeight;
+      // 此时图片的拉伸方位
+      store.position = eleTarget.position;
+      // 最大宽度
+      if (typeof params.maxWidth == 'number') {
+        store.maxWidth = params.maxWidth;
+      } else if (params.maxWidth) {
+        // 使用第一个非内联水平的祖先元素的尺寸作为最大尺寸
+        var eleParent = (function(element) {
+          var step = function(ele) {
+            var display = getComputedStyle(ele).style;
+            if (/inline/.test(display)) {
+              return step(ele.parentElement);
+            }
+            return ele;
+          }
+          return step(element);
+        })(eleTarget.parentElement);
+        // 设置最大尺寸
+        if (eleParent) {
+          store.maxWidth = eleParent.clientWidth - 4;
+        }
+      }
+    }
+  });
+  // 设置手形，或者拖拽，视标志量决定
+  doc.addEventListener('mousemove', function(event) {
+    var eleTarget = event.target;
+    if (store.reszing) {
+      event.preventDefault();
+      // 移动距离
+      var distanceX = event.clientX - store.clientX;
+      var distanceY = event.clientY - store.clientY;
+      // 变化的尺寸
+      var width = 0;
+      var height = 0;
+      // 方位计算是加还是减
+      var scale = 1;
+      // 不同方位有着不同的判断逻辑
+      var position = store.position;
+      // 左下角
+      if ((position == 'bottom left' || position == 'top right') &amp;&amp; distanceX * distanceY &lt; 0) {
+        // 左下方是变大，右上是变小
+        // distanceX- distanceY+ 变大，distanceX+ distanceY-是变小
+        // 右上角
+        // 左下方是变小，右上是变大，正好和 'bottom left' 相反
+        if (position == 'top right') {
+          scale = -1;
+        }
+        width = store.imageWidth - distanceX * scale;
+        height = store.imageHeight + distanceY * scale;
+      } else if ((position == 'top left' || position == 'bottom right') &amp;&amp; distanceX * distanceY &gt; 0) {
+        // 左上角
+        // distanceX+, distanceY+是缩小
+        // distanceX-, distanceY-是放大
+        // 如果是右下角，则相反
+        if (position == 'bottom right') {
+          scale = -1;
+        }
+        width = store.imageWidth - distanceX * scale;
+        height = store.imageHeight - distanceY * scale;
+      }
+      if (!width &amp;&amp; !height) {
+        return;
+      }
+      // 目标尺寸
+      var imageWidth = 0;
+      var imageHeight = 0;
+      // 图像的原始比例
+      var ratio = store.imageWidth / store.imageHeight;
+      // 选择移动距离大的方向
+      if (Math.abs(distanceX) &gt; Math.abs(distanceY)) {
+        // 宽度变化为主
+        imageWidth = width;
+        imageHeight = width / ratio;
+      } else {
+        // 高度变化为主
+        imageHeight = height;
+        imageWidth = height * ratio;
+      }
+      // 最终设置图片的尺寸
+      store.image.width = Math.round(imageWidth);
+      store.image.height = Math.round(imageHeight);
+    } else if (eleTarget.matches &amp;&amp; eleTarget.matches(strSelectorActive)) {
+      // 根据位置设置手形
+      var clientX = event.clientX;
+      var clientY = event.clientY;
+      var bounding = eleTarget.getBoundingClientRect();
+      // 边缘判断
+      if ((clientX - bounding.left &lt; 20 &amp;&amp; clientY - bounding.bottom &gt; -20) || (clientX - bounding.right &gt; -20 &amp;&amp; clientY - bounding.top &lt; 20)) {
+        eleTarget.style.cursor = 'nesw-resize';
+        // 判断位置
+        if (clientX - bounding.left &lt; 20) {
+          eleTarget.position = 'bottom left';
+        } else {
+          eleTarget.position = 'top right';
+        }
+      } else if ((clientX - bounding.left &lt; 20 &amp;&amp; clientY - bounding.top &lt; 20) || (clientX - bounding.right &gt; -20 &amp;&amp; clientY - bounding.bottom &gt; -
+          20)) {
+        eleTarget.style.cursor = 'nwse-resize';
+        // 判断位置
+        if (clientX - bounding.left &lt; 20) {
+          eleTarget.position = 'top left';
+        } else {
+          eleTarget.position = 'bottom right';
+        }
+      } else {
+        eleTarget.style.cursor = '';
+        eleTarget.position = '';
+      }
+    }
+  });
+  // 拖拽结束
+  doc.addEventListener('mouseup', function(event) {
+    // 图片尺寸超出100%限制
+    if (store.image &amp;&amp; store.maxWidth &amp;&amp; store.image.width &gt; store.maxWidth) {
+      // 目标尺寸
+      var imageWidth = store.maxWidth;
+      var imageHeight = imageWidth / (store.imageWidth / store.imageHeight);
+      // 最终设置图片的尺寸
+      store.image.width = Math.round(imageWidth);
+      store.image.height = Math.round(imageHeight);
+    }
+    if (store.reszing) {
+      store.reszing = false;
+      params.onFinish();
+    }
+  });
+};
+</code></pre>
+<h2 id="使用">使用</h2>
+<p>在 HTML 页面中直接引入上面 JS 代码就可以使用了：</p>
+<pre><code class="language-html">&lt;script&gt;
+  onlyImageResize({
+    // 参数在这里
+  });
+&lt;/script&gt;
+</code></pre>
+<p>此时，页面中所有设置了类名 <code>.resizable</code>，或者设置了 HTML 属性 <code>resizable</code> 的元素都可以四面拉伸了。</p>
+<p>options 为可选参数，包括：</p>
+<ul>
+<li>
+<p>selector</p>
+<p>字符串值。默认值是 <code>'.resizable, [resizable]'</code>，表示识别为可拉伸图片的选择器。</p>
+</li>
+<li>
+<p>maxWidth</p>
+<p>数值或布尔值。默认是 <code>true</code>，表示有最大宽度限制，最大宽度值是第一个非内联祖先元素的宽度。支持设置为数值，指定最大宽度值。</p>
+</li>
+<li>
+<p>whenDisabled</p>
+<p>函数值，如果返回 <code>true</code>，表示禁用图像的拉伸，如果是 <code>false</code>，则拉伸执行。默认值是：</p>
+<pre><code class="language-js">function () {
+    return window.imgResizable === false || document.imgResizable === false;
+}
+</code></pre>
+<p>表示，如果 <code>window.imgResizable</code> 或者 <code>document.imgResizable</code> 的值是 <code>false</code>，则禁用拉伸。</p>
+</li>
+<li>
+<p>onFinish</p>
+<p>函数值，默认是空函数，拖拽结束的时候触发。</p>
+</li>
+</ul>
+<h2 id="码上掘金">码上掘金</h2>
+<iframe src="https://code.juejin.cn/pen/7228490812546351163"></iframe>
+<h2 id="参考资料">参考资料</h2>
+<ol>
+<li><a href="https://www.zhangxinxu.com/wordpress/2022/11/js-image-resize/">JS之我用单img元素实现了图像resize拉伸效果</a></li>
+<li>体验地址：<a href="https://zhangxinxu.gitee.io/only-img-resize/">https://zhangxinxu.gitee.io/only-img-resize/</a></li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Shell 脚本和编程 ｜ 青训营笔记]]></title>
+        <id>https://zkrisj.github.io/post/shell-jiao-ben-he-bian-cheng-or-qing-xun-ying-bi-ji/</id>
+        <link href="https://zkrisj.github.io/post/shell-jiao-ben-he-bian-cheng-or-qing-xun-ying-bi-ji/">
+        </link>
+        <updated>2023-05-01T00:40:34.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="介绍">介绍</h2>
+<ol>
+<li>Shell 脚本是一种用Shell脚本语言编写的程序，它可以在 UNIX 或类 UNIX 操作系统上运行。Shell 脚本通常用于自动化任务、管理系统和编写小型应用程序。Shell 脚本可以完成许多任务，例如文件操作、进程管理、网络管理、系统配置等。</li>
+<li>Shell 脚本语言基于命令行界面，它使用 Shell 解释器（例如 Bash）解释 Shell 脚本语言。</li>
+<li>Shell 脚本语言的语法非常简单，可以包含各种命令和操作，例如条件语句、循环语句、函数、变量和输入/输出操作等，易于学习和使用。</li>
+</ol>
+<h3 id="学习-shell-的价值">学习 shell 的价值</h3>
+<ol>
+<li>Linux 服务器的基本操作和管理。</li>
+<li>前端 node.is 服务的进程管理、问题排查、资源监控等运维操作。</li>
+<li>使用 shell 编写 TCE、SCM、Docker 脚本，完成服务编译和部署。</li>
+</ol>
+<h2 id="概念">概念</h2>
+<p><strong>物理终端 =&gt;  软件终端 tty =&gt; 终端模拟器  =&gt;  Shell</strong></p>
+<ul>
+<li>终端：获取用户输入，展示运算结果的硬件设备。</li>
+<li>tty：teletypeWriter 的简称，和终端等价，早期指电报打印机，在 linux 中是输入输出环境。</li>
+<li>终端模拟器：Mac Terminal、iTerm2 等，关联虚拟 tty 的输入输出软件。</li>
+<li>Shell：command interpreter，处理来自终端模拟器的输入，解释执行之后输出结果给终端。</li>
+<li>Bash：Shell 的一种具体实现。</li>
+</ul>
+<h2 id="流程">流程</h2>
+<ol>
+<li>tty 或者说终端最开始指的是获取用户输入并输出的物理设备， 比如电传打字机。</li>
+<li>在 linux 中是接收用户输入、输出结果的终端仿真软件， 比如我们用的 mac terminal、 iterm2 等， 更强输入辅助功能、画面绘制输出的模拟终端器；</li>
+<li>而 tty 变成一个虚拟概念， 是 linux 的一个程序，每个终端模拟器关联一个虚拟 tty，和内核打交道。</li>
+<li>我们可以在终端模拟器中输入 tty 查看关联到的虚拟 tty bash 是 shell 的一种具体实现, 可以理解成实例和类的关系。</li>
+</ol>
+<h2 id="发展">发展</h2>
+<ol>
+<li>Ken Thompson（来自贝尔实验室）在 1971 年为 UNIX 开发了第一个 shell，称为 V6 shell</li>
+<li>Stephen Bourne 在贝尔实验室 为 V7 UNIX 所开发的 Bourne shell，即 sh</li>
+<li>开源组织 GNU 为了取代 Bourne shell 开发的 Bourne-Again shell，即 Bash</li>
+</ol>
+<blockquote>
+<p>除了替代 v6 shell，sh 还有几个优点，把控制流程，循环，变量引入了脚本，提供了一种更具功能性的语言</p>
+<p>主流 Linux 系统使用的 shell，许多都以它为锚点。</p>
+<p>bash是 sh 的超集，可以直接执行大部分 sh 脚本。<br>
+Bash 在兼容 Bourne shell 脚本编程的同时，集成了 Korn shell 和 C shell 的功能，包括命令历史，命令行编辑，目录堆栈（pushd 和 popd），一些实用环境变量，命令自动补全等。</p>
+</blockquote>
+<h2 id="语法">语法</h2>
+<ol>
+<li>shell 不仅提供了与内核和设备交互的方法，还集成了一些今天软件开发中通用的设计模式（比如管道和过滤器），具备控制流程，循环，变量，命令查找的机制。</li>
+<li>既是命令解释器，也是一门编程语言，作为命令解释器，它提供给用户接口，使用丰富的 GNU 工具集，第三方的或者内置的，比如 cd、pwd、exec、test、netstat 等。</li>
+</ol>
+<figure data-type="image" tabindex="1"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/451e053dc7664f5f8e64bc56e33c224b~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<h3 id="变量">变量</h3>
+<figure data-type="image" tabindex="2"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e6ebbf7259bf4684b83f5dd58aacd3b8~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<h3 id="父子-shell-的关系">父子 Shell 的关系</h3>
+<figure data-type="image" tabindex="3"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a8b1f909185d40d18eaec097ad30176f~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<h3 id="自定义变量">自定义变量</h3>
+<p><strong>declare [+/-] 选项 变量</strong></p>
+<figure data-type="image" tabindex="4"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3cbb1b735fe641a7a72a61a40feeb16d~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<figure data-type="image" tabindex="5"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2b81ba49314644d296e57dc219a859a0~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<h2 id="环境变量">环境变量</h2>
+<p>Bash Shel 在启动时总要配置其运行环境，例如初始化环境变量、设置命令提示符、指定系统命令路径等。</p>
+<figure data-type="image" tabindex="6"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8d5ba89f74c9480a8a362ac715efd47c~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<h2 id="配置文件加载">配置文件加载</h2>
+<ol>
+<li>通过系统用户登录默认运行的 shell</li>
+<li>非登录交互式运行 shell</li>
+<li>执行脚本运行非交互式 shell</li>
+</ol>
+<figure data-type="image" tabindex="7"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e4685f933d834ff4a781b523f538975e~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<blockquote>
+<p>如果取得 bash 需要完整的登录流程，我们称之为 login shell，比如 ssh 远程登录一台主机。不需要登录的 bash 我们称为 non-login bash，比如在原来的 bash 中执行 bash开启子进程、 执行一些外部命令。如果修改了配置文件，不会立即生效，需要我们重启终端或者执行 source 命令。</p>
+</blockquote>
+<pre><code class="language-sh">source ~/bashrc
+</code></pre>
+<h2 id="运算符和引用">运算符和引用</h2>
+<ol>
+<li>双引号：部分引用，使用这种引用时，<code>$</code>、`(反引号)、\(转义符) 这 3 个还是会解析成特殊的意义</li>
+<li>单引号：完全引用，只原样输出</li>
+<li>反引号：执行命令</li>
+</ol>
+<figure data-type="image" tabindex="8"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/fb041940c17347bf890a586052cc1bde~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<blockquote>
+<p>cmd &amp; 实现让命令在后台运行：</p>
+<p>使用方法一的时候，当我们关闭终端，命令就会停止运行。加上nohup可以在关闭终端后不停止命令</p>
+</blockquote>
+<h2 id="管道与管道符">管道与管道符 |</h2>
+<p>如果需要互通，比如第一个命令的返回传递给第二个命令，就需要用到管道了。管道的本质就是将多个程序进行了一个连接，和信号一样，也是进程通信的方式之一。</p>
+<ol>
+<li>作用：将前一个命令的结果传递给后面的命令</li>
+<li>语法: cmd1 | cmd2</li>
+<li>要求:管道右侧的命令必须能接受标准输入才行，比如 grep 命令，ls、mv等不能直接使用，可以使用 xargs 预处理注意: 管道命令仅仅处理 stdout，对于 stderr 会予以忽略，可以使用 set-o pipefail 设置 shell 遇到管道错误退出</li>
+</ol>
+<figure data-type="image" tabindex="9"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/abd592a75e6a4b3690b0d5d3ca7eb377~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<h2 id="重定向">重定向</h2>
+<p>输出重定向符号：</p>
+<ol>
+<li><code>v</code>：覆盖写入文件</li>
+<li><code>&gt;&gt;</code>：追加写入文件</li>
+<li><code>2&gt;</code>：错误输出写入文件</li>
+<li><code>&amp;&gt;</code>：正确和错误输出统一写入到文件中</li>
+</ol>
+<p>输入重定向符号：<code>&gt;</code> 和 <code>&gt;&gt;</code>。</p>
+<figure data-type="image" tabindex="10"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ffc91cb4374743518376b962c830e565~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<blockquote>
+<p>每个 shell 命令在执行时都会打开三个文件描述符， 文件描述符 0、1、2， 分别对应 stdin、stdout、stderr， 这三个文件描述符默认默认指向 终端输入、终端输出，那么当命令需要获取输入的时候，它会去读取 fd0， 当要输出的时候它会像 fd1、fd2写入， 改变这些描述符指向的行为叫做重定向</p>
+<p>2&gt;&amp;1 必须写在 &gt; 之后</p>
+<p>&lt;&lt; 比较特殊， 表示继续沿用当前的标准输入， 只是当识别到指定的标识符后停止， 将接收到的内容作为 stdin</p>
+<p>实例: 用户在命令行输入内容，当输入 EOF 的时候停止， 所输入的内容写入 foo.txt</p>
+</blockquote>
+<h2 id="判断命令">判断命令</h2>
+<p>shell 中提供了 <code>test</code>、<code>[</code>、<code>[[</code> 三种判断符号，可用于：</p>
+<ol>
+<li>整数测试</li>
+<li>字符串测试</li>
+<li>文件测试</li>
+</ol>
+<p>语法:</p>
+<ol>
+<li><code>test condition</code></li>
+<li><code>[ condition ]</code></li>
+<li><code>[[ condition ]]</code></li>
+</ol>
+<p>注意：</p>
+<ol>
+<li>中括号前后要有空格符</li>
+<li><code>[</code> 和 <code>test</code> 是命令只能使用自己支持的标志位，<code>&lt;</code>、<code>&gt;</code>、<code>=</code> 只能用来比较字符串</li>
+<li>中括号内的变量，最好都是用引号括起来</li>
+<li><code>[[</code> 更丰富，在整型比较中支持 <code>&lt;</code>、<code>&gt;</code>、<code>=</code>，在字符串比较中支持 <code>=</code>、<code>~</code> 正则</li>
+</ol>
+<figure data-type="image" tabindex="11"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ec6aae195eb240cdbbb7c9ae8bbe158d~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<figure data-type="image" tabindex="12"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6f2fd1e577c64b4f84591280016f45a6~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<blockquote>
+<p>根据程序是否正常执行（程序退出的状态）进行判断：</p>
+<ol>
+<li>exit：手动退出 shell 的命令</li>
+<li>exit 10 返回 10 给 shell，返回值非 0 为不正常退出</li>
+<li>$? 用于判读昂当前 shell 前一个进程是否正常退出（非 0 为不正常退出）</li>
+</ol>
+</blockquote>
+<h2 id="分支语句">分支语句</h2>
+<p>语法1:</p>
+<pre><code>if condition ;then
+程序段
+elif condition ; then
+程序段
+esle
+程序段
+fi
+</code></pre>
+<figure data-type="image" tabindex="13"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ed4ffaff364a42778f17212d1eda5b41~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<p>语法2:</p>
+<pre><code>case $变量 in:
+&quot;第一个变量内容&quot;)
+程序段
+;;
+&quot;第一个变量内容&quot;)
+程序段
+;;
+*)
+程序段
+esac
+</code></pre>
+<figure data-type="image" tabindex="14"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a39552b07b4c4095a666374938e81745~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<h2 id="循环">循环</h2>
+<ol>
+<li>
+<p>while循环</p>
+<p>condition ; do 程序段; donewhile</p>
+</li>
+<li>
+<p>unti1循环（当条件成立的时候跳出循环，与 while循环相反）</p>
+<p>until condition ; do 程序段; done</p>
+</li>
+<li>
+<p>for循环</p>
+<p>for var in [words...];do 程序段:done</p>
+</li>
+</ol>
+<figure data-type="image" tabindex="15"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/be81c61cdedd4273a4a4f40420581c35~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<h2 id="函数">函数</h2>
+<ol>
+<li>
+<p>语法一：</p>
+<p>funcName() echo &quot;abc&quot;;</p>
+</li>
+<li>
+<p>语法二：</p>
+<p>function funcName() { echo &quot;abc&quot;; }</p>
+</li>
+</ol>
+<figure data-type="image" tabindex="16"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/85f74524ba664ac597ab65832559b13a~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<ol start="3">
+<li>
+<p>函数也是命令</p>
+<ol>
+<li>exit：手动退出 shell 、命令</li>
+<li>exit 10 返回 10 给 shell，返回值非 0 为不正常退出</li>
+<li>$? 用于判读昂当前 shell 前一个命令是否正常退出（非 0 为不正常退出）</li>
+</ol>
+<p>为了函数内定义的变量不污染全局， 我们最好使用 local 去定义， 或者在函数退出之前使用 unset 去处理一下</p>
+</li>
+</ol>
+<blockquote>
+<p>注意：</p>
+<ol>
+<li>shell 自上而下执行，函数必须在使用前定义</li>
+<li>函数获取变量和 shell script 类似，$0 代表函数名， 后续参数通过 $1、$2 ...获取</li>
+<li>函数内 retun 仅仅表示函数执行状态，不代表函数执行结果</li>
+<li>返回结果一般使用 echo、printf， 在外面使用 $0 获取</li>
+<li>结果如果没有 return ，函数状态是上一条命令的执行状态，存储在 $? 中</li>
+</ol>
+</blockquote>
+<h2 id="模块化">模块化</h2>
+<p>模块化的原理是在当前 she11 内执行函数文件，方式：<code>source [函数库的路径]</code>。</p>
+<figure data-type="image" tabindex="17"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b8eccf571ccc4ec89902eb639d4f5a44~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<figure data-type="image" tabindex="18"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cf34b723d8c14a98a6c11118a73514ce~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<h2 id="常用命令">常用命令</h2>
+<figure data-type="image" tabindex="19"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/12b64125a88d40c199b04ce442c4d34c~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<h2 id="执行">执行</h2>
+<ol>
+<li>shell 脚本文件一般以 <code>.sh</code> 结尾，也可以没有，这是一个约定; 第一行需要指定用什么命令解释器来执行。<code>#!</code> 是内核识别并选择合适的解释器之后，将文本文件再交给解释器执行。</li>
+</ol>
+<figure data-type="image" tabindex="20"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d57c43f8c50a4f12b7d5b0ad47cca008~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<ol start="2">
+<li>启动方式：</li>
+</ol>
+<figure data-type="image" tabindex="21"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/bd3f509d339c466d9cfff7ec11921f4c~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<h2 id="shell-展开">Shell 展开</h2>
+<ol>
+<li>大括号展开 (Brace Expansion) {...}</li>
+<li>波浪号展开 (Tilde Expansion) ~</li>
+<li>参数展开 (Shell Parameter Expansion)</li>
+<li>命令替换 (Command Substitution)</li>
+<li>数学计算 (Arithmetic Expansion) $((..))</li>
+<li>文件名展开 (Filename Expansion) *?[..] 外壳文件名模式匹配</li>
+</ol>
+<h2 id="调试和前端集成">调试和前端集成</h2>
+<ol>
+<li>普通 log，使用 echo、printf</li>
+</ol>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ce4ee0aa2f5942c8898d1d840a00deef~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"><br>
+2. 使用 set 命令</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/eb10427459c641d39e5e976d6e0e2443~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"><br>
+3. vscode debug 插件</p>
+<figure data-type="image" tabindex="22"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6cea617816854762bb1731b09488edfa~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<ol start="4">
+<li>
+<p>node</p>
+<ol>
+<li>
+<p>node中通过 exec、spawn 调用 shell 命令</p>
+</li>
+<li>
+<p>shell 脚本中调用 node 命令</p>
+</li>
+<li>
+<p>借助 zx 等库进行 javascript、 shell script 的融合</p>
+<ol>
+<li>借助 shell 完成系统操作，文件io、内存、磁盘系统状态查借助 nodejs 完成应用层能力， 网络io、计算等</li>
+<li>借助 shell 完成系统操作，文件io、内存、磁盘系统状态查借助 nodejs 完成应用层能力， 网络io、计算等</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<figure data-type="image" tabindex="23"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8d714dd27df54f7b8eece8ab3c038d7d~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<figure data-type="image" tabindex="24"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/26ff6c607ebf4aff971e6edb2f06c765~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<blockquote>
+<p>exec 启动一个子 shell 进程执行传入的命令，并且将执行结果保存在缓冲区中， 并且缓冲区是有大小限制的，执行完毕通过回调函数返回，</p>
+<p>spawn 默认不使用 shell，而是直接启动子进程执行命令，且会直接返回一个 流对象，支持写入或者读取流数据，这个在大数据量交互的场景比较适合</p>
+</blockquote>
+<h2 id="总结">总结</h2>
+<p>shell 的思想和语法和传统的编程语言不太一样，强调一条语句只干一件事，所以万物皆命令， 在执行过程中也是逐行、逐个连接符、逐个空格的解析出最小化的命令执行，执行完之后再解析下一句。了解 shell 的配置加载、执行方式、执行过程、命令解析过程、 必要的语法、常用命令，可以方便的写出自己的自动化脚本。</p>
+]]></content>
+    </entry>
+</feed>

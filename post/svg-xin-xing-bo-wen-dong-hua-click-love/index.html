@@ -1,0 +1,254 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>SVG 心形波纹动画 + Click Love | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    SVG 心形波纹动画 + Click Love
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2023-02-25 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tags">
+                            # JS
+                        </a>
+                    
+                        <a href="https://zkrisj.github.io/tag/10MZNKSN7/" class="post-tags">
+                            # HTML
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p>代码的世界可以很简单也可以很浪漫，又到了一年一度秀浪漫的日子（过去几天了），给大家介绍一个 SVG 心形波纹动画和 Click Love 页面点击特效，效果如下：</p>
+<figure data-type="image" tabindex="1"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e8538d2d729b4a70961a709130d9f543~tplv-k3u1fbpfcp-watermark.image?" alt="动画.gif" loading="lazy"></figure>
+<h2 id="svg-心形波纹动画">SVG 心形波纹动画</h2>
+<ol>
+<li>定义一个 <code>svg</code> 元素。</li>
+</ol>
+<pre><code class="language-js">&lt;svg id=&quot;hearts&quot; viewBox=&quot;-600 -400 1200 800&quot;
+  preserveAspectRatio=&quot;xMidYMid slice&quot;&gt;
+  &lt;symbol id=&quot;heart&quot; viewBox=&quot;-69 -16 138 138&quot;&gt;
+    &lt;path d=&quot;M0,12 C 50,-30 110,50  0,120 C-110,50 -50,-30 0,12z&quot; /&gt;
+  &lt;/symbol&gt;
+&lt;/svg&gt;
+</code></pre>
+<ul>
+<li><code>viewBox</code> 属性的值是一个包含四个数字的列表：<code>x</code>、<code>y</code>、<code>width</code> 和 <code>height</code>。<code>x</code> 和 <code>y</code> 表示视口的左上角坐标，<code>width</code> 和 <code>height</code> 代表它的尺寸。这些数字由空格或逗号分隔，指定了用户空间中的一个矩形，指定了 <code>svg</code> 元素的视口边界（而非浏览器视口）。</li>
+<li><code>preserveAspectRatio</code> 属性指示具有提供给定纵横比的 <code>viewBox</code> 的元素必须如何适应具有不同纵横比的视口。因为 SVG 图像的纵横比是由 <code>viewBox</code> 属性定义的，所以如果未设置该属性，则 <code>preserveAspectRatio</code> 属性无效（有一个例外，对于 <code>&lt;image&gt;</code> 元素，<code>preserveAspectRatio</code> 定义引用图像应如何适合 <code>&lt;image&gt;</code> 元素定义的矩形）。
+<ul>
+<li><code>xMidYMid</code>（默认值）- 表示强制统一缩放。将元素的 <code>viewBox</code> 的中点 <code>x</code> 值与视口的中点 <code>x</code> 值对齐；将元素的 <code>viewBox</code> 的中点 <code>y</code> 值与视口的中点 <code>y</code> 值对齐。</li>
+<li>第二个参数是可选的：<code>meet</code>（默认）表示缩放图形，整个 <code>viewBox</code> 在视口中可见；<code>slice</code> 表示缩放图形，但 <code>viewBox</code> 绘制的区域大于视口。</li>
+</ul>
+</li>
+<li>使用 <code>symbol</code> 元素定义了一个图形模板对象，下面可以使用 <code>use</code> 元素复用这个模板。</li>
+</ul>
+<ol start="2">
+<li>定义颜色数组、心形数组。</li>
+</ol>
+<pre><code class="language-js">const colors = [&quot;#e03776&quot;, &quot;#8f3e98&quot;, &quot;#4687bf&quot;, &quot;#3bab6f&quot;, &quot;#f9c25e&quot;, &quot;#f47274&quot;];
+const hearts = [];
+</code></pre>
+<ol start="3">
+<li>向心形数组添加 <code>symbol</code> 元素的 <code>use</code> 元素实例。</li>
+</ol>
+<pre><code class="language-js">function useTheHeart(n) {
+  const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+  use.n = n;
+  use.setAttribute('href', '#heart');
+  use.setAttribute('transform', `scale(${use.n})`);
+  use.setAttribute('fill', colors[n % colors.length]);
+  use.setAttribute('x', -69);
+  use.setAttribute('y', -69);
+  use.setAttribute('width', 138);
+  use.setAttribute('height', 138);
+  hearts.push(use);
+  svg.appendChild(use);
+}
+for (let n = 18; n &gt;= 0; n--) useTheHeart(n);
+</code></pre>
+<ul>
+<li><code>use</code> 元素实例的 <code>x</code>、<code>y</code>、<code>width</code> 和 <code>height</code> 属性需要和 <code>symbol</code> 元素的 <code>viewBox</code> 坐标系相对应。</li>
+<li>根据 <code>use</code> 元素的序号对其进行放大指定倍数，同时将放大倍数绑定到元素上。</li>
+</ul>
+<ol start="4">
+<li>定义动画函数。</li>
+</ol>
+<pre><code class="language-js">function Frame() {
+  window.requestAnimationFrame(Frame);
+  for (let i = 0; i &lt; hearts.length; i++) {
+    if (hearts[i].n &lt; 18) {
+      hearts[i].n += .01;
+    } else {
+      hearts[i].n = 0;
+      svg.appendChild(hearts[i]);
+    }
+    hearts[i].setAttribute('transform', `scale(${hearts[i].n})`);
+  }
+}
+Frame();
+</code></pre>
+<ul>
+<li>循环遍历 <code>hearts</code> 数组，将每个心形放大倍数 <code>+= .01</code>。</li>
+<li>当心形的放大倍数大于 <code>18</code> 时，将其调整为 <code>0</code>，并将元素从 <code>svg</code> 子节点中删除并重新添加到子节点列表的末尾处（如果某个节点已经拥有父节点，在被传入 <code>appendChild</code> 方法参数中调用后，它首先会被移除，再被插入到新的位置）。</li>
+</ul>
+<h2 id="click-love-页面点击特效">Click Love 页面点击特效</h2>
+<p>这是一个迷你的页面小插件，体积只有 1KB 多，通过 <code>script</code> 标签引入后，点击页面任意处会出现小爱心的图形。源码如下：</p>
+<pre><code class="language-js">!function(e,t,a){function r(){for(var e=0;e&lt;n.length;e++)n[e].alpha&lt;=0?(t.body.removeChild(n[e].el),n.splice(e,1)):(n[e].y--,n[e].scale+=.004,n[e].alpha-=.013,n[e].el.style.cssText=&quot;left:&quot;+n[e].x+&quot;px;top:&quot;+n[e].y+&quot;px;opacity:&quot;+n[e].alpha+&quot;;transform:scale(&quot;+n[e].scale+&quot;,&quot;+n[e].scale+&quot;) rotate(45deg);background:&quot;+n[e].color+&quot;;z-index:99999&quot;);requestAnimationFrame(r)}var n=[];e.requestAnimationFrame=e.requestAnimationFrame||e.webkitRequestAnimationFrame||e.mozRequestAnimationFrame||e.oRequestAnimationFrame||e.msRequestAnimationFrame||function(e){setTimeout(e,1e3/60)},function(e){var a=t.createElement(&quot;style&quot;);a.type=&quot;text/css&quot;;try{a.appendChild(t.createTextNode(e))}catch(t){a.styleSheet.cssText=e}t.getElementsByTagName(&quot;head&quot;)[0].appendChild(a)}(&quot;.heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}&quot;),function(){var a=&quot;function&quot;==typeof e.onclick&amp;&amp;e.onclick;e.onclick=function(e){a&amp;&amp;a(),function(e){var a=t.createElement(&quot;div&quot;);a.className=&quot;heart&quot;,n.push({el:a,x:e.clientX-5,y:e.clientY-5,scale:1,alpha:1,color:&quot;rgb(&quot;+~~(255*Math.random())+&quot;,&quot;+~~(255*Math.random())+&quot;,&quot;+~~(255*Math.random())+&quot;)&quot;}),t.body.appendChild(a)}(e)}}(),r()}(window,document);
+</code></pre>
+<p>将以上代码保存为一个 JS 文件，通过 <code>script</code> 标签引入到页面即可开启动效。</p>
+<h2 id="码上掘金">码上掘金</h2>
+<iframe src="https://code.juejin.cn/pen/7203751914763190330"></iframe>
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/gei-layui-vue-ti-liao-ge-pr/" class="post-title gt-a-link">
+                    如何给开源项目提 PR，给 layui - vue 提了个 PR，已合并
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

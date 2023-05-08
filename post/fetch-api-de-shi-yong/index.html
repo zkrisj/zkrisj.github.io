@@ -1,0 +1,341 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>Fetch API 的使用 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    Fetch API 的使用
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-08-29 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tags">
+                            # JS
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p>Fetch 是一个用来获取网络资源的 API，与 XMLHttpRequest 功能基本相同，但 Fetch 使用 Promise 处理响应，而不是回调函数。</p>
+<h2 id="语法">语法</h2>
+<pre><code class="language-ts">Promise&lt;Response&gt; fetch(input:string|Request[, options:object]);
+</code></pre>
+<blockquote>
+<p>当接收到一个代表错误的 HTTP 响应状态码时，从 <code>fetch()</code> 返回的 Promise <strong>不会被标记为 reject</strong>，即使是 404 或 500 状态，也都会将 Promise 状态标记为 resolve（如果响应的 HTTP 状态码不在 200 - 299 的范围内，则设置 resolve 返回值的 <code>ok</code> 属性为 false）。只有当网络故障时或请求被阻止时，<strong>才会被标记为 reject</strong>。</p>
+</blockquote>
+<h3 id="options">options</h3>
+<ul>
+<li>
+<p><code>method</code>: 请求使用的方法，如 <code>GET</code>、<code>POST</code>。</p>
+</li>
+<li>
+<p><code>headers</code>: 请求的头信息，可以为 <code>Headers</code> 对象或包含 <code>Headers</code> 属性和值的对象字面量。</p>
+</li>
+<li>
+<p><code>body</code>: 请求的 body 信息：<code>Blob</code>、<code>FormData</code>、<code>URLSearchParams</code> 对象或者字符串。注意 GET 或 HEAD 方法的请求不能包含 body 信息。</p>
+</li>
+<li>
+<p><code>signal</code>: 指定一个 <code>AbortSignal</code> 实例，用于取消 <code>fetch()</code> 请求。</p>
+</li>
+<li>
+<p><code>keepalive</code>：用于页面卸载时，告诉浏览器在后台保持连接，继续发送数据。一个典型的场景就是，用户离开网页时，脚本向服务器提交一些用户行为的统计信息。这时，如果不用 <code>keepalive</code> 属性，数据可能无法发送，因为浏览器已经把页面卸载了。</p>
+</li>
+<li>
+<p><code>mode</code>: 请求的模式，如 <code>cors</code>（默认值，允许跨域请求。）、<code>no-cors</code>（请求方法只限于 GET、POST 和 HEAD，并且只能使用有限的几个简单标头，不能添加跨域的复杂标头，相当于提交表单所能发出的请求。）或者 <code>same-origin</code>（只允许同源请求）。</p>
+</li>
+<li>
+<p><code>credentials</code>: 请求的 credentials，<code>same-origin</code>（默认值，同源请求时发送 <code>cookie</code>，跨域请求时不发送。）、<code>omit</code>（一律不发送）或者 <code>include</code>（不管同源请求，还是跨域请求，一律发送 <code>cookie</code>。）。为了在当前域名内自动发送 <code>cookie</code>，必须提供这个选项，从 Chrome 50 开始，这个属性也可以接受 <code>FederatedCredential</code> 实例或是一个 <code>PasswordCredential</code> 实例。</p>
+</li>
+<li>
+<p><code>cache</code>: 请求的 cache 模式：<code>default</code>、 <code>no-store</code>、 <code>reload</code> 、 <code>no-cache</code>、 <code>force-cache</code> 或者 <code>only-if-cached</code>。</p>
+<ul>
+<li><code>default</code>：默认值，先在缓存里面寻找匹配的请求。</li>
+<li><code>no-store</code>：直接请求远程服务器，并且不更新缓存。</li>
+<li><code>reload</code>：直接请求远程服务器，并且更新缓存。</li>
+<li><code>no-cache</code>：将服务器资源跟本地缓存进行比较，有新的版本才使用服务器资源，否则使用缓存。</li>
+<li><code>force-cache</code>：缓存优先，只有不存在缓存的情况下，才请求远程服务器。</li>
+<li><code>only-if-cached</code>：只检查缓存，如果缓存里面不存在，将返回504错误。</li>
+</ul>
+</li>
+<li>
+<p><code>redirect</code>: 可用的 redirect 模式：<code>follow</code> (自动跟随重定向), <code>error</code> (如果产生重定向 <code>fetch()</code> 将自动终止并抛出错误），或者 <code>manual</code> (<code>fetch()</code> 不跟随 HTTP 跳转，但是 <code>response.url</code> 属性会指向新的 URL，<code>response.redirected</code> 属性会变为 <code>true</code>，由开发者自己决定后续如何处理跳转。)。在 Chrome 中默认使用 <code>follow</code>（Chrome 47 之前的默认值是 <code>manual</code>）。</p>
+</li>
+<li>
+<p><code>referrer</code>: <code>no-referrer</code>、<code>client</code> 或一个 URL。默认是 <code>client</code>。</p>
+</li>
+<li>
+<p><code>referrerPolicy</code>: 指定了 HTTP 头部 referer 字段的值。可能为以下值之一：<code>no-referrer</code>、 <code>no-referrer-when-downgrade</code>、<code>origin</code>、<code>origin-when-cross-origin</code>、 <code>unsafe-url</code>。</p>
+</li>
+<li>
+<p><code>integrity</code>: 请求的 <strong>SRI</strong>（子资源完整性（Subresource Integrity）是允许浏览器检查其获得的资源（例如从 CDN 获得的）是否被篡改的一项安全特性。它通过验证获取文件的哈希值和你提供的哈希值是否一样来判断资源是否被篡改。比如，下载文件时，检查文件的 SHA-256 哈希值是否相符，确保没有被篡改。) 值（例如： <code>sha256-BpfBw7ivV8q2jLiT13fxDYAe2tJllusRSZ273h2nFSE=</code>）。</p>
+</li>
+</ul>
+<pre><code class="language-js">const response = fetch(url, {
+  method: &quot;GET&quot;,
+  headers: {
+    &quot;Content-Type&quot;: &quot;text/plain;charset=UTF-8&quot;
+  },
+  body: undefined,
+  referrer: &quot;about:client&quot;,
+  referrerPolicy: &quot;no-referrer-when-downgrade&quot;,
+  mode: &quot;cors&quot;, 
+  credentials: &quot;same-origin&quot;,
+  cache: &quot;default&quot;,
+  redirect: &quot;follow&quot;,
+  integrity: &quot;&quot;,
+  keepalive: false,
+  signal: undefined
+});
+</code></pre>
+<h2 id="response-对象">Response 对象</h2>
+<p><code>fetch()</code> 方法返回一个 Promise，resolve 时得到一个 Response 对象。</p>
+<h3 id="属性">属性</h3>
+<ul>
+<li>Response.headers 只读</li>
+<li>包含此 Response 所关联的 Headers 对象。</li>
+<li>Response.ok 只读</li>
+<li>包含了一个布尔值，表示该 Response 成功（HTTP 状态码的范围在 200-299）。</li>
+<li>Response.redirected 只读</li>
+<li>表示该 Response 是否来自一个重定向，如果是的话，它的 URL 列表将会有多个条目。</li>
+<li>Response.status 只读</li>
+<li>包含 Response 的状态码（例如 200 表示成功）。</li>
+<li>Response.statusText 只读</li>
+<li>包含了与该 Response 状态码一致的状态信息（例如，OK 对应 200）。</li>
+<li>Response.type 只读</li>
+<li>包含 Response 的类型（例如，basic、cors）。</li>
+<li>Response.url 只读</li>
+<li>包含 Response 的 URL。</li>
+<li>Response.body 只读</li>
+<li>一个简单的 getter，用于暴露一个 ReadableStream 类型的 body 内容。</li>
+<li>Response.bodyUsed 只读</li>
+<li>包含了一个布尔值，表示该 Response 是否读取过 Body。</li>
+</ul>
+<h3 id="方法">方法</h3>
+<ul>
+<li>Response.clone()</li>
+<li>创建一个 Response 对象的克隆。</li>
+<li>Response.error()</li>
+<li>返回一个绑定了网络错误的新的 Response 对象。</li>
+<li>Response.redirect()</li>
+<li>用另一个 URL 创建一个新的 Response。</li>
+<li>以下方法 Responses 对象被设置为了 stream 的方式，所以只能被读取一次：</li>
+<li>Response.arrayBuffer()</li>
+<li>读取 Response 对象并且将它设置为已读，并返回一个被解析为 ArrayBuffer 格式的 Promise 对象。</li>
+<li>Response.blob()</li>
+<li>读取 Response 对象并且将它设置为已读，并返回一个被解析为 Blob 格式的 Promise 对象。</li>
+<li>Response.formData()</li>
+<li>读取Response 对象并且将它设置为已读，并返回一个被解析为 FormData 格式的 Promise 对象。</li>
+<li>Response.json()</li>
+<li>读取 Response 对象并且将它设置为已读，并返回一个被解析为 JSON 格式的 Promise 对象。</li>
+<li>Response.text()</li>
+<li>读取 Response 对象并且将它设置为已读，并返回一个被解析为 USVString 格式的 Promise 对象。</li>
+</ul>
+<h2 id="使用">使用</h2>
+<pre><code class="language-js">const response = await fetch(&quot;https://lf3-cdn-tos.bytescm.com/obj/static/xitu_juejin_web//static/favicons/favicon-32x32.png&quot;);
+for (let [key, value] of response.headers) { 
+  console.log(`${key} : ${value}`);  
+}
+response.headers.forEach(
+  (value, key) =&gt; console.log(key, ':', value)
+);
+console.log(response.headers.get('Content-Type'));
+const response = await fetch(&quot;https://api.juejin.cn/content_api/v1/author_center/task_list&quot;, {
+  headers: {
+    &quot;content-type&quot;: &quot;application/json&quot;,
+  },
+  body: '{&quot;cursor&quot;:&quot;0&quot;,&quot;limit&quot;:10}',
+  method: &quot;POST&quot;,
+  credentials: &quot;include&quot;
+});
+console.log(await response.clone().json());
+</code></pre>
+<h3 id="上传文件">上传文件</h3>
+<p>上传二进制文件时，不用修改标头的 <code>Content-Type</code>，浏览器会自动设置。</p>
+<ol>
+<li>方式一，已存在的表单元素：<code>fetch(url, { body: new FormData(form:HTMLFormElement) })</code>。</li>
+<li>方式二，构造出一个表单对象：</li>
+</ol>
+<pre><code class="language-js">const input = document.querySelector('input[type=&quot;file&quot;]');
+
+const data = new FormData();
+data.append('file', input.files[0]);
+data.append('username', 'foo');
+
+const response = fetch(url, {
+  method: 'POST',
+  body: data
+});
+</code></pre>
+<ol start="3">
+<li>方式三，直接上传二进制数据，将 <code>Blob</code> 或 <code>ArrayBuffer</code> 对象放在 <code>body</code> 属性里面：</li>
+</ol>
+<pre><code class="language-js">const blob = await new Promise(resolve =&gt;   
+  canvasElem.toBlob(resolve,  'image/png')
+);
+
+const response = await fetch(url, {
+  method:  'POST',
+  body: blob
+});
+</code></pre>
+<h2 id="总结和对比-axios">总结和对比 axios</h2>
+<ul>
+<li>Fetch API 是 WHATWG 规范标准，axios 使用的是 XMLHttpRequest，都是基于 promise 的，在 IE 中都需要 promise Polyfill。</li>
+<li>Fetch 没有 <code>XMLHttpRequest.onprogress</code> 事件，但可以通过 <code>Response.body</code> 接口返回的 ReadableStream 对象获取当前数据块大小，监测上传下载进度。</li>
+<li><strong>中断请求功能</strong> 可以通过 AbortController、AbortSignal API 实现。</li>
+<li><strong>拦截请求和响应功能</strong> 可以通过包装 <code>fetch()</code> 方法或 npm 库 fetch-intercept 实现。</li>
+</ul>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/guan-yu-xu-ni-domshadow-dom-he-documentfragment/" class="post-title gt-a-link">
+                    关于 虚拟 DOM、Shadow DOM 和 DocumentFragment
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

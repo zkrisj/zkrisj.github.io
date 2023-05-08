@@ -1,0 +1,267 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>HTML 中的语义元素 | 青训营笔记 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    HTML 中的语义元素 | 青训营笔记
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2023-01-22 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/10MZNKSN7/" class="post-tags">
+                            # HTML
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p>我们知道，HTML 被用来结构化信息——例如标题、段落和列表等，也可用来在一定程度上描述文档的外观和语义。在编程中，语义指的是一段代码的含义——例如 &quot;运行这行 JavaScript 代码会产生怎样的影响？&quot;, 或者 &quot;这个 HTML 的元素有什么作用，扮演了什么样的角色&quot;（而不只是 &quot;它看上去像是什么？&quot;）。</p>
+<p>首先我们看一个使用 HTML5 语义元素定义的页面，可以看到通过语义元素，HTML 结构更加清晰了。</p>
+<iframe src="https://code.juejin.cn/pen/7191133165879033893"></iframe>
+<h2 id="html-中的语义">HTML 中的语义</h2>
+<p>语义 HTML 是使用 HTML 标记来加强网页和 Web 应用程序中信息的语义或意义，而不仅仅是定义其表示或外观。根据 W3C，语义网：</p>
+<blockquote>
+<p>“允许跨应用程序、企业和团体对数据进行分享和重用。”</p>
+</blockquote>
+<p>好的语义化 HTML 也改善了网页文档的可访问性（<a href="https://en.wikipedia.org/wiki/Web_Content_Accessibility_Guidelines">参见网页内容无障碍指南</a>）。例如，当屏幕阅读器或音频浏览器可以正确判定一个文档的结构时，视觉障碍用户不会再因阅读重复或无关的信息而浪费时间。</p>
+<p>例如，<code>&lt;h1&gt;</code> 元素是一个语义化元素，赋予了它包裹着的文本“这个页面中最高级别标题功能“的角色 (或含义) 。</p>
+<pre><code class="language-html">&lt;h1&gt;This is a top level heading&lt;/h1&gt;
+</code></pre>
+<p>默认情况下，绝大多数浏览器的代理样式将会赋予一个 <code>&lt;h1&gt;</code> 元素很大的字号尺寸从而使它看上去更像是一个标题（虽然你可以把它格式化为任何你想要的样式），但是更重要的是它的语义会被在很多地方以不同的方式被使用到，例如搜索引擎会把它包含的内容作为一个重要的关键词，从而影响这个页面在搜索结果中的排序（SEO），而且屏幕阅读器可以将其用作路标，以帮助视障用户浏览页面。此外，编写语义标记的其他一些好处如下：</p>
+<ul>
+<li>查找有意义的标记比在 div 等标记中的没有语义或命名空间的样式类要容易得多</li>
+<li>可以向开发人员建议将要填充的数据类型</li>
+<li>语义命名反映了正确的自定义元素/组件</li>
+</ul>
+<p>但是，你也可以通过样式（CSS）来让任何的元素看上去像是一个最高级别的标题：</p>
+<pre><code class="language-html">&lt;span style=&quot;font-size: 32px; margin: 21px 0;&quot;&gt;Is this a top level heading?&lt;/span&gt;
+</code></pre>
+<p>这将使它看起来像一个顶级标题，但它没有语义值，因此它不会获得如上所述的任何额外好处。</p>
+<h2 id="语义元素">语义元素</h2>
+<p>语义元素清楚地向浏览器和开发者描述其意义。</p>
+<ul>
+<li>非语义元素的例子：<code>&lt;div&gt;</code> 和 <code>&lt;span&gt;</code> - 无法提供关于其内容的信息。</li>
+<li>语义元素的例子：<code>&lt;form&gt;</code>、<code>&lt;table&gt;</code>、<code>&lt;img&gt;</code> 等 - 清晰地定义其内容。</li>
+</ul>
+<p>许多网站包含了指示导航、页眉、菜单、内容、文章以及页脚的 HTML 代码，例如这些：<code>&lt;div id=&quot;nav&quot;&gt;</code>、<code>&lt;div class=&quot;header&quot;&gt;</code>、<code>&lt;div id=&quot;menu&quot;&gt;</code>、<code>&lt;div id=&quot;content&quot;&gt;</code>、<code>&lt;div id=&quot;post&quot;&gt;</code>、<code>&lt;div id=&quot;footer&quot;&gt;</code>。而在 HTML5 中，提供了一系列新的语义元素来明确一个 Web 页面的不同部分，例如与以上 HTML 代码对应的元素分别为：<code>&lt;nav&gt;</code>、<code>&lt;header&gt;</code>、<code>&lt;menu&gt;</code>、<code>&lt;section&gt;</code>、<code>&lt;article&gt;</code>、<code>&lt;footer&gt;</code>。</p>
+<figure data-type="image" tabindex="1"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/96386da288144b6881fd5e766623f436~tplv-k3u1fbpfcp-watermark.image?" alt="语义元素.jpg" loading="lazy"></figure>
+<p>下面介绍几个常见的语义元素。</p>
+<h3 id="address-元素"><code>&lt;address&gt;</code> 元素</h3>
+<p>表示上下文的背景信息，可以是必要的任何一种联系方式，比如真实地址、URL、电子邮箱、电话号码、社交媒体账号、地理坐标等等。</p>
+<ul>
+<li>虽然 <code>&lt;address&gt;</code> 元素看起来只是使用了 <code>&lt;i&gt;</code> 或者 <code>&lt;em&gt;</code> 元素的默认样式来渲染其中的文本，通常呈现为斜体，但是当处理联系信息时使用它更为合适，因为它表达了额外的语义信息。</li>
+<li>当表示一个和联系信息无关的任意的地址时，请改用 <code>&lt;p&gt;</code> 元素而不是 <code>&lt;address&gt;</code> 元素。</li>
+<li>这个元素不能包含除联系信息之外的任何信息，比如出版日期（这应当被包含在 <code>&lt;time&gt;</code> 元素之中）。</li>
+<li>通常，<code>&lt;address&gt;</code> 元素可以放在 <code>&lt;footer&gt;</code> 元素之中（如果存在的话）。如果 <code>&lt;address&gt;</code> 元素位于 <code>&lt;article&gt;</code> 元素内，则它表示文章的联系信息。</li>
+<li>大多数浏览器会在 <code>&lt;address&gt;</code> 元素前后添加折行。</li>
+</ul>
+<h3 id="article-元素"><code>&lt;article&gt;</code> 元素</h3>
+<p>表示文档、页面、应用或网站中的独立结构，其意在成为可独立分配的或可复用的结构，如在发布中，它可能是论坛帖子、杂志或新闻文章、博客、用户提交的评论、交互式组件，或者其他独立的内容项目。</p>
+<ul>
+<li>每个<code>&lt;article&gt;</code>，通常包括标题（<code>&lt;h1&gt;</code> - <code>&lt;h6&gt;</code> 元素）作为<code>&lt;article&gt;</code>元素的子元素。</li>
+<li>当 <code>&lt;article&gt;</code> 元素嵌套使用时，则该元素代表与外层元素有关的文章。例如，代表博客评论的 <code>&lt;article&gt;</code> 元素可嵌套在代表博客文章的 <code>&lt;article&gt;</code> 元素中。</li>
+<li><code>&lt;article&gt;</code> 元素的作者信息可通过 <code>&lt;address&gt;</code> 元素提供，但是不适用于嵌套的 <code>&lt;article&gt;</code> 元素。</li>
+<li><code>&lt;article&gt;</code> 元素的发布日期和时间可通过 <code>&lt;time&gt;</code> 元素的 <code>pubdate</code> 属性表示。</li>
+<li>可以使用 <code>&lt;time&gt;</code> 元素的 <code>datetime</code> 属性来描述 <code>&lt;article&gt;</code> 元素的发布日期和时间。</li>
+</ul>
+<h3 id="aside-元素"><code>&lt;aside&gt;</code> 元素</h3>
+<p>表示一个和其余页面内容几乎无关的部分，被认为是独立于该内容的一部分并且可以被单独的拆分出来而不会使整体受影响。其通常表现为侧边栏或者标注框（call-out boxes）。</p>
+<ul>
+<li><code>&lt;aside&gt;</code> 不能是 <code>&lt;address&gt;</code> 元素的后代。</li>
+<li>不要把 <code>&lt;aside&gt;</code> 元素放在括号内要说明的文本，因为这种文本被认为是主要流内容的一部分。</li>
+</ul>
+<h3 id="footer-元素"><code>&lt;footer&gt;</code> 元素</h3>
+<p>表示最近一个章节内容或者根节点元素的页脚，通常包含该章节作者、版权数据或者与文档相关的链接等信息。</p>
+<ul>
+<li><code>&lt;footer&gt;</code> 元素内的作者信息应包含在 <code>&lt;address&gt;</code> 元素中。</li>
+<li><code>&lt;footer&gt;</code> 元素必须不能是 <code>&lt;address&gt;</code>、<code>&lt;header&gt;</code> 或者另一个 <code>&lt;footer&gt;</code> 元素的后代元素。</li>
+<li><code>&lt;footer&gt;</code> 元素不是分区内容，因此不能在页面大纲中引入新的分区。</li>
+</ul>
+<h3 id="header-元素"><code>&lt;header&gt;</code> 元素</h3>
+<p>与全站的横幅标志作用具有相同的意义，除非嵌套在分区内容中。<code>&lt;header&gt;</code> 元素可以定义一个全局网站的标题，在可访问性树中被描述为一个横幅。它通常包括一个标志、公司名称、搜索功能，可能还有全局导航或一个 Logo，一般位于页面的顶部。</p>
+<p>否则，它是可访问性树中的一个部分，通常包含周围部分的标题（h1-h6元素）和可选的副标题，但这不是必需的。</p>
+<ul>
+<li><code>&lt;header&gt;</code> 元素通常用于包含页面部分的标题（h1 至 h6 元素）。</li>
+<li><code>&lt;header&gt;</code> 元素必须不能是 <code>&lt;address&gt;</code>、<code>&lt;footer&gt;</code> 或者另一个 <code>&lt;header&gt;</code> 元素的后代元素。</li>
+<li><code>&lt;header&gt;</code> 元素不是分区内容，因此不能在页面大纲中引入新的分区。</li>
+</ul>
+<h3 id="main-元素"><code>&lt;main&gt;</code> 元素</h3>
+<p>呈现了文档或应用的主体部分，与文档直接相关，或者扩展于文档的中心主题、应用的主要功能部分的内容组成。</p>
+<ul>
+<li><code>&lt;main&gt;</code> 与文档的大纲无关，不会影响 DOM 的页面结构，仅有提供信息的作用。</li>
+<li><code>&lt;main&gt;</code> 元素的内容应当是独一无二的，任何同时存在于任意一系列文档中的相同、重复内容，比如侧边栏、导航栏链接、版权信息、网站 Logo，搜索框（除非搜索框为文档的主要功能），都不应当被包含在其内。</li>
+<li>浏览器的阅读器模式会寻找文档中的 <code>&lt;main&gt;</code> 元素，以及 标题元素和内容分区元素以便将内容转换至阅读器视图。</li>
+</ul>
+<h3 id="nav-元素"><code>&lt;nav&gt;</code> 元素</h3>
+<p>表示页面的一部分，其目的是在当前文档或其他文档中提供导航链接，例如菜单，目录和索引。</p>
+<ul>
+<li>一个网页可能含有多个 <code>&lt;nav&gt;</code> 元素，例如一个是网站内的导航列表，另一个是本页面内的导航列表。</li>
+<li>对于屏幕阅读障碍的人，可以使用这个元素来确定是否忽略初始内容。</li>
+</ul>
+<h3 id="section-元素"><code>&lt;section&gt;</code> 元素</h3>
+<p>表示 HTML 文档中一个通用独立章节，一般来说会包含一个标题（在文档中，有独立的内容部分但没有标题来描述其内容，是没有任何意义的。标题对所有的读者都很有用，尤其是对使用屏幕阅读器等辅助技术的用户，同时标题也有利于搜索引擎优化）。一般来说，<code>&lt;section&gt;</code> 应该出现在文档大纲中。</p>
+<ul>
+<li><code>&lt;section&gt;</code> 元素不能是 <code>&lt;address&gt;</code> 元素的后代。</li>
+<li><code>&lt;section&gt;</code> 是一个通用的分节元素，只有在没有更具体的元素来代表它的时候才可以使用。例如一个搜索结果列表或地图显示及其控件并没有特定的元素，可以放在 <code>&lt;section&gt;</code> 里面。</li>
+<li>当该元素的内容可以作为一个独立的作品在多个媒体上发表，使用 <code>&lt;article&gt;</code> 是一个更好的选择。</li>
+<li>将该元素作为一个样式包装时，应使用 <code>&lt;div&gt;</code>。</li>
+</ul>
+<h2 id="总结">总结</h2>
+<p>当要使用哪个标记时，先清楚哪个(或哪些)元素最适合。例如，它是一个数据列表吗？是有序的还是无序的？它是一篇带有章节和相关信息的文章吗？它列出了定义吗？它是一个需要标题的数字或图像吗？除了全局的页眉和页脚之外，它还应该有一个页眉和页脚吗？等等。</p>
+<h2 id="参考资料">参考资料</h2>
+<p><a href="https://developer.mozilla.org/en-US/docs/Glossary/Semantics#semantics_in_html">Semantics in HTML</a></p>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/qing-xun-ying-x-ma-shang-jue-jin-zhi-zuo-yi-ge-fan-zhuan-dong-xiao-de-ge-ren-ming-pian/" class="post-title gt-a-link">
+                    「青训营 X 码上掘金」制作一个翻转动效的个人名片
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

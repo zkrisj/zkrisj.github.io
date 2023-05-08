@@ -1,0 +1,658 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>JS | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <div class="main-content">
+        <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+        <div class="current-tag-container">
+            <h2 class="title gt-c-content-color-first">
+                #JS
+            </h2>
+        </div>
+        <div class="post-list-container">
+    <div class="post-inner">
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://zkrisj.github.io/post/tuo-zhuai-tu-pian-suo-fang-xiao-guo/">
+                            <span class="post-title gt-c-content-color-first">拖拽图片缩放效果</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2023-05-02 ·
+                        </time>
+                        
+                            <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tag">
+                                # JS
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://zkrisj.github.io/post/javascript-markdown-ku-marked/">
+                            <span class="post-title gt-c-content-color-first">JavaScript Markdown 库 marked</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2023-04-30 ·
+                        </time>
+                        
+                            <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tag">
+                                # JS
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://zkrisj.github.io/post/javascript-bi-bao-or-qing-xun-ying-bi-ji/">
+                            <span class="post-title gt-c-content-color-first">JavaScript 闭包</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2023-04-30 ·
+                        </time>
+                        
+                            <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tag">
+                                # JS
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://zkrisj.github.io/post/mouseevent-shu-biao-shi-jian-xiang-jie/">
+                            <span class="post-title gt-c-content-color-first">MouseEvent 鼠标事件详解</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2023-04-13 ·
+                        </time>
+                        
+                            <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tag">
+                                # JS
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://zkrisj.github.io/post/yi-ge-windows-zhu-ti-de-404-ye-mian/">
+                            <span class="post-title gt-c-content-color-first">一个  Windows 主题的 404 页面</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2023-03-17 ·
+                        </time>
+                        
+                            <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tag">
+                                # JS
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://zkrisj.github.io/post/javascript-wu-cai-zhi-xie-ku-js-confetti/">
+                            <span class="post-title gt-c-content-color-first">🎉JavaScript 五彩纸屑库 js-confetti</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2023-03-08 ·
+                        </time>
+                        
+                            <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tag">
+                                # JS
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://zkrisj.github.io/post/svg-xin-xing-bo-wen-dong-hua-click-love/">
+                            <span class="post-title gt-c-content-color-first">SVG 心形波纹动画 + Click Love</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2023-02-25 ·
+                        </time>
+                        
+                            <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tag">
+                                # JS
+                            </a>
+                        
+                            <a href="https://zkrisj.github.io/tag/10MZNKSN7/" class="post-tag">
+                                # HTML
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://zkrisj.github.io/post/xie-hao-js-de-yuan-ze-zu-jian-feng-zhuang-guo-cheng-chou-xiang-or-qing-xun-ying-bi-ji/">
+                            <span class="post-title gt-c-content-color-first">写好 JS 的原则 组件封装、过程抽象 ｜ 青训营笔记</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2023-01-24 ·
+                        </time>
+                        
+                            <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tag">
+                                # JS
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://zkrisj.github.io/post/htmlcssjs-ge-si-qi-zhi-de-yuan-ze-or-qing-xun-ying-bi-ji/">
+                            <span class="post-title gt-c-content-color-first">HTML、CSS、JS 各司其职的原则 ｜ 青训营笔记</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2023-01-23 ·
+                        </time>
+                        
+                            <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tag">
+                                # JS
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://zkrisj.github.io/post/tu-nian-rang-zhe-ge-tu-zi-fa-she-bao-po-ni-de-pi-yun/">
+                            <span class="post-title gt-c-content-color-first">兔年让这只🐇发射💣来爆破你的所有坏运</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2023-01-08 ·
+                        </time>
+                        
+                            <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tag">
+                                # JS
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://zkrisj.github.io/post/qian-duan-ben-di-cun-chu-shu-ju-ku-indexeddb-cun-chu-wen-jian/">
+                            <span class="post-title gt-c-content-color-first">前端本地存储数据库 IndexedDB 存储文件</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2022-12-16 ·
+                        </time>
+                        
+                            <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tag">
+                                # JS
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://zkrisj.github.io/post/qian-duan-ben-di-cun-chu-shu-ju-ku-indexeddb-de-fan-wei-sou-suo-he-ji-shu/">
+                            <span class="post-title gt-c-content-color-first">前端本地存储数据库 IndexedDB 的范围查询和对结果计数</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2022-12-15 ·
+                        </time>
+                        
+                            <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tag">
+                                # JS
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://zkrisj.github.io/post/qian-duan-ben-di-cun-chu-shu-ju-ku-indexeddb-he-web-sqlweb-storage-de-dui-bi/">
+                            <span class="post-title gt-c-content-color-first">前端本地存储数据库 IndexedDB 和 Web SQL、Web Storage 的对比</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2022-12-13 ·
+                        </time>
+                        
+                            <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tag">
+                                # JS
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://zkrisj.github.io/post/qian-duan-ben-di-cun-chu-shu-ju-ku-indexeddb-de-zeng-shan-gai-cha/">
+                            <span class="post-title gt-c-content-color-first">前端本地存储数据库 IndexedDB 的增删改查</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2022-12-12 ·
+                        </time>
+                        
+                            <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tag">
+                                # JS
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://zkrisj.github.io/post/web-ying-yong-cheng-xu-de-wen-jian-xi-tong-xie-ru-neng-li/">
+                            <span class="post-title gt-c-content-color-first">Web 应用程序的文件系统写入能力</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2022-12-01 ·
+                        </time>
+                        
+                            <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tag">
+                                # JS
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://zkrisj.github.io/post/bu-shi-yong-input-file-yuan-su-js-ru-he-cao-zuo-wen-jian/">
+                            <span class="post-title gt-c-content-color-first">不使用 input file 元素，JS 如何操作文件</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2022-11-30 ·
+                        </time>
+                        
+                            <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tag">
+                                # JS
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://zkrisj.github.io/post/html-drag-and-drop-api-he-shi-xian-ye-mian-yuan-su-tuo-zhuai-xiao-guo/">
+                            <span class="post-title gt-c-content-color-first">拖拽删除元素、拖拽排序、拖拽预览图片和拖拽移动元素</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2022-11-25 ·
+                        </time>
+                        
+                            <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tag">
+                                # JS
+                            </a>
+                        
+                            <a href="https://zkrisj.github.io/tag/10MZNKSN7/" class="post-tag">
+                                # HTML
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://zkrisj.github.io/post/canvas-shi-xian-wen-zi-shui-yin-he-tu-pian-shui-yin-he-cheng/">
+                            <span class="post-title gt-c-content-color-first">Canvas 实现文字水印和图片水印合成</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2022-11-18 ·
+                        </time>
+                        
+                            <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tag">
+                                # JS
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://zkrisj.github.io/post/canvas-drawimage-fang-fa-shi-xian-tu-pian-ya-suo/">
+                            <span class="post-title gt-c-content-color-first">Canvas drawImage() 方法实现图片压缩</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2022-11-17 ·
+                        </time>
+                        
+                            <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tag">
+                                # JS
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="post gt-bg-theme-color-second">
+                <div class="post-left">
+                    <div>
+                        
+                        <a href="https://zkrisj.github.io/post/shi-yong-svg-forginobject-shi-xian-dui-dom-yuan-su-jie-tu/">
+                            <span class="post-title gt-c-content-color-first">使用 SVG forginObject 对页面 DOM 元素截图</span>
+                        </a>
+                    </div>
+                    <div class="gt-post-content post-abstract gt-c-content-color-second">
+                        
+                    </div>
+                    <div class="post-info">
+                        <time class="post-time gt-c-content-color-first">
+                            发布于 · 2022-11-13 ·
+                        </time>
+                        
+                            <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tag">
+                                # JS
+                            </a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        
+    </div>
+</div>
+        <div class="pagination-container">
+    
+    
+        <a href="https://zkrisj.github.io/tag/LYfiaPBFV/page/2" class="prev-page gt-a-link">下一页</a>
+    
+</div>
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,332 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>AbortController AbortSignal 的使用 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    AbortController AbortSignal 的使用
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-08-29 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tags">
+                            # JS
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p><code>AbortController</code> 接口表示一个控制器对象，用来中止一个或多个请求。使用 <code>AbortController.signal</code> 属性可以获取其关联的 <code>AbortSignal</code> 对象的引用。</p>
+<p><code>AbortSignal</code> 对象表示一个信号，可以完成与 DOM 请求的通信。</p>
+<h2 id="方法和属性">方法和属性</h2>
+<p><code>AbortController.signal</code></p>
+<ul>
+<li>返回一个 <code>AbortSignal</code> 对象实例，用来传递中止信号。</li>
+</ul>
+<p><code>AbortController.abort()</code></p>
+<ul>
+<li>中止它的 <code>signal</code> 对应的请求。</li>
+</ul>
+<p><code>AbortSignal.aborted</code></p>
+<ul>
+<li>以 Boolean 表示与之通信的请求是否被终止（<code>true</code>）或未终止（<code>false</code>）。</li>
+</ul>
+<p><code>AbortSignal.reason</code></p>
+<ul>
+<li>一旦信号中止，提供中止原因。</li>
+</ul>
+<p><code>AbortSignal.throwIfAborted()</code><br>
+如果信号已中止，则会抛出信号的中止原因；否则它什么也不做。</p>
+<p><code>静态方法 AbortSignal.abort(reason)</code></p>
+<ul>
+<li>返回一个已设置为 <code>aborted</code>（并且不会触发 <code>abort</code> 事件）的 <code>AbortSignal</code>。该方法的目的类似于 <code>Promise.reject</code>。如果未指定 <code>reason</code>，则将原因设置为 <code>DOMException</code>。</li>
+</ul>
+<p><code>静态方法 AbortSignal.timeout(time)</code></p>
+<ul>
+<li>返回一个 <code>AbortSignal</code>，它将在指定时间后自动中止。</li>
+</ul>
+<p><code>事件属性 AbortSignal.onabort</code></p>
+<ul>
+<li>当 <code>abort</code> 事件触发时，即当信号正在与之通信的 DOM 请求被中止时调用。</li>
+</ul>
+<p><code>其他</code></p>
+<ul>
+<li><code>AbortSignal</code> 接口从其父接口 <code>EventTarget</code> 继承属性和方法。</li>
+</ul>
+<h2 id="使用场景">使用场景</h2>
+<ol>
+<li>下面的示例我们通过封装 Fetch API 来下载一段视频。当一个 fetch 请求初始化时，我们把 <code>AbortSignal</code> 作为一个选项 <code>{ signal }</code> 传递到到请求对象，然后就可以通过调用 <code>AbortController.abort()</code> 来中止请求。当 <code>abort()</code> 方法被调用时，这个 fetch 请求将 <code>reject</code> 一个名为 <code>AbortError</code> 的 <code>DOMException</code>。</li>
+</ol>
+<pre><code class="language-js">const controller = new AbortController();
+const signal = controller.signal;
+
+downloadBtn.addEventListener('click', fetchVideo);
+
+abortBtn.addEventListener('click', function() {
+  controller.abort('Download aborted');
+});
+
+function fetchVideo() {
+  fetch(url, { signal }).then(function(response) {
+    //...
+  }).catch(function(e) {
+    reports.textContent = 'Download error: ' + e.message;
+  });
+}
+</code></pre>
+<ol start="2">
+<li>下面的示例封装了一个 <code>WebScocket</code>，并通过 <code>AbortSignal</code> 来关闭其连接。</li>
+</ol>
+<pre><code class="language-js">function abortableSocket(url, signal) {
+  const w = new WebSocket(url);
+
+  if (signal.aborted) {
+    w.close();  // signal 已经终止的情况下马上关闭 websocket
+  }
+  signal.addEventListener('abort', () =&gt; w.close());
+
+  return w;
+}
+</code></pre>
+<ol start="3">
+<li>我们经常需要在 js 中处理 dom 的监听和卸载工作。但是下面的例子由于事件监听和卸载传入的函数不是同一个引用时不会生效的。</li>
+</ol>
+<pre><code class="language-js">window.addEventListener('resize', () =&gt; doSomething());
+
+// 不会生效
+window.removeEventListener('resize', () =&gt; doSomething());
+</code></pre>
+<p>因此我们经常需要一些额外的代码去维护这个回调函数的引用的一致性。有了 <code>AbortSignal</code> 之后我们就可以通过 <code>addEventListener</code> 第三个参数我们可以传递一个 <code>signal</code>，当 <code>signal</code> 中止时，事件监听将被移除。</p>
+<pre><code class="language-js">const controller = new AbortController();
+const { signal } = controller;
+
+window.addEventListener('resize', () =&gt; doSomething(), { signal });
+
+controller.abort();
+</code></pre>
+<ol start="4">
+<li>在 JavaScript 中我们可能需要在对象中管理非常复杂的生命周期，比如先执行开启然后执行一系列逻辑后终止。</li>
+</ol>
+<pre><code class="language-js">const someObject = new SomeObject();
+someObject.start();
+
+// 执行一些操作后
+someObject.stop();
+</code></pre>
+<p>这种情况可以通过 <code>AbortSignal</code> 进行实现。</p>
+<pre><code class="language-js">const controller = new AbortController();
+
+const someObject = new SomeObject(controller.signal);
+
+// 执行一些操作后
+controller.abort();
+</code></pre>
+<p>通过 <code>AbortSignal</code> 实现的好处是：</p>
+<ul>
+<li>这能非常清晰地表示这个对象只能被执行一次，只能从开始到结束，而不能反过来。如果它终止了后想再次使用则需要再次创建一个对象。</li>
+<li>可以在很多地方共享一个 <code>signal</code>。我们无需持有多个 <code>SomeObject</code> 的实例。只需要调用 <code>controller.abort()</code>，这些 <code>SomeObject</code> 的实例都能被终止掉。</li>
+<li>如果 <code>SomeObject</code> 内部也有调用像 <code>fetch</code> 之类的内部 api 只需要把这个 <code>signal</code> 继续传递，则 <code>fetch</code> 也能被一起终止掉。例如以下代码：</li>
+</ul>
+<pre><code class="language-js">export class SomeObject {
+  constructor(signal) {
+    this.signal = signal;
+
+    // 一些请求
+    const p = fetch('/json', { signal });
+  }
+
+  // 执行复杂操作
+  doComplexOperation() {
+    if (this.signal.aborted) {
+      throw new Error(`thing stopped`);
+    }
+    for (let i = 0; i &lt; 1_000_000; ++i) {
+      // ...
+    }
+  }
+}
+</code></pre>
+<ol start="5">
+<li>我们通常会在 React Hook <code>useEffect</code> 中进行一些异步 api 调用。可以借助 <code>signal</code> 在下一次 <code>useEffect</code> 重新调用时将前一次的调用终止。</li>
+</ol>
+<pre><code class="language-js">function FooComponent({ something }) {
+  useEffect(() =&gt; {
+    const controller = new AbortController();
+    const { signal } = controller;
+
+    const p = (async () =&gt; {
+      const j = await fetch(url + something, { signal });
+    })();
+
+    return () =&gt; controller.abort();
+  }, [something]);
+
+  return &lt;&gt;...&lt;&gt;;
+}
+</code></pre>
+<p>也可以封装一个 <code>useEffectAsync</code> 的 Hook。</p>
+<pre><code class="language-js">function useEffectAsync(cb, dependence) {
+   const controller = new AbortController();
+   const { signal } = controller;
+   useEffect(() =&gt; {
+     cb(signal);
+     return () =&gt; controller.abort();
+   }, dependence)
+}
+</code></pre>
+<h2 id="总结">总结</h2>
+<p><code>AbortController</code> 和 <code>AbortSignal</code> 提供了一些用来中止请求和事件的接口，帮助我们提前终止请求进而节约一些资源，也给我们带来了一些新的开发模式。</p>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/fetch-api-de-shi-yong/" class="post-title gt-a-link">
+                    Fetch API 的使用
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,284 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>npm workspaces 的使用 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    npm workspaces 的使用
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-08-29 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/-SviN8-mD/" class="post-tags">
+                            # nodeJS
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p>本地化开发 <code>npm package</code> 不可能每次改了代码，都发布到 <code>npm</code> 官网，所以 <code>npm</code> 提供给我们 <code>npm link</code> 命令用来进行本地化开发。使用 <code>npm-link</code> 调试代码，我们要开两个编辑器，一个编辑器改开发 <code>package</code> 的代码，另一个编辑器用来调试。</p>
+<p>如果我们开发组件库几十个组件，难道要开几十个窗口吗？<code>npm</code> 的新特性 <code>workspaces</code> 可以帮助我们来进行多包管理，它可以让多个 <code>npm</code> 包在同一个项目中进行开发和管理变得非常方便：</p>
+<ul>
+<li>它会将子包中所有的依赖包都提升到根目录中进行安装，提升包安装的速度；</li>
+<li>它初始化后会自动将子包之间的依赖进行关联（软链接）；</li>
+<li>因为同一个项目的关系，从而可以让各个子包共享一些流程，比如：<code>eslint</code>、<code>stylelint</code>、<code>git hooks</code>、<code>publish flow</code> 等；</li>
+</ul>
+<p><code>workspaces</code> 是一个用来在本地项目下面管理多个包的 <code>npm</code> 功能。（yarn 很早就支持了，<code>npm</code> 在 <code>7.x</code> 中开始支持，也就是 Node@15.0.0 新增的功能）。</p>
+<p>这个功能让我们在本地开发包，尤其是多个互相依赖的包时，避免手动的去执行 <code>npm link</code> 命令，而是在 <code>npm install</code> 的时候，会自动把 <code>workspaces</code> 下面的合法包，自动创建符号链接到当前的 <code>node_modules</code> 文件夹里。</p>
+<h2 id="使用">使用</h2>
+<h3 id="配置在-packagejson-中的-workspaces-字段">配置在 <code>package.json</code> 中的 <code>workspaces</code> 字段</h3>
+<p><code>workspaces</code> 字段接收一个数组，数组里面可以填写相对根目录的文件夹名称或者是通配符，在 <code>npm install</code> 期间自动符号链接的这些包称为单个工作区。在以下示例中，位于文件夹 <code>./packages</code> 内的所有文件夹都将被视为工作区，只要它们包含有效的 <code>package.json</code> 文件即可：</p>
+<pre><code>{
+  &quot;name&quot;: &quot;workspace-example&quot;,
+  &quot;workspaces&quot;: [
+    &quot;./packages/*&quot;
+  ]
+}
+</code></pre>
+<p>运行 <code>npm install</code>，<code>./packages</code> 内的所有包都将创建符号链接到当前目录的 <code>node_modules</code> 文件夹里，对于包的使用和查找，和正常安装的 <code>npm</code> 包相同。</p>
+<h3 id="使用-npm-init-自动执行定义新工作区">使用 npm init 自动执行定义新工作区</h3>
+<p>例如，在已经定义了 <code>package.json</code> 的项目中运行：</p>
+<pre><code>npm init -w ./packages/a -y
+</code></pre>
+<p>如果不存在文件夹 <code>./packages/a</code>，此命令将创建文件夹 <code>./packages/a</code> 和 <code>./packages/a/package.json</code> 文件。同时，在当前目录的 <code>package.json</code> 中添加 <code>workspaces</code> 字段，和值 <code>[&quot;packages\\a&quot;]</code>。</p>
+<p>也可以一次添加多个工作区：</p>
+<pre><code>npm init -w packages/a -w packages/b -y
+</code></pre>
+<h3 id="添加依赖到工作区">添加依赖到工作区</h3>
+<p>可以直接在工作区，进行安装、更新和删除依赖。例如，有下面的包结构：</p>
+<pre><code>.
++-- package.json
+`-- packages
+   +-- a
+   |   `-- package.json
+   `-- b
+       `-- package.json
+</code></pre>
+<p>如果要从 <code>npm</code> 库中添加一个名为 <code>abbrev</code> 的依赖到工作区 <code>a</code>，可以使用以下命令告诉 <code>npm</code> 安装程序应该将包添加为工作区 <code>a</code> 的依赖项：</p>
+<pre><code>npm install abbrev -w a
+</code></pre>
+<p>如果要卸载 <code>abbrev</code> 的依赖，则要使用以下命令：</p>
+<pre><code>npm uninstall abbrev -w a
+</code></pre>
+<p>其他的 <code>npm</code> 命令也同样适用于工作区。</p>
+<h3 id="在工作区中运行命令">在工作区中运行命令</h3>
+<p>假如，当前项目中已经存在工作区 <code>a</code> 和 <code>b</code>，可以在指定的工作区 <code>a</code> 中运行以下 <code>npm</code> 命令：</p>
+<pre><code>npm run test --workspace=a
+</code></pre>
+<p>这相当于以下步骤：</p>
+<pre><code>cd packages/a &amp;&amp; npm run test
+</code></pre>
+<p>也可以指定多个参数：</p>
+<pre><code>npm run test --workspace=a --workspace=b
+</code></pre>
+<p>或者在所有配置的工作区中运行该命令，将按照它们在 <code>package.json</code> 中出现的顺序在每个工作区中运行：</p>
+<pre><code>npm run test --workspaces
+</code></pre>
+<p>如果使 <code>npm</code> 忽略缺少目标脚本的工作区，可以加上 <code>--if-present</code> 标志。</p>
+<pre><code>npm run test --workspaces --if-present
+</code></pre>
+<h3 id="单独部署">单独部署</h3>
+<p>只安装工作区 <code>a</code> 中的依赖包并运行：</p>
+<pre><code>npm install --production --workspace=a
+npm run prod --workspace=a
+</code></pre>
+<h2 id="示例">示例</h2>
+<p>假如，当前项目中已经存在工作区 <code>a</code>：</p>
+<pre><code>.
++-- node_modules
+|  `-- a -&gt; ../packages/a
++-- package-lock.json
++-- package.json
+`-- packages
+   +-- a
+   |   `-- package.json
+</code></pre>
+<p>在工作区 <code>a</code> 中新建 <code>index.js</code> 文件，并加入以下内容：</p>
+<pre><code class="language-js">module.exports = 'a'
+</code></pre>
+<p>在当前目录下，新建 lib 目录和 <code>index.js</code> 文件，并加入以下内容：</p>
+<pre><code class="language-js">const moduleA = require('a')
+console.log(moduleA) // -&gt; a
+</code></pre>
+<p>然后运行 <code>node lib/index.js</code>，可以看到工作区和正常安装的 <code>npm</code> 包使用并无差别。我们可以轻松地发布这些嵌套的工作空间以在其他地方使用。</p>
+<h2 id="和-monorepo-配合使用">和 monorepo 配合使用</h2>
+<p>如果维护一个单体仓库太过庞大了，维护多个仓库又太过繁琐，<code>monorepo</code> 的理念是维护一个仓库，但是一个仓库划分为多个 <code>package</code>。</p>
+<h3 id="方式一">方式一：</h3>
+<p>各个子项目都集合到一个项目中来，<code>package.json</code> 只有一份在根目录，所有项目中的 <code>npm</code> 包都安装到根目录，在根目录的 <code>package.json</code> 中定义开发和部署子项目的命令。</p>
+<p>缺点：</p>
+<ul>
+<li>命令混乱；</li>
+<li>无法应对子项目之间存在 <code>npm</code> 包冲突的问题；（比如，<code>A</code> 项目想用 <code>webpack4</code>，<code>B</code> 项目想用 <code>webpack5</code>）</li>
+</ul>
+<h3 id="方式二">方式二：</h3>
+<p>各个子项目都集合到一个项目中来，根目录和各个子包都各自有一份 <code>package.json</code>，但基础的构建工具在根目录进行安装，比如上面提到的 <code>webpack</code>、<code>webpack-cli</code>、<code>webpack-dev-server</code>、<code>html-webpack-plugin</code>、<code>webpack-merge</code>，全都在根目录进行安装，和业务相关的 <code>npm</code> 包都安装到各自子项目中。</p>
+<p>缺点：<br>
+如果子项目中有依赖相同的包，不得不在各个子项目中重复安装；<br>
+同样无法应对子项目之间存在 <code>npm</code> 包冲突的问题；<br>
+如果某天想把 <code>B</code> 项目移除，成本很高；</p>
+<h3 id="方式三">方式三：</h3>
+<p>各个子项目都集合到一个项目中来，各个子包都各自有一份 <code>package.json</code>，根目录无 <code>package.json</code>。</p>
+<p>缺点：</p>
+<ul>
+<li>同样如果子项目中有依赖相同的包，不得不在各个子项目中重复安装；</li>
+</ul>
+<p>使用 <code>workspaces</code> 就可以很好的解决了上面的所有问题！</p>
+<h2 id="其他应用">其他应用</h2>
+<ol>
+<li>对于已经存在的项目而言，比如一个是 <code>Web</code> 的，一个是 <code>H5</code> 的，他们属于同一个业务，所以有大量的代码可以复用，又因为只涉及这两个项目而已，把公共代码做成 <code>npm</code> 包又有点太杀鸡用牛刀，而采用复制、粘贴的方式又显然是非常低效的，这时可以使用 <code>workspaces</code> 将它们合并成一个项目。</li>
+<li><code>mock</code> 服务也是个子项目单独一套，但是大多数接口的数据都是可以公用的，只是 <code>url</code> 前缀不同。这样就可以使用 <code>workspaces</code> 将它们合并成一个项目，这是对原项目改动量最小的方案。</li>
+</ol>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/npm-link-de-shi-yong/" class="post-title gt-a-link">
+                    npm link 的使用
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

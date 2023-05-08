@@ -1,0 +1,340 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>axios 上传下载进度显示和取消请求 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    axios 上传下载进度显示和取消请求
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-08-29 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/-SviN8-mD/" class="post-tags">
+                            # nodeJS
+                        </a>
+                    
+                        <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tags">
+                            # JS
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p>Axios 是一个基于 promise 网络请求库，作用于 node.js 和浏览器中。 它是 isomorphic 的(同构，即同一套代码可以运行在浏览器和 node.js 中)。在服务端它使用原生 node.js http 模块, 而在客户端 (浏览端) 则使用 XMLHttpRequests。</p>
+<h3 id="特性">特性</h3>
+<ul>
+<li>从浏览器创建 XMLHttpRequests</li>
+<li>从 node.js 创建 http 请求</li>
+<li>支持 Promise API</li>
+<li>拦截请求和响应</li>
+<li>转换请求和响应数据</li>
+<li>取消请求</li>
+<li>自动转换 JSON 数据</li>
+<li>客户端支持防御 XSRF</li>
+</ul>
+<h2 id="上传和下载进度显示">上传和下载进度显示</h2>
+<p>由于 Axios 是基于 XMLHttpRequests 的，所以可以使用 XMLHttpRequests 接口的 ProgressEvent 事件监听下载或上传进度。代码如下：</p>
+<pre><code class="language-js">axios('https://fetch-progress.anthum.com/30kbps/images/sunrise-baseline.jpg', {
+  responseType: 'blob',
+  onDownloadProgress(e) {
+    if (e.lengthComputable) {
+      result.textContent = Math.round((e.loaded * 100) / e.total) + '%';
+      if (e.loaded === e.total) {
+        result.textContent += `，用时：${e.timeStamp.toFixed(0)}ms`;
+      }
+    }
+  },
+})
+const data = new FormData();
+data.append('file', input.files[0]);
+data.append('username', 'foo');
+// 或者已存在表单元素
+// const data = new FormData(form:HTMLFormElement));
+axios.post('upload', data, {
+  headers: {'Content-Type': 'multipart/form-data;charset=utf-8'},
+  onUploadProgress(e) {
+    if (e.lengthComputable) {
+      result.textContent = Math.round((e.loaded * 100) / e.total) + '%';
+      if (e.loaded === e.total) {
+        result.textContent += `，用时：${e.timeStamp.toFixed(0)}ms`;
+      }
+    }
+  },
+})
+</code></pre>
+<p>其中的事件属性为：</p>
+<ul>
+<li><code>ProgressEvent.lengthComputable</code> 只读</li>
+<li>是一个 <code>Boolean</code> 标志，表示底层流程将需要完成的总工作量和已经完成的工作量是否可以计算。换句话说，它告诉我们进度是否可以被测量。</li>
+<li><code>ProgressEvent.loaded</code> 只读</li>
+<li>是一个 <code>long</code> 类型数据，表示底层流程已经执行的工作总量。可以用这个属性和 <code>ProgressEvent.total</code> 计算工作完成比例。当使用 <code>HTTP</code> 下载资源，它只表示内容本身的部分，不包括首部和其它开销。</li>
+<li><code>ProgressEvent.total</code> 只读</li>
+<li>是一个 <code>long</code> 类型数据，表示正在执行的底层流程的工作总量。当使用 <code>HTTP</code> 下载资源，它只表示内容本身的部分，不包括首部和其它开销。</li>
+</ul>
+<h2 id="取消请求">取消请求</h2>
+<ol>
+<li>使用 Axios <code>CancelToken</code> API，但从 v0.22.0 开始不推荐使用。</li>
+</ol>
+<pre><code class="language-js">const CancelToken = axios.CancelToken;
+const source = CancelToken.source();
+
+axios.get('/user/12345', {
+  cancelToken: source.token
+}).catch(function (thrown) {
+  if (axios.isCancel(thrown)) {
+    console.log('Request canceled', thrown.message);
+  } else {
+    // 处理错误
+  }
+});
+
+axios.post('/user/12345', {
+  name: 'new name'
+}, {
+  cancelToken: source.token
+}).catch(function (thrown) {
+  if (axios.isCancel(thrown)) {
+    console.log('Request canceled', thrown.message);
+  } else {
+    // 处理错误
+  }
+})
+
+// 取消请求（message 参数是可选的）
+source.cancel('Operation canceled by the user.');
+
+// 也可以通过传递一个 executor 函数到 CancelToken 的构造函数来创建一个 cancel token：
+let cancel;
+
+axios.get('/user/12345', {
+  cancelToken: new CancelToken(function executor(c) {
+    // executor 函数接收一个 cancel 函数作为参数
+    cancel = c;
+  })
+}).catch(function (thrown) {
+  if (axios.isCancel(thrown)) {
+    console.log('Request canceled', thrown.message);
+  } else {
+    // 处理错误
+  }
+});
+
+// 取消请求
+cancel();
+</code></pre>
+<ol start="2">
+<li>从 v0.22.0 开始，Axios 支持以 <code>fetch</code> API 方式—— <code>AbortController</code> 取消请求：</li>
+</ol>
+<pre><code class="language-js">const controller = new AbortController();
+
+axios.get('/foo/bar', {
+   signal: controller.signal
+}).then(function(response) {
+   //...
+}).catch(err =&gt; console.dir(err));
+// 取消请求
+controller.abort();
+</code></pre>
+<ol start="3">
+<li>可以使用同一个 <code>CancelToken</code> 或 <code>signal</code> 取消多个请求。可以使用这两种取消 API，即使是针对同一个请求：</li>
+</ol>
+<pre><code class="language-js">const controller = new AbortController();
+
+const CancelToken = axios.CancelToken;
+const source = CancelToken.source();
+
+axios.get('/user/12345', {
+  cancelToken: source.token,
+  signal: controller.signal
+}).catch(function (thrown) {
+  if (axios.isCancel(thrown)) {
+    console.log('Request canceled', thrown.message);
+  } else {
+    // 处理错误
+  }
+});
+
+axios.post('/user/12345', {
+  name: 'new name'
+}, {
+  cancelToken: source.token
+})
+
+// 取消请求 (message 参数是可选的)
+source.cancel('Operation canceled by the user.');
+// 或
+controller.abort();
+</code></pre>
+<h2 id="下载过程中断请求">下载过程中断请求</h2>
+<pre><code class="language-js">const source = axios.CancelToken.source();
+axios('https://fetch-progress.anthum.com/30kbps/images/sunrise-baseline.jpg', {
+  cancelToken: source.token,
+  responseType: 'blob',
+  onDownloadProgress(e) {
+    if (e.lengthComputable) {
+      progress.textContent = Math.round((e.loaded * 100) / e.total) + '%';
+      if (e.loaded === e.total) {
+        progress.textContent += `，用时：${e.timeStamp.toFixed(0)}ms`;
+      }
+    }
+  }
+}).then(res =&gt; {
+  console.log(res);
+  i1.src = URL.createObjectURL(res.data);
+}).catch(err =&gt; progress.textContent = err.message);
+stopBtn.onclick = e =&gt; source.cancel('Operation canceled by the user.');
+</code></pre>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/abortcontroller-abortsignal-de-shi-yong/" class="post-title gt-a-link">
+                    AbortController AbortSignal 的使用
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

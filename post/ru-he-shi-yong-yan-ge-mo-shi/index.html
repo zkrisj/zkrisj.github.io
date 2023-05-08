@@ -1,0 +1,383 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>如何使用严格模式 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    如何使用严格模式
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-08-29 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tags">
+                            # JS
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mstyle mathcolor="lime"><mrow><mi>E</mi><mi>C</mi><mi>M</mi><mi>A</mi><mi>S</mi><mi>c</mi><mi>r</mi><mi>i</mi><mi>p</mi><mi>t</mi><mn>5</mn></mrow></mstyle></mrow><annotation encoding="application/x-tex">\color{lime}{ECMAScript 5}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord" style="color:lime;"><span class="mord mathdefault" style="margin-right:0.05764em;color:lime;">E</span><span class="mord mathdefault" style="margin-right:0.07153em;color:lime;">C</span><span class="mord mathdefault" style="margin-right:0.10903em;color:lime;">M</span><span class="mord mathdefault" style="color:lime;">A</span><span class="mord mathdefault" style="margin-right:0.05764em;color:lime;">S</span><span class="mord mathdefault" style="color:lime;">c</span><span class="mord mathdefault" style="margin-right:0.02778em;color:lime;">r</span><span class="mord mathdefault" style="color:lime;">i</span><span class="mord mathdefault" style="color:lime;">p</span><span class="mord mathdefault" style="color:lime;">t</span><span class="mord" style="color:lime;">5</span></span></span></span></span> 开始添加了严格模式，在多个方面改变了 JavaScript 的语义，使 Javascript 在更严格的条件下运行，浏览器能更容易的解析代码，现在已经被大多浏览器实现（包括 IE10）。</p>
+<p>它的产生是为了形成与正常代码不同的语义，而不仅仅是 JavaScript 的一个子集，主要目的是：</p>
+<ul>
+<li>消除 Javascript 语法的一些不合理、不严谨之处，减少一些怪异行为；</li>
+<li>消除代码运行的一些不安全之处，保证代码运行的安全；</li>
+<li>修复了一些导致 JavaScript 引擎难以执行优化的缺陷，相同的代码，严格模式可以比非严格模式下运行得更快。</li>
+<li>为新版本的 Javascript 做好铺垫。</li>
+</ul>
+<h2 id="使用">使用</h2>
+<p>严格模式可以应用到整个脚本或个别函数中。在 eval 、Function 、内联事件处理属性、WindowTimers.setTimeout() 方法中传入的脚本字符串，其行为类似于开启了严格模式的一个单独脚本，它们会如预期一样工作。<strong>在单独的封闭大括弧 {} 内声明是没有效果的。</strong></p>
+<h3 id="整个脚本文件">整个脚本文件</h3>
+<p>为整个脚本文件开启严格模式，需要在所有语句之前放一个特定语句 &quot;use strict&quot;;（或 'use strict';）。</p>
+<pre><code class="language-js">// 整个脚本都开启严格模式的语法
+&quot;use strict&quot;;
+let s = &quot;Hi!  I'm a strict mode script!&quot;;
+</code></pre>
+<p>这种语法存在陷阱，合并均为严格模式的脚本或均为非严格模式的都没问题，但在合并严格模式与非严格模式时可能会有问题。所以不能盲目的合并冲突代码，建议按一个个函数去开启严格模式（至少在学习的过渡期要这样做）。</p>
+<h3 id="单个函数">单个函数</h3>
+<p>要给某个函数开启严格模式，要把 &quot;use strict&quot;;（或 'use strict';）声明放在函数体所有语句之前。</p>
+<pre><code class="language-js">function strict() {
+  // 函数级别严格模式语法
+  'use strict';
+  function nested() {
+    return &quot;And so am I!&quot;;
+  }
+  return &quot;Hi!  I'm a strict mode function!  &quot; + nested();
+}
+
+function notStrict() {
+  return &quot;I'm not strict.&quot;;
+}
+</code></pre>
+<h2 id="语法和行为">语法和行为</h2>
+<p>严格模式同时改变了语法及运行时行为，变化通常分为这几类：将问题直接转化为错误（如语法错误或运行时错误）, 简化了如何为给定名称的特定变量计算，简化了 eval 以及 arguments。</p>
+<h3 id="静默错误转成异常语法错误">静默错误转成异常|语法错误</h3>
+<p>JavaScript 被设计为能使新人开发者更易于上手，所以有时候会给错误操作赋予不报错误的语义 (non-error semantics)。有时候这可以解决当前的问题，但有时候却会给以后留下更大的问题。严格模式则把这些失误当成错误，以便可以发现并立即将其改正。</p>
+<ol>
+<li>不能隐式声明全局变量。</li>
+</ol>
+<pre><code class="language-js">&quot;use strict&quot;;
+// ReferenceError: mistypedVariable is not defined
+mistypedVariable = 17;
+</code></pre>
+<ol start="2">
+<li>不能给不可写属性，只读属性 (getter-only) ，不可扩展对象 (non-extensible object) 的新属性赋值。</li>
+</ol>
+<pre><code class="language-js">&quot;use strict&quot;;
+
+// 给不可写属性赋值
+let obj1 = {};
+Object.defineProperty(obj1, &quot;x&quot;, { value: 42, writable: false });
+obj1.x = 9; // 抛出 TypeError 错误
+
+// 给只读属性赋值
+let obj2 = { get x() { return 17; } };
+obj2.x = 5; // 抛出 TypeError 错误
+
+// 给不可扩展对象的新属性赋值
+let fixed = {};
+Object.preventExtensions(fixed);
+fixed.newProp = &quot;ohai&quot;; // 抛出 TypeError 错误
+</code></pre>
+<ol start="3">
+<li>不能删除不可删除的属性。</li>
+</ol>
+<pre><code class="language-js">&quot;use strict&quot;;
+delete Object.prototype; // 抛出 TypeError 错误
+</code></pre>
+<ol start="3">
+<li>函数不能有重名参数。正常模式下最后一个重名参数名会掩盖之前的重名参数，之前的参数仍然可以通过 <code>arguments[i]</code> 来访问。</li>
+</ol>
+<pre><code class="language-js">function sum(a, a, c) { // !!! 语法错误
+  &quot;use strict&quot;;
+  return a + a + c; // 代码运行到这里会出错
+}
+</code></pre>
+<ol start="4">
+<li>禁止八进制数字语法。在 ECMAScript 6 中支持为一个数字加&quot;0o&quot;的前缀来表示八进制数，例如 <code>0644 === 420</code> 还有 <code>&quot;\045&quot; === &quot;%&quot;</code>。</li>
+</ol>
+<pre><code class="language-js">&quot;use strict&quot;;
+let sum = 015 + // !!! 语法错误
+          197 +
+          142;
+</code></pre>
+<ol start="5">
+<li>禁止设置原始类型的属性。不采用严格模式，设置属性将会简单忽略 (no-op)。</li>
+</ol>
+<pre><code class="language-js">(function() {
+  &quot;use strict&quot;;
+
+  false.true = &quot;&quot;;              //TypeError
+  (14).sailing = &quot;home&quot;;        //TypeError
+  &quot;with&quot;.you = &quot;far away&quot;;      //TypeError
+})();
+</code></pre>
+<h3 id="简化变量的使用">简化变量的使用</h3>
+<p>Javascript 语言的一个特点，就是允许&quot;动态绑定&quot;，即某些属性和方法到底属于哪一个对象，不是在编译时确定的，而是在运行时（runtime）确定的。严格模式简化了代码中变量名字映射到变量定义的方式。很多编译器的优化是依赖存储变量的位置的能力，这对全面优化 JavaScript 代码至关重要。严格模式移除了大多数这种情况的发生，所以编译器可以更好的优化严格模式的代码。</p>
+<ol>
+<li>禁用 <code>with</code>。<code>with</code> 所引起的问题是块内的任何名称可以映射 (map) 到 <code>with</code> 传进来的对象的属性，也可以映射到包围这个块的作用域内的变量 (甚至是全局变量), 这一切都是在运行时决定的：在代码运行之前是无法得知的。</li>
+</ol>
+<pre><code class="language-js">&quot;use strict&quot;;
+let x = 17;
+const obj = { x: 1 };
+with (obj) { // !!! 语法错误
+  // 如果没有开启严格模式，with 中的这个 x 会指向 with 上面的那个 x，还是 obj.x？
+  // 如果不运行代码，我们无法知道，因此，这种代码让引擎无法进行优化，速度也就会变慢。
+  x;
+}
+</code></pre>
+<p>一种取代 <code>with</code> 的简单方法是，将目标对象赋给一个短命名变量，然后访问这个变量上的相应属性。</p>
+<ol start="2">
+<li><code>eval</code> 不再为上层范围 (包围 eval 代码块的范围) 引入新变量，仅仅为被运行的代码创建变量。在正常模式下， 代码 <code>eval(&quot;let x;&quot;)</code> 会给上层函数或者全局引入一个新的变量 <code>x</code>，这意味着，在一个包含 <code>eval</code> 调用的函数内所有没有引用到参数或者局部变量的名称都必须在运行时才能被映射到特定的定义 (因为 <code>eval</code> 可能引入的新变量会覆盖它的外层变量)。</li>
+</ol>
+<pre><code class="language-js">let x = 17;
+let evalX = eval(&quot;'use strict'; let x = 42; x&quot;);
+console.assert(x === 17);
+console.assert(evalX === 42);
+</code></pre>
+<ol start="3">
+<li>禁止删除声明变量。</li>
+</ol>
+<pre><code class="language-js">&quot;use strict&quot;;
+
+let x;
+delete x; // !!! 语法错误
+
+eval(&quot;let y; delete y;&quot;); // !!! 语法错误
+</code></pre>
+<h3 id="让-eval-和-arguments-变的简单">让 eval 和 arguments 变的简单</h3>
+<p>严格模式让 <code>arguments</code> 和 <code>eval</code> 少了一些奇怪的行为。两者在通常的代码中都包含了很多奇怪的行为：<code>eval</code> 会添加删除绑定，改变绑定好的值，还会通过用它索引过的属性给形参取别名的方式修改形参。虽然在未来的 ECMAScript 版本解决这个问题之前，是不会有补丁来完全修复这个问题，但严格模式下将 <code>eval</code> 和 <code>arguments</code> 作为关键字对于此问题的解决是很有帮助的。</p>
+<ol>
+<li>名称 eval 和 arguments 不能通过程序语法被绑定 (be bound) 或赋值。以下的所有尝试将引起语法错误：</li>
+</ol>
+<pre><code class="language-js">&quot;use strict&quot;;
+eval = 17;
+arguments++;
+++eval;
+let obj = { set p(arguments) { } };
+let eval;
+try { } catch (arguments) { }
+function x(eval) { }
+function arguments() { }
+let y = function eval() { };
+let f = new Function(&quot;arguments&quot;, &quot;'use strict'; return 17;&quot;);
+</code></pre>
+<ol start="2">
+<li>参数的值不会随 <code>arguments</code> 对象的值的改变而变化。在正常模式下，对于第一个参数是 <code>arg</code> 的函数，对 <code>arg</code> 赋值时会同时赋值给 <code>arguments[0]</code>，反之亦然（除非没有参数，或者 <code>arguments[0]</code> 被删除）。严格模式下，函数的 <code>arguments</code> 对象会保存函数被调用时的原始参数。<code>arguments[i]</code> 的值不会随与之相应的参数的值的改变而变化，同名参数的值也不会随与之相应的 <code>arguments[i]</code> 的值的改变而变化。</li>
+</ol>
+<pre><code class="language-js">function f(a) {
+  &quot;use strict&quot;;
+  a = 42;
+  return [a, arguments[0]];
+}
+let pair = f(17);
+console.assert(pair[0] === 42);
+console.assert(pair[1] === 17);
+</code></pre>
+<ol start="3">
+<li>不再支持 <code>arguments.callee</code>。正常模式下，<code>arguments.callee</code> 指向当前正在执行的函数。这个作用很小：直接给执行函数命名就可以了！此外，<code>arguments.callee</code> 十分不利于优化，例如内联函数，因为 <code>arguments.callee</code> 会依赖对非内联函数的引用。</li>
+</ol>
+<pre><code class="language-js">&quot;use strict&quot;;
+let f = function() { return arguments.callee; };
+f(); // 抛出类型错误
+</code></pre>
+<h2 id="安全的-javascript">&quot;安全的&quot; JavaScript</h2>
+<p>在浏览器环境下，JavaScript 能够获取用户的隐私信息，因此，此类 JavaScript 在运行之前必须进行部分转换，以审查对被禁止功能的访问。JavaScript 的灵活性使得在没有运行时检查的情况下不可能有效地做到这一点。开启严格模式并且<strong>用特定的方式调用</strong>，就会大大减少在执行时进行检查的必要，从而避免引起性能损耗。</p>
+<ol>
+<li><code>this</code> 不再被封装为对象，而且如果没有指定 <code>this</code> 的话它值是 <code>undefined</code>。对一个普通的函数来说，<code>this</code> 总会是一个对象：不管调用时 <code>this</code> 它本来就是一个对象；还是用布尔值，字符串或者数字调用函数时函数里面被封装成对象的 <code>this</code>；还是使用 <code>undefined</code> 或者 <code>null</code> 调用函数时 <code>this</code> 指向的全局对象。<strong>这种自动转化为对象的过程不仅是一种性能上的损耗，同时在浏览器中暴露出全局对象也会成为安全隐患，因为全局对象提供了访问那些所谓安全的 JavaScript 环境必须限制的功能的途径。</strong></li>
+</ol>
+<pre><code class="language-js">&quot;use strict&quot;;
+function fun() { return this; }
+console.assert(fun() === undefined);
+console.assert(fun.call(2) === 2);
+console.assert(fun.apply(null) === null);
+console.assert(fun.call(undefined) === undefined);
+console.assert(fun.bind(true)() === true);
+</code></pre>
+<ol start="2">
+<li><code>fun.caller</code> 和 <code>fun.arguments</code> 都是不可删除的属性而且在存值、取值时都会报错。在普通模式下使用这些广泛实现的 ECMAScript 扩展时，当一个叫 <code>fun</code> 的函数正在被调用的时候，<code>fun.caller</code> 是最后一个调用 <code>fun</code> 的函数，而且 <code>fun.arguments</code> 包含调用 <code>fun</code> 时用的形参。</li>
+</ol>
+<blockquote>
+<p>在一些旧时的 ECMAScript 实现中 <code>arguments.caller</code> 曾经是一个对象，里面存储的属性指向那个函数的变量。这是一个安全隐患，因为它通过函数抽象打破了本来被隐藏起来的保留值；它同时也是引起大量优化工作的原因。出于这些原因，现在的浏览器没有实现它。</p>
+</blockquote>
+<pre><code class="language-js">function restricted() {
+  &quot;use strict&quot;;
+  restricted.caller;    // 抛出类型错误
+  restricted.arguments; // 抛出类型错误
+}
+
+restricted();
+</code></pre>
+<h2 id="为未来的-ecmascript-版本铺平道路">为未来的 ECMAScript 版本铺平道路</h2>
+<p>未来版本的 ECMAScript 很有可能会引入新语法，ECMAScript5 中的严格模式就提早设置了一些限制来减轻之后版本改变产生的影响。如果提早使用了严格模式中的保护机制，那么做出改变就会变得更容易。</p>
+<ul>
+<li><code>implements</code>, <code>interface</code>, <code>let</code>, <code>package</code>, <code>private</code>, <code>protected</code>, <code>public</code>, <code>static</code>和<code>yield</code> 变成了保留的关键字，不能再作为变量名或者形参名。</li>
+</ul>
+<pre><code class="language-js">function package(protected) { // !!!
+  &quot;use strict&quot;;
+  let implements; // !!!
+
+  interface: // !!!
+  while (true) {
+    break interface; // !!!
+  }
+
+  function private() { } // !!!
+}
+function fun(static) { 'use strict'; } // !!!
+</code></pre>
+<h2 id="总结">总结</h2>
+<p>&quot;严格模式&quot;体现了 Javascript 更合理、更安全、更严谨的发展方向，有助于更细致深入地理解 Javascript，让你变成一个更好的程序员。</p>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/kai-fa-zhe-gong-ju-wang-luo-mian-ban-zhong-de-request-payload-he-form-data/" class="post-title gt-a-link">
+                    开发者工具网络面板中的 Request Payload 和 Form Data
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

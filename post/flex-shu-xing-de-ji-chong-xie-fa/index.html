@@ -1,0 +1,226 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>flex 属性的几种写法 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    flex 属性的几种写法
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-08-28 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/5W0xko0tt/" class="post-tags">
+                            # CSS
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <p>2009年，W3C 提出了一种新的方案----Flex 布局，定义了一种针对用户界面设计而优化的 CSS 盒子模型。目前，它已经得到了所有浏览器的支持。如果学会使用它写 CSS 布局，简直太方便了。</p>
+<h2 id="容器的属性">容器的属性</h2>
+<p>Flex 容器存在两根轴：水平的主轴（main axis）和垂直的交叉轴（cross axis），主轴由 <code>flex-direction</code> 定义。以下6个属性设置在容器上。</p>
+<blockquote>
+<ul>
+<li>flex-direction: row | row-reverse | column | column-reverse;</li>
+<li>flex-wrap: nowrap | wrap | wrap-reverse;</li>
+<li>flex-flow: &lt;'flex-direction'&gt; || &lt;'flex-wrap'&gt;;</li>
+<li>justify-content: flex-start | flex-end | center | space-between | space-around;</li>
+<li>align-items: flex-start | flex-end | center | baseline | stretch;</li>
+<li>align-content: flex-start | flex-end | center | space-between | space-around | stretch;</li>
+</ul>
+</blockquote>
+<h2 id="项目的属性">项目的属性</h2>
+<p>以下6个属性设置在项目上。</p>
+<blockquote>
+<ul>
+<li>order: <code>&lt;integer&gt;</code>;</li>
+<li>flex-grow: <code>&lt;number&gt;</code>; /* 负值无效。省略时默认值为 1。 (初始值为 0) */</li>
+<li>flex-shrink: <code>&lt;number&gt;</code>; /* 负值无效。省略时默认值为1。 (初始值为 1) */</li>
+<li>flex-basis: <code>&lt;length&gt;</code> | auto; /* 若值为0，则必须加上单位，以免被视作伸缩性。省略时默认值为 0。(初始值为 auto) */</li>
+<li>flex: none | auto | initial  | [ &lt;'flex-grow'&gt; &lt;'flex-shrink'&gt;? || &lt;'flex-basis'&gt; ]</li>
+<li>align-self: auto | flex-start | flex-end | center | baseline | stretch;</li>
+</ul>
+</blockquote>
+<h2 id="flex属性">flex属性</h2>
+<p><code>flex</code> 属性是 <code>flex-grow</code>, <code>flex-shrink</code> 和 <code>flex-basis</code> 的简写，默认值为 <code>0 1 auto</code>。</p>
+<h3 id="关键字语法">关键字语法：</h3>
+<ul>
+<li><code>initial</code><br>
+元素会根据自身宽高设置尺寸。它会缩短自身以适应 flex 容器，但不会伸长并吸收 flex 容器中的额外自由空间来适应 flex 容器 。相当于将属性设置为 <code>flex: 0 1 auto</code>。</li>
+<li><code>auto</code><br>
+元素会根据自身的宽度与高度来确定尺寸，但是会伸长并吸收 flex 容器中额外的自由空间，也会缩短自身来适应 flex 容器。这相当于将属性设置为 <code>flex: 1 1 auto</code>.</li>
+<li><code>none</code><br>
+元素会根据自身宽高来设置尺寸。它是完全非弹性的：既不会缩短，也不会伸长来适应 flex 容器。相当于将属性设置为 <code>flex: 0 0 auto</code>。</li>
+</ul>
+<h3 id="单值语法">单值语法：</h3>
+<ol>
+<li>无单位数: 它会被当作<code>flex:&lt;number&gt; 1 0;</code>，其中 <code>&lt;flex-grow&gt;</code> 的值为 <code>number</code>，<code>&lt;flex-shrink&gt;</code> 的值被假定为 1，然后 <code>&lt;flex-basis&gt;</code> 的值被假定为<code>0</code>。</li>
+<li>一个有效的宽度 (<code>width</code>)值：它会被当作 <code>&lt;flex-basis&gt;</code> 的值。</li>
+</ol>
+<h3 id="双值语法">双值语法:</h3>
+<ol>
+<li>第一个值必须为一个无单位数，并且它会被当作 <code>&lt;flex-grow&gt;</code> 的值。第二个值必须为一个无单位数：它会被当作 <code>&lt;flex-shrink&gt;</code> 的值。</li>
+<li>第一个值必须为一个无单位数，并且它会被当作 <code>&lt;flex-grow&gt;</code> 的值。第二个值必须为一个有效的宽度值：它会被当作 <code>&lt;flex-basis&gt;</code> 的值。</li>
+</ol>
+<h3 id="三值语法">三值语法：</h3>
+<ul>
+<li>第一个值必须为一个无单位数，并且它会被当作 <code>&lt;flex-grow&gt;</code> 的值。</li>
+<li>第二个值必须为一个无单位数，并且它会被当作 <code>&lt;flex-shrink&gt;</code> 的值。</li>
+<li>第三个值必须为一个有效的宽度值，并且它会被当作 <code>&lt;flex-basis&gt;</code> 的值。</li>
+</ul>
+<h2 id="示例">示例</h2>
+<p>一般将 flex 设置为以下值之一：<code>auto</code>，<code>initial</code>，<code>none</code>，或一个无单位正数。调整以下 flex 容器的大小查看这些值的效果：</p>
+<iframe src="https://code.juejin.cn/pen/7125330277345263629"></iframe>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/curl-chang-yong-ming-ling/" class="post-title gt-a-link">
+                    curl 常用命令
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

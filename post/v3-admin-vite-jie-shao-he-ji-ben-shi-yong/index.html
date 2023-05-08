@@ -1,0 +1,311 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>V3 Admin Vite 介绍和基本使用 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    V3 Admin Vite 介绍和基本使用
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2023-05-02 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/Gh8djQs1V/" class="post-tags">
+                            # Vue
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p><a href="https://github.com/un-pany/v3-admin-vite">V3 Admin Vite</a> 是一个免费开源的中后台管理系统基础解决方案，基于 Vue3、TypeScript、Element Plus、Pinia 和 Vite 等主流技术。另外还有：</p>
+<ul>
+<li>Vue-Cli 5.x 版: <a href="https://github.com/un-pany/v3-admin">v3-admin</a></li>
+<li>Electron 桌面版: <a href="https://github.com/un-pany/v3-electron-vite">v3-electron-vite</a></li>
+</ul>
+<h2 id="功能">功能</h2>
+<ul>
+<li><strong>用户管理</strong>：登录、登出演示</li>
+<li><strong>权限管理</strong>：内置页面权限（动态路由）、指令权限、权限函数、路由守卫</li>
+<li><strong>多环境</strong>：开发环境（development）、预发布环境（staging）、正式环境（production）</li>
+<li><strong>多主题</strong>：内置普通、黑暗、深蓝三种主题模式</li>
+<li><strong>错误页面</strong>: 403、404</li>
+<li><strong>Dashboard</strong>：根据不同用户显示不同的 Dashboard 页面</li>
+<li><strong>其他内置功能</strong>：SVG、动态侧边栏、动态面包屑、标签页快捷导航、Screenfull 全屏、自适应收缩侧边栏</li>
+</ul>
+<h2 id="特性">特性</h2>
+<ul>
+<li><strong>Vue3</strong>：采用 Vue3 + script setup 最新的 Vue3 组合式 API</li>
+<li><strong>Element Plus</strong>：Element UI 的 Vue3 版本</li>
+<li><strong>Pinia</strong>: 传说中的 Vuex5</li>
+<li><strong>Vite</strong>：真的很快</li>
+<li><strong>Vue Router</strong>：路由路由</li>
+<li><strong>TypeScript</strong>：JavaScript 语言的超集</li>
+<li><strong>PNPM</strong>：更快速的，节省磁盘空间的包管理工具</li>
+<li><strong>Scss</strong>：和 Element Plus 保持一致</li>
+<li><strong>CSS 变量</strong>：主要控制项目的布局和颜色</li>
+<li><strong>ESlint</strong>：代码校验</li>
+<li><strong>Prettier</strong>：代码格式化</li>
+<li><strong>Axios</strong>：发送网络请求（已封装好）</li>
+<li><strong>UnoCSS</strong>：具有高性能且极具灵活性的即时原子化 CSS 引擎</li>
+<li><strong>注释</strong>：各个配置项都写有尽可能详细的注释</li>
+<li><strong>兼容移动端</strong>: 布局兼容移动端页面分辨率</li>
+</ul>
+<h2 id="本地安装">本地安装</h2>
+<ol>
+<li>克隆仓库：</li>
+</ol>
+<pre><code class="language-sh">git clone https://github.com/un-pany/v3-admin-vite.git
+// 或克隆国内镜像仓库
+git clone https://gitee.com/un-pany/v3-admin-vite.git
+</code></pre>
+<ol start="2">
+<li>V3 Admin Vite 是推荐使用 pnpm 命令来安装第三方依赖，而不是直接使用 npm 命令，所以需要安装 pnpm。</li>
+</ol>
+<pre><code class="language-sh">npm install -g pnpm
+</code></pre>
+<ol start="3">
+<li>安装依赖：</li>
+</ol>
+<pre><code class="language-sh">pnpm i
+</code></pre>
+<p>如果安装太慢，可以选择将官方依赖源切换为淘宝依赖源：</p>
+<pre><code class="language-sh">pnpm config set registry https://registry.npmmirror.com
+</code></pre>
+<ol start="4">
+<li>运行开发版预览：</li>
+</ol>
+<pre><code class="language-sh">pnpm dev
+</code></pre>
+<p>如下图所示代表运行成功：</p>
+<figure data-type="image" tabindex="1"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c36fb50ab238498aa8c890069ce344ba~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="" loading="lazy"></figure>
+<p>打开项目地址后，界面如下：</p>
+<figure data-type="image" tabindex="2"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b90b2ee7d0944e9081a87a4558e8c331~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<ol start="5">
+<li>构建和预览：预发布环境、正式环境。</li>
+</ol>
+<pre><code class="language-sh"># 构建预发布环境
+pnpm build:stage
+
+# 预览预发布环境
+pnpm preview:stage
+
+# 构建正式环境
+pnpm build:prod
+
+# 预览正式环境
+pnpm preview:prod
+</code></pre>
+<ol start="6">
+<li>代码格式化和单元测试：</li>
+</ol>
+<pre><code class="language-sh"># 代码格式化
+pnpm lint
+
+# 单元测试
+pnpm test
+</code></pre>
+<h2 id="git-提交规范参考">Git 提交规范参考</h2>
+<ul>
+<li><code>feat</code> 增加新的业务功能</li>
+<li><code>fix</code> 修复业务问题/BUG</li>
+<li><code>perf</code> 优化性能</li>
+<li><code>style</code> 更改代码风格, 不影响运行结果</li>
+<li><code>refactor</code> 重构代码</li>
+<li><code>revert</code> 撤销更改</li>
+<li><code>test</code> 测试相关, 不涉及业务代码的更改</li>
+<li><code>docs</code> 文档和注释相关</li>
+<li><code>chore</code> 更新依赖/修改脚手架配置等琐事</li>
+<li><code>workflow</code> 工作流改进</li>
+<li><code>ci</code> 持续集成相关</li>
+<li><code>types</code> 类型定义文件更改</li>
+<li><code>wip</code> 开发中</li>
+</ul>
+<h2 id="目录结构">目录结构</h2>
+<pre><code class="language-sh"># v3-admin-vite
+├─ .husky                # 用户提交代码时格式化代码
+├─ .vscode               # 本项目推荐的 vscode 配置和拓展
+├─ public
+│  ├─ favicon.ico
+│  ├─ app-loading.css    # 首屏加载 loading
+├─ src
+│  ├─ api                # api 接口
+│  ├─ assets             # 静态资源
+│  ├─ components         # 全局组件
+│  ├─ config             # 全局配置
+│  ├─ constant           # 常量/枚举
+│  ├─ directives         # 全局指令
+│  ├─ hooks              # 全局 hook
+│  ├─ icons              # svg icon
+│  ├─ layout             # 布局
+│  ├─ plugins            # 全局插件
+│  ├─ router             # 路由
+│  ├─ store              # pinia store
+│  ├─ styles             # 全局样式
+│  ├─ utils              # 全局公共方法
+│  └─ views              # 所有页面
+│  ├─ App.vue            # 入口页面
+│  └─ main.ts            # 入口文件
+├─ tests                 # 单元测试
+├─ types                 # ts 声明
+├─ .env.development      # 开发环境
+├─ .env.production       # 正式环境
+├─ .env.staging          # 预发布环境
+├─ .eslintrc.js          # eslint 配置
+├─ .prettier.config.js   # prettier 配置
+├─ tsconfig.json         # ts 编译配置
+├─ unocss.config.ts      # unocss 配置
+└─ vite.config.ts        # vite 配置
+</code></pre>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/tuo-zhuai-tu-pian-suo-fang-xiao-guo/" class="post-title gt-a-link">
+                    拖拽图片缩放效果
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

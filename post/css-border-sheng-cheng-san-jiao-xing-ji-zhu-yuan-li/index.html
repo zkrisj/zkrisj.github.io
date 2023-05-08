@@ -1,0 +1,254 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>CSS border 生成三角形技术原理 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    CSS border 生成三角形技术原理
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2023-04-29 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/5W0xko0tt/" class="post-tags">
+                            # CSS
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p>在 CSS 中使用 <code>border</code> 属性创建三角形的原理：每个 <code>border</code> 都有一个宽度、一个样式和一个颜色，可以设置不同的 <code>border</code> 宽度和样式来创建各种形状。</p>
+<h2 id="生成三角形">生成三角形</h2>
+<p>HTML 代码如下：</p>
+<pre><code class="language-html">&lt;div class=&quot;test&quot;&gt;&lt;/div&gt;
+</code></pre>
+<p>CSS 代码如下：</p>
+<pre><code class="language-css">.test {
+  width: 50px;
+  height: 50px;
+  border-left: 50px solid lime;
+  border-right: 50px solid blue;
+  border-top: 50px solid red;
+  border-bottom: 50px solid magenta;
+}
+</code></pre>
+<p><code>div</code> 应用了上面这个样式后，结果如下：</p>
+<figure data-type="image" tabindex="1"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5de41e44123c433da290a483be1133f8~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<p>现在，如果我们现在只保留一个一个上边框，其余边框均为 <code>transparent</code> 透明（或与背景色同色），那么是不是就只显示一个上面红色的边框了，我们测试下，与上面的代码类似，只是修改下其余三个边框的颜色。</p>
+<pre><code class="language-css">.test {
+  width: 50px;
+  height: 50px;
+  border: 50px solid;
+  border-color: #ff0000 #ffffff #ffffff #ffffff;
+}
+</code></pre>
+<p>得到的是一个梯形，结果如下图：</p>
+<figure data-type="image" tabindex="2"><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4507d392b06c43c29f57607b85da62d2~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<p>如果把 <code>div</code> 的高宽都变成 <code>0</code>，只留一边，不就是三角了吗？代码如下：</p>
+<pre><code class="language-css">.test {
+  width: 0;
+  height: 0;
+  border: 50 px solid;
+  border - color: #ff0000 #ffffff #ffffff #ffffff;
+}
+</code></pre>
+<figure data-type="image" tabindex="3"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5b4ae44e7ef644acab3719e0ff94e598~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<p>上图为等腰直角三角形，之所以为等腰直角，是因为所有的边框宽度是一样的，如果我们将边框宽度设置为不同，则会形成等腰三角形。</p>
+<pre><code class="language-css">.test {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 50px 30px;
+  border-color: #ff0000 #ffffff #ffffff #ffffff;
+}
+</code></pre>
+<figure data-type="image" tabindex="4"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1bde52f04590434287e887b2ec4d5f56~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<p>要更改箭头的方向，只需要对 border-width 和 border-color 进行修改即可：</p>
+<pre><code class="language-js">.test {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 30px 50px;
+  border-color: #ffffff #ffffff #ffffff #ff0000;
+}
+</code></pre>
+<figure data-type="image" tabindex="5"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1a6f268e525f4daa8180c744dddc1cc0~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<p>可以不局限于保留一条边框，也可以保留两条，于是我们可以告别等腰，得到更加锐利的三角：</p>
+<pre><code class="language-js">.test {
+  width: 0;
+  height: 0;
+  border-width: 20px 10px;
+  border-style: solid;
+  border-color: blue blue #ffffff #ffffff;
+}
+</code></pre>
+<p>下面是这种形状的一个应用 - 消息框底部箭头：</p>
+<figure data-type="image" tabindex="6"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7e7bcaafdf1b4acdb494a62af8fa5e42~tplv-k3u1fbpfcp-watermark.image?" alt="image.png" loading="lazy"></figure>
+<iframe src="https://code.juejin.cn/pen/7227411408458088487"></iframe>
+<h2 id="总结">总结</h2>
+<p>使用 CSS border 属性创建三角形有以下好处：</p>
+<ol>
+<li>轻量级：与使用图片或 SVG 等其他方法相比，使用 CSS border 属性创建三角形可以减少对服务器的请求，从而提高页面加载速度，特别是对于需要频繁使用的小型图形而言。</li>
+<li>灵活性：使用 CSS border 属性可以创建各种不同形状的三角形，可以根据需要调整大小和颜色，同时不需要额外的代码或工具。</li>
+<li>响应式设计：使用 CSS border 属性创建的三角形可以随着屏幕大小和设备类型的变化自动调整大小和位置，从而实现响应式设计。</li>
+<li>可维护性：使用 CSS border 属性创建三角形可以使代码更易于维护。当需要更改三角形的大小或颜色时，只需要修改 CSS 属性值即可，而无需编辑图像或其他代码。</li>
+<li>兼容性：使用 CSS border 属性创建三角形不需要使用特殊的浏览器插件或其他技术，因此可以在各种浏览器和设备上正常工作。</li>
+</ol>
+<p>综上所述，使用 CSS border 属性创建三角形是一种简单、灵活、响应式、可维护、兼容性好的方法，可以帮助开发人员创建高效且可靠的界面元素。</p>
+<h2 id="参考资料">参考资料</h2>
+<ol>
+<li><a href="https://www.zhangxinxu.com/wordpress/2010/05/css-border%E4%B8%89%E8%A7%92%E3%80%81%E5%9C%86%E8%A7%92%E5%9B%BE%E5%BD%A2%E7%94%9F%E6%88%90%E6%8A%80%E6%9C%AF%E7%AE%80%E4%BB%8B/">CSS border三角、圆角图形生成技术简介</a></li>
+</ol>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/yi-chong-xin-de-ke-yi-shi-yuan-su-chong-die-de-css-ji-qiao/" class="post-title gt-a-link">
+                    一种新的可以使元素重叠的 CSS 技巧
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

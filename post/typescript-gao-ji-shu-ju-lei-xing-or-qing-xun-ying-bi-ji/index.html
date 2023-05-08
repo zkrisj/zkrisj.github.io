@@ -1,0 +1,763 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>TypeScript 高级数据类型 ｜ 青训营笔记 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    TypeScript 高级数据类型 ｜ 青训营笔记
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2023-01-29 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/Ra5sEQnVW/" class="post-tags">
+                            # TypeScript
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="typescript-介绍">TypeScript 介绍</h2>
+<ol>
+<li>TypeScript 是 JavaScript 的超集，提供了 JavaScript 的所有功能，并提供了可选的静态类型、Mixin、类、接口和泛型等特性。</li>
+<li>TypeScript 的目标是通过其类型系统帮助及早发现错误并提高 JavaScript 开发效率。</li>
+<li>通过 TypeScript 编译器或 Babel 转码器转译为 JavaScript 代码，可运行在任何浏览器，任何操作系统。</li>
+<li>任何现有的 JavaScript 程序都可以运行在 TypeScript 环境中，并只对其中的 TypeScript 代码进行编译。</li>
+<li>在完整保留 JavaScript 运行时行为的基础上，通过引入静态类型定义来提高代码的可维护性，减少可能出现的 bug。</li>
+<li>永远不会改变 JavaScript 代码的运行时行为，例如数字除以零等于 Infinity。这意味着，如果将代码从 JavaScript 迁移到 TypeScript ，即使 TypeScript 认为代码有类型错误，也可以保证以相同的方式运行。</li>
+<li>对 JavaScript 类型进行了扩展，增加了例如 <code>any</code>、<code>unknown</code>、<code>never</code>、<code>void</code>。</li>
+<li>一旦 TypeScript 的编译器完成了检查代码的工作，它就会 <strong>擦除</strong> 类型以生成最终的“已编译”代码。这意味着一旦代码被编译，生成的普通 JS 代码便没有类型信息。这也意味着 TypeScript 绝不会根据它推断的类型更改程序的 <strong>行为</strong>。最重要的是，尽管您可能会在编译过程中看到类型错误，但类型系统自身与程序如何运行无关。</li>
+<li>在较大型的项目中，可以在单独的文件 tsconfig.json 中声明 TypeScript 编译器的配置，并细化地调整其工作方式、严格程度、以及将编译后的文件存储在何处。</li>
+</ol>
+<h2 id="函数">函数</h2>
+<p>TypeScript 具有定义函数参数和返回值的特定语法。</p>
+<ol>
+<li>函数返回值的类型可以明确定义。</li>
+</ol>
+<pre><code class="language-ts">function getTime(): number {
+  return new Date().getTime();
+}
+let time = getTime(); // let time: number
+console.log(time);
+</code></pre>
+<p><strong>如果没有定义返回类型，TypeScript 将尝试通过返回的变量或表达式的类型来推断它。</strong></p>
+<ol start="2">
+<li>类型 <code>void</code> 可用于指示函数不返回任何值。</li>
+</ol>
+<pre><code class="language-ts">function printHello(): void {
+  console.log('Hello!');
+}
+</code></pre>
+<ol start="3">
+<li>函数参数的类型与变量声明的语法相似。</li>
+</ol>
+<pre><code class="language-ts">function multiply(a: number, b: number) {
+  return a * b;
+}
+</code></pre>
+<p><strong>如果没有定义参数类型，TypeScript 将默认使用 any，除非额外的类型信息可用，如默认参数和类型别名。</strong></p>
+<ol start="4">
+<li>默认情况下，TypeScript 会假定所有参数都是必需的，但它们可以显式标记为可选。</li>
+</ol>
+<pre><code class="language-ts">// 这里的 `?` 运算符将参数 `c` 标记为可选
+function add(a: number, b: number, c?: number) {
+  return a + b + (c || 0);
+}
+console.log(add(2,5));
+</code></pre>
+<ol start="5">
+<li>对于具有默认值的参数，默认值位于类型注释之后。</li>
+</ol>
+<pre><code class="language-ts">function pow(value: number, exponent: number = 10) {
+  return value ** exponent;
+}
+</code></pre>
+<p><strong>TypeScript 还可以从默认值推断类型。</strong></p>
+<pre><code class="language-ts">function pow(value, exponent = 10) {
+  return value ** exponent;
+}
+console.log(pow(10, '2')); // Argument of type 'string' is not assignable to parameter of type 'number'.
+</code></pre>
+<ol start="6">
+<li>命名参数遵循与普通参数相同的模式。</li>
+</ol>
+<pre><code class="language-ts">function divide({ dividend, divisor }: { dividend: number, divisor: number }) {
+  return dividend / divisor;
+}
+console.log(divide({dividend: 10, divisor: 2}));
+</code></pre>
+<ol start="7">
+<li>剩余参数可以像普通参数一样类型化，但类型必须是数组，因为剩余参数始终是数组。</li>
+</ol>
+<pre><code class="language-ts">function add(a: number, b: number, ...rest: number[]) {
+  return a + b + rest.reduce((p, c) =&gt; p + c, 0);
+}
+console.log(add(10,10,10,10,10));
+</code></pre>
+<ol start="8">
+<li>函数类型可以与具有类型别名的函数分开指定。</li>
+</ol>
+<pre><code class="language-ts">type Negate = (value: number) =&gt; number;
+// 参数 value 自动从 Negate 类型被分配 number 类型
+const negateFunction: Negate = (value) =&gt; value * -1;
+console.log(negateFunction(10));
+</code></pre>
+<ol start="9">
+<li>函数重载是方法名字相同，而参数不同，返回类型可以相同也可以不同。</li>
+</ol>
+<ul>
+<li>函数重载类型化定义了一个函数可以被调用的所有方式，在自动补全时会很有用，可以在自动补全中列出所有可能的重载记录。</li>
+<li>函数重载需要定义重载签名（一个以上，定义函数的形参和返回类型，没有函数体，不可调用）和一个实现签名。</li>
+<li>除了常规的函数之外，类中的方法也可以重载。</li>
+</ul>
+<pre><code class="language-ts">function makeDate(timestamp: number): Date;
+function makeDate(m: number, d: number, y: number): Date;
+function makeDate(mOrTimestamp: number, d?: number, y?: number): Date {
+  if (d !== undefined &amp;&amp; y !== undefined) {
+    return new Date(y, mOrTimestamp, d);
+  } else {
+    return new Date(mOrTimestamp);
+  }
+}
+const d1 = makeDate(12345678);
+const d2 = makeDate(5, 5, 5);
+const d3 = makeDate(1, 3); // No overload expects 2 arguments, but overloads do exist that expect either 1 or 3 arguments.
+</code></pre>
+<p>在本例中，我们编写了两个重载：一个接受一个参数，另一个接受三个参数。前两个签名称为重载签名，但它们都不能用两个参数调用。</p>
+<p>在下面这个示例中，我们可以用字符串或数组调用它。但是，我们不能使用可能是字符串或数组的值调用它，报错：<code>No overload matches this call.</code>，因为 TypeScript 只能将函数调用解析为单个重载：</p>
+<pre><code class="language-ts">function len(s: string): number;
+function len(arr: any[]): number;
+function len(x: any[] | string) {
+  return x.length;
+}
+len(&quot;&quot;); // OK
+len([0]); // OK
+len(Math.random() &gt; 0.5 ? &quot;hello&quot; : [0]); // No overload matches this call.
+</code></pre>
+<p>因为两个重载都有相同的参数计数和相同的返回类型，所以我们可以编写一个非重载版本的函数：</p>
+<pre><code class="language-ts">function len(x: any[] | string) {
+  return x.length;
+}
+</code></pre>
+<p>现在我们可以使用任意一种值调用它，所以如果可能，可以首选具有联合类型的参数，而不是重载函数。</p>
+<h2 id="枚举">枚举</h2>
+<p>枚举是一个特殊的“类”，表示一组常量（不可更改的变量）。使用枚举类型可以为一组数值赋予更加友好的名字。枚举有两种数据类型：<code>string</code> 和 <code>numer</code>。</p>
+<ol>
+<li>默认情况下，枚举会将第一个值初始化为 <code>0</code>，后面的值依次值加 <code>1</code>。</li>
+</ol>
+<pre><code class="language-ts">enum CardinalDirections {
+  North,
+  East,
+  South,
+  West
+};
+let currentDirection: CardinalDirections = CardinalDirections.North;
+console.log(currentDirection); // '0' 因为 North 是第一个值
+// currentDirection = 'North'; // Error: &quot;North&quot; is not assignable to type 'CardinalDirections'.
+</code></pre>
+<ol start="2">
+<li>可以设置第一个枚举的值的数字，并让它自动递增。</li>
+</ol>
+<pre><code class="language-ts">enum CardinalDirections {
+  North = 1,
+  East,
+  South,
+  West
+}
+console.log(CardinalDirections.North); // logs 1
+console.log(CardinalDirections.West); // logs 4
+</code></pre>
+<ol start="3">
+<li>可以为每个枚举值分配唯一的数值，值将不会自动递增。</li>
+</ol>
+<pre><code class="language-ts">enum StatusCodes {
+  NotFound = 404,
+  Success = 200,
+  Accepted = 202,
+  BadRequest = 400
+};
+console.log(StatusCodes.NotFound); // logs 404
+console.log(StatusCodes.Success); // logs 200
+</code></pre>
+<ol start="4">
+<li><code>string</code> 类型比 <code>numer</code> 类型枚举更常见，因为它们的可读性和目的性更强。</li>
+</ol>
+<pre><code class="language-ts">enum CardinalDirections {
+  North = 'North',
+  East = &quot;East&quot;,
+  South = &quot;South&quot;,
+  West = &quot;West&quot;
+};
+console.log(CardinalDirections.North); // logs &quot;North&quot;
+console.log(CardinalDirections.West); // logs &quot;West&quot;
+</code></pre>
+<p><strong>可以混合字符串和数字枚举值，但不建议这样做。</strong></p>
+<ol start="5">
+<li>可以通过枚举值来获取枚举名称。</li>
+</ol>
+<pre><code class="language-ts">enum StatusCodes {
+  NotFound = 404,
+  Success = 200,
+  Accepted = 202,
+  BadRequest = 400
+};
+let s1 = StatusCodes[200]; // string | undefined
+console.log(s1); // Success
+</code></pre>
+<ol start="6">
+<li>如果某个属性的值是计算出来的，它后面的第一位成员必须初始化。</li>
+</ol>
+<pre><code class="language-ts">const value = 0;
+enum List {
+  A = value,
+  B = 2,  // 必须初始化
+  C,
+}
+</code></pre>
+<ol start="7">
+<li>为了避免在额外生成的代码上的开销和额外的非直接的对枚举成员的访问，我们可以使用 <code>const</code> 枚举，常量枚举不允许包含计算成员。不同于常规的枚举，它们在编译阶段会被删除。</li>
+</ol>
+<pre><code class="language-ts">const a = 1;
+const enum Enum {
+  A = 1,
+  B = A * 2,
+  C = a * 2, // const enum member initializers can only contain literal values and other computed enum values.
+}
+</code></pre>
+<ol start="8">
+<li>使用 keyof typeof 来获取将所有 Enum 键表示为字符串的 Type。</li>
+</ol>
+<pre><code class="language-ts">enum LogLevel {
+  ERROR,
+  WARN,
+  INFO,
+  DEBUG,
+}
+// 相当于 type LogLevelStrings = 'ERROR' | 'WARN' | 'INFO' | 'DEBUG';
+type LogLevelStrings = keyof typeof LogLevel;
+</code></pre>
+<h2 id="联合类型">联合类型</h2>
+<p>联合类型（Union Types）可以通过 <code>|</code> 运算符将变量设置多种类型，赋值时可以根据设置的类型来赋值。当一个值可以是多个单一类型时，可以使用联合类型。例如当变量是 <code>string</code> 或 <code>number</code> 时。</p>
+<pre><code class="language-ts">function printStatusCode(code: string | number) {
+  console.log(`My status code is ${code}.`)
+}
+printStatusCode(404);
+printStatusCode('404');
+</code></pre>
+<p>注意：使用联合类型时，需要知道你的类型是什么，以避免类型错误：</p>
+<pre><code class="language-ts">function printStatusCode(code: string | number) {
+  console.log(`My status code is ${code.toUpperCase()}.`); // error: Property 'toUpperCase' does not exist on type 'string | number'. Property 'toUpperCase' does not exist on type 'number'
+}
+</code></pre>
+<p>在上述示例中，因为 <code>toUpperCase()</code> 是一个字符串方法，而数字无法访问它。</p>
+<h2 id="类型别名和接口">类型别名和接口</h2>
+<p>TypeScript 允许类型与使用它们的变量分开定义。类型别名和接口允许在不同的变量之间轻松共享类型。</p>
+<h3 id="类型别名">类型别名</h3>
+<ol>
+<li>类型别名就像我们使用了匿名对象类型一样。</li>
+</ol>
+<pre><code class="language-ts">type Point = {
+  x: number;
+  y: number;
+};
+function printCoord(pt: Point) {
+  console.log(&quot;The coordinate's x value is &quot; + pt.x);
+  console.log(&quot;The coordinate's y value is &quot; + pt.y);
+}
+
+printCoord({ x: 100, y: 100 });
+</code></pre>
+<ol start="2">
+<li>可以使用类型别名为任何类型命名，而不仅仅是对象类型。例如，类型别名可以命名联合类型：</li>
+</ol>
+<pre><code class="language-ts">type ID = number | string;
+</code></pre>
+<ol start="3">
+<li>类型别名可以定义指定区间具体的数值，该类型只能取定义的区间内的数值。</li>
+</ol>
+<pre><code class="language-ts">type Direction = 'center' | 'left' | 'right';
+let d: Direction = ''; // Type '&quot;&quot;' is not assignable to type 'Direction'.
+</code></pre>
+<ol start="4">
+<li>类型别名可以指定模板字符串类型规则。</li>
+</ol>
+<pre><code class="language-ts">type BooleanString = `${boolean}`;
+const bool: BooleanString = '1'; // Type '&quot;1&quot;' is not assignable to type '&quot;false&quot; | &quot;true&quot;'.
+
+type SerialNumber= `${number}.${number}`;
+const id: SerialNumber= '1.2';
+</code></pre>
+<h3 id="接口">接口</h3>
+<p>接口类似于类型别名，但是<strong>只适用于对象类型</strong>。</p>
+<ol>
+<li>就像上面使用类型别名一样，TypeScript 只关心我们传递给 <code>printCoord</code> 的值的结构——它是否具有预期的属性。只关心类型的结构和功能，这就是我们将 TypeScript 称为结构类型系统的原因。</li>
+</ol>
+<pre><code class="language-ts">interface Point {
+  x: number;
+  y: number;
+}
+function printCoord(pt: Point) {
+  console.log(&quot;The coordinate's x value is &quot; + pt.x);
+  console.log(&quot;The coordinate's y value is &quot; + pt.y);
+}
+
+printCoord({ x: 100, y: 100 });
+</code></pre>
+<ol start="2">
+<li>接口的几乎所有功能都可以在类型别名中使用，关键区别在于类型别名不能重新定义以添加新属性，而接口始终是可扩展的。</li>
+</ol>
+<pre><code class="language-ts">type Window = {
+  title: string
+}
+// Error: Duplicate identifier 'Window'.
+type Window = {
+  ts: TypeScriptAPI
+}
+
+interface Window {
+  title: string
+}
+interface Window {
+  ts: TypeScriptAPI
+}
+</code></pre>
+<ol start="3">
+<li>接口通过 <code>extends</code> 关键字可以继承另一个接口、类、类型别名来扩展成员，支持多继承，在 <code>extends</code> 关键字之后用逗号分隔。</li>
+</ol>
+<pre><code class="language-ts">interface Show {
+  isShow: boolean;
+}
+type Graphic = {
+  name: string;
+}
+class Point {
+  x: number;
+  y: number;
+}
+interface Point3d extends Point, Graphic, Show {
+  z: number;
+}
+
+const point3d: Point3d = { x: 1, y: 2, z: 3, name: '1', isShow: true };
+</code></pre>
+<ol start="4">
+<li>与使用接口描述函数类型差不多，我们也可以描述那些能够“通过索引得到”的类型。可索引类型具有一个 索引签名，它描述了对象索引的类型，还有相应的索引返回值类型。</li>
+</ol>
+<pre><code class="language-ts">interface i1 {
+  [index: number]: string
+}
+let list: i1 = [&quot;0&quot;, &quot;1&quot;, &quot;2&quot;];
+// list2 = [&quot;0&quot;, 1, &quot;2&quot;] // Type 'number' is not assignable to type 'string'.
+
+interface i2 {
+  [index: string]: number
+}
+const list2: i2 = {};
+list2[&quot;0&quot;] = 0;
+list2[1] = &quot;1&quot;; // Type 'string' is not assignable to type 'number'.
+</code></pre>
+<blockquote>
+<p>TypeScript 支持两种索引签名：字符串和数字。可以同时使用两种类型的索引，但是数字索引的返回值必须是字符串索引返回值类型的子类型。这是因为当使用 <code>number</code> 来索引时，JavaScript 会将它转换成 <code>string</code> 然后再去索引对象。也就是说用 <code>100</code>（一个 <code>number</code>）去索引等同于使用 <code>&quot;100&quot;</code>（一个 <code>string</code>）去索引，因此两者需要保持一致。字符串索引签名能够很好的描述 <code>dictionary</code> 模式，并且它们也会确保所有属性与其返回值类型相匹配。</p>
+</blockquote>
+<pre><code class="language-ts">class Animal {
+  name: string;
+}
+class Dog extends Animal {
+  breed: string;
+}
+// 错误：使用数值型的字符串索引，有时会得到完全不同的Animal!
+interface NotOkay {
+  [x: number]: Animal; // 'number' index type 'Animal' is not assignable to 'string' index type 'Dog'.
+  [x: string]: Dog;
+}
+
+interface NumberDictionary {
+  [index: string]: number;
+  length: number;    // 可以，length是number类型
+  name: string       // 错误，name的类型与索引类型返回值的类型不匹配
+}
+</code></pre>
+<ol start="5">
+<li>除了描述带有属性的普通对象外，接口也可以描述函数类型。</li>
+</ol>
+<ul>
+<li>使用接口表示函数类型，需要给接口定义一个调用签名，它就像是一个只有参数列表和返回值类型的函数定义。</li>
+<li>参数列表里的每个参数都需要名字和类型，对于函数类型的类型检查来说，函数的参数名不需要与接口里定义的名字相匹配。</li>
+<li>函数的参数会逐个进行检查，要求对应位置上的参数类型是兼容的。</li>
+<li>如果不指定类型，类型系统会推断出参数类型。</li>
+</ul>
+<pre><code class="language-ts">interface SearchFunc {
+  (source: string, subString: string): boolean;
+}
+let mySearch: SearchFunc;
+mySearch = function(source: string, subString: string) {
+  let result = source.search(subString);
+  return result &gt; -1;
+}
+mySearch = function(src: string, sub: string): boolean {
+  let result = src.search(sub);
+  return result &gt; -1;
+}
+mySearch = function(src, sub) {
+  let result = src.search(sub);
+  return result &gt; -1;
+}
+</code></pre>
+<h3 id="交叉类型">交叉类型</h3>
+<p>接口允许我们通过扩展其他类型来构建新类型。TypeScript 还提供了另一种称为交叉类型的结构，使用 <code>&amp;</code> 运算符定义，主要用于组合现有的对象类型。</p>
+<ol>
+<li>交叉类型包含了所需的所有类型的特性。</li>
+</ol>
+<pre><code class="language-ts">interface Colorful {
+  color: string;
+}
+interface Circle {
+  radius: number;
+}
+function draw(circle: Colorful &amp; Circle) {
+  console.log(`Color was ${circle.color}`);
+  console.log(`Radius was ${circle.radius}`);
+}
+draw({ color: &quot;blue&quot;, radius: 42 });
+// 'raidus' does not exist in type 'Colorful &amp; Circle'. Did you mean to write 'radius'?
+draw({ color: &quot;red&quot;, raidus: 42 });
+</code></pre>
+<p>在这里，我们将 <code>Colorful</code> 和 <code>Circle</code> 相交以生成一个包含 <code>Colorful</code> 和 <code>Circle</code> 的所有成员的新类型。</p>
+<ol start="2">
+<li>可以将多个接口类型合并成一个类型，实现等同于接口继承的效果。</li>
+</ol>
+<pre><code class="language-ts">interface A {
+  name: string;
+  age: number;
+}
+interface B {
+  name: string;
+  height: string;
+}
+type Person = A &amp; B;  // 相当于求并集
+const person: Person = { name: 'Tom', age: 18, height: '60kg' };
+</code></pre>
+<ol start="3">
+<li>类型别名也可以与接口交叉。</li>
+</ol>
+<pre><code class="language-ts">interface Animal {
+  name: string
+}
+type Person = Animal &amp; {
+  age: number;
+}
+</code></pre>
+<ol start="4">
+<li>类型别名可以通过交叉类型实现接口的继承行为。</li>
+</ol>
+<pre><code class="language-ts">type Animal = {
+  name: string
+}
+type Bear = Animal &amp; { 
+  honey: boolean 
+}
+</code></pre>
+<ol start="5">
+<li>原始类型之间交叉类型为 <code>never</code>，因为任何类型都不能满足同时属于多种原始类型。</li>
+</ol>
+<pre><code class="language-ts">type Useless = string &amp; number; // type Useless: never
+Useless = 1; // 'Useless' only refers to a type, but is being used as a value here.
+</code></pre>
+<h2 id="类">类</h2>
+<p>TypeScript 向 JavaScript 类添加了类型和可见性修饰符。</p>
+<ol>
+<li>类的成员（属性和方法）使用类型注释（类似于变量）进行类型化。</li>
+</ol>
+<pre><code class="language-ts">class Person {
+  name: string;
+}
+const person = new Person();
+person.name = &quot;Jane&quot;;
+</code></pre>
+<ol start="2">
+<li>类成员也可以被赋予影响可见性的特殊修饰符。TypeScript 中有三个主要的可见性修饰符：</li>
+</ol>
+<ul>
+<li><code>public</code> -（默认）允许从任何地方访问类成员</li>
+<li><code>private</code> - 只允许从类内部访问类成员</li>
+<li><code>protected</code> - 允许从自身和继承它的任何类访问类成员</li>
+</ul>
+<pre><code class="language-ts">class Person {
+  private name: string;
+  constructor(name: string) {
+    this.name = name;
+  }
+  getName(): string {
+    return this.name;
+  }
+}
+const person = new Person(&quot;Jane&quot;);
+console.log(person.getName()); // person.name isn't accessible from outside the class since it's private
+</code></pre>
+<ol start="3">
+<li>TypeScript 通过向参数添加可见性修饰符，可以在构造函数中定义类成员。</li>
+</ol>
+<pre><code class="language-ts">class Person {
+  constructor(private name: string) {}
+  getName(): string {
+    return this.name;
+  }
+}
+const person = new Person(&quot;Jane&quot;);
+console.log(person.getName()); // Jane
+</code></pre>
+<ol start="4">
+<li>与数组类似，<code>readonly</code> 关键字可以防止类成员被更改，只读属性必须在声明时或构造函数里被初始化，<code>readonly</code> 关键字也可以在构造函数中定义类成员。</li>
+</ol>
+<pre><code class="language-ts">class Person {
+  readonly name: string = 'Jane';
+  constructor(name?: string) {
+    if(name) this.name = name;
+  }
+}
+const person = new Person(&quot;a&quot;);
+// person.name = ''; // Cannot assign to 'name' because it is a read-only property.
+</code></pre>
+<ol start="5">
+<li>类通过 <code>extends</code> 关键字继承另一个类，一个类只能继承一个类；通过 <code>implements</code> 关键字实现接口（接口描述了类的公共部分，而不是公共和私有两部分），一个类支持实现多个接口，在 <code>implements</code> 关键字之后用逗号分隔。</li>
+</ol>
+<pre><code class="language-ts">interface Shape {
+  getArea: () =&gt; number;
+}
+class Rectangle implements Shape {
+  constructor(protected readonly width: number, protected readonly height: number) {}
+  getArea(): number {
+    return this.width * this.height;
+  }
+}
+class Square extends Rectangle {
+  constructor(width: number) {
+    super(width, width);
+  }
+}
+</code></pre>
+<ol start="6">
+<li>当一个类扩展另一个类时，它可以用相同的名称<strong>重写</strong>父类的成员。较新版本的 TypeScript 允许使用 <code>override</code> 关键字显式标记，它可以帮助防止意外重写不存在的方法。使用设置 <code>noImplicitOverride</code> 可以强制在重写时使用它。</li>
+</ol>
+<pre><code class="language-ts">class Rectangle {
+  constructor(protected readonly width: number, protected readonly height: number) {}
+  toString(): string {
+    return `Rectangle[width=${this.width}, height=${this.height}]`;
+  }
+}
+class Square extends Rectangle {
+  constructor(width: number) {
+    super(width, width);
+  }
+  override toString(): string {
+    return `Square[width=${this.width}]`;
+  }
+}
+</code></pre>
+<ol start="7">
+<li>抽象类允许它们用作其他类的基类，而无需实现其所有成员。通过使用 <code>abstract</code> 关键字定义抽象类，未实现的成员也需要使用 <code>abstract</code> 关键字标识。抽象类不能直接实例化，因为它们没有实现其所有成员。</li>
+</ol>
+<pre><code class="language-ts">abstract class Polygon {
+  abstract getArea(): number;
+  toString(): string {
+    return `Polygon[area=${this.getArea()}]`;
+  }
+}
+class Rectangle extends Polygon {
+  constructor(protected readonly width: number, protected readonly height: number) {
+    super();
+  }
+  getArea(): number {
+    return this.width * this.height;
+  }
+}
+</code></pre>
+<ol start="8">
+<li>TypeScript 支持通过 <code>getters/setters</code> 来截取对对象成员的访问，有效地控制对对象成员的访问。只带有 <code>get</code> 不带有 <code>set</code> 的存取器自动被推断为 readonly。</li>
+</ol>
+<pre><code class="language-ts">class Employee {
+  login: boolean;
+  private _fullName: string;
+  get fullName(): string {
+    return this._fullName;
+  }
+  set fullName(newName: string) {
+    console.log(this.login);
+    if (this.login === true) {
+      this._fullName = newName;
+    } else {
+      console.log(&quot;Error: Unauthorized update of employee!&quot;);
+    }
+  }
+}
+const employee = new Employee();
+employee.login = true;
+employee.fullName = &quot;Bob Smith&quot;;
+if (employee.fullName) {
+  console.log(employee.fullName);
+}
+</code></pre>
+<ol start="9">
+<li>静态成员存在于类本身上面而不是类的实例上。</li>
+</ol>
+<pre><code class="language-ts">class StaticMem {
+  static num: number;
+  static disp(): void {
+    console.log(&quot;num 值为 &quot; + StaticMem.num);
+  }
+}
+StaticMem.num = 12;
+StaticMem.disp();
+</code></pre>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/typescript-ji-ben-shu-ju-lei-xing-or-qing-xun-ying-bi-ji/" class="post-title gt-a-link">
+                    TypeScript 基本数据类型 ｜ 青训营笔记
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

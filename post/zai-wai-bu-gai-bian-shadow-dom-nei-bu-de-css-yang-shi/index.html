@@ -1,0 +1,251 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>在外部改变 Shadow DOM 内部的 CSS 样式 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    在外部改变 Shadow DOM 内部的 CSS 样式
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-10-21 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tags">
+                            # JS
+                        </a>
+                    
+                        <a href="https://zkrisj.github.io/tag/10MZNKSN7/" class="post-tags">
+                            # HTML
+                        </a>
+                    
+                        <a href="https://zkrisj.github.io/tag/5W0xko0tt/" class="post-tags">
+                            # CSS
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p>比如，自定义了一个按钮：</p>
+<pre><code class="language-html">&lt;ui-button type=&quot;primary&quot;&gt;按钮&lt;/ui-button&gt;
+</code></pre>
+<p>如何在外部修改已定义的 Web Components 的 Shadow DOM 内部样式？下面是两种方法。</p>
+<h2 id="使用-css-变量">使用 CSS 变量</h2>
+<p>在 Shadow DOM 内部使用 CSS 变量定义样式，然后在使用 Web Components 的地方改变 CSS 变量的值即可改变 Shadow DOM 内部样式。</p>
+<pre><code class="language-js">class UiButton extends HTMLElement {
+  constructor() {
+    super();
+    const shadow = this.attachShadow({ mode: 'open' });
+    shadow.innerHTML = `
+      &lt;style&gt;
+        button {
+          padding: 9px 1em;
+          border: 1px solid;
+          border-radius: var(--ui-button-radius, 4px);
+          background: var(--ui-button-background, #fff);
+          color: var(--ui-button-color, #333);
+          border-color: var(--ui-border-color, #ccc);
+        }
+      &lt;/style&gt;
+      &lt;button part=&quot;button&quot;&gt;${this.textContent}&lt;/button&gt;`;
+  }
+}
+customElements.define('ui-button', UiButton);
+</code></pre>
+<pre><code class="language-css">[type=primary] {
+  --ui-button-radius: 1mm;
+  --ui-button-background: deepskyblue;
+  --ui-button-color: #fff;
+  --ui-border-color: lightblue;
+}
+</code></pre>
+<iframe src="https://code.juejin.cn/pen/7156867580354330654"></iframe>
+<h2 id="使用-part-伪元素">使用 ::part 伪元素</h2>
+<p><code>::part</code> CSS 伪元素表示在 Shadow DOM 中任何匹配 <code>part</code> 属性的元素。只需要在 Shadow DOM 中元素上添加 <code>part</code> 属性，然后在外部使用 <code>::part</code> 伪元素选择匹配 <code>part</code> 属性的元素改变样式即可。</p>
+<pre><code class="language-js">class UiButton extends HTMLElement {
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' }).innerHTML = `
+    &lt;style&gt;
+      button {
+        padding: 9px 1em;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background: #fff;
+        color: #333;
+      }
+    &lt;/style&gt;
+    &lt;button part=&quot;button&quot;&gt;${this.textContent}&lt;/button&gt;`;
+  }
+}
+customElements.define('ui-button', UiButton);
+</code></pre>
+<pre><code class="language-css">[type=primary]::part(button) {
+  border-color: coral;
+  background: orangered;
+  color: #fff;
+}
+</code></pre>
+<iframe src="https://code.juejin.cn/pen/7156867596891979813"></iframe>
+<ol>
+<li><code>part</code> 全局属性包含一个以元素中 <code>part</code> 属性名称组成的列表，该列表以空格分隔。</li>
+<li>在任意元素（包括 <code>HTMLUnknownElement</code>）上，<code>element.part</code> 都会返回一个 <code>DOMTokenList</code> 对象。所以判断一个元素是否含有 <code>part</code> 属性，不能使用 <code>element.part</code>，要用 <code>Element.hasAttribute('part')</code> 方法。</li>
+<li>可以通过 DOM 事件改变 <code>part</code> 属性的值，来动态改变伪元素 <code>::part</code> 选择的元素的 CSS 样式：</li>
+</ol>
+<iframe src="https://code.juejin.cn/pen/7156891626982834206"></iframe>
+<h2 id="浏览器支持">浏览器支持</h2>
+<p>在安卓手机，苹果手机和 PC 端测试，都可以完全支持，查看到效果。而 is 属性目前只有 Safari 浏览器不支持。</p>
+<figure data-type="image" tabindex="1"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9297d924aec141cdae3dd1c57c460356~tplv-k3u1fbpfcp-watermark.image?" alt="developer.mozilla.org_en-US_docs_Web_CSS___part.png" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3268243723554aa7a1b48dc8c0922b36~tplv-k3u1fbpfcp-watermark.image?" alt="CPT2210211722-617x293.png" loading="lazy"></figure>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/jiang-lie-biao-zhuan-hua-wei-yi-ge-dai-tu-biao-de-ke-zhe-die-zhan-kai-de-cai-dan/" class="post-title gt-a-link">
+                    将列表转化为一个带图标的可折叠/展开的菜单
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

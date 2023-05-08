@@ -1,0 +1,219 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>页面滚动顶部指示进度条 JS 和 CSS 实现 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    页面滚动顶部指示进度条 JS 和 CSS 实现
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-09-13 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/5W0xko0tt/" class="post-tags">
+                            # CSS
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p>页面滚动顶部指示，是在页面上下滚动时，顶部显示一个滚动条，指示页面的滚动距离和页面的滚动高度的比例。效果如下：</p>
+<figure data-type="image" tabindex="1"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6706dfda6cf54b468c1297bcb04245ec~tplv-k3u1fbpfcp-watermark.image?" alt="CPT2209131004-668x576-min.gif" loading="lazy"></figure>
+<h2 id="js-实现">JS 实现</h2>
+<p>原理是顶部放一个宽度为 0 的滚动条，然后监听窗口滚动事件，把页面的滚动距离和页面的滚动高度（页面的实际高度 - 页面的视口高度）进行比较，然后更新滚动条的宽度。</p>
+<pre><code class="language-js">window.onscroll = function(e) {
+  var height = document.scrollingElement.scrollHeight - document.scrollingElement.clientHeight;
+  progressBar.style.width = (document.scrollingElement.scrollTop / height) * 100 + &quot;%&quot;;
+}
+</code></pre>
+<pre><code class="language-css">.progress-container {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, .1);
+}
+
+.progress-bar {
+  width: 0;
+  height: 8px;
+  background: rgba(0, 200, 0, .7);
+}
+</code></pre>
+<iframe src="https://code.juejin.cn/pen/7142718964181925900"></iframe>
+<h2 id="css-实现">CSS 实现</h2>
+<p>原理是给页面添加一个线性渐变的背景，背景的宽度等于页面的宽度，背景的高度要等于页面的滚动高度（页面的实际高度 - 页面的视口高度），这可以使用 CSS 的函数 calc(100% - 100vh) 来得到，然后加上滚动条的高度，比如 5px，calc(100% - 100vh + 5px)。</p>
+<pre><code class="language-css">body {
+  background: linear-gradient(to top right, lime 50%, white 50%) no-repeat;
+  background-size: 100% calc(100% - 100vh + 5px);
+}
+</code></pre>
+<p>这里使用 linear-gradient 函数创建了一个两种颜色的渐变色，在 50% 位置共享一个颜色停止点，即渐变的一半。这将在两种颜色之间创建一条硬线，即创建一个条纹而不是逐渐过渡。</p>
+<figure data-type="image" tabindex="2"><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/27b46221b7084a4fa984625c4f4115dc~tplv-k3u1fbpfcp-watermark.image?" alt="CPT2209131207-1349x1029-min.gif" loading="lazy"></figure>
+<p>接下来就是把多余背景遮盖，可以使用伪元素来完成：</p>
+<pre><code class="language-css">body::after {
+  content: &quot;&quot;;
+  position: fixed;
+  top: 5px;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: white;
+  z-index: -1;
+}
+</code></pre>
+<p>这种方法的滚动条不能太高，不然滚动条末端的倾斜条纹会很明显。</p>
+<iframe src="https://code.juejin.cn/pen/7142725459602571278"></iframe>
+<p>以上的 JS 和 CSS 实现在 IE11 中都有效果。</p>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/callapplybind-de-shi-yong-chang-jing/" class="post-title gt-a-link">
+                    call()、apply()、bind() 的使用场景
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

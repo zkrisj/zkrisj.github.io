@@ -1,0 +1,256 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>如何更简单地更改 input type=file 文件选择框的样式 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    如何更简单地更改 input type=file 文件选择框的样式
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-11-28 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/5W0xko0tt/" class="post-tags">
+                            # CSS
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p>HTML 原生的 <code>&lt;input type=&quot;file&quot;&gt;</code> 文件选择框元素样式在各个浏览器上面由用户代理默认设置样式，如果在页面上应用了其他颜色或主题时，我们通常也相应的更改这些输入框或按钮的颜色或背景，否则会出现颜色与背景或主题不融入的样式不一致问题。</p>
+<p>通常的做法是隐藏文件选择输入框，然后使用 <code>&lt;label&gt;</code> 元素模拟文件选择框，点击 <code>&lt;label&gt;</code> 元素就会自动触发文件选择输入框的点击选择行为，再通过监听文件选择框的 change 事件还可以将文件信息显示在页面上。HTML 结构示意如下：</p>
+<pre><code class="language-html">&lt;body&gt;
+  &lt;label for=&quot;fileInput&quot;&gt;Choose a file to upload&lt;/label&gt;
+  &lt;input id=&quot;fileInput&quot; onchange=&quot;updateFileList(this)&quot; type=&quot;file&quot; multiple&gt;
+  &lt;ul id=&quot;fileList&quot;&gt;&lt;/ul&gt;
+&lt;/body&gt;
+&lt;script&gt;
+  function updateFileList(fileInput) {
+    while (fileList.firstChild) fileList.removeChild(fileList.firstChild);
+    var curFiles = fileInput.files;
+    if (!(curFiles.length === 0)) {
+      [].forEach.call(curFiles, function(file) {
+        var listItem = document.createElement('li');
+        listItem.textContent = 'File name: ' + file.name + '; file size ' + returnFileSize(file.size) + '.';
+        fileList.appendChild(listItem);
+      });
+    }
+  }
+
+  function returnFileSize(number) {
+    if (number &lt; 1024) {
+      return number + 'bytes';
+    } else if (number &gt;= 1024 &amp;&amp; number &lt; 1048576) {
+      return (number / 1024).toFixed(1) + 'KB';
+    } else if (number &gt;= 1048576) {
+      return (number / 1048576).toFixed(1) + 'MB';
+    }
+  }
+&lt;/script&gt;
+&lt;style&gt;
+  button, label, input {
+    display: inline-block;
+    padding: .5em 1em;
+  }
+  input[type=file] {
+    display: none;
+  }
+  label[for=fileInput] {
+    background: linear-gradient(to bottom, #eee, #ccc);
+  }
+&lt;/style&gt;
+</code></pre>
+<iframe src="https://code.juejin.cn/pen/7171005126797164558"></iframe>
+<p>这种方式虽然比较繁琐，但是可以定制更多内容，并且兼容 IE。</p>
+<h2 id="css-伪元素-file-selector-button">CSS 伪元素 ::file-selector-button</h2>
+<figure data-type="image" tabindex="1"><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/bb37d02aa5d84e888c289e3bed796d0f~tplv-k3u1fbpfcp-watermark.image?" alt="微信截图_20221128172300.png" loading="lazy"></figure>
+<p>Chrome 89 开始支持，目前除了 IE，其他各浏览器都已支持，匹配 <code>&lt;input type=&quot;file&quot;&gt;</code> 元素上的按钮，兼容写法为 ::-webkit-file-upload-button。通过伪元素 ::file-selector-button 定制文件选择框的样式更加简单了：</p>
+<pre><code class="language-html">&lt;body&gt;
+  &lt;input type=&quot;file&quot; multiple&gt;
+&lt;/body&gt;
+&lt;style&gt;
+  /* 后面的提示文字颜色 */
+  [type=file] {
+    color: red;
+    /* font-size: 0; */
+  }
+  /* 主按钮的样式自定义 */
+  ::file-selector-button {
+    height: 3rem;
+    color: #fff;
+    border-radius: .25rem;
+    border: 1px solid #2a80eb;
+    padding: .75rem 1rem;
+    background-color: #2a80eb;
+    cursor: pointer;
+  }
+  ::-ms-browse {
+    height: 3rem;
+    color: #fff;
+    border-radius: .25rem;
+    border: 1px solid #2a80eb;
+    padding: .75rem 1rem;
+    background-color: #2a80eb;
+    cursor: pointer;
+  }
+&lt;/style&gt;
+</code></pre>
+<iframe src="https://code.juejin.cn/pen/7171009839273869320"></iframe>
+<p>IE 浏览器（IE10+）也支持对文件选择框样式自定义，但是使用的是私有的 ::-ms-browse 伪元素。另外，如果希望隐藏按钮后面的“未选择任何文件”的文字，只需对当前 <code>&lt;input&gt;</code> 元素设置样式 <code>font-size: 0</code> 即可。</p>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li><a href="https://www.zhangxinxu.com/wordpress/2022/10/css-file-selector-button/">CSS ::file-selector-button 伪元素简介</a></li>
+</ul>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/html-drag-and-drop-api-he-shi-xian-ye-mian-yuan-su-tuo-zhuai-xiao-guo/" class="post-title gt-a-link">
+                    拖拽删除元素、拖拽排序、拖拽预览图片和拖拽移动元素
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

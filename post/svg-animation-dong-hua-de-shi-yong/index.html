@@ -1,0 +1,233 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>SVG animation 动画的使用 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    SVG animation 动画的使用
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-11-08 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/10MZNKSN7/" class="post-tags">
+                            # HTML
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p>SVG 内容可以通过以下方式进行动画处理：</p>
+<ul>
+<li>使用 SVG 动画。SVG 动画文档片段可以描述对文档元素的基于时间的修改，可以定义运动路径，或插入元素的属性和样式属性。这些效果可以链接在一起或触发以响应文档中的其他事件。</li>
+<li>使用 CSS 动画。这个 CSS 模块定义了使用关键帧随时间动画化 CSS 属性值的方法。这些关键帧动画的行为可以通过指定它们的持续时间、重复次数和重复行为来控制。</li>
+<li>使用 CSS 过渡。此 CSS 模块定义属性以指定 CSS 属性值的更改在指定的持续时间内逐渐发生。</li>
+<li>使用 SVG DOM。SVG DOM 被定义为 DOM4 规范的扩展。每个属性和样式表设置都可以通过脚本访问，并且 SVG 提供了一组额外的 DOM 接口来通过脚本支持高效的动画。理想情况下，支持脚本的浏览器也将实现 HTML 中定义的动画帧 API 。</li>
+<li>使用 Web Animations API。这个 DOM API 提供了一个脚本接口来触发样式属性和属性的用户代理优化动画，而不需要计算单个帧的值。</li>
+</ul>
+<p>SVG 动画通过 SMIL（Synchronized Multimedia Integration Language，同步多媒体合成语言）实现，通过在一个 SVG 元素内添加一个动画元素比如 <code>&lt;animate&gt;</code> 即可以实现动画。</p>
+<ul>
+<li>动画元素的数字属性（x，y 等）</li>
+<li>动画元素的颜色属性</li>
+<li>动画元素的 transform 属性（平移或旋转等）</li>
+<li>使元素沿着指定路径运动</li>
+</ul>
+<h2 id="css-动画">CSS 动画</h2>
+<p>下面通过 CSS 属性实现 SVG 的动画。</p>
+<iframe src="https://code.juejin.cn/pen/7142740773811781664"></iframe>
+<p>也可以通过 SMIL 方式实现，但是没有 CSS 控制动画灵活。</p>
+<iframe src="https://code.juejin.cn/pen/7163663019526848523"></iframe>
+<h2 id="svg-animation-元素">SVG animation 元素</h2>
+<h3 id="set">set</h3>
+<p>用来设定一个属性值，并为该值赋予一个持续时间。它支持所有的属性类型，包括那些原理上不能插值的，例如值为字符串和布尔类型的属性。set 元素是非叠加的。无法在其上使用 additive 属性或 accumulate 属性，即使声明了这些属性也会自动被忽略。</p>
+<iframe src="https://code.juejin.cn/pen/7163817212350824462"></iframe>
+<h3 id="animate">animate</h3>
+<p>放在形状元素的内部，用来定义一个元素的某个属性如何踩着时点改变。在指定持续时间里，属性从开始值变成结束值。</p>
+<iframe src="https://code.juejin.cn/pen/7163842952706392101"></iframe>
+<h2 id="animatetransform">animateTransform</h2>
+<p>在其目标元素上设置 transform 属性的动画，从而允许动画控制平移、缩放、旋转或倾斜等。</p>
+<iframe src="https://code.juejin.cn/pen/7163844251657175078"></iframe>
+<h2 id="animatemotion">animateMotion</h2>
+<p>定义元素如何沿着路径移动。</p>
+<iframe src="https://code.juejin.cn/pen/7163848226150285326"></iframe>
+<h2 id="事件">事件</h2>
+<p>下面示例绑定了几个动画事件：点击按钮开始，点击按钮停止，鼠标悬停暂停，鼠标移开取消暂停。</p>
+<pre><code class="language-html">&lt;button id=&quot;b1&quot;&gt;点击开始动画&lt;/button&gt;
+&lt;button id=&quot;b2&quot;&gt;点击停止动画&lt;/button&gt;
+&lt;h5&gt;&lt;mark&gt;鼠标悬停暂停&lt;/mark&gt;&lt;/h5&gt;
+&lt;svg width=&quot;300&quot; height=&quot;100&quot; id=&quot;svg&quot;&gt;
+  &lt;title&gt;SVG SMIL Animate with Path&lt;/title&gt;
+  &lt;rect x=&quot;0&quot; y=&quot;0&quot; width=&quot;300&quot; height=&quot;100&quot; stroke=&quot;black&quot; stroke-width=&quot;1&quot; /&gt;
+  &lt;rect x=&quot;0&quot; y=&quot;0&quot; width=&quot;20&quot; height=&quot;20&quot; fill=&quot;blue&quot; stroke=&quot;black&quot; stroke-width=&quot;1&quot;&gt;
+    &lt;animateMotion id=&quot;ani&quot;
+       path=&quot;M 250,80 H 50 Q 30,80 30,50 Q 30,20 50,20 H 250 Q 280,20,280,50 Q 280,80,250,80Z&quot;
+       dur=&quot;3s&quot; repeatCount=&quot;indefinite&quot; rotate=&quot;auto&quot; begin=&quot;indefinite&quot; /&gt;
+  &lt;/rect&gt;
+&lt;/svg&gt;
+&lt;script&gt;
+  svg.onmouseout = e =&gt; svg.unpauseAnimations();
+  svg.onmouseover = e =&gt; svg.pauseAnimations();
+  b1.onclick = e =&gt; ani.beginElement();
+  b2.onclick = e =&gt; ani.endElement();
+&lt;/script&gt;
+</code></pre>
+<iframe src="https://code.juejin.cn/pen/7163654617572573184"></iframe>
+<p>补充：目前 SVG SMIL animation 动画相关资料还是太少，尤其对各个属性和方法的解释、示例，而且标准也在不断变动，所以 CSS 动画在功能和兼容方面还是更有优势。</p>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/SVG/SVG_animation_with_SMIL">SVG animation with SMIL</a></li>
+<li><a href="https://www.zhangxinxu.com/wordpress/2014/08/so-powerful-svg-smil-animation/">超级强大的 SVG SMIL animation 动画详解</a></li>
+</ul>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/jin-ji-de-postgresqlxia-zhui-de-mysql/" class="post-title gt-a-link">
+                    进击的 PostgreSQL，下坠的 MySQL
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

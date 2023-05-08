@@ -1,0 +1,278 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>Reflect API 和 Object 静态方法的对比 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    Reflect API 和 Object 静态方法的对比
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2022-09-30 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/LYfiaPBFV/" class="post-tags">
+                            # JS
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="介绍">介绍</h2>
+<p><code>Reflect</code> 内置对象提供了与 JavaScript 对象交互的方法，这些方法与 <code>Proxy handler</code>（捕获器）的方法相对应。</p>
+<ol>
+<li><code>Reflect</code> 不是一个函数对象，因此不能当构造函数。</li>
+<li><code>Proxy</code> 一般需要和 <code>Reflect</code> 联合使用，<code>Proxy</code> 对象拦截操作，<code>Reflect</code> 完成默认行为，然后就可以在 <code>Proxy</code> 对象中部署额外的功能。</li>
+</ol>
+<h2 id="reflect-操作函数化">Reflect 操作函数化</h2>
+<ol>
+<li><code>Reflect.has</code> 判断一个对象是否存在某个属性，和 <code>in</code> 运算符的功能完全相同。如果 <code>target</code> 不是 <code>Object</code>，会抛出 <code>TypeError</code>。</li>
+</ol>
+<pre><code class="language-js">Reflect.has(target, prop)
+// 相当于
+prop in target
+</code></pre>
+<ol start="2">
+<li><code>Reflect.deleteProperty</code> 删除一个对象的某个属性，和 <code>delete</code> 运算符的功能完全相同。如果 <code>target</code> 不是 <code>Object</code>，会抛出 <code>TypeError</code>。</li>
+</ol>
+<pre><code class="language-js">Reflect.deleteProperty(target, prop)
+// 相当于
+delete target[prop]
+</code></pre>
+<h2 id="reflectapply-更易读和理解">Reflect.apply 更易读和理解</h2>
+<ol>
+<li>在 <code>Reflect</code> 之前，使用 <code>Function.prototype.apply</code> 调用具有给定 <code>this</code> 值的函数。</li>
+</ol>
+<pre><code class="language-js">Function.prototype.apply.call(Math.floor, undefined, [1.75]); // 1
+</code></pre>
+<ol start="2">
+<li>使用 <code>Reflect.apply</code> 之后更易读和理解：</li>
+</ol>
+<pre><code class="language-js">Reflect.apply(Math.floor, undefined, [1.75]) // 1
+Reflect.apply(String.fromCharCode, undefined, [104, 101, 108, 108, 111]) // &quot;hello&quot;
+Reflect.apply(RegExp.prototype.exec, /ab/, ['confabulation']).index // 4
+Reflect.apply(''.charAt, 'ponies', [3]) // &quot;i&quot;
+</code></pre>
+<h2 id="reflectdefineproperty-setprototypeof-检查属性定义是否成功">Reflect.defineProperty | setPrototypeOf 检查属性定义是否成功</h2>
+<ol>
+<li>使用 <code>Object.defineProperty</code> 和 <code>Object.setPrototypeOf</code>，成功则返回传递给函数的对象，否则抛出 <code>TypeError</code>，需要使用 <code>try...catch</code> 块来捕获定义属性时发生的错误。</li>
+</ol>
+<pre><code class="language-js">try {
+  Object.defineProperty(target, prop, descriptor) // success
+} catch (err) {
+  // failure
+}
+</code></pre>
+<ol start="2">
+<li>使用 <code>Reflect.defineProperty</code> 和 <code>Reflect.setPrototypeOf</code>，返回一个布尔值表示成功状态，可以替换成 <code>if...else</code> 块：</li>
+</ol>
+<pre><code class="language-js">if (Reflect.defineProperty(target, prop, descriptor)) {
+  // success
+} else {
+  // failure
+}
+</code></pre>
+<ol start="3">
+<li>如果 <code>target</code> 不是 <code>Object</code>，它们都会抛出 <code>TypeError</code> 异常。</li>
+</ol>
+<h2 id="与-object-对象的静态方法对比">与 Object 对象的静态方法对比</h2>
+<p><strong><code>Reflect</code> 上的一些方法对应于 ES2015 之前的 <code>Object</code> 上的静态方法</strong>。有些在 <code>Reflect</code> 上的新方法，<code>Object</code> 上没有；而有些在 <code>Object</code> 上的方法 <code>Reflect</code> 上没有。</p>
+<ol>
+<li><code>defineProperty</code>，<code>Object</code> 和 <code>Reflect</code> 都有。</li>
+<li><code>defineProperties</code>，只有 <code>Object</code> 有。</li>
+<li><code>Reflect.has</code> 对应 <code>Object.hasOwn</code>。</li>
+<li><code>deleteProperty</code>，只有 <code>Reflect</code> 有。</li>
+<li><code>get</code>，只有 <code>Reflect</code> 有。</li>
+<li><code>set</code>，只有 <code>Reflect</code> 有，返回一个布尔值表示成功状态。</li>
+<li><code>keys</code>，只有 <code>Object</code> 有，返回一个可枚举的属性键的字符串数组。如果目标不是对象，在 ES5 中抛出 <code>TypeError</code>，在 ES2015 中则将其强制转换为对象。</li>
+<li><code>ownKeys</code>，只有 <code>Reflect</code> 有，返回一个由目标对象自身的属性键组成的数组。等同于 `Object.getOwnPropertyNames(targe</li>
+<li><code>getOwnPropertyDescriptor</code>，<code>Object</code> 和 <code>Reflect</code> 都有。如果指定的属性存在于对象上，则返回该属性描述符，如果不存在则返回 <code>undefined</code>。在 ES5 中，如果第一个参数不是对象（而是原始类型），会抛出 <code>TypeError</code>。而在 ES2015，第一个的参数不是对象类型会被强制转换为对象。</li>
+<li><code>getOwnPropertyDescriptors</code>，只有 <code>Object</code> 有。获取指定对象的所有自身属性的描述符，如果没有任何自身属性，则返回空对象。</li>
+</ol>
+<blockquote>
+<p>浅拷贝一个对象：<code>Object.assign()</code> 方法只能拷贝源对象的可枚举的自身属性，同时拷贝时无法拷贝属性的描述符，而且访问器属性会被转换成数据属性，也无法拷贝源对象的原型，使用 <code>Object.getOwnPropertyDescriptors(obj)</code> 方法配合 <code>Object.create()</code> 方法则可以实现这些。</p>
+<pre><code class="language-js">Object.create(
+  Object.getPrototypeOf(obj),
+  Object.getOwnPropertyDescriptors(obj)
+);
+</code></pre>
+</blockquote>
+<ol start="11">
+<li><code>getPrototypeOf</code>，<code>Object</code> 和 <code>Reflect</code> 都有，返回给定对象的原型。如果没有继承属性，则返回 <code>null</code>。在 ES5 中，如果参数不是一个对象类型，会抛出 <code>TypeError</code> 异常。在 ES2015 中，参数会被强制转换为一个对象。如果 <code>target</code> 不是 <code>Object</code>，会抛出 <code>TypeError</code>。</li>
+<li><code>setPrototypeOf</code>，<code>Object</code> 和 <code>Reflect</code> 都有。</li>
+</ol>
+<ul>
+<li><code>Object.setPrototypeOf</code> 设置对象的新原型，并返回该对象。</li>
+<li><code>Reflect.setPrototypeOf</code> 返回一个布尔值，指示原型是否成功设置。</li>
+<li>如果 <code>prototype</code> 不是一个对象（或 <code>null</code>），会抛出 <code>TypeError</code> 异常。</li>
+<li>如果 <code>obj</code> 参数是不可扩展的或是一个不可修改原型的对象（如 <code>Object.prototype</code> 或 <code>window</code>），<code>Object.setPrototypeOf</code> 会抛出 <code>TypeError</code> 异常，<code>Reflect.setPrototypeOf</code> 返回 <code>false</code>。</li>
+</ul>
+<ol start="13">
+<li><code>isExtensible</code>，<code>Object</code> 和 <code>Reflect</code> 都有。返回一个 <code>Boolean</code> 值，指示一个对象是否是可扩展的（是否可以在它上面添加新的属性）。</li>
+</ol>
+<ul>
+<li>默认情况下，对象是可扩展的：即可以为他们添加新的属性，并且可以重新分配其原型。</li>
+<li><code>Object.preventExtensions</code>、<code>Object.seal</code> 或 <code>Object.freeze</code> 方法都可以使一个对象变为不可扩展。</li>
+<li>在 ES5 中，如果参数不是对象（而是原始类型），<code>Object.isExtensible</code> 会抛出 <code>TypeError</code>。在 ES2015 中，如果传递了非对象参数，<code>Object.isExtensible</code> 将返回 <code>false</code> 而没有任何错误，因为根据定义，原始类型是不可变的。</li>
+<li>如果参数不是对象（而是原始类型），<code>Reflect.isExtensible</code> 会抛出 <code>TypeError</code>。</li>
+</ul>
+<ol start="14">
+<li><code>preventExtensions</code>，<code>Object</code> 和 <code>Reflect</code> 都有，阻止对象添加新属性和对象的原型被重新分配。</li>
+</ol>
+<ul>
+<li>当将新属性添加到不可扩展对象将静默失败，严格模式下会抛出 <code>TypeError</code>。</li>
+<li>当为不可扩展对象重新分配原型时，会抛出 <code>TypeError</code>。</li>
+<li><code>Object.preventExtensions</code> 使对象不可扩展并会返回该对象。在 ES5 中，如果参数不是一个对象类型（而是原始类型），会抛出 <code>TypeError</code> 异常。在 ES2015 中，非对象参数将被视为一个不可扩展的普通对象，因此会被直接返回。</li>
+<li><code>Reflect.preventExtensions</code> 返回一个 <code>Boolean</code> 值指示目标对象是否成功被设置为不可扩展。如果参数不是一个对象类型（而是原始类型），会抛出 <code>TypeError</code> 异常。</li>
+</ul>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/windows-xi-tong-zhong-de-ying-lian-jie-he-ruan-lian-jie/" class="post-title gt-a-link">
+                    Windows 系统中的硬链接和软链接
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

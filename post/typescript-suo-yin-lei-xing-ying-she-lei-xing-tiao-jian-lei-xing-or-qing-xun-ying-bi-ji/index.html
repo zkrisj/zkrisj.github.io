@@ -1,0 +1,782 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>TypeScript 索引类型、映射类型、条件类型 ｜ 青训营笔记 | zkrisj</title>
+
+<link rel="shortcut icon" href="https://zkrisj.github.io/favicon.ico?v=1683589449040">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://zkrisj.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            zkrisj
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1683589449040"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 7px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    TypeScript 索引类型、映射类型、条件类型 ｜ 青训营笔记
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2023-02-03 ·
+                    </time>
+                    
+                        <a href="https://zkrisj.github.io/tag/Ra5sEQnVW/" class="post-tags">
+                            # TypeScript
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="typescript-介绍">TypeScript 介绍</h2>
+<ol>
+<li>TypeScript 是 JavaScript 的超集，提供了 JavaScript 的所有功能，并提供了可选的静态类型、Mixin、类、接口和泛型等特性。</li>
+<li>TypeScript 的目标是通过其类型系统帮助及早发现错误并提高 JavaScript 开发效率。</li>
+<li>通过 TypeScript 编译器或 Babel 转码器转译为 JavaScript 代码，可运行在任何浏览器，任何操作系统。</li>
+<li>任何现有的 JavaScript 程序都可以运行在 TypeScript 环境中，并只对其中的 TypeScript 代码进行编译。</li>
+<li>在完整保留 JavaScript 运行时行为的基础上，通过引入静态类型定义来提高代码的可维护性，减少可能出现的 bug。</li>
+<li>永远不会改变 JavaScript 代码的运行时行为，例如数字除以零等于 Infinity。这意味着，如果将代码从 JavaScript 迁移到 TypeScript ，即使 TypeScript 认为代码有类型错误，也可以保证以相同的方式运行。</li>
+<li>对 JavaScript 类型进行了扩展，增加了例如 <code>any</code>、<code>unknown</code>、<code>never</code>、<code>void</code>。</li>
+<li>一旦 TypeScript 的编译器完成了检查代码的工作，它就会 <strong>擦除</strong> 类型以生成最终的“已编译”代码。这意味着一旦代码被编译，生成的普通 JS 代码便没有类型信息。这也意味着 TypeScript 绝不会根据它推断的类型更改程序的 <strong>行为</strong>。最重要的是，尽管可能会在编译过程中看到类型错误，但类型系统自身与程序如何运行无关。</li>
+<li>在较大型的项目中，可以在单独的文件 tsconfig.json 中声明 TypeScript 编译器的配置，并细化地调整其工作方式、严格程度、以及将编译后的文件存储在何处。</li>
+</ol>
+<h2 id="keyof">keyof</h2>
+<ol>
+<li>用于从对象类型中生成其键的字符串或数字字面量的联合类型。</li>
+</ol>
+<pre><code class="language-ts">type Point = { x: number; y: number };
+type P = keyof Point; // 相当于 type P = 'x' | 'y'
+</code></pre>
+<ol start="2">
+<li>如果对象类型具有字符串或数字索引签名，则 <code>keyof</code> 将返回这些类型：</li>
+</ol>
+<pre><code class="language-ts">type Arrayish = { [n: number]: unknown };
+type A = keyof Arrayish; // 相当于 type A = number
+ 
+type Mapish = { [k: string]: boolean };
+type M = keyof Mapish; // 相当于 type M = string | number
+</code></pre>
+<p><code>M</code> 是类型 <code>string | number</code>，因为 JavaScript 对象键总是被强制转换为字符串，所以 <code>obj[0]</code> 总是与 <code>obj[&quot;0&quot;]</code> 相同。</p>
+<ol start="3">
+<li><code>keyof</code> 还可以与索引签名一起使用，以提取索引类型。</li>
+</ol>
+<pre><code class="language-ts">type StringMap = { [key: string]: unknown };
+// 这里 keyof StringMap 解析为 string | number
+function createStringPair(property: keyof StringMap, value: string): StringMap {
+  return { [property]: value };
+}
+</code></pre>
+<h2 id="索引访问类型">索引访问类型</h2>
+<ol>
+<li>我们可以使用索引访问类型来查找一种类型的特定属性：</li>
+</ol>
+<pre><code class="language-ts">type Person = { age: number; name: string; alive: boolean };
+type Age = Person[&quot;age&quot;]; // type Age = number
+type I1 = Person[&quot;age&quot; | &quot;name&quot;]; // type I1 = string | number
+type I2 = Person[keyof Person]; // type I2 = string | number | boolean
+type AliveOrName = &quot;alive&quot; | &quot;name&quot;;
+type I3 = Person[AliveOrName]; // type I3 = string | boolean
+</code></pre>
+<ol start="2">
+<li>使用 <code>number</code> 来获取数组元素的类型，然后将其与 <code>typeof</code> 结合起来，可以方便地捕获数组字面量的元素类型。</li>
+</ol>
+<pre><code class="language-ts">const MyArray = [
+  { name: &quot;Alice&quot;, age: 15 },
+  { name: &quot;Bob&quot;, age: 23 },
+  { name: &quot;Eve&quot;, age: 38 },
+];
+type Person = typeof MyArray[number];
+// type Person = {
+//   name: string;
+//   age: number;
+// }
+type Age = typeof MyArray[number][&quot;age&quot;]; // type Age = number
+// Or
+type Age2 = Person[&quot;age&quot;]; // type Age2 = number
+</code></pre>
+<ol start="3">
+<li>索引时只能使用类型，这意味着不能使用常量来生成变量引用：</li>
+</ol>
+<pre><code class="language-ts">const key = &quot;age&quot;;
+type Age = Person[key]; // Type 'key' cannot be used as an index type.
+</code></pre>
+<p>但可以使用类型别名进行类似的类型重构：</p>
+<pre><code class="language-ts">type key = &quot;age&quot;;
+type Age = Person[key]; // type Age = number
+</code></pre>
+<h2 id="索引签名">索引签名</h2>
+<ol>
+<li>有时你并不能提前知道类型属性的所有名称，但你确实知道值的类型。在这些情况下，可以使用索引签名来描述可能值的类型，例如：</li>
+</ol>
+<pre><code class="language-ts">function getStringArray(): StringArray {
+  return {} as StringArray;
+}
+interface StringArray {
+  [index: number]: string;
+}
+const myArray: StringArray = getStringArray();
+const secondItem = myArray[1]; // const secondItem: string
+</code></pre>
+<p>索引签名属性只允许使用某些类型：<code>string</code>、<code>number</code>、<code>symbol</code>、模板字符串以及仅包含这些的联合类型。</p>
+<ol start="2">
+<li>可以支持两种类型的索引器，但从数字索引器返回的类型必须是从字符串索引器返回的类型的子类型。这是因为当使用数字进行索引时，JavaScript 实际上会在索引到对象之前将其转换为字符串。这意味着使用 <code>100</code>（数字）进行索引与使用 <code>&quot;100&quot;</code>（字符串）进行索引是一样的，因此两者需要保持一致。</li>
+</ol>
+<pre><code class="language-ts">class Animal {
+  name: string;
+}
+class Dog extends Animal {
+  breed: string;
+}
+interface NotOkay {
+  [x: number]: Animal; // 'number' index type 'Animal' is not assignable to 'string' index type 'Dog'.
+  [x: string]: Dog;
+}
+</code></pre>
+<ol start="3">
+<li>虽然字符串索引签名是描述“字典”模式的强大方式，但它还强制所有属性与其返回类型相匹配，因为字符串索引声明 <code>obj.property</code> 也可写作 <code>obj[&quot;property&quot;]</code>。在下面的示例中，<code>name</code> 的类型与字符串索引的类型不匹配，所以类型检查器报错：</li>
+</ol>
+<pre><code class="language-ts">interface NumberDictionary {
+  [index: string]: number;
+  length: number;    // 可以，length是number类型
+  name: string       // 错误，name的类型与索引类型返回值的类型不匹配
+}
+</code></pre>
+<p>但是，如果索引签名是属性类型的联合，则可以接受不同类型的属性：</p>
+<pre><code class="language-ts">interface NumberOrStringDictionary {
+  [index: string]: number | string;
+  length: number; // ok
+  name: string; // ok
+}
+</code></pre>
+<h2 id="索引类型">索引类型</h2>
+<p>使用索引类型，编译器就能够检查使用了动态属性名的代码。例如，一个常见的 JavaScript 场景是从对象中选取属性的子集。</p>
+<pre><code class="language-ts">function pluck(o, names) {
+  return names.map(n =&gt; o[n]);
+}
+</code></pre>
+<p>在 TypeScript 中通过<strong>索引访问操作符 T[K]</strong> 和<strong>索引类型查询 keyof T</strong> 使用它：</p>
+<pre><code class="language-ts">function pluck&lt;T, K extends keyof T&gt;(o: T, names: K[]): T[K][] {
+  return names.map(n =&gt; o[n]);
+}
+interface Person {
+  name: string;
+  age: number;
+}
+let person: Person = {
+  name: 'Jarid',
+  age: 35
+};
+let strings: string[] = pluck(person, ['name']); // string[]
+pluck(person, ['age', 'unknown']); // error, 'unknown' is not in 'name' | 'age'
+</code></pre>
+<p>这里编译器会检查 <code>name</code> 是否是 <code>Person</code> 的一个属性。类型语法也反映了表达式语法，所以 <code>person['name']</code> 具有类型 <code>Person['name']</code>：</p>
+<pre><code class="language-ts">let personName: Person['name'] = person['name']; // string
+</code></pre>
+<p>像索引类型查询一样，可以在普通的上下文里使用索引访问 <code>T[K]</code>，这正是它的强大所在。</p>
+<pre><code class="language-ts">function getProperty&lt;T, K extends keyof T&gt;(o: T, name: K): T[K] {
+  return o[name]; // o: T, name: K所以o[name]: T[K]
+}
+</code></pre>
+<p>当返回 <code>T[K]</code> 的结果时，编译器会实例化键的真实类型，因此 <code>getProperty</code> 的返回值类型会随着传入的属性名而改变。</p>
+<pre><code class="language-ts">let name: string = getProperty(person, 'name');
+let age: number = getProperty(person, 'age');
+let unknown = getProperty(person, 'unknown'); // error, 'unknown' is not in 'name' | 'age'
+</code></pre>
+<h3 id="索引类型和索引签名">索引类型和索引签名</h3>
+<p><code>keyof</code> 和 <code>T[K]</code> 可以与索引签名交互。索引签名参数类型必须是“字符串”或“数字”。如果你有一个带有字符串索引签名的类型，则 <code>keyof T</code> 将为 <code>string | number</code>（不仅仅是字符串，因为在 JavaScript 中，可以同时使用字符串 <code>object[&quot;42&quot;]</code> 或数字 <code>object[42]</code> 访问对象属性），而 <code>T[&quot;someString&quot;]</code> 是索引签名的类型。</p>
+<pre><code class="language-ts">interface Dictionary&lt;T&gt; {
+  [key: string]: T;
+}
+let keys: keyof Dictionary&lt;number&gt;; // let keys: string | number
+let value: Dictionary&lt;number&gt;[&quot;foo&quot;]; // let value: number
+</code></pre>
+<p>一个带有数字索引签名的类型，<code>keyof T</code> 将只是数字。</p>
+<pre><code class="language-ts">interface Dictionary2&lt;T&gt; {
+  [key: number]: T;
+}
+let keys2: keyof Dictionary2&lt;number&gt;; // let keys2: number
+let numberValue: Dictionary2&lt;number&gt;[42]; // let numberValue: number
+let value2: Dictionary2&lt;number&gt;[&quot;foo&quot;]; // Property 'foo' does not exist on type 'Dictionary2&lt;number&gt;'.
+</code></pre>
+<h2 id="映射类型">映射类型</h2>
+<p>有时一种类型需要基于另一种类型的属性列表。</p>
+<ol>
+<li>让我们看一下最简单的映射类型及其部分：</li>
+</ol>
+<pre><code class="language-ts">type Keys = &quot;option1&quot; | &quot;option2&quot;;
+type Flags = { [K in Keys]: boolean };
+</code></pre>
+<p>语法类似于带有 <code>for .. in</code> 内部索引签名的语法。分为三部分：</p>
+<ul>
+<li>类型变量 <code>K</code>，它会依次绑定到每个属性。</li>
+<li>字符串字面量联合的 <code>Keys</code>，它包含了要迭代的属性名的集合。</li>
+<li>属性的结果类型。</li>
+</ul>
+<p><code>Keys</code> 是硬编码的的属性名列表，并且属性类型永远是 <code>boolean</code>，因此这个映射类型等同于：</p>
+<pre><code class="language-ts">type Flags = {
+  option1: boolean;
+  option2: boolean;
+};
+</code></pre>
+<ol start="2">
+<li>一个常见的任务是将一个已知的类型每个属性设为可选。</li>
+</ol>
+<pre><code class="language-ts">interface PersonSubset {
+  name?: string;
+  age?: number;
+}
+</code></pre>
+<p>或者我们可能想要一个只读版本：</p>
+<pre><code class="language-ts">interface PersonReadonly {
+  readonly name: string;
+  readonly age: number;
+}
+</code></pre>
+<p>这种情况在 JavaScript 中经常发生，以至于 TypeScript 提供了一种基于旧类型创建新类型的方法——<strong>映射类型</strong>。在映射类型中，新类型以相同的方式转换旧类型中的每个属性。例如，你可以令每个属性成为 <code>readonly</code> 类型或可选的。</p>
+<pre><code class="language-ts">type Partial&lt;T&gt; = {
+  [P in keyof T]?: T[P];
+};
+type Readonly&lt;T&gt; = {
+  readonly [P in keyof T]: T[P];
+};
+type Person = {
+  name: string;
+  age: number;
+};
+type PersonPartial = Partial&lt;Person&gt;;
+// type PersonPartial = {
+//   name?: string | undefined;
+//   age?: number | undefined;
+// }
+type ReadonlyPerson = Readonly&lt;Person&gt;;
+// type ReadonlyPerson = {
+//   readonly name: string;
+//   readonly age: number;
+// }
+</code></pre>
+<ol start="3">
+<li>映射类型描述的是类型而不是成员。如果要添加成员，可以使用交叉类型：</li>
+</ol>
+<pre><code class="language-ts">type PartialWithNewMember&lt;T&gt; = {
+  [P in keyof T]?: T[P];
+} &amp; { newMember: boolean }
+type WrongPartialWithNewMember&lt;T&gt; = {
+  [P in keyof T]?: T[P];
+  newMember: boolean; // A mapped type may not declare properties or methods.
+}
+</code></pre>
+<ol start="4">
+<li>实际应用中，可能不同于上面的 <code>Readonly</code> 或 <code>Partial</code>。它们会基于一些现有的类型，按照一定的方式转换属性字段。这就是 <code>keyof</code> 索引访问类型的用武之地：</li>
+</ol>
+<pre><code class="language-ts">type Person = {
+  name: string;
+  age: number;
+};
+// 基于一些已存在的类型，且按照一定的方式转换字段
+type NullablePerson = { [P in keyof Person]: Person[P] | null };
+// 相当于
+// type NullablePerson = {
+//   name: string | null;
+//   age: number | null;
+// }
+type PartialPerson = { [P in keyof Person]?: Person[P] };
+// 相当于
+// type PartialPerson = {
+//   name?: string | undefined;
+//   age?: number | undefined;
+// }
+
+</code></pre>
+<p>但它更有用的地方是可以有一些通用版本。</p>
+<pre><code class="language-ts">// 通用版本
+type Nullable&lt;T&gt; = { [P in keyof T]: T[P] | null };
+type MyPartial&lt;T&gt; = { [P in keyof T]?: T[P] };
+</code></pre>
+<p>上述转换中，属性列表是 <code>keyof T</code>，且结果类型是 <code>T[P]</code> 的变体，所以它们是<strong>同态</strong>的，即映射只作用于 <code>T</code> 的属性。而且，编译器知道在添加任何新属性之前可以拷贝所有存在的属性修饰符，例如 <code>Person.name</code> 是只读的，<code>Partial&lt;Person&gt;.name</code> 则将是只读的和可选的。</p>
+<p>要注意的是，<code>keyof any</code> 表示可用作对象索引的任何类型，即 <code>keyof any</code> 等于 <code>string | number | symbol</code>。</p>
+<p>由于 <code>Readonly</code> 和 <code>Partial</code> 非常有用，所以它们和 <code>Pick</code>、<code>Record</code> 被一起包含进了 TypeScript 的标准库中。</p>
+<p>非同态类型本质上是在创建新属性，因此它们无法从任何地方复制属性修饰符。<code>Readonly</code>、<code>Partial</code> 和 <code>Pick</code> 是同态的，但 <code>Record</code> 不是，因为 <code>Record</code> 并不需要输入类型来拷贝属性：</p>
+<pre><code class="language-ts">type ThreeStringProps = Record&lt;&quot;prop1&quot; | &quot;prop2&quot; | &quot;prop3&quot;, string&gt;;
+</code></pre>
+<p>下面是另一个例子， <code>T[P]</code> 被包装在 <code>Proxy&lt;T&gt;</code> 代理中：</p>
+<pre><code class="language-ts">type Proxy&lt;T&gt; = {
+  get(): T;
+  set(value: T): void;
+};
+type Proxify&lt;T&gt; = {
+  [P in keyof T]: Proxy&lt;T[P]&gt;;
+};
+function proxify&lt;T&gt;(o: T): Proxify&lt;T&gt; {
+  return {} as Proxify&lt;T&gt;;
+}
+let props = { rooms: 4 };
+let proxyProps = proxify(props);
+// 相当于
+// let proxyProps: Proxify&lt;{
+//   rooms: number;
+// }&gt;
+</code></pre>
+<ol start="5">
+<li>了解了如何包装一个类型的属性，接下来就是如何拆包：从映射类型推断。</li>
+</ol>
+<pre><code class="language-ts">function unproxify&lt;T&gt;(t: Proxify&lt;T&gt;): T {
+  let result = {} as T;
+  for (const k in t) {
+    result[k] = t[k].get();
+  }
+  return result;
+}
+let props = { rooms: 4 };
+let proxyProps = proxify(props);
+// let proxyProps: Proxify&lt;{
+//   rooms: number;
+// }&gt;
+let originalProps = unproxify(proxyProps);
+// let originalProps: {
+//   rooms: number;
+// }
+</code></pre>
+<p>注意这个拆包推断只适用于同态的映射类型。如果映射类型不是同态的，那么需要给拆包函数提供一个显式类型参数。</p>
+<ol start="6">
+<li>映射类型可以建立在索引签名的语法之上，声明未声明的属性类型。</li>
+</ol>
+<pre><code class="language-ts">type OptionsFlags&lt;Type&gt; = {
+  [Property in keyof Type]: boolean;
+};
+type FeatureFlags = {
+  darkMode: () =&gt; void;
+  newUserProfile: () =&gt; void;
+};
+type FeatureOptions = OptionsFlags&lt;FeatureFlags&gt;;
+// type FeatureOptions = {
+//   darkMode: boolean;
+//   newUserProfile: boolean;
+// }
+</code></pre>
+<p>在此示例中，<code>OptionsFlags</code> 将从类型中获取所有属性类型并将它们更改为布尔。</p>
+<ol start="7">
+<li>有两个附加的修饰符可以在映射期间应用：<code>readonly</code> 和 <code>?</code> 它们分别影响可变性和选择性。还可以通过添加 <code>-</code> 或 <code>+</code> 前缀来删除或添加这些附加的修饰符。如果不添加前缀，则假定为 <code>+</code>。</li>
+</ol>
+<pre><code class="language-ts">// Removes 'readonly' attributes from a type's properties
+type CreateMutable&lt;Type&gt; = {
+  -readonly [Property in keyof Type]: Type[Property];
+};
+type LockedAccount = {
+  readonly id: string;
+  readonly name: string;
+};
+type UnlockedAccount = CreateMutable&lt;LockedAccount&gt;;
+// type UnlockedAccount = {
+//   id: string;
+//   name: string;
+// }
+
+// Removes 'optional' attributes from a type's properties
+type Concrete&lt;Type&gt; = {
+  [Property in keyof Type]-?: Type[Property];
+};
+type MaybeUser = {
+  id: string;
+  name?: string;
+  age?: number;
+};
+type User = Concrete&lt;MaybeUser&gt;;
+// type User = {
+//   id: string;
+//   name: string;
+//   age: number;
+// }
+</code></pre>
+<ol start="8">
+<li>在 TypeScript 4.1 及更高版本中，可以在映射类型中使用 <code>as</code> 子句<strong>重新映射</strong>映射类型中的键，例如可以利用模板字符串类型等功能，从以前的属性名称创建新的属性名称：</li>
+</ol>
+<pre><code class="language-ts">type Getters&lt;Type&gt; = {
+  [Property in keyof Type as `get${Capitalize&lt;string &amp; Property&gt;}`]: () =&gt; Type[Property]
+};
+interface Person {
+  name: string;
+  age: number;
+  location: string;
+}
+type LazyPerson = Getters&lt;Person&gt;;
+// type LazyPerson = {
+//   getName: () =&gt; string;
+//   getAge: () =&gt; number;
+//   getLocation: () =&gt; string;
+// }
+</code></pre>
+<p>可以通过条件类型来过滤关键字属性：</p>
+<pre><code class="language-ts">// 删除kind属性
+type RemoveKindField&lt;Type&gt; = {
+  [Property in keyof Type as Exclude&lt;Property, &quot;kind&quot;&gt;]: Type[Property]
+};
+interface Circle {
+  kind: &quot;circle&quot;;
+  radius: number;
+}
+type KindlessCircle = RemoveKindField&lt;Circle&gt;;
+// type KindlessCircle = {
+//   radius: number;
+// }
+</code></pre>
+<p>不仅仅是 <code>string | number | symbol</code>，可以映射任何类型的联合：</p>
+<pre><code class="language-ts">type EventConfig&lt;Events extends { kind: string }&gt; = {
+  [E in Events as E[&quot;kind&quot;]]: (event: E) =&gt; void;
+}
+type SquareEvent = { kind: &quot;square&quot;, x: number, y: number };
+type CircleEvent = { kind: &quot;circle&quot;, radius: number };
+type Config = EventConfig&lt;SquareEvent | CircleEvent&gt;
+// type Config = {
+//   square: (event: SquareEvent) =&gt; void;
+//   circle: (event: CircleEvent) =&gt; void;
+// }
+</code></pre>
+<h2 id="条件类型">条件类型</h2>
+<ol>
+<li>条件类型就是在初始状态并不直接确定具体类型，而是通过一定的类型运算得到最终的变量类型。条件类型的形式为 <code>T extends U ? X : Y</code>，类似于 JavaScript 中的条件表达式。</li>
+</ol>
+<pre><code class="language-ts">type TypeName&lt;T&gt; = T extends string
+  ? &quot;string&quot;
+  : T extends number
+  ? &quot;number&quot;
+  : T extends boolean
+  ? &quot;boolean&quot;
+  : T extends undefined
+  ? &quot;undefined&quot;
+  : T extends Function
+  ? &quot;function&quot;
+  : &quot;object&quot;;
+type T0 = TypeName&lt;string&gt;;
+// type T0 = &quot;string&quot;
+type T1 = TypeName&lt;&quot;a&quot;&gt;;
+// type T1 = &quot;string&quot;
+type T2 = TypeName&lt;true&gt;;
+// type T2 = &quot;boolean&quot;
+type T3 = TypeName&lt;() =&gt; void&gt;;
+// type T3 = &quot;function&quot;
+type T4 = TypeName&lt;string[]&gt;;
+// type T4 = &quot;object&quot;
+type T5 = TypeName&lt;string | (() =&gt; void)&gt;;
+// type T5 = &quot;string&quot; | &quot;function&quot;
+type T6 = TypeName&lt;string | string[] | undefined&gt;;
+// type T6 = &quot;string&quot; | &quot;undefined&quot; | &quot;object&quot;
+type T7 = TypeName&lt;string[] | number[]&gt;;
+// type T7 = &quot;object&quot;
+</code></pre>
+<ol start="2">
+<li>条件类型的强大之处在于将它们与泛型一起使用，例如一个基于输入类型进行选择的 <code>createLabel</code> 函数：</li>
+</ol>
+<pre><code class="language-ts">interface IdLabel {
+  id: number /* 一些字段 */;
+}
+interface NameLabel {
+  name: string /* 其它字段 */;
+}
+function createLabel(id: number): IdLabel;
+function createLabel(name: string): NameLabel;
+function createLabel(nameOrId: string | number): IdLabel | NameLabel;
+function createLabel(nameOrId: string | number): IdLabel | NameLabel {
+  throw &quot;unimplemented&quot;;
+}
+</code></pre>
+<ul>
+<li>如果一个库必须在其 API 中一遍又一遍地做出相同类型的选择，这将变得很麻烦。</li>
+<li>我们必须创建三个重载：一个用于确定类型的每种情况（一个用于 <code>string</code>，一个用于 <code>number</code>），一个用于最通用的情况（采用 <code>string | number</code>）。对于每个 <code>createLabel</code> 可以处理的新类型，重载的数量呈指数增长。</li>
+</ul>
+<p>相反，我们可以将该逻辑转换为条件类型：</p>
+<pre><code class="language-ts">type NameOrId&lt;T extends number | string&gt; = T extends number ? IdLabel : NameLabel;
+</code></pre>
+<p>然后，我们可以使用该条件类型将重载简化为没有重载的单个函数。</p>
+<pre><code class="language-ts">function createLabel&lt;T extends number | string&gt;(idOrName: T): NameOrId&lt;T&gt; {
+  throw &quot;unimplemented&quot;;
+}
+let a = createLabel(&quot;typescript&quot;);
+// let a: NameLabel
+let b = createLabel(2.8);
+// let b: IdLabel
+let c = createLabel(Math.random() ? &quot;hello&quot; : 42);
+// let c: NameLabel | IdLabel
+</code></pre>
+<ol start="3">
+<li>通常，条件类型的检查将为我们提供一些新信息。就像使用类型守卫缩小范围可以给我们提供更具体的类型一样，条件类型的 <code>true</code> 分支将根据我们检查的类型进一步约束泛型。</li>
+</ol>
+<pre><code class="language-ts">type MessageOf&lt;T&gt; = T[&quot;message&quot;]; // Type '&quot;message&quot;' cannot be used to index type 'T'.
+</code></pre>
+<p>在本例中，TypeScript 产生错误是因为不知道 <code>T</code> 有一个名为 <code>message</code> 的属性。我们可以约束 <code>T</code>，TypeScript 也不会再报错了：</p>
+<pre><code class="language-ts">type MessageOf&lt;T extends { message: unknown }&gt; = T[&quot;message&quot;];
+interface Email {
+  message: string;
+}
+type EmailMessageContents = MessageOf&lt;Email&gt;;
+// type EmailMessageContents = string
+</code></pre>
+<p>如果我们希望 <code>MessageOf</code> 接受任何类型，并且在 <code>message</code> 属性不可用的情况下默认为 <code>never</code> 之类的类型，我们应该怎么做呢？ 我们可以通过将约束移动到外面，并引入条件类型来实现这一点：</p>
+<pre><code class="language-ts">type MessageOf&lt;T&gt; = T extends { message: unknown } ? T[&quot;message&quot;] : never;
+interface Email {
+  message: string;
+}
+interface Dog {
+  bark(): void;
+}
+type EmailMessageContents = MessageOf&lt;Email&gt;;
+// type EmailMessageContents = string
+type DogMessageContents = MessageOf&lt;Dog&gt;;
+// type DogMessageContents = never
+</code></pre>
+<p>在 <code>true</code> 分支中，TypeScript 知道 <code>T</code> 将有一个 <code>message</code> 属性。</p>
+<ol start="4">
+<li>当传入的类型参数为联合类型时，他们会被分配类型。</li>
+</ol>
+<pre><code class="language-ts">type ToArray&lt;Type&gt; = Type extends any ? Type[] : never;
+type StrArrOrNumArr = ToArray&lt;string | number&gt;;
+// type StrArrOrNumArr = string[] | number[]
+</code></pre>
+<p>通常，分布性是所需的行为。要避免这种行为，可以用方括号括起 <code>extends</code> 关键字的两边。</p>
+<pre><code class="language-ts">type ToArrayNonDist&lt;Type&gt; = [Type] extends [any] ? Type[] : never;
+// 'StrArrOrNumArr'不再是联合
+type StrArrOrNumArr2 = ToArrayNonDist&lt;string | number&gt;;
+// type StrArrOrNumArr2 = (string | number)[]
+</code></pre>
+<ol start="5">
+<li>条件类型的分配属性可以方便地用于过滤联合类型：</li>
+</ol>
+<pre><code class="language-ts">// 求不同：从 T 中删除可分配给 U 的类型
+type Diff&lt;T, U&gt; = T extends U ? never : T;
+// 求相同：从 T 中删除不可分配给 U 的类型
+type Filter&lt;T, U&gt; = T extends U ? T : never;
+
+type T1 = Diff&lt;&quot;a&quot; | &quot;b&quot; | &quot;c&quot; | &quot;d&quot;, &quot;a&quot; | &quot;c&quot; | &quot;f&quot;&gt;;
+// type T1 = &quot;b&quot; | &quot;d&quot;
+type T2 = Filter&lt;&quot;a&quot; | &quot;b&quot; | &quot;c&quot; | &quot;d&quot;, &quot;a&quot; | &quot;c&quot; | &quot;f&quot;&gt;; // &quot;a&quot; | &quot;c&quot;
+// type T2 = &quot;a&quot; | &quot;c&quot;
+type T3 = Diff&lt;string | number | (() =&gt; void), Function&gt;; // string | number
+// type T3 = string | number
+type T4 = Filter&lt;string | number | (() =&gt; void), Function&gt;; // () =&gt; void
+// type T4 = () =&gt; void
+
+// 从 T 中删除 null 和 undefined
+type NotNullable&lt;T&gt; = Diff&lt;T, null | undefined&gt;;
+
+type T5 = NotNullable&lt;string | number | undefined&gt;;
+// type T5 = string | number
+type T6 = NotNullable&lt;string | string[] | null | undefined&gt;;
+// type T6 = string | string[]
+</code></pre>
+<ol start="7">
+<li>下面是一个名为 <code>Flatten</code> 的类型，它将数组类型扁平化为它们的元素类型，不是数组类型时返回原类型：</li>
+</ol>
+<pre><code class="language-ts">type Flatten&lt;T&gt; = T extends any[] ? T[number] : T;
+// 提取元素类型
+type Str = Flatten&lt;string[]&gt;;
+// type Str = string
+type Num = Flatten&lt;number&gt;;
+// type Num = number
+</code></pre>
+<p>这里使用了索引访问 <code>number</code> 来获取 <code>string[]</code> 的元素类型。条件类型还为我们提供了一种使用 <code>infer</code> 关键字从 <code>true</code> 分支中与之进行比较的类型中进行推断的方法。</p>
+<h3 id="infer">infer</h3>
+<ol>
+<li><code>infer</code> 关键字可以在条件类型的条件内使用，将推断的类型放入变量中，然后可以在条件分支中使用该推断变量。例如，我们可以在 <code>Flatten</code> 中推断元素类型，而不是使用索引访问类型“手动”提取它：</li>
+</ol>
+<pre><code class="language-ts">type Flatten&lt;T&gt; = T extends Array&lt;infer Item&gt; ? Item : T;
+// type of item1 is `number`
+type item1 = Flatten&lt;number[]&gt;;
+// type of item2 is `{name: string}`
+type item2 = Flatten&lt;{ name: string }&gt;;
+</code></pre>
+<p>在这里，我们使用 <code>infer</code> 关键字以声明方式引入一个名为 <code>Item</code> 的新泛型类型变量，而不是指定如何在 <code>true</code> 分支中检索元素类型 <code>T</code>。下面是另一种写法：</p>
+<pre><code class="language-ts">type Flatten&lt;T&gt; = T extends (infer E)[] ? E : T;
+// type of item1 is `number`
+type item1 = Flatten&lt;number[]&gt;;
+// type of item2 is `{name: string}`
+type item2 = Flatten&lt;{ name: string }&gt;;
+</code></pre>
+<ol start="2">
+<li>可以使用 <code>infer</code> 关键字编写一些有用的辅助类型别名。例如，对于简单的情况，我们可以从函数类型中提取返回类型：</li>
+</ol>
+<pre><code class="language-ts">type GetReturnType&lt;Type&gt; = Type extends (...args: never[]) =&gt; infer Return ? Return : never;
+type Num = GetReturnType&lt;() =&gt; number&gt;;
+// type Num = number
+type Str = GetReturnType&lt;(x: string) =&gt; string&gt;;
+// type Str = string
+type Bools = GetReturnType&lt;(a: boolean, b: boolean) =&gt; boolean[]&gt;;
+// type Bools = boolean[]
+</code></pre>
+<p>我们也可以使用内置工具类型 <code>ReturnType</code> 获取函数返回值类型。</p>
+<pre><code class="language-ts">type Num = ReturnType&lt;() =&gt; number&gt;;
+// type Num = number
+type Str = ReturnType&lt;(x: string) =&gt; string&gt;;
+// type Str = string
+type Bools = ReturnType&lt;(a: boolean, b: boolean) =&gt; boolean[]&gt;;
+// type Bools = boolean[]
+</code></pre>
+<ol start="3">
+<li>借助 <code>infer</code> 可以实现元组转联合类型。</li>
+</ol>
+<pre><code class="language-ts">type Flatten&lt;T&gt; = T extends Array&lt;infer U&gt; ? U : never;
+type T0 = [string, number];
+type T1 = Flatten&lt;T0&gt;; // string | number
+</code></pre>
+<ol start="4">
+<li>可以嵌套条件类型以形成按顺序评估的模式匹配序列。</li>
+</ol>
+<pre><code class="language-ts">type Unpacked&lt;T&gt; = T extends (infer U)[]
+  ? U
+  : T extends (...args: any[]) =&gt; infer U
+  ? U
+  : T extends Promise&lt;infer U&gt;
+  ? U
+  : T;
+type T0 = Unpacked&lt;string&gt;;
+// type T0 = string
+type T1 = Unpacked&lt;string[]&gt;;
+// type T1 = string
+type T2 = Unpacked&lt;() =&gt; string&gt;;
+// type T2 = string
+type T3 = Unpacked&lt;Promise&lt;string&gt;&gt;;
+// type T3 = string
+type T4 = Unpacked&lt;Promise&lt;string&gt;[]&gt;;
+// type T4 = Promise&lt;string&gt;
+type T5 = Unpacked&lt;Unpacked&lt;Promise&lt;string&gt;[]&gt;&gt;;
+// type T5 = string
+</code></pre>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zkrisj.github.io/post/typescript-fan-xing-lei-xing-zhuan-huan-lei-xing-shou-wei-or-qing-xun-ying-bi-ji/" class="post-title gt-a-link">
+                    TypeScript 泛型、类型转换、类型守卫 ｜ 青训营笔记
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">全栈技术文章记录博客</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://zkrisj.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>
